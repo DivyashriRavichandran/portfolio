@@ -1,0 +1,18 @@
+{
+  "extends": [
+    // "next/core-web-vitals",
+    "next",
+    "next/typescript",
+    "prettier"
+  ],
+  "ignorePatterns": ["components/ui/**"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 0,
+    "@next/next/no-img-element": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-require-imports": 0,
+    "react/no-unescaped-entities": 0,
+    "jsx-a11y/alt-text": 0
+  }
+}
