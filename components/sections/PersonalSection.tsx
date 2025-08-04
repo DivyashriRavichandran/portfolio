@@ -65,7 +65,10 @@ export default function PersonalSection() {
           delay={0.3}
           className="lg:col-start-2 lg:row-span-6 h-[250px] lg:h-auto "
         >
-          <div className="relative h-full rounded-xl bg-muted p-6 border shadow-sm">
+          <motion.div
+            whileHover={{ y: -5 }}
+            className="relative h-full rounded-xl bg-muted p-6 border shadow-sm"
+          >
             {/* HEADING */}
             <div className="flex items-center gap-2">
               <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-sparkle-icon" />
@@ -78,7 +81,7 @@ export default function PersonalSection() {
             <div className="px-6 mt-4 absolute inset-0 flex justify-center items-center mx-auto h-full">
               <RotateWords
                 words={[
-                  "replay The Last of Us 🎮",
+                  "play The Last of Us 🎮",
                   "binge sci-fi series 👽",
                   "play piano 🎹",
                   "cook new recipes 🍳",
@@ -86,7 +89,7 @@ export default function PersonalSection() {
                 ]}
               />
             </div>
-          </div>
+          </motion.div>
         </ScrollAnimation>
 
         {/* MUSIC */}

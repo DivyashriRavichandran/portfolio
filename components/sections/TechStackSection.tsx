@@ -49,10 +49,10 @@ export default function TechStackSection() {
     { name: "Spring Boot", icon: SiSpringboot, category: "backend" },
     { name: "MySQL", icon: GrMysql, category: "backend" },
     { name: "MongoDB", icon: SiMongodb, category: "backend" },
-    { name: "Git", icon: SiGit, category: "tools" },
-    { name: "Jira", icon: SiJira, category: "tools" },
     { name: "Jest", icon: SiJest, category: "tools" },
     { name: "Cypress", icon: SiCypress, category: "tools" },
+    { name: "Git", icon: SiGit, category: "tools" },
+    { name: "Jira", icon: SiJira, category: "tools" },
     { name: "Figma", icon: SiFigma, category: "design" },
     { name: "Framer", icon: SiFramer, category: "design" },
   ];
@@ -103,7 +103,7 @@ export default function TechStackSection() {
         </ScrollAnimation>
 
         {/* TECH STACK */}
-        <div className="mt-6 mx-auto max-w-5xl relative z-10 grid grid-cols-3 gap-4 md:grid-cols-6">
+        <div className="mt-6 mx-auto max-w-5xl relative z-10 grid grid-cols-3 gap-3 md:gap-4 md:grid-cols-6">
           {filteredTech.map((tech, index) => (
             <ScrollAnimation
               key={tech.name}

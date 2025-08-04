@@ -51,10 +51,10 @@ const ContactSection = () => {
                     {method.icon}
                   </div>
                   <div>
-                    <h3 className="text-sm md:text-base font-medium group-hover:underline">
+                    <h3 className="font-medium group-hover:underline">
                       {method.label}
                     </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       {method.description}
                     </p>
                   </div>

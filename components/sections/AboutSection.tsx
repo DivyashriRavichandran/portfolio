@@ -12,32 +12,38 @@ const AboutSection = () => {
           <Heading title={"About Me"} subtitle={"Know who am I"} />
 
           <div className="mt-6 md:mt-12 grid gap-12 md:grid-cols-3">
-            <div className="col-span-2 text-sm md:text-lg space-y-3 md:space-y-4 text-muted-foreground">
+            <div className="col-span-2 md:text-lg space-y-3 md:space-y-4 text-muted-foreground">
               <ScrollAnimation delay={0.2}>
                 <p>
-                  I&apos;m a full stack developer with a front-end focus,
-                  currently working at KP Platforms in Qatar. I specialize in
-                  building responsive, user-centric web applications using
-                  technologies like React and Next.js. At KP, I collaborate with
-                  UI/UX Designers and Backend Developer teams to transform Figma
-                  designs into code and integrated RESTful APIs.
+                  I&apos;m a{" "}
+                  <span className="text-gradient">full stack developer</span>{" "}
+                  with a front-end focus, currently working at KP Platforms in{" "}
+                  <span className="text-gradient">Qatar.</span> I specialize in
+                  building responsive, user-centric web applications using {""}
+                  <span className="text-gradient"> React</span> and{" "}
+                  <span className="text-gradient">Next.js</span>. At KP, I
+                  collaborate with UI/UX Designers and Backend Developer teams
+                  to transform Figma designs into code and integrated RESTful
+                  APIs.
                 </p>
               </ScrollAnimation>
 
               <ScrollAnimation delay={0.3}>
                 <p>
-                  I have a Bachelor’s degree in Computer Science from University
-                  of Leeds, where I built a strong foundation in both software
-                  engineering and programming algorithms. I&apos;m passionate
-                  about creating efficient, scalable, and user-friendly
-                  applications. I enjoy solving complex problems and
-                  continuously learning new technologies to enhance my skills.
+                  I have a Bachelor’s degree in{" "}
+                  <span className="text-gradient">Computer Science</span> from
+                  the University of Leeds, where I built a strong foundation in
+                  both software engineering and programming algorithms. I&apos;m
+                  passionate about creating efficient, scalable, and
+                  user-friendly applications. I enjoy solving complex problems
+                  and continuously learning new technologies to enhance my
+                  skills.
                 </p>
               </ScrollAnimation>
             </div>
 
             <ScrollAnimation direction="right">
-              <div className="rotate-6s relative flex items-center justify-center md:w-60 mx-auto size-40 md:h-full rounded-lg">
+              <div className="hidden relative md:flex items-center justify-center md:w-60 mx-auto size-40 md:h-full rounded-lg">
                 <Image
                   src={"/emoji2.png"}
                   alt={""}
@@ -52,7 +58,7 @@ const AboutSection = () => {
         </div>
       </div>
       {/* EXPERIENCE SECTION */}
-      <div className="my-10 md:my-20 container mx-auto px-4">
+      <div className="my-0 md:my-20 container mx-auto px-4">
         <Heading title={"My Journey"} subtitle={"Experience & Education"} />
 
         <TimelineSection />

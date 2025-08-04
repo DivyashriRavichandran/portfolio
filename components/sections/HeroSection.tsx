@@ -47,7 +47,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-6 inline-flex items-center rounded-full bg-muted px-3 py-1 text-sm backdrop-blur-sm border"
+            className="mb-6 md:mb-3 inline-flex items-center rounded-full bg-muted px-2 py-1 text-xs md:text-sm backdrop-blur-sm border"
           >
             <span className="mr-2 h-2 w-2 rounded-full gradient"></span>
             <motion.span
@@ -65,7 +65,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-4xl font-bold leading-tight md:text-6xl lg:text-7xl"
+          className="text-5xl leading-13 md:leading-normal font-bold md:text-7xl"
         >
           Hi!, I&apos;m Divyashri Ravichandran
         </motion.h1>
@@ -75,7 +75,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-4 md:mt-6 md:text-lg text-muted-foreground max-w-3xl mx-auto"
+          className="mt-4 md:text-lg text-muted-foreground max-w-3xl mx-auto"
         >
           Full-stack developer with 1+ year of front-end experience building
           e-commerce web applications with Next.js, currently expanding backend
@@ -87,7 +87,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="mt-4 md:mt-6 flex gap-4 items-center justify-center"
+          className="mt-6 md:mt-10 flex gap-4 items-center justify-center"
         >
           <Button onClick={handleProjectsClick}>See Projects</Button>
           <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">

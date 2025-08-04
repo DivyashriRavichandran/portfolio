@@ -16,7 +16,7 @@ const buttonVariants = cva(
           "border bg-muted hover:bg-muted/60 hover:text-muted-foreground",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "bg-muted/50 text-muted-foreground hover:bg-muted",
+        ghost: "backdrop-blur-sm text-zinc-100 hover:bg-muted/40",
         link: "text-primary underline-offset-4 hover:underline",
         none: "",
       },
@@ -25,6 +25,7 @@ const buttonVariants = cva(
         sm: "h-8 gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 px-6 has-[>svg]:px-4",
         icon: "size-8",
+        iconCarousel: "size-6",
       },
     },
     defaultVariants: {

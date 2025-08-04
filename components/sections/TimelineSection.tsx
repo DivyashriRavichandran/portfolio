@@ -123,18 +123,16 @@ const TimelineItem = ({
 
             {/* INNER CONTENT */}
             <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border group-hover/card:border-transparent">
-              <div className=" rounded-full px-2 py-1 text-xs bg-card w-fit inline-block text-card-foreground">
+              <div className="rounded-full px-2 py-1 text-xs dark:bg-card bg-muted w-fit inline-block text-card-foreground">
                 {date}
               </div>
               <h3 className="mt-1 text-lg md:text-xl font-semibold">{title}</h3>
               <div className="flex items-center justify-between gap-2">
-                <p className="text-gradient text-sm md:text-base font-medium">
-                  {organization}
-                </p>
+                <p className="text-gradient font-medium">{organization}</p>
                 <p className="text-sm text-muted-foreground">{place}</p>
               </div>
 
-              <ul className="list-disc mt-2 text-muted-foreground text-sm space-y-1">
+              <ul className="pl-2 list-disc mt-2 text-muted-foreground text-sm space-y-1">
                 {points.map((point, index) => (
                   <li key={index}>{point}</li>
                 ))}

@@ -61,8 +61,8 @@ const ProjectsSection = () => {
         { name: "Tailwind CSS", icon: SiTailwindcss },
       ],
       images: [P1_image1, P1_image2, P1_image3],
-      githubLink: "https://github.com/yourusername/cinedb",
-      websiteLink: "https://cinedb.vercel.app",
+      githubLink: "https://github.com/DivyashriRavichandran/cine-db",
+      websiteLink: "https://cinedb-web.vercel.app",
     },
     {
       title: "PAYGEZ",
@@ -128,12 +128,12 @@ const ProjectsSection = () => {
               <div className="flex flex-col justify-between gap-6 md:gap-8">
                 {/* LEFT CONTENT */}
                 <div>
-                  <h3 className="text-lg md:text-2xl font-bold z-40">
+                  <h3 className="text-xl md:text-2xl leading-6 md:leading-8 tracking-tight font-bold z-40">
                     {project.title}
                   </h3>
-                  <div className="md:w-1/2 flex flex-col justify-between">
+                  <div className="md:w-1/2 flex flex-col justify-between h-full">
                     <div>
-                      <p className="mt-1 text-sm text-muted-foreground mr-2">
+                      <p className="mt-2 text-sm text-muted-foreground mr-2">
                         {project.description}
                       </p>
 
@@ -144,7 +144,7 @@ const ProjectsSection = () => {
                             <TooltipProvider>
                               <Tooltip>
                                 <TooltipTrigger>
-                                  <tech.icon className="size-8 md:size-9 rounded-full bg-card p-2" />
+                                  <tech.icon className="size-9 rounded-full bg-card p-2" />
                                 </TooltipTrigger>
                                 <TooltipContent>{tech.name}</TooltipContent>
                               </Tooltip>
@@ -186,22 +186,19 @@ const ProjectsSection = () => {
                   </div>
                 </div>
 
-                {/* IMAGE OR PLACEHOLDER */}
-                <div className="md:absolute md:-bottom-4 md:-right-4 h-full md:h-48 w-full md:w-1/2 group-hover:bottom-0 group-hover:right-0 transition-all duration-300">
-                  <Carousel className="w-full h-full">
-                    <CarouselContent className="h-full">
+                {/* IMAGES */}
+                <div className="md:absolute md:-bottom-4 overflow-hidden md:-right-4 h-full md:h-48 w-full md:w-1/2 group-hover:bottom-0 group-hover:right-0 transition-all duration-300">
+                  <Carousel>
+                    <CarouselContent>
                       {project?.images?.map((image, index) => (
-                        <CarouselItem
-                          key={index}
-                          className="flex items-center justify-center h-full"
-                        >
-                          <div className="relative w-full h-full rounded-lg overflow-hidden">
-                            <Image
-                              src={image}
-                              alt=""
-                              className="object-cover"
-                            />
-                          </div>
+                        <CarouselItem key={index}>
+                          <Image
+                            src={image}
+                            alt=""
+                            width={500}
+                            height={500}
+                            className="h-48 w-full object-fill rounded-lg md:rounded-tl-xl border"
+                          />
                         </CarouselItem>
                       ))}
                     </CarouselContent>
