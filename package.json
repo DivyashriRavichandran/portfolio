@@ -11,7 +11,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@hookform/resolvers": "^5.1.1",
-    "@radix-ui/react-dialog": "^1.1.13",
+    "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
@@ -31,6 +31,7 @@
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.0",
     "tech-stack-icons": "^3.3.1",
+    "vaul": "^1.1.2",
     "zod": "^3.25.71"
   },
   "devDependencies": {

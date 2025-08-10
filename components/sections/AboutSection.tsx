@@ -16,8 +16,8 @@ const AboutSection = () => {
               <ScrollAnimation delay={0.2}>
                 <p>
                   I&apos;m a{" "}
-                  <span className="text-gradient">full stack developer</span>{" "}
-                  with a front-end focus, currently working at KP Platforms in{" "}
+                  <span className="text-gradient">front-end developer</span>{" "}
+                  currently working at KP Platforms in{" "}
                   <span className="text-gradient">Qatar.</span> I specialize in
                   building responsive, user-centric web applications using {""}
                   <span className="text-gradient"> React</span> and{" "}

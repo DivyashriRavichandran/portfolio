@@ -10,12 +10,10 @@ import {
   SiTypescript,
   SiTailwindcss,
   SiPython,
-  SiSpringboot,
   SiGit,
   SiFigma,
   SiFramer,
   SiCypress,
-  SiMongodb,
   SiJira,
   SiHtml5,
   SiCss3,
@@ -23,38 +21,36 @@ import {
   SiJest,
 } from "react-icons/si";
 import { IconType } from "react-icons";
-import { FaJava } from "react-icons/fa";
+import { FaNodeJs } from "react-icons/fa";
 import { GrMysql } from "react-icons/gr";
 import Heading from "../Heading";
 
 interface TechItem {
   name: string;
   icon: IconType;
-  category: "frontend" | "backend" | "design" | "tools";
+  category: "languages" | "frameworks" | "tools";
 }
 
 export default function TechStackSection() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   const techStack: TechItem[] = [
-    { name: "React", icon: SiReact, category: "frontend" },
-    { name: "Next.js", icon: SiNextdotjs, category: "frontend" },
-    { name: "TypeScript", icon: SiTypescript, category: "frontend" },
-    { name: "Tailwind CSS", icon: SiTailwindcss, category: "frontend" },
-    { name: "HTML", icon: SiHtml5, category: "frontend" },
-    { name: "CSS", icon: SiCss3, category: "frontend" },
-    { name: "Javascript", icon: SiJavascript, category: "frontend" },
-    { name: "Python", icon: SiPython, category: "backend" },
-    { name: "Java", icon: FaJava, category: "backend" },
-    { name: "Spring Boot", icon: SiSpringboot, category: "backend" },
-    { name: "MySQL", icon: GrMysql, category: "backend" },
-    { name: "MongoDB", icon: SiMongodb, category: "backend" },
+    { name: "HTML", icon: SiHtml5, category: "languages" },
+    { name: "CSS", icon: SiCss3, category: "languages" },
+    { name: "JavaScript", icon: SiJavascript, category: "languages" },
+    { name: "TypeScript", icon: SiTypescript, category: "languages" },
+    { name: "React", icon: SiReact, category: "frameworks" },
+    { name: "Next.js", icon: SiNextdotjs, category: "frameworks" },
+    { name: "Tailwind CSS", icon: SiTailwindcss, category: "frameworks" },
+    { name: "Python", icon: SiPython, category: "languages" },
+    { name: "MySQL", icon: GrMysql, category: "languages" },
+    { name: "Node.js", icon: FaNodeJs, category: "frameworks" },
+    { name: "Framer", icon: SiFramer, category: "frameworks" },
     { name: "Jest", icon: SiJest, category: "tools" },
     { name: "Cypress", icon: SiCypress, category: "tools" },
     { name: "Git", icon: SiGit, category: "tools" },
     { name: "Jira", icon: SiJira, category: "tools" },
-    { name: "Figma", icon: SiFigma, category: "design" },
-    { name: "Framer", icon: SiFramer, category: "design" },
+    { name: "Figma", icon: SiFigma, category: "tools" },
   ];
 
   const filteredTech = activeCategory
@@ -62,9 +58,8 @@ export default function TechStackSection() {
     : techStack;
 
   const categories = [
-    { id: "frontend", name: "Frontend" },
-    { id: "backend", name: "Backend" },
-    { id: "design", name: "Design" },
+    { id: "languages", name: "Languages" },
+    { id: "frameworks", name: "Frameworks" },
     { id: "tools", name: "Tools" },
   ];
 

@@ -77,9 +77,8 @@ const HeroSection = () => {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="mt-4 md:text-lg text-muted-foreground max-w-3xl mx-auto"
         >
-          Full-stack developer with 1+ year of front-end experience building
-          e-commerce web applications with Next.js, currently expanding backend
-          expertise in Java Spring Boot.
+          Front-end developer with over 1 year of experience building e-commerce
+          web applications with Next.js and React.
         </motion.p>
 
         {/* BUTTONS */}
