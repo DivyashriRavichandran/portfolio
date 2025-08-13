@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeToggle } from "./ThemeToggle";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Variants } from "framer-motion";
 
 interface NavItem {
   name: string;
@@ -95,7 +96,8 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const itemVariants = {
+
+  const itemVariants: Variants = {
     hidden: { opacity: 0, x: 50 },
     visible: (i: number) => ({
       opacity: 1,

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ScrollAnimation from "../custom/ScrollAnimation";
 import {
+  SiFirebase,
+  SiFramer,
   SiKeras,
   SiNextdotjs,
   SiPytest,
@@ -49,6 +51,7 @@ import P3_image4 from "@/assets/images/cv-builder-4.png";
 import P4_image1 from "@/assets/images/report-1.png";
 import P4_image2 from "@/assets/images/report-2.png";
 import P4_image3 from "@/assets/images/report-3.png";
+import { FaNetworkWired, FaProjectDiagram } from "react-icons/fa";
 
 type ProjectProps = {
   title: string;
@@ -110,6 +113,7 @@ const ProjectsSection = () => {
       techStack: [
         { name: "Next.js", icon: SiNextdotjs },
         { name: "Tailwind CSS", icon: SiTailwindcss },
+        { name: "Framer Motion", icon: SiFramer },
       ],
       images: [P3_image1, P3_image2, P3_image3, P3_image4],
       githubLink: "https://github.com/DivyashriRavichandran/cv-builder",
@@ -130,6 +134,9 @@ const ProjectsSection = () => {
       techStack: [
         { name: "Next.js", icon: SiNextdotjs },
         { name: "Tailwind CSS", icon: SiTailwindcss },
+        { name: "Framer Motion", icon: SiFramer },
+        { name: "Firebase", icon: SiFirebase },
+        { name: "Zustand", icon: FaNetworkWired },
       ],
       images: [P2_image1, P2_image2, P2_image3, P2_image4],
       websiteLink: "https://paygez.com",
@@ -212,8 +219,8 @@ const ProjectsSection = () => {
                           <span key={index}>
                             <TooltipProvider>
                               <Tooltip>
-                                <TooltipTrigger>
-                                  <tech.icon className="size-7 rounded-full bg-card p-1.5" />
+                                <TooltipTrigger className="rounded-full bg-card p-1.5">
+                                  <tech.icon className="size-4" />
                                 </TooltipTrigger>
                                 <TooltipContent>{tech.name}</TooltipContent>
                               </Tooltip>

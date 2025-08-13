@@ -81,11 +81,11 @@ export default function PersonalSection() {
             <div className="px-6 mt-4 absolute inset-0 flex justify-center items-center mx-auto h-full">
               <RotateWords
                 words={[
-                  "play The Last of Us 🎮",
                   "binge sci-fi series 👽",
-                  "play piano 🎹",
+                  "play The Last of Us 🎮",
+                  "play the piano 🎹",
                   "cook new recipes 🍳",
-                  "explore new tech 🤖",
+                  "explore 🤖",
                 ]}
               />
             </div>

@@ -23,7 +23,7 @@ const AboutSection = () => {
                   <span className="text-gradient"> React</span> and{" "}
                   <span className="text-gradient">Next.js</span>. At KP, I
                   collaborate with UI/UX Designers and Backend Developer teams
-                  to transform Figma designs into code and integrated RESTful
+                  to transform Figma designs into code and integrate RESTful
                   APIs.
                 </p>
               </ScrollAnimation>
@@ -34,10 +34,9 @@ const AboutSection = () => {
                   <span className="text-gradient">Computer Science</span> from
                   the University of Leeds, where I built a strong foundation in
                   both software engineering and programming algorithms. I&apos;m
-                  passionate about creating efficient, scalable, and
-                  user-friendly applications. I enjoy solving complex problems
-                  and continuously learning new technologies to enhance my
-                  skills.
+                  passionate about designing and creating applications. I enjoy
+                  solving complex problems and learning new technologies to
+                  enhance my skills.
                 </p>
               </ScrollAnimation>
             </div>

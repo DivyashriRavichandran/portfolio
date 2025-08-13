@@ -18,10 +18,8 @@ import {
   SiHtml5,
   SiCss3,
   SiJavascript,
-  SiJest,
 } from "react-icons/si";
 import { IconType } from "react-icons";
-import { FaNodeJs } from "react-icons/fa";
 import { GrMysql } from "react-icons/gr";
 import Heading from "../Heading";
 
@@ -44,9 +42,7 @@ export default function TechStackSection() {
     { name: "Tailwind CSS", icon: SiTailwindcss, category: "frameworks" },
     { name: "Python", icon: SiPython, category: "languages" },
     { name: "MySQL", icon: GrMysql, category: "languages" },
-    { name: "Node.js", icon: FaNodeJs, category: "frameworks" },
-    { name: "Framer", icon: SiFramer, category: "frameworks" },
-    { name: "Jest", icon: SiJest, category: "tools" },
+    { name: "Framer Motion", icon: SiFramer, category: "frameworks" },
     { name: "Cypress", icon: SiCypress, category: "tools" },
     { name: "Git", icon: SiGit, category: "tools" },
     { name: "Jira", icon: SiJira, category: "tools" },
