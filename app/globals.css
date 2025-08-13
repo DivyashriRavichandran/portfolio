@@ -57,7 +57,7 @@
     --muted: oklch(96.7% 0.001 286.375); /* zinc-100 */
     --muted-foreground: oklch(44.2% 0.017 285.786); /* zinc-600 subtext */
 
-    --primary: oklch(51.1% 0.262 276.966); /* indigo-600 */
+    --primary: #4e37f6; /* indigo-600 */
     --primary-light: oklch(96.2% 0.018 272.314); /* indigo-50 */
     --primary-dark: oklch(35.9% 0.144 278.697); /* indigo-900 */
     --primary-foreground: oklch(97.7% 0.014 308.299); /* text slate-950 */
@@ -93,7 +93,7 @@
     --card: oklch(27.4% 0.006 286.033); /* zinc-800 */
     --card-foreground: oklch(87.1% 0.006 286.286); /* zinc-300 */
 
-    --primary: oklch(69.6% 0.17 162.48); /* emerald-500 */
+    --primary: oklch(70.192% 0.15767 160.464); /* emerald-500 */
     --primary-light: oklch(98.2% 0.018 155.826); /* emerald-50 */
     --primary-dark: oklch(37.8% 0.077 168.94); /* emerald-900 */
     --primary-foreground: oklch(14.1% 0.005 285.823); /* text zinc-950 */
@@ -126,22 +126,6 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     font-family: "Space Grotesk", sans-serif;
   }
-}
-
-.stars-container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background-color: var(--primary);
-  border-radius: 50%;
-  animation: twinkle 4s infinite;
 }
 
 @keyframes twinkle {
@@ -291,5 +275,22 @@ html {
 
   .animate-bg-shine {
     animation: bg-shine 2.2s linear infinite;
+  }
+}
+
+.arrow-path {
+  stroke-dasharray: 60; /* total length of path (estimate, you can tweak) */
+  stroke-dashoffset: 60; /* hide entire stroke initially */
+  animation: draw-arrow 1s forwards;
+  animation-delay: 0s; /* optional delay */
+}
+
+.group:hover .arrow-path {
+  animation: draw-arrow 1s forwards;
+}
+
+@keyframes draw-arrow {
+  to {
+    stroke-dashoffset: 0; /* reveal stroke */
   }
 }

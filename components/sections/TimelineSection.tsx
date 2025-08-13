@@ -121,6 +121,9 @@ const TimelineItem = ({
             {/* GRADIENT BORDER */}
             <div className="rounded-[13px] absolute -inset-[1px] bg-gradient-to-br from-primary to-secondary opacity-0 group-hover/card:opacity-100 transition duration-300 z-0" />
 
+            {/* GRADIENT GLOW */}
+            <div className="absolute z-40 size-20 rounded-full blur-[100px] right-0 top-0 opacity-80 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
+
             {/* INNER CONTENT */}
             <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border group-hover/card:border-transparent">
               <div className="rounded-full px-2 py-1 text-xs dark:bg-card bg-muted w-fit inline-block text-card-foreground">

@@ -52,8 +52,6 @@ export default function Home() {
             {/* ABOUT SECTION */}
             <section id="about" ref={aboutRef} className="relative">
               <AboutSection />
-              <div className="-z-10 absolute -left-40 top-1/2 rounded-full h-[400px] w-[500px] bg-secondary/10 blur-3xl"></div>
-              <div className="-z-10 absolute -right-40 bottom-0 rounded-full h-[400px] w-[500px] bg-primary/10 blur-3xl"></div>
             </section>
 
             {/* TECH STACK SECTION */}

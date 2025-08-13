@@ -30,7 +30,7 @@ const ContactSection = () => {
     <div className="my-10 md:my-20 container mx-auto px-4">
       <Heading title={"Get in Touch"} subtitle={"Contact me"} />
 
-      <div className="mt-6 md:mt-12 mx-auto grid max-w-6xl gap-4 md:gap-6 lg:gap-12 md:grid-cols-3 lg:grid-cols-2">
+      <div className="mt-6 md:mt-12 mx-auto grid max-w-6xl gap-6 lg:gap-12 md:grid-cols-3 lg:grid-cols-2">
         {/* CONTACT DETAILS */}
         <ScrollAnimation direction="right">
           <div className="space-y-3 md:space-y-4">

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { FaJava } from "react-icons/fa";
 import ScrollAnimation from "../custom/ScrollAnimation";
 import {
   SiKeras,
-  SiMongodb,
   SiNextdotjs,
   SiPytest,
-  SiSpringboot,
   SiTailwindcss,
   SiTensorflow,
 } from "react-icons/si";
@@ -18,7 +15,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image, { StaticImageData } from "next/image";
-
 import {
   Dialog,
   DialogContent,
@@ -26,7 +22,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import {
   Carousel,
   CarouselContent,
@@ -34,9 +29,11 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "../ui/carousel";
-
 import ActionButton from "../ActionButton";
 import Heading from "../Heading";
+import ProjectDetails from "../ProjectDetails";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { cn } from "@/lib/utils";
 
 import P1_image1 from "@/assets/images/cinedb-1.png";
 import P1_image2 from "@/assets/images/cinedb-2.png";
@@ -45,11 +42,13 @@ import P2_image1 from "@/assets/images/paygez-1.png";
 import P2_image2 from "@/assets/images/paygez-2.png";
 import P2_image3 from "@/assets/images/paygez-3.png";
 import P2_image4 from "@/assets/images/paygez-4.png";
-
-import image1 from "@/assets/images/1.jpg";
-import image2 from "@/assets/images/2.jpg";
-import image3 from "@/assets/images/3.jpg";
-import ProjectDetails from "../ProjectDetails";
+import P3_image1 from "@/assets/images/cv-builder-1.png";
+import P3_image2 from "@/assets/images/cv-builder-2.png";
+import P3_image3 from "@/assets/images/cv-builder-3.png";
+import P3_image4 from "@/assets/images/cv-builder-4.png";
+import P4_image1 from "@/assets/images/report-1.png";
+import P4_image2 from "@/assets/images/report-2.png";
+import P4_image3 from "@/assets/images/report-3.png";
 
 type ProjectProps = {
   title: string;
@@ -71,7 +70,7 @@ type ProjectProps = {
 const ProjectsSection = () => {
   const Projects: ProjectProps[] = [
     {
-      title: "CINEDB",
+      title: "CineDB",
       type: "Frontend",
       year: "2025",
       description:
@@ -97,6 +96,26 @@ const ProjectsSection = () => {
       websiteLink: "https://cinedb-web.vercel.app",
     },
     {
+      title: "CV Builder",
+      type: "Frontend",
+      year: "2025",
+      description: "A web application for building CVs from templates.",
+      detailedDescription:
+        "CV Builder is a user-friendly web app that allows users to create and customize their CVs using pre-designed templates.",
+      features: [
+        "Template selection and customization",
+        "Export CV as PDF",
+        "User authentication and profiles",
+      ],
+      techStack: [
+        { name: "Next.js", icon: SiNextdotjs },
+        { name: "Tailwind CSS", icon: SiTailwindcss },
+      ],
+      images: [P3_image1, P3_image2, P3_image3, P3_image4],
+      githubLink: "https://github.com/DivyashriRavichandran/cv-builder",
+      websiteLink: "https://cv-builder-online.vercel.app",
+    },
+    {
       title: "PAYGEZ",
       type: "Frontend",
       year: "2025",
@@ -116,27 +135,6 @@ const ProjectsSection = () => {
       websiteLink: "https://paygez.com",
     },
     {
-      title: "RecipeDash",
-      type: "Backend",
-      year: "2025",
-      description: "Simple CRUD application for managing recipes",
-      detailedDescription:
-        "RecipeDash is a backend focused CRUD app to create, update, delete, and search recipes.",
-      features: [
-        "REST API with Spring Boot",
-        "MongoDB database",
-        "Unit testing with PyTest",
-      ],
-      techStack: [
-        { name: "Java", icon: FaJava },
-        { name: "Spring Boot", icon: SiSpringboot },
-        { name: "MongoDB", icon: SiMongodb },
-      ],
-      images: [image1, image2, image3],
-      githubLink: "https://github.com/yourusername/recipedash",
-      websiteLink: "https://recipedash.site",
-    },
-    {
       title: "Lung Cancer Detection using DCGAN Model",
       type: "dissertation",
       year: "2024",
@@ -154,18 +152,17 @@ const ProjectsSection = () => {
         { name: "TensorFlow", icon: SiTensorflow },
         { name: "PyTest", icon: SiPytest },
       ],
-      images: [image1, image2, image3],
+      images: [P4_image1, P4_image2, P4_image3],
       githubLink:
         "https://github.com/DivyashriRavichandran/Lung-Cancer-Classifier",
       websiteLink:
         "https://www.linkedin.com/in/divyashri-ravichandran/overlay/1726242566093/single-media-viewer/?profileId=ACoAADnahAABN7xSWUAT0reDfOdlR9AYpx4hBkk",
     },
   ];
-
-  // State to open dialog and hold current project
   const [selectedProject, setSelectedProject] = useState<ProjectProps | null>(
     null
   );
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="container mx-auto px-4 my-10 md:my-20">
@@ -182,9 +179,20 @@ const ProjectsSection = () => {
             <div
               onClick={() => setSelectedProject(project)}
               className="relative cursor-pointer group overflow-hidden rounded-xl border bg-background/60 px-5 py-6 md:p-8 shadow-md hover:scale-105 transition duration-200"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
               {/* Glow gradient */}
               <div className="-z-10 absolute -top-1/3 -right-1/3 h-2/3 w-2/3 rounded-full bg-gradient-to-br from-primary to-secondary opacity-0 blur-2xl transition duration-500 group-hover:opacity-50 group-hover:scale-125" />
+
+              {/* ANIMATION */}
+              <DotLottieReact
+                className="rotate-130 absolute -top-7 right-0 size-24 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                src="/Arrow.json"
+                autoplay={isHovered}
+                key={isHovered ? "play" : "pause"}
+                loop
+              />
 
               <div className="flex flex-col justify-between gap-6 md:gap-8">
                 {/* LEFT CONTENT */}
@@ -199,7 +207,7 @@ const ProjectsSection = () => {
                       </p>
 
                       {/* TECH STACK ICONS */}
-                      <div className="mt-3 flex flex-wrap gap-x-2">
+                      <div className="mt-3 flex flex-wrap gap-x-2 justify-center md:justify-start">
                         {project.techStack.map((tech, index) => (
                           <span key={index}>
                             <TooltipProvider>
@@ -216,7 +224,7 @@ const ProjectsSection = () => {
                     </div>
 
                     {/* ACTION BUTTONS */}
-                    <div className="mt-3 flex flex-wrap gap-2 md:gap-4">
+                    <div className="mt-3 flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start">
                       {project.type === "dissertation" ? (
                         <a
                           href={project.websiteLink}
@@ -251,7 +259,13 @@ const ProjectsSection = () => {
                 </div>
 
                 {/* IMAGES */}
-                <div className="md:absolute md:-bottom-4 overflow-hidden md:-right-4 h-full md:h-48 w-full md:w-1/2 group-hover:bottom-0 group-hover:right-0 transition-all duration-300">
+                <div
+                  className="md:absolute md:-bottom-4 md:-right-4 h-48 w-full md:w-80 overflow-hidden group-hover:bottom-0 group-hover:right-0 transition-all duration-300"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   <Carousel>
                     <CarouselContent>
                       {project?.images?.map((image, index) => (
@@ -259,13 +273,19 @@ const ProjectsSection = () => {
                           <Image
                             src={image}
                             alt=""
-                            width={500}
-                            height={500}
-                            className="h-48 w-full object-fill rounded-tl-lg md:rounded-tl-xl border-l border-t"
+                            width={1000}
+                            height={1000}
+                            className={cn(
+                              "opacity-90 h-48 w-full object-cover object-top rounded-tl-lg md:rounded-tl-xl border-l border-t",
+                              (project.title == "CineDB" ||
+                                project.title == "CV Builder") &&
+                                "opacity-100"
+                            )}
                           />
                         </CarouselItem>
                       ))}
                     </CarouselContent>
+
                     <div className="md:opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       <CarouselPrevious className="left-2 top-1/2 -translate-y-1/2" />
                       <CarouselNext className="right-2 top-1/2 -translate-y-1/2" />

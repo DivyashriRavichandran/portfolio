@@ -17,19 +17,9 @@ const HeroSection = () => {
       id="home"
       className="relative min-h-screen overflow-hidden pt-10 md:pt-20"
     >
-      {/* BACKGROUND STARS */}
-      <div className="absolute inset-0 z-0">
-        <div className="stars-container">
-          {/* <div className="star" style={{ top: "10%", left: "20%" }}></div>
-          <div className="star" style={{ top: "25%", left: "80%" }}></div>
-          <div className="star" style={{ top: "40%", left: "10%" }}></div>
-          <div className="star" style={{ top: "70%", left: "30%" }}></div>
-          <div className="star" style={{ top: "85%", left: "70%" }}></div> */}
-
-          <div className="absolute z-40 size-20 md:size-40 rounded-full blur-3xl md:blur-[150px] right-1/4 top-1/4 opacity-80 bg-secondary" />
-          <div className="absolute z-40 size-20 md:size-40 rounded-full blur-3xl md:blur-[150px] left-1/4 bottom-1/6 bg-primary" />
-        </div>
-      </div>
+      {/* BACKGROUND GLOWS */}
+      <div className="absolute z-40 size-24 md:size-36 rounded-full blur-[80px] md:blur-[150px] right-0 md:right-1/4 top-0 md:top-1/4 opacity-100 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
+      <div className="absolute z-40 size-20 md:size-36 rounded-full blur-[80px] md:blur-[150px] left-0 md:left-1/4 bottom-1/6 opacity-100 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
 
       {/* CONTENT */}
       <div className="container relative z-10 mx-auto flex min-h-[calc(100vh-80px)] flex-col items-center justify-center px-4 text-center">

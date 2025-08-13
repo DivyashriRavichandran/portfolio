@@ -75,7 +75,7 @@ export default function TechStackSection() {
               onClick={() => setActiveCategory(null)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                 activeCategory === null
-                  ? "gradient text-primary-foreground"
+                  ? "gradient text-primary-foreground hover:opacity-80"
                   : "bg-muted  hover:bg-muted/60"
               }`}
             >
@@ -87,7 +87,7 @@ export default function TechStackSection() {
                 onClick={() => setActiveCategory(category.id)}
                 className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
                   activeCategory === category.id
-                    ? "gradient text-primary-foreground"
+                    ? "gradient text-primary-foreground hover:opacity-80"
                     : "bg-muted  hover:bg-card"
                 }`}
               >
