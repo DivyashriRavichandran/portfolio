@@ -22,6 +22,7 @@ import {
 import { IconType } from "react-icons";
 import { GrMysql } from "react-icons/gr";
 import Heading from "../Heading";
+import { GiBearFace } from "react-icons/gi";
 
 interface TechItem {
   name: string;
@@ -43,10 +44,11 @@ export default function TechStackSection() {
     { name: "Python", icon: SiPython, category: "languages" },
     { name: "MySQL", icon: GrMysql, category: "languages" },
     { name: "Framer Motion", icon: SiFramer, category: "frameworks" },
+    { name: "Zustand", icon: GiBearFace, category: "tools" },
     { name: "Cypress", icon: SiCypress, category: "tools" },
+    { name: "Figma", icon: SiFigma, category: "tools" },
     { name: "Git", icon: SiGit, category: "tools" },
     { name: "Jira", icon: SiJira, category: "tools" },
-    { name: "Figma", icon: SiFigma, category: "tools" },
   ];
 
   const filteredTech = activeCategory
@@ -62,14 +64,14 @@ export default function TechStackSection() {
   return (
     <div className="py-10 md:py-20">
       <div className="container mx-auto px-4 text-center">
-        <Heading title={"Technologies"} subtitle={"My Tech Stack"} />
+        <Heading title={"Tech Stack"} subtitle={"Skills"} />
 
         {/* CATEGORIES */}
         <ScrollAnimation delay={0.2}>
           <div className="mt-6 md:mt-10 flex flex-wrap justify-center gap-2">
             <button
               onClick={() => setActiveCategory(null)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
+              className={`rounded-full px-4 py-2 md:px-5 md:py-2 text-sm md:text-base font-medium transition-all ${
                 activeCategory === null
                   ? "gradient text-primary-foreground hover:opacity-80"
                   : "bg-muted  hover:bg-muted/60"
@@ -94,7 +96,7 @@ export default function TechStackSection() {
         </ScrollAnimation>
 
         {/* TECH STACK */}
-        <div className="mt-6 mx-auto max-w-5xl relative z-10 grid grid-cols-3 gap-3 md:gap-4 md:grid-cols-6">
+        <div className="mt-6 md:mt-10 mx-auto max-w-5xl relative z-10 grid grid-cols-3 gap-3 md:gap-4 md:grid-cols-6">
           {filteredTech.map((tech, index) => (
             <ScrollAnimation
               key={tech.name}

@@ -27,7 +27,11 @@ const ContactSection = () => {
   ];
 
   return (
-    <div className="my-10 md:my-20 container mx-auto px-4">
+    <div className="relative py-10 md:py-20 md:container md:mx-auto px-4 overflow-y-clip">
+      <div className="-z-10 absolute top-1/2 size-[200px] blur-[100px] dark:blur-[200px] bg-amber-400" />
+      <div className="-z-10 absolute top-0 left-1/2 size-[200px] blur-[100px] dark:blur-[200px] bg-pink-400" />
+      <div className="-z-10 absolute top-2/3 right-0 size-[200px] blur-[100px] dark:blur-[200px] bg-cyan-400" />
+
       <Heading title={"Get in Touch"} subtitle={"Contact me"} />
 
       <div className="mt-6 md:mt-12 mx-auto grid max-w-6xl gap-6 lg:gap-12 md:grid-cols-3 lg:grid-cols-2">
@@ -45,16 +49,16 @@ const ContactSection = () => {
                   href={method.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 md:gap-4 rounded-lg border bg-muted/10 p-3 md:p-4 transition-all duration-300 hover:border-primary/20 hover:bg-muted/50"
+                  className="group flex items-center gap-2 md:gap-4 rounded-lg border bg-muted/10 p-3 md:p-4 transition-all duration-300 hover:border-foreground/40"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full gradient-10 text-primary transition-all duration-300 group-hover:scale-110">
                     {method.icon}
                   </div>
                   <div>
-                    <h3 className="font-medium group-hover:underline">
+                    <h3 className="md:text-lg font-medium group-hover:underline">
                       {method.label}
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm md:text-base text-muted-foreground">
                       {method.description}
                     </p>
                   </div>
@@ -69,8 +73,8 @@ const ContactSection = () => {
           direction="left"
           className="md:col-span-2 lg:col-span-1"
         >
-          <div className="rounded-lg bg-muted/70 p-6 md:p-8 border border-muted-foreground/10">
-            <h3 className="mb-6 text-lg md:text-xl font-bold">
+          <div className="rounded-lg bg-muted/20 p-6 md:p-8 border">
+            <h3 className="mb-6 text-lg md:text-xl font-semibold">
               Send me a message
             </h3>
             <ContactForm />

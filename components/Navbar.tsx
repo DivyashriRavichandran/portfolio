@@ -29,22 +29,17 @@ export default function Navbar() {
 
   const navItems: NavItem[] = [
     { name: "Home", href: "#home", isActive: activeSection === "home" },
-    { name: "Works", href: "#works", isActive: activeSection === "works" },
-    { name: "About", href: "#about", isActive: activeSection === "about" },
+    { name: "Projects", href: "#works", isActive: activeSection === "works" },
+    { name: "About Me", href: "#about", isActive: activeSection === "about" },
     {
-      name: "Tech Stack",
+      name: "Skills",
       href: "#tech-stack",
       isActive: activeSection === "tech-stack",
     },
     {
-      name: "Personal",
+      name: "Beyond Work",
       href: "#personal",
       isActive: activeSection === "personal",
-    },
-    {
-      name: "Contact",
-      href: "#contact",
-      isActive: activeSection === "contact",
     },
   ];
 
@@ -119,60 +114,37 @@ export default function Navbar() {
     }
   };
 
+  const navbarVariants: Variants = {
+    hidden: { y: "-100%" },
+    visible: {
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 80,
+        damping: 14,
+        duration: 0.6,
+      },
+    },
+  };
+
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300   ${
-        scrolled ? "py-3" : "py-4"
-      } bg-background backdrop-blur-sm `}
-    >
-      <div className="md:container md:mx-auto px-4">
-        <div className="flex items-center justify-between md:justify-center">
-          <Link href="#home" className="md:hidden text-2xl font-bold">
+    <>
+      {/* MOBILE */}
+      <nav
+        className={`lg:hidden fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4   ${
+          scrolled ? "py-3" : "py-4"
+        } backdrop-blur-lg `}
+      >
+        <div className="flex items-center justify-between">
+          <Link href="#home" className="text-2xl font-bold">
             DR.
           </Link>
-
-          {/* DESKTOP */}
-          <div className="hidden md:flex items-center space-x-4">
-            <div className="relative flex items-center justify-center space-x-1 rounded-full bg-card px-2 py-1.5 backdrop-blur">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
-                    item.isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                >
-                  {/* Animated background blob */}
-                  {item.isActive && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className="absolute inset-0 z-0 rounded-full bg-muted-foreground/20"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  )}
-                  {/* Text stays visible on top */}
-                  <span className="relative z-10">{item.name}</span>
-                </Link>
-              ))}
-            </div>
-            <ThemeToggle />
-          </div>
-
-          {/* MOBILE */}
-          <div className="flex items-center space-x-3 md:hidden">
+          <div className="flex items-center space-x-2">
             <ThemeToggle />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <Menu className="h-5 w-5" />
+                <Button variant="ghost" size="icon">
+                  <Menu className="size-6 stroke-[1.5px]" />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
@@ -207,7 +179,56 @@ export default function Navbar() {
             </Sheet>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* DESKTOP */}
+      <motion.nav
+        variants={navbarVariants}
+        initial="hidden"
+        animate="visible"
+        className="hidden lg:inline fixed top-0 w-full z-50"
+      >
+        <div className="mt-4 lg:max-w-3xl xl:max-w-5xl mx-auto transition-all duration-300 border rounded-full p-1 backdrop-blur-lg bg-gradient-to-r from-transparent via-muted/80 to-transparent">
+          <div className="relative flex items-center">
+            {/* Left: Logo */}
+            <div className="flex-shrink-0 ml-4 text-2xl font-bold">DR.</div>
+
+            {/* Center: Nav Items */}
+            <div className="absolute left-1/2 -translate-x-1/2 flex items-center space-x-3 xl:space-x-8">
+              {navItems.map((item) => (
+                <div
+                  key={item.name}
+                  className={`cursor-pointer relative rounded-full transition-colors ${
+                    item.isActive
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.href);
+                  }}
+                >
+                  {item.name}
+                </div>
+              ))}
+            </div>
+
+            {/* Right: Button */}
+            <Button
+              variant={"outline"}
+              onClick={() => handleNavClick("#contact")}
+              className="z-20 ml-auto"
+            >
+              Let&apos;s Connect
+            </Button>
+          </div>
+        </div>
+
+        {/* Floating Theme Toggle */}
+        <div className="z-20 absolute top-4 right-10">
+          <ThemeToggle />
+        </div>
+      </motion.nav>
+    </>
   );
 }

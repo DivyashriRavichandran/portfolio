@@ -16,7 +16,7 @@ const Heading = ({
       <p className="text-xs md:text-sm font-medium uppercase tracking-wider text-gradient">
         {title}
       </p>
-      <h2 className="mt-1 md:mt-2 text-3xl font-bold md:text-5xl">
+      <h2 className="mt-1 md:mt-2 text-3xl md:text-5xl italic playfair-display">
         {subtitle}
       </h2>
     </ScrollAnimation>

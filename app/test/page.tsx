@@ -1,50 +1,67 @@
 "use client";
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import Navbar from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
+gsap.registerPlugin(ScrollTrigger);
 
-const TestPage = () => {
+export default function TestPage() {
+  useEffect(() => {
+    const layers = gsap.utils.toArray(".parallax-layer") as HTMLElement[];
+
+    layers.forEach((layer, i) => {
+      return gsap.to(layer, {
+        y: (i + 1) * 100, // deeper layers move more
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          scrub: true,
+        },
+      });
+    });
+  }, []);
+
   return (
     <>
-      <Navbar />
-      <div className="flex flex-col justify-center md:mx-auto md:container px-4">
-        {/* HEADER */}
-        <div className="flex flex-col gap-2 my-10 mx-auto text-xl font-bold">
-          <div>Default TestPage</div>
-          <div className="text-center text-lg text-muted-foreground">
-            Subtext TestPage
-          </div>
+      <section className="relative min-h-screen overflow-hidden hero bg-black text-white flex items-center justify-center">
+        {/* Background Parallax Layers */}
+        <div className="absolute inset-0">
+          {/* Layer 1 */}
+          <div className="parallax-layer absolute -top-40 -left-40 w-[500px] h-[500px] bg-lime-400/20 rounded-full blur-[120px]" />
+          {/* Layer 2 */}
+          <div className="parallax-layer absolute top-1/3 right-0 w-[400px] h-[400px] bg-lime-500/20 rounded-full blur-[100px]" />
+          {/* Layer 3 */}
+          <div className="parallax-layer absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-lime-300/20 rounded-full blur-[140px]" />
         </div>
 
-        {/* COLOR PALETTES */}
-        <div className="flex gap-5 mx-auto">
-          <div className="rounded-full size-10 bg-primary" />
-          <div className="rounded-full size-10 bg-primary-light" />
-          <div className="rounded-full size-10 bg-primary-dark" />
-          <div className="rounded-full size-10 bg-primary-foreground border border-white" />
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-4 opacity-20">
+          <h1 className="text-5xl md:text-base font-bold mb-6">
+            Hi, I’m <span className="text-lime-400">Divyashri</span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
+            Frontend Developer • React Enthusiast • UI/UX Designer
+          </p>
         </div>
-        <div className="mt-5 flex gap-5 mx-auto">
-          <div className="rounded-full size-10 bg-secondary" />
-          <div className="rounded-full size-10 bg-secondary-light" />
-          <div className="rounded-full size-10 bg-secondary-dark" />
-          <div className="rounded-full size-10 bg-secondary-foreground border border-white" />
-        </div>
+      </section>
 
-        {/* CARD PREVIEW */}
-        <div className="my-10 bg-card text-card-foreground size-40 rounded-lg mx-auto justify-center items-center flex">
-          This is a card
-        </div>
-
-        {/* BUTTON PREVIEWS */}
-        <div className="flex gap-5 mx-auto">
-          <Button className="w-fit">Click me</Button>
-          <Button variant="outline" className="w-fit">
-            Click me
-          </Button>
-        </div>
-      </div>
+      {/* next section */}
+      <section className="my-40 md:container md:mx-auto">
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
+          ullam! Quis earum culpa, hic id necessitatibus eius, accusantium
+          delectus autem eaque ducimus, repellat atque. Expedita beatae dolorum
+          quas iure non itaque alias libero perferendis. Quidem minima quam
+          dolore dolor obcaecati libero nisi id quis? Vitae quia iste accusamus
+          ipsa! Numquam temporibus earum dolorem saepe exercitationem quisquam
+          qui! Explicabo inventore tempore reprehenderit dolor dicta suscipit
+          sapiente. Doloribus cum, hic alias ex voluptates, nobis magnam
+          laudantium sapiente, tenetur voluptas ducimus amet eveniet rem omnis.
+          Impedit quos rerum excepturi qui dolore quibusdam cum ab commodi
+          expedita! At, officia error amet atque nam pariatur.
+        </p>
+      </section>
     </>
   );
-};
-
-export default TestPage;
+}

@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ onFinish }: { onFinish: () => void }) {
   const count = useMotionValue(0);
   const progressControls = useAnimationControls();
   const [displayPercentage, setDisplayPercentage] = useState(0);
@@ -16,9 +16,12 @@ export default function LoadingScreen() {
   useEffect(() => {
     const animation = animate(count, 100, {
       duration: 5,
-      ease: [0.33, 1, 0.68, 1], // Custom easing for more natural counting
+      ease: [0.33, 1, 0.68, 1],
       onUpdate: (latest) => {
         setDisplayPercentage(Math.round(latest));
+      },
+      onComplete: () => {
+        onFinish(); // ✅ notify parent when animation completes
       },
     });
 
@@ -28,7 +31,7 @@ export default function LoadingScreen() {
     });
 
     return animation.stop;
-  }, [count, progressControls]);
+  }, [count, progressControls, onFinish]);
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br bg-background flex items-center justify-center z-50 overflow-hidden">

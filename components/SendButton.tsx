@@ -17,7 +17,7 @@ export const SendButton = ({
     <Button
       {...rest}
       className={cn(
-        "relative overflow-hidden group",
+        "relative overflow-hidden group md:text-base",
         isSubmitting ? "bg-foreground text-background" : "",
         rest.className
       )}

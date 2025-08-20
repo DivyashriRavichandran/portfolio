@@ -9,6 +9,7 @@ import {
   SiTailwindcss,
   SiTensorflow,
 } from "react-icons/si";
+import { GiBearFace } from "react-icons/gi";
 import { IconType } from "react-icons";
 import {
   Tooltip,
@@ -17,13 +18,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Image, { StaticImageData } from "next/image";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   Carousel,
   CarouselContent,
@@ -34,9 +28,6 @@ import {
 import ActionButton from "../ActionButton";
 import Heading from "../Heading";
 import ProjectDetails from "../ProjectDetails";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { cn } from "@/lib/utils";
-
 import P1_image1 from "@/assets/images/cinedb-1.png";
 import P1_image2 from "@/assets/images/cinedb-2.png";
 import P1_image3 from "@/assets/images/cinedb-3.png";
@@ -48,10 +39,13 @@ import P3_image1 from "@/assets/images/cv-builder-1.png";
 import P3_image2 from "@/assets/images/cv-builder-2.png";
 import P3_image3 from "@/assets/images/cv-builder-3.png";
 import P3_image4 from "@/assets/images/cv-builder-4.png";
-import P4_image1 from "@/assets/images/report-1.png";
+import P4_image1 from "@/assets/images/report-4.png";
 import P4_image2 from "@/assets/images/report-2.png";
 import P4_image3 from "@/assets/images/report-3.png";
-import { FaNetworkWired, FaProjectDiagram } from "react-icons/fa";
+import ArrowAnimation from "../custom/ArrowAnimation";
+import { ArrowUpRight } from "lucide-react";
+import { motion, useMotionValue } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type ProjectProps = {
   title: string;
@@ -60,17 +54,17 @@ type ProjectProps = {
   description: string;
   detailedDescription?: string;
   features?: string[];
-  challenges?: string[];
   techStack: {
     name: string;
     icon: IconType;
   }[];
-  images?: StaticImageData[];
+  images: StaticImageData[];
   githubLink?: string;
   websiteLink?: string;
 };
 
 const ProjectsSection = () => {
+  const router = useRouter();
   const Projects: ProjectProps[] = [
     {
       title: "CineDB",
@@ -85,10 +79,6 @@ const ProjectsSection = () => {
         "Filter by genre and year",
         "Watch trailers inside the app",
         "Responsive UI with Next.js and Tailwind CSS",
-      ],
-      challenges: [
-        "Optimizing API calls for performance",
-        "Implementing responsive carousel for images",
       ],
       techStack: [
         { name: "Next.js", icon: SiNextdotjs },
@@ -120,12 +110,12 @@ const ProjectsSection = () => {
       websiteLink: "https://cv-builder-online.vercel.app",
     },
     {
-      title: "PAYGEZ",
+      title: "Paygez",
       type: "Frontend",
       year: "2025",
       description: "Social media e-commerce platform developed at KP Platforms",
       detailedDescription:
-        "PAYGEZ combines social media features with e-commerce capabilities to offer users an engaging shopping experience.",
+        "Paygez combines social media features with e-commerce capabilities to offer users an engaging shopping experience.",
       features: [
         "User profiles and social feeds",
         "Integrated shopping cart and payments",
@@ -136,17 +126,17 @@ const ProjectsSection = () => {
         { name: "Tailwind CSS", icon: SiTailwindcss },
         { name: "Framer Motion", icon: SiFramer },
         { name: "Firebase", icon: SiFirebase },
-        { name: "Zustand", icon: FaNetworkWired },
+        { name: "Zustand", icon: GiBearFace },
       ],
-      images: [P2_image1, P2_image2, P2_image3, P2_image4],
+      images: [P2_image4, P2_image1, P2_image2, P2_image3],
       websiteLink: "https://paygez.com",
     },
     {
-      title: "Lung Cancer Detection using DCGAN Model",
+      title: "Dissertation",
       type: "dissertation",
       year: "2024",
       description:
-        "A deep learning model for data augmentation and classification of lung cancer images.",
+        "Lung Cancer Detection using DCGAN Model, A deep learning model for data augmentation and classification of lung cancer images.",
       detailedDescription:
         "Developed a DCGAN-based deep learning pipeline to augment lung cancer image data and improve classification accuracy.",
       features: [
@@ -169,14 +159,22 @@ const ProjectsSection = () => {
   const [selectedProject, setSelectedProject] = useState<ProjectProps | null>(
     null
   );
-  const [isHovered, setIsHovered] = useState(false);
+  const [hoverKey, setHoverKey] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  // Motion values for cursor-following effects
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    mouseX.set(e.clientX);
+    mouseY.set(e.clientY);
+  };
   return (
-    <div className="container mx-auto px-4 my-10 md:my-20">
+    <div className="relative container mx-auto px-4 mt-10 md:mt-20">
       <Heading title={"Latest Works"} subtitle={"Featured Projects"} />
 
       {/* PROJECTS */}
-      <div className="mt-6 md:mt-12 grid gap-8 md:grid-cols-2">
+      <div className="md:hidden mt-6 md:mt-12 grid gap-8 lg:grid-cols-2">
         {Projects.map((project, index) => (
           <ScrollAnimation
             key={index}
@@ -185,245 +183,170 @@ const ProjectsSection = () => {
           >
             <div
               onClick={() => setSelectedProject(project)}
-              className="relative cursor-pointer group overflow-hidden rounded-xl border bg-background/60 px-5 py-6 md:p-8 shadow-md hover:scale-105 transition duration-200"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              className="flex flex-col lg:justify-between lg:h-full relative cursor-pointer group overflow-hidden rounded-xl border bg-background/60 px-5 py-6 md:p-8 shadow-md hover:scale-105 transition duration-200"
+              onMouseEnter={() => setHoverKey((prev) => prev + 1)}
+              onMouseLeave={() => setHoverKey((prev) => prev - 1)}
             >
-              {/* Glow gradient */}
-              <div className="-z-10 absolute -top-1/3 -right-1/3 h-2/3 w-2/3 rounded-full bg-gradient-to-br from-primary to-secondary opacity-0 blur-2xl transition duration-500 group-hover:opacity-50 group-hover:scale-125" />
+              {/* GLOW GRADIENT */}
+              <div className="-z-10 absolute -top-1/3 -right-1/3 h-2/3 w-2/3 rounded-full bg-gradient-to-br from-primary to-secondary opacity-10 md:opacity-0 blur-3xl md:blur-[120px] transition duration-500 group-hover:opacity-80 group-hover:scale-125" />
 
               {/* ANIMATION */}
-              <DotLottieReact
-                className="rotate-130 absolute -top-7 right-0 size-24 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                src="/Arrow.json"
-                autoplay={isHovered}
-                key={isHovered ? "play" : "pause"}
-                loop
-              />
+              <div className="absolute top-2 right-3 group-hover:opacity-100 opacity-100 lg:opacity-0 transition-opacity">
+                <ArrowAnimation key={hoverKey} />
+              </div>
 
-              <div className="flex flex-col justify-between gap-6 md:gap-8">
-                {/* LEFT CONTENT */}
-                <div>
-                  <h3 className="text-xl md:text-2xl leading-6 md:leading-8 tracking-tight font-bold">
-                    {project.title}
-                  </h3>
-                  <div className="md:w-1/2 flex flex-col justify-between h-full">
-                    <div>
-                      <p className="mt-2 text-sm text-muted-foreground mr-2">
-                        {project.description}
-                      </p>
+              {/* LEFT CONTENT */}
+              <>
+                <h3 className="w-4/5 md:w-full text-xl md:text-2xl leading-6 md:leading-8 tracking-tight font-bold md:text-center lg:text-start">
+                  {project.title}
+                </h3>
+                <div className="lg:w-1/2 flex flex-col justify-between h-full">
+                  <div>
+                    <p className="mt-2 text-sm text-muted-foreground mr-2 md:text-center lg:text-start">
+                      {project.description}
+                    </p>
 
-                      {/* TECH STACK ICONS */}
-                      <div className="mt-3 flex flex-wrap gap-x-2 justify-center md:justify-start">
-                        {project.techStack.map((tech, index) => (
-                          <span key={index}>
-                            <TooltipProvider>
-                              <Tooltip>
-                                <TooltipTrigger className="rounded-full bg-card p-1.5">
-                                  <tech.icon className="size-4" />
-                                </TooltipTrigger>
-                                <TooltipContent>{tech.name}</TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* ACTION BUTTONS */}
-                    <div className="mt-3 flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start">
-                      {project.type === "dissertation" ? (
-                        <a
-                          href={project.websiteLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ActionButton text="Project Report" />
-                        </a>
-                      ) : (
-                        <a
-                          href={project.websiteLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ActionButton text="Live Demo" />
-                        </a>
-                      )}
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <ActionButton text="View Code" />
-                        </a>
-                      )}
+                    {/* TECH STACK ICONS */}
+                    <div className="mt-3 flex flex-wrap gap-x-2 justify-center lg:justify-start">
+                      {project.techStack.map((tech, index) => (
+                        <span key={index}>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger className="rounded-full bg-card p-1.5">
+                                <tech.icon className="size-4" />
+                              </TooltipTrigger>
+                              <TooltipContent>{tech.name}</TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </div>
 
-                {/* IMAGES */}
-                <div
-                  className="md:absolute md:-bottom-4 md:-right-4 h-48 w-full md:w-80 overflow-hidden group-hover:bottom-0 group-hover:right-0 transition-all duration-300"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                >
-                  <Carousel>
-                    <CarouselContent>
-                      {project?.images?.map((image, index) => (
-                        <CarouselItem key={index}>
-                          <Image
-                            src={image}
-                            alt=""
-                            width={1000}
-                            height={1000}
-                            className={cn(
-                              "opacity-90 h-48 w-full object-cover object-top rounded-tl-lg md:rounded-tl-xl border-l border-t",
-                              (project.title == "CineDB" ||
-                                project.title == "CV Builder") &&
-                                "opacity-100"
-                            )}
-                          />
-                        </CarouselItem>
-                      ))}
-                    </CarouselContent>
-
-                    <div className="md:opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                      <CarouselPrevious className="left-2 top-1/2 -translate-y-1/2" />
-                      <CarouselNext className="right-2 top-1/2 -translate-y-1/2" />
-                    </div>
-                  </Carousel>
+                  {/* ACTION BUTTONS */}
+                  <div className="mt-3 lg:mt-6 flex flex-wrap gap-2 md:gap-4 justify-center lg:justify-start">
+                    {project.type === "dissertation" ? (
+                      <a
+                        href={project.websiteLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ActionButton text="Project Report" />
+                      </a>
+                    ) : (
+                      <a
+                        href={project.websiteLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ActionButton text="Live Demo" />
+                      </a>
+                    )}
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ActionButton text="View Code" />
+                      </a>
+                    )}
+                  </div>
                 </div>
+              </>
+
+              {/* IMAGES */}
+              <div
+                className="mt-4 lg:mt-0 lg:absolute lg:-bottom-4 lg:-right-4 h-48 md:h-80 lg:h-48 w-full lg:w-1/2 overflow-hidden group-hover:bottom-0 group-hover:right-0 transition-all duration-300"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+              >
+                <Carousel>
+                  <CarouselContent>
+                    {project?.images?.map((image, index) => (
+                      <CarouselItem key={index}>
+                        <Image
+                          src={image}
+                          alt=""
+                          width={1000}
+                          height={1000}
+                          className="h-48 md:h-full lg:h-48 w-full object-cover object-top rounded-tr-xl lg:rounded-tr-none border-r border-b rounded-tl-xl lg:border-r-0 lg:border-b-0 border-l border-t"
+                        />
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+
+                  <div className="md:opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <CarouselPrevious className="left-2 top-1/2 -translate-y-1/2" />
+                    <CarouselNext className="right-2 top-1/2 -translate-y-1/2" />
+                  </div>
+                </Carousel>
               </div>
             </div>
           </ScrollAnimation>
         ))}
       </div>
 
-      {/* DIALOG FOR PROJECT DETAILS */}
-      <Dialog
-        open={!!selectedProject}
-        onOpenChange={() => setSelectedProject(null)}
+      {/* PROJECT NEW */}
+      <div
+        className="mt-6 md:mt-20 flex flex-col space-y-4"
+        onMouseMove={handleMouseMove}
       >
-        <DialogContent
-          className="
-    min-w-[80vw] max-h-[80vh] 
-    bg-background rounded-lg shadow-lg 
-    grid grid-cols-2 gap-8 p-8 overflow-hidden
-  "
-        >
-          {/* LEFT side: Details */}
-          <div className="flex flex-col justify-between">
-            <div className="flex flex-col">
-              <DialogHeader className="mb-4">
-                <DialogTitle className="text-3xl font-bold">
-                  {selectedProject?.title}
-                </DialogTitle>
-                <DialogDescription className="text-muted-foreground mt-2">
-                  {selectedProject?.detailedDescription}
-                </DialogDescription>
-              </DialogHeader>
+        {Projects.map((project, index) => (
+          <motion.div
+            key={index}
+            onHoverStart={() => setHoveredIndex(index)}
+            onHoverEnd={() => setHoveredIndex(null)}
+            className="cursor-pointer group py-4 flex items-end gap-2"
+            onClick={() =>
+              router.push(`/projects/${project.title.toLowerCase()}`)
+            }
+          >
+            {/* Title */}
+            <motion.h1 className="text-7xl text-muted-foreground/50 group-hover:text-foreground tracking-tight overflow-hidden whitespace-nowrap">
+              <span className="inline-block">{project.title}</span>
+            </motion.h1>
 
-              {/* Tech Stack */}
-              <div className="flex gap-4 items-center">
-                <h4 className="text-lg font-semibold">Tech Stack:</h4>
-                <div className="flex flex-wrap items-center gap-3">
-                  {selectedProject?.techStack.map((tech, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 rounded-full bg-muted px-4 py-1 text-sm font-medium"
-                    >
-                      <tech.icon className="h-5 w-5" />
-                      {tech.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {hoveredIndex === index && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+              >
+                <ArrowUpRight className="size-12" />
+              </motion.div>
+            )}
+            {/* Image that appears on hover */}
+            {hoveredIndex === index && (
+              <motion.div
+                className="absolute bottom-0 right-0 z-10"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50 }}
+              >
+                <Image
+                  src={project.images[0]}
+                  alt={project.title}
+                  width={1000}
+                  height={1000}
+                  className="w-[450px] h-60 object-cover rounded-2xl"
+                />
+              </motion.div>
+            )}
+          </motion.div>
+        ))}
+      </div>
 
-              {/* Features */}
-              {selectedProject?.features && (
-                <section className="mt-6 flex-grow">
-                  <h4 className="text-lg font-semibold mb-2">Features</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm leading-relaxed text-foreground/90">
-                    {selectedProject.features.map((feat, i) => (
-                      <li key={i}>{feat}</li>
-                    ))}
-                  </ul>
-                </section>
-              )}
+      {/* GRADIENTS */}
+      <div className="-z-20 absolute -left-20 top-20 rounded-full size-40 bg-gradient-to-br from-primary to-secondary blur-[150px]"></div>
+      <div className="-z-20 absolute right-0 top-1/2 rounded-full size-60 bg-gradient-to-br from-primary to-secondary  blur-[200px]"></div>
 
-              {/* Challenges */}
-              {selectedProject?.challenges && (
-                <div className="mt-4">
-                  <h4 className="text-lg font-semibold mb-2">Challenges</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm leading-relaxed text-foreground/90">
-                    {selectedProject.challenges.map((ch, i) => (
-                      <li key={i}>{ch}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="mt-4 flex justify-center gap-4 flex-wrap">
-              {selectedProject?.type === "dissertation" ? (
-                <a
-                  href={selectedProject?.websiteLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ActionButton text="Project Report" />
-                </a>
-              ) : (
-                <a
-                  href={selectedProject?.websiteLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ActionButton text="Live Demo" />
-                </a>
-              )}
-              {selectedProject?.githubLink && (
-                <a
-                  href={selectedProject?.githubLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ActionButton text="View Code" />
-                </a>
-              )}
-            </div>
-          </div>
-
-          {/* RIGHT side: Images */}
-          {selectedProject?.images && (
-            <div className="flex flex-col gap-4 overflow-hidden">
-              <h3 className="text-xl font-semibold">Project Screenshots</h3>
-              <div className="mt-2 flex flex-col gap-5 overflow-y-auto max-h-[65vh]">
-                {selectedProject.images.map((image, i) => (
-                  <Image
-                    key={i}
-                    src={image}
-                    alt={`Screenshot ${i + 1}`}
-                    width={600}
-                    height={400}
-                    className="rounded-lg object-cover border"
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      {/* DIALOG FOR PROJECT DETAILS */}
       <ProjectDetails
         open={!!selectedProject}
         onClose={() => setSelectedProject(null)}
