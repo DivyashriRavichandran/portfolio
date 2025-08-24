@@ -8,6 +8,8 @@ import {
   useTransform,
   useInView,
 } from "framer-motion";
+import Image from "next/image";
+import Suitcase from "@/assets/images/suitcase.png";
 
 export default function TimelineSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -86,8 +88,18 @@ const TimelineItem = ({
   const itemRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(itemRef, { once: true, margin: "-100px 0px" });
 
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "end start"], // starts when enters viewport, ends when leaves
+  });
+
+  // Parallax movement values
+  const x = useTransform(scrollYProgress, [0, 1], ["500px", "-100%"]); // move across screen
+  const y = useTransform(scrollYProgress, [0, 1], ["-50px", "50px"]); // optional floating
+  const rotate = useTransform(scrollYProgress, [0, 1], ["-12deg", "12deg"]);
+
   return (
-    <div ref={itemRef} className="relative mb-12 ">
+    <div ref={itemRef} className="relative mb-8 md:mb-12">
       <div
         className={`flex flex-col md:flex-row group cursor-pointer ${
           isLeft ? "md:flex-row-reverse" : ""
@@ -122,20 +134,39 @@ const TimelineItem = ({
             <div className="rounded-[13px] absolute -inset-[1px] bg-gradient-to-br from-primary to-secondary opacity-0 group-hover/card:opacity-100 transition duration-300 z-0" />
 
             {/* GRADIENT GLOW */}
-            <div className="absolute z-40 size-20 rounded-full blur-[100px] right-0 top-0 opacity-80 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
+            <div className="absolute z-40 size-20 rounded-full blur-[150px] right-0 top-0 opacity-80 bg-gradient-to-br from-primary to-secondary" />
+
+            <motion.div
+              ref={itemRef}
+              style={{ x, y, rotate }}
+              className={`hidden absolute top-1/2 -translate-y-1/2 ${
+                index == 1 && "hidden"
+              }`}
+            >
+              <Image
+                src={Suitcase}
+                alt="Suitcase"
+                className="size-96"
+                priority
+              />
+            </motion.div>
 
             {/* INNER CONTENT */}
             <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border group-hover/card:border-transparent">
-              <div className="rounded-full px-2 py-1 text-xs dark:bg-card bg-muted w-fit inline-block text-card-foreground">
+              <div className="-ml-1 rounded-full px-2 py-1 text-xs md:text-sm dark:bg-card bg-muted w-fit inline-block text-card-foreground">
                 {date}
               </div>
-              <h3 className="mt-1 text-lg md:text-xl font-semibold">{title}</h3>
+              <h3 className="mt-1 md:mt-3 text-lg md:text-2xl tracking-tight font-semibold">
+                {title}
+              </h3>
               <div className="flex items-center justify-between gap-2">
                 <p className="text-gradient font-medium">{organization}</p>
-                <p className="text-sm text-muted-foreground">{place}</p>
+                <p className="text-sm md:text-base text-muted-foreground">
+                  {place}
+                </p>
               </div>
 
-              <ul className="pl-2 list-disc mt-2 text-muted-foreground text-sm space-y-1">
+              <ul className="pl-2 list-disc mt-2 md:mt-4 text-muted-foreground text-sm md:text-base space-y-1">
                 {points.map((point, index) => (
                   <li key={index}>{point}</li>
                 ))}

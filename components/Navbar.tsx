@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { ArrowRight, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -127,10 +127,35 @@ export default function Navbar() {
     },
   };
 
+  useEffect(() => {
+    const elements = document.querySelectorAll(".text");
+
+    elements.forEach((element) => {
+      // 🛑 If already processed, skip
+      if (element.querySelector(".block")) return;
+
+      const innerText = element.textContent || "";
+      element.innerHTML = "";
+
+      const textContainer = document.createElement("div");
+      textContainer.classList.add("block");
+
+      for (const letter of innerText) {
+        const span = document.createElement("span");
+        span.innerText = letter.trim() === "" ? "\xa0" : letter;
+        span.classList.add("letter");
+        textContainer.appendChild(span);
+      }
+
+      element.appendChild(textContainer);
+      element.appendChild(textContainer.cloneNode(true));
+    });
+  }, []);
+
   return (
     <>
       {/* MOBILE */}
-      <nav
+      <motion.nav
         className={`lg:hidden fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4   ${
           scrolled ? "py-3" : "py-4"
         } backdrop-blur-lg `}
@@ -148,10 +173,13 @@ export default function Navbar() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent className="w-[60%]">
+              <SheetContent className="w-[60%] overflow-hidden">
                 <VisuallyHidden>
                   <SheetTitle />
                 </VisuallyHidden>
+                <div className="-z-20 absolute left-0 bottom-20 rounded-full size-32 bg-gradient-to-br from-primary to-secondary blur-[150px]"></div>
+                <div className="-z-20 absolute right-0 top-0 rounded-full size-20 bg-gradient-to-br from-primary to-secondary blur-[80px]"></div>
+
                 <div className="flex flex-col space-y-4 mt-8">
                   {navItems.map((item, index) => (
                     <motion.div
@@ -175,11 +203,18 @@ export default function Navbar() {
                     </motion.div>
                   ))}
                 </div>
+                <Button
+                  className="absolute gap-2 justify-between flex bottom-0 left-0 w-full px-5 py-4 rounded-none"
+                  onClick={() => handleNavClick("#contact")}
+                >
+                  Let&apos;s Connect
+                  <ArrowRight />
+                </Button>
               </SheetContent>
             </Sheet>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* DESKTOP */}
       <motion.nav
@@ -198,7 +233,7 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <div
                   key={item.name}
-                  className={`cursor-pointer relative rounded-full transition-colors ${
+                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] leading-[24px] h-[24px]  ${
                     item.isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"

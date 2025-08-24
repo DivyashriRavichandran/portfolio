@@ -5,6 +5,7 @@ import Heading from "../Heading";
 import TimelineSection from "./TimelineSection";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TextAnimator from "../custom/TextAnimator";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,40 +71,39 @@ const AboutSection = () => {
     <>
       {/* ABOUT SECTION */}
       <div ref={sectionRef} className="pt-10 md:pt-20">
-        <div className="bg-muted/30 py-10 md:py-20">
+        <div className="bg-muted/50 py-10 md:py-20">
           <div className="md:container md:mx-auto px-4 md:max-w-6xl">
             <Heading title={"About Me"} subtitle={"Know who am I"} />
 
-            <div
-              // ref={textRef}
-              className="mt-6 md:my-12 md:text-4xl leading-snug"
-            >
-              <p>
-                I&apos;ve been fascinated by computers since I was a child,
-                which eventually led me to study{" "}
-                <span className="tracking-normal playfair-display italic">
-                  Computer Science
-                </span>{" "}
-                at the University of Leeds where I built a solid foundation in
-                software engineering and algorithms. Along the way, I discovered
-                a love for{" "}
-                <span className="tracking-normal playfair-display italic">
-                  frontend development,
-                </span>{" "}
-                building web applications that blend creativity with
-                functionality. I also enjoy designing{" "}
-                <span className="tracking-normal playfair-display italic">
-                  UI/UX,
-                </span>{" "}
-                which brings out my creative side.
-              </p>
+            <div className="mt-6 md:my-12 mx-auto">
+              <TextAnimator animateOnScroll={true} delay={0.2}>
+                <div className="text-xl md:text-4xl leading-snug text-muted-foreground">
+                  My background in{" "}
+                  <span className="tracking-normal playfair-display italic">
+                    Computer Science
+                  </span>{" "}
+                  from the University of Leeds gave me a solid foundation in
+                  software engineering and algorithms. Along the way, I
+                  discovered a love for{" "}
+                  <span className="tracking-normal playfair-display italic">
+                    frontend development
+                  </span>
+                  , where I could blend creativity with functionality. I also
+                  enjoy designing{" "}
+                  <span className="tracking-normal playfair-display italic">
+                    UI/UX
+                  </span>
+                  , which helps me craft intuitive and engaging digital
+                  experiences.
+                </div>
+              </TextAnimator>
             </div>
           </div>
         </div>
       </div>
 
       {/* EXPERIENCE SECTION */}
-      <div className="md:my-20 container mx-auto px-4">
+      <div className="mt-10 md:my-20 container mx-auto px-4">
         <Heading title={"My Journey"} subtitle={"Experience & Education"} />
         <TimelineSection />
       </div>

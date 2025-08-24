@@ -43,7 +43,7 @@ export default function TechStackSection() {
     { name: "Tailwind CSS", icon: SiTailwindcss, category: "frameworks" },
     { name: "Python", icon: SiPython, category: "languages" },
     { name: "MySQL", icon: GrMysql, category: "languages" },
-    { name: "Framer Motion", icon: SiFramer, category: "frameworks" },
+    { name: "Framer", icon: SiFramer, category: "frameworks" },
     { name: "Zustand", icon: GiBearFace, category: "tools" },
     { name: "Cypress", icon: SiCypress, category: "tools" },
     { name: "Figma", icon: SiFigma, category: "tools" },
@@ -63,7 +63,11 @@ export default function TechStackSection() {
 
   return (
     <div className="py-10 md:py-20">
-      <div className="container mx-auto px-4 text-center">
+      <div className="relative container mx-auto px-4 text-center">
+        {/* GRADIENTS */}
+        <div className="-z-20 absolute right-0 top-0 md:top-20 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[100px] md:blur-[150px]"></div>
+        <div className="-z-20 absolute left-0 md:-left-20 top-1/4 md:top-3/4 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[80px] md:blur-[150px]"></div>
+
         <Heading title={"Tech Stack"} subtitle={"Skills"} />
 
         {/* CATEGORIES */}
@@ -74,7 +78,7 @@ export default function TechStackSection() {
               className={`rounded-full px-4 py-2 md:px-5 md:py-2 text-sm md:text-base font-medium transition-all ${
                 activeCategory === null
                   ? "gradient text-primary-foreground hover:opacity-80"
-                  : "bg-muted  hover:bg-muted/60"
+                  : "bg-card hover:bg-muted"
               }`}
             >
               All
@@ -83,10 +87,10 @@ export default function TechStackSection() {
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition-all ${
+                className={`rounded-full px-4 py-2 text-sm md:text-base font-medium transition-all ${
                   activeCategory === category.id
                     ? "gradient text-primary-foreground hover:opacity-80"
-                    : "bg-muted  hover:bg-card"
+                    : "bg-card hover:bg-muted"
                 }`}
               >
                 {category.name}
@@ -104,10 +108,10 @@ export default function TechStackSection() {
               direction={index % 2 === 0 ? "up" : "down"}
             >
               <motion.div
-                className="group relative overflow-hidden rounded-xl bg-card/80 p-4 transition-all hover:shadow-lg hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-xl bg-card/40 p-4 transition-all hover:shadow-lg hover:-translate-y-1 h-full"
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="flex flex-col items-center justify-center text-center text-foreground/70 group-hover:text-foreground">
+                <div className="flex flex-col items-center justify-between h-full text-center text-foreground/70 group-hover:text-foreground">
                   <tech.icon className="size-6 md:size-8 " />
                   <h3 className="text-sm md:text-base mt-2 md:mt-3 font-medium">
                     {tech.name}

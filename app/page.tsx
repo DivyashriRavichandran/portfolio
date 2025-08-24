@@ -8,7 +8,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
-import LoadingSection from "@/components/sections/LoadingSection";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const homeRef = useRef<HTMLElement>(null);
@@ -29,14 +29,14 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen overflow-x-hidden">
+    <main className="overflow-x-hidden">
       {/* BACKGROUND GLOWS */}
       <div className="absolute -z-10 size-24 md:size-36 rounded-full blur-[80px] md:blur-[100px] right-0 md:right-1/6 top-0 md:top-1/4 opacity-100 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
       <div className="absolute -z-10 size-20 md:h-36 md:w-1/5 rounded-full blur-[80px] md:blur-[150px] left-0 md:left-1/4 bottom-1/6 opacity-100 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
       <div className="absolute -z-10 size-20 md:size-36 rounded-full blur-[80px] md:blur-[100px] left-0 top-0 opacity-100 dark:opacity-60 bg-gradient-to-br from-primary to-secondary" />
 
       {loading ? (
-        <LoadingSection />
+        <LoadingScreen />
       ) : (
         <>
           <Navbar />
@@ -47,12 +47,12 @@ export default function Home() {
             </section>
 
             {/* WORK SECTION */}
-            <section id="works" ref={worksRef} className="relative">
+            <section id="works" ref={worksRef}>
               <ProjectsSection />
             </section>
 
             {/* ABOUT SECTION */}
-            <section id="about" ref={aboutRef} className="relative">
+            <section id="about" ref={aboutRef}>
               <AboutSection />
             </section>
 
@@ -72,8 +72,8 @@ export default function Home() {
             </section>
           </div>
 
-          <footer className="bg-muted py-4 md:py-8">
-            <div className="text-sm md:text-base container mx-auto px-4 text-center text-muted-foreground">
+          <footer className="bg-foreground dark:bg-muted py-4 md:py-8">
+            <div className="text-sm md:text-base container mx-auto px-4 text-center text-muted/60 dark:text-muted-foreground">
               <p>© 2025. Divyashri Portfolio. All rights reserved.</p>
             </div>
           </footer>

@@ -28,9 +28,9 @@ const ContactSection = () => {
 
   return (
     <div className="relative py-10 md:py-20 md:container md:mx-auto px-4 overflow-y-clip">
-      <div className="-z-10 absolute top-1/2 size-[200px] blur-[100px] dark:blur-[200px] bg-amber-400" />
-      <div className="-z-10 absolute top-0 left-1/2 size-[200px] blur-[100px] dark:blur-[200px] bg-pink-400" />
-      <div className="-z-10 absolute top-2/3 right-0 size-[200px] blur-[100px] dark:blur-[200px] bg-cyan-400" />
+      {/* GRADIENTS */}
+      <div className="-z-20 absolute left-0 md:-left-20 top-0 md:top-20 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[100px] md:blur-[150px]"></div>
+      <div className="-z-20 absolute right-0 top-1/4 md:top-3/4 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[80px] md:blur-[150px]"></div>
 
       <Heading title={"Get in Touch"} subtitle={"Contact me"} />
 

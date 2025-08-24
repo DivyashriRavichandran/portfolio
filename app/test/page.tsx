@@ -1,66 +1,79 @@
 "use client";
-import { useEffect } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
+import Heading from "@/components/Heading";
+import { Projects } from "@/components/sections/ProjectsSection";
+import { useEffect, useState } from "react";
 
 export default function TestPage() {
   useEffect(() => {
-    const layers = gsap.utils.toArray(".parallax-layer") as HTMLElement[];
+    const elements = document.querySelectorAll(".text");
+    elements.forEach((element) => {
+      const innerText = element.textContent || "";
+      element.innerHTML = "";
 
-    layers.forEach((layer, i) => {
-      return gsap.to(layer, {
-        y: (i + 1) * 100, // deeper layers move more
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".hero",
-          start: "top top",
-          scrub: true,
-        },
-      });
+      const textContainer = document.createElement("div");
+      textContainer.classList.add("block");
+
+      for (const letter of innerText) {
+        const span = document.createElement("span");
+        span.innerText = letter.trim() === "" ? "\xa0" : letter;
+        span.classList.add("letter");
+        textContainer.appendChild(span);
+      }
+
+      element.appendChild(textContainer);
+      element.appendChild(textContainer.cloneNode(true));
     });
   }, []);
+  const [pos, setPos] = useState({ x: -999, y: -999 });
 
+  useEffect(() => {
+    const handle = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handle);
+    return () => window.removeEventListener("mousemove", handle);
+  }, []);
   return (
     <>
-      <section className="relative min-h-screen overflow-hidden hero bg-black text-white flex items-center justify-center">
-        {/* Background Parallax Layers */}
-        <div className="absolute inset-0">
-          {/* Layer 1 */}
-          <div className="parallax-layer absolute -top-40 -left-40 w-[500px] h-[500px] bg-lime-400/20 rounded-full blur-[120px]" />
-          {/* Layer 2 */}
-          <div className="parallax-layer absolute top-1/3 right-0 w-[400px] h-[400px] bg-lime-500/20 rounded-full blur-[100px]" />
-          {/* Layer 3 */}
-          <div className="parallax-layer absolute bottom-0 left-1/3 w-[600px] h-[600px] bg-lime-300/20 rounded-full blur-[140px]" />
-        </div>
+      <section className="md:container md:mx-auto px-4 mt-10 md:mt-20">
+        <Heading title={"Latest Works"} subtitle={"Featured Projects"} />
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 opacity-20">
-          <h1 className="text-5xl md:text-base font-bold mb-6">
-            Hi, I’m <span className="text-lime-400">Divyashri</span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
-            Frontend Developer • React Enthusiast • UI/UX Designer
-          </p>
+        {/* PROJECT */}
+        <div className="mt-6 md:mt-20 overflow-hidden">
+          {Projects.map((project, index) => (
+            <h1
+              key={index}
+              className="pathway-gothic text text-[120px] leading-[140px] h-[140px] text-muted-foreground overflow-hidden"
+            >
+              {project.title}
+            </h1>
+          ))}
         </div>
       </section>
 
-      {/* next section */}
-      <section className="my-40 md:container md:mx-auto">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores,
-          ullam! Quis earum culpa, hic id necessitatibus eius, accusantium
-          delectus autem eaque ducimus, repellat atque. Expedita beatae dolorum
-          quas iure non itaque alias libero perferendis. Quidem minima quam
-          dolore dolor obcaecati libero nisi id quis? Vitae quia iste accusamus
-          ipsa! Numquam temporibus earum dolorem saepe exercitationem quisquam
-          qui! Explicabo inventore tempore reprehenderit dolor dicta suscipit
-          sapiente. Doloribus cum, hic alias ex voluptates, nobis magnam
-          laudantium sapiente, tenetur voluptas ducimus amet eveniet rem omnis.
-          Impedit quos rerum excepturi qui dolore quibusdam cum ab commodi
-          expedita! At, officia error amet atque nam pariatur.
-        </p>
+      <section className="hidden relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Your gradient background blobs */}
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 opacity-80 blur-3xl" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply blur-3xl animate-pulse" />
+        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply blur-3xl animate-pulse" />
+
+        {/* Cursor distortion glass */}
+        <div
+          className="hidden pointer-events-none fixed z-20 rounded-full"
+          style={{
+            width: "220px",
+            height: "220px",
+            left: pos.x - 110,
+            top: pos.y - 110,
+            backdropFilter: "blur(40px) saturate(150%)",
+            WebkitBackdropFilter: "blur(40px) saturate(150%)",
+          }}
+        />
+
+        {/* Content */}
+        <h1 className="relative z-10 text-white text-6xl font-bold">
+          Hero Section
+        </h1>
       </section>
     </>
   );

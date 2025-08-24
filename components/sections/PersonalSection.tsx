@@ -4,38 +4,35 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollAnimation from "../custom/ScrollAnimation";
 import Heading from "../Heading";
-import { RotateWords } from "../custom/RotateWords";
 import shape1 from "@/assets/images/hero shapes/controller.png";
 import shape2 from "@/assets/images/hero shapes/headphones.png";
-import { useState } from "react";
-
-const hobbies = [
-  {
-    word: "play the last of us",
-    shape: shape1, // controller
-  },
-  {
-    word: "binge sci-fi series 👽",
-    shape: shape1, // e.g., alien/TV shape
-  },
-  {
-    word: "design UI/UX for apps 🎨",
-    shape: shape1, // paintbrush
-  },
-  {
-    word: "make music 🎶",
-    shape: shape2, // music note
-  },
-];
+import { RotateWords } from "../custom/RotateWords";
 
 export default function PersonalSection() {
+  const hobbies = [
+    {
+      word: "play the last of us 🎮",
+      shape: shape1, // controller
+    },
+    {
+      word: "binge sci-fi series 👽",
+      shape: shape1, // e.g., alien/TV shape
+    },
+    {
+      word: "design UI/UX for apps 🎨",
+      shape: shape1, // paintbrush
+    },
+    {
+      word: "make music 🎶",
+      shape: shape2, // music note
+    },
+  ];
+  // SPOTIFY TRACKS
   const tracks = [
     { id: "3c0IzRLA4OtKgcsaub6Yv9" },
     { id: "2WfaOiMkCvy7F5fcp2zZ8L" },
     { id: "13M4YIND38VDlSfdxKLgpl" },
   ];
-  const [currentIndex, setCurrentIndex] = useState(0);
-
   return (
     <section className="relative py-10 md:py-20 bg-muted/30">
       {/* Title */}
@@ -69,9 +66,9 @@ export default function PersonalSection() {
               height={1000}
               className="zoom-in-90 w-full h-60 rounded-xl object-cover object-left"
             />
-            <div className="absolute bottom-4 left-4 bg-card border font-medium backdrop-blur-xs px-2.5 py-2 rounded-full flex items-center gap-1">
+            <div className="absolute bottom-4 left-4 bg-card/20 dark:bg-card border backdrop-blur-sm px-2.5 py-2 rounded-full flex items-center gap-1">
               <div className="size-4 bg-gradient-to-t from-primary to-secondary mask-location-icon" />
-              <span className="text-xs">Doha, Qatar</span>
+              <span className="text-xs tracking-tight">Doha, Qatar</span>
             </div>
             <div className="p-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 size-12 rounded-full gradient-light flex items-center justify-center">
               <Image
@@ -101,24 +98,9 @@ export default function PersonalSection() {
                 When I&apos;m Not Coding
               </h3>
             </div>
-
-            {/* title */}
-            <div className="w-full text-center left-1/2 -translate-x-1/2 absolute bottom-6 z-20">
-              <span className="hidden italic tracking-tight bg-black font-semibold text-4xl px-1">
-                {hobbies[currentIndex].word}
-              </span>
+            <div className="absolute inset-0 px-6 justify-center mx-auto items-center flex">
+              <RotateWords words={hobbies.map((hobby) => hobby.word)} />
             </div>
-
-            {/* Floating Shape */}
-            <motion.div className="-z-10 absolute -bottom-10 w-full opacity-80">
-              <Image
-                src={hobbies[currentIndex].shape}
-                alt=""
-                className="w-full object-contain"
-              />
-            </motion.div>
-
-            <div className="-z-20 absolute bg-gradient-to-b w-full h-40 bottom-0 blur-3xl from-primary to-secondary" />
           </motion.div>
         </ScrollAnimation>
 
