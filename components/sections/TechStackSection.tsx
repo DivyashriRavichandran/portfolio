@@ -62,7 +62,7 @@ export default function TechStackSection() {
   ];
 
   return (
-    <div className="py-10 md:py-20">
+    <div className="py-10 md:py-20 overflow-clip">
       <div className="relative container mx-auto px-4 text-center">
         {/* GRADIENTS */}
         <div className="-z-20 absolute right-0 top-0 md:top-20 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[100px] md:blur-[150px]"></div>

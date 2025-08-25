@@ -43,7 +43,7 @@ export default function TestPage() {
           {Projects.map((project, index) => (
             <h1
               key={index}
-              className="pathway-gothic text text-[120px] leading-[140px] h-[140px] text-muted-foreground overflow-hidden"
+              className="text text-[120px] leading-[140px] h-[140px] text-muted-foreground overflow-hidden"
             >
               {project.title}
             </h1>
@@ -51,7 +51,7 @@ export default function TestPage() {
         </div>
       </section>
 
-      <section className="hidden relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="hidden relative h-screen items-center justify-center overflow-hidden">
         {/* Your gradient background blobs */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-blue-500 to-pink-500 opacity-80 blur-3xl" />
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply blur-3xl animate-pulse" />

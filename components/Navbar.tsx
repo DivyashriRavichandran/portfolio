@@ -15,6 +15,7 @@ import {
 import { ThemeToggle } from "./ThemeToggle";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Variants } from "framer-motion";
+import Confetti from "react-confetti";
 
 interface NavItem {
   name: string;
@@ -26,11 +27,12 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState<string>("home");
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const navItems: NavItem[] = [
     { name: "Home", href: "#home", isActive: activeSection === "home" },
     { name: "Projects", href: "#works", isActive: activeSection === "works" },
-    { name: "About Me", href: "#about", isActive: activeSection === "about" },
+    { name: "About", href: "#about", isActive: activeSection === "about" },
     {
       name: "Skills",
       href: "#tech-stack",
@@ -106,14 +108,6 @@ export default function Navbar() {
     }),
   };
 
-  const handleNavClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-    }
-  };
-
   const navbarVariants: Variants = {
     hidden: { y: "-100%" },
     visible: {
@@ -122,11 +116,12 @@ export default function Navbar() {
         type: "spring",
         stiffness: 80,
         damping: 14,
-        duration: 0.6,
+        duration: 0.4,
       },
     },
   };
 
+  // ROLLING TEXT ANIMATION
   useEffect(() => {
     const elements = document.querySelectorAll(".text");
 
@@ -152,15 +147,33 @@ export default function Navbar() {
     });
   }, []);
 
+  const handleNavClick = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    }
+  };
+
+  const handleContactButtonClick = () => {
+    handleNavClick("#contact");
+    setShowConfetti(true);
+  };
+
   return (
     <>
       {/* MOBILE */}
       <motion.nav
-        className={`lg:hidden fixed top-0 left-0 w-full z-50 transition-all duration-300 px-4   ${
-          scrolled ? "py-3" : "py-4"
-        } backdrop-blur-lg `}
+        variants={navbarVariants}
+        initial="hidden"
+        animate="visible"
+        className="lg:hidden fixed top-0 left-0 w-full z-50"
       >
-        <div className="flex items-center justify-between">
+        <div
+          className={`flex items-center justify-between transition-all duration-300 px-4   ${
+            scrolled ? "py-3" : "py-4"
+          } backdrop-blur-lg `}
+        >
           <Link href="#home" className="text-2xl font-bold">
             DR.
           </Link>
@@ -233,7 +246,7 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <div
                   key={item.name}
-                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] leading-[24px] h-[24px]  ${
+                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] leading-[24px] tracking-tight h-[24px]  ${
                     item.isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
@@ -251,7 +264,7 @@ export default function Navbar() {
             {/* Right: Button */}
             <Button
               variant={"outline"}
-              onClick={() => handleNavClick("#contact")}
+              onClick={() => handleContactButtonClick()}
               className="z-20 ml-auto"
             >
               Let&apos;s Connect
@@ -259,6 +272,16 @@ export default function Navbar() {
           </div>
         </div>
 
+        {showConfetti && (
+          <Confetti
+            width={window.innerWidth}
+            height={window.innerHeight}
+            recycle={false} // confetti falls once
+            numberOfPieces={200} // adjust amount
+            tweenDuration={1000} // adjust duration
+            onConfettiComplete={() => setShowConfetti(false)}
+          />
+        )}
         {/* Floating Theme Toggle */}
         <div className="z-20 absolute top-4 right-10">
           <ThemeToggle />

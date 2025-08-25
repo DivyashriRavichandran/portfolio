@@ -135,13 +135,6 @@
 }
 .pathway-gothic {
   font-family: "Pathway Gothic One", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.krona-one {
-  font-family: "Krona One", sans-serif;
-  font-weight: 400;
   font-style: normal;
 }
 
@@ -260,6 +253,9 @@
 @layer components {
   .text-gradient {
     @apply bg-gradient-to-t from-primary to-secondary bg-clip-text text-transparent;
+  }
+  .text-gradient2 {
+    @apply bg-gradient-to-tr from-muted-foreground via-foreground to-muted-foreground bg-clip-text text-transparent;
   }
   .gradient {
     @apply bg-gradient-to-tl from-primary to-secondary;

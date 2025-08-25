@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -8,84 +8,87 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
-interface CopyProps {
+const animatedRefs = new WeakSet<Element>();
+
+interface Props {
   children: React.ReactElement;
   animateOnScroll?: boolean;
   delay?: number;
+  id?: string;
 }
 
 export default function TextAnimator({
   children,
   animateOnScroll = true,
   delay = 0,
-}: CopyProps) {
+  id,
+}: Props) {
   const containerRef = useRef<HTMLSpanElement | null>(null);
   const splitRef = useRef<SplitText | null>(null);
 
-  useGSAP(
-    () => {
-      if (!containerRef.current) return;
+  const runAnimation = useCallback(() => {
+    if (!containerRef.current) return;
 
-      // Kill old split instance before creating a new one
-      splitRef.current?.revert();
-
-      // Split text into lines
-      splitRef.current = new SplitText(containerRef.current, { type: "lines" });
-      const lines = splitRef.current.lines;
-
-      gsap.set(lines, { opacity: 0, y: 50 });
-
-      if (animateOnScroll) {
-        gsap.to(lines, {
-          opacity: 1,
-          y: 0,
-          ease: "power3.out",
-          duration: 0.8,
-          delay,
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        });
-      } else {
-        gsap.to(lines, {
-          opacity: 1,
-          y: 0,
-          ease: "power3.out",
-          duration: 0.8,
-          delay,
-          stagger: 0.15,
-        });
-      }
-
-      // Refresh ScrollTrigger after split
-      ScrollTrigger.refresh();
-
-      return () => {
-        splitRef.current?.revert();
-        // If you need to kill all ScrollTriggers, uncomment the next line:
-        // ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      };
-    },
-    {
-      scope: containerRef,
-      dependencies: [children, animateOnScroll, delay],
+    // prevent double-animation
+    if (
+      animatedRefs.has(containerRef.current) ||
+      (id && sessionStorage.getItem(`animated-${id}`))
+    ) {
+      gsap.set(containerRef.current, { opacity: 1, y: 0 });
+      return;
     }
-  );
 
-  // Re-split on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      splitRef.current?.revert();
-      splitRef.current = new SplitText(containerRef.current, { type: "lines" });
-      ScrollTrigger.refresh();
+    // cleanup and resplit
+    splitRef.current?.revert();
+    splitRef.current = new SplitText(containerRef.current, { type: "lines" });
+    const lines = splitRef.current.lines;
+
+    gsap.set(lines, { opacity: 0, y: 50 });
+
+    const animConfig = {
+      opacity: 1,
+      y: 0,
+      ease: "power3.out",
+      duration: 0.8,
+      delay,
+      stagger: 0.15,
+      onComplete: () => {
+        animatedRefs.add(containerRef.current!);
+        if (id) sessionStorage.setItem(`animated-${id}`, "true");
+      },
     };
 
+    if (animateOnScroll) {
+      gsap.to(lines, {
+        ...animConfig,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      });
+    } else {
+      gsap.to(lines, animConfig);
+    }
+  }, [animateOnScroll, delay, id]);
+
+  useGSAP(() => runAnimation(), {
+    scope: containerRef,
+    dependencies: [children, animateOnScroll, delay],
+  });
+
+  // 🔁 Re-run on resize (if not animated yet)
+  useEffect(() => {
+    const handleResize = () => {
+      if (!containerRef.current) return;
+
+      runAnimation();
+      ScrollTrigger.refresh();
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [runAnimation]);
 
   return <span ref={containerRef}>{children}</span>;
 }

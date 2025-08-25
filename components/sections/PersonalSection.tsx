@@ -4,28 +4,17 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollAnimation from "../custom/ScrollAnimation";
 import Heading from "../Heading";
-import shape1 from "@/assets/images/hero shapes/controller.png";
-import shape2 from "@/assets/images/hero shapes/headphones.png";
+import shape1 from "@/assets/images/25.png";
+import headphones from "@/assets/images/headphones.png";
+
 import { RotateWords } from "../custom/RotateWords";
 
 export default function PersonalSection() {
   const hobbies = [
-    {
-      word: "play the last of us 🎮",
-      shape: shape1, // controller
-    },
-    {
-      word: "binge sci-fi series 👽",
-      shape: shape1, // e.g., alien/TV shape
-    },
-    {
-      word: "design UI/UX for apps 🎨",
-      shape: shape1, // paintbrush
-    },
-    {
-      word: "make music 🎶",
-      shape: shape2, // music note
-    },
+    "play the last of us 🎮",
+    "binge sci-fi series 👽",
+    "design UI/UX for apps 🎨",
+    "make music 🎶",
   ];
   // SPOTIFY TRACKS
   const tracks = [
@@ -34,15 +23,18 @@ export default function PersonalSection() {
     { id: "13M4YIND38VDlSfdxKLgpl" },
   ];
   return (
-    <section className="relative py-10 md:py-20 bg-muted/30">
-      {/* Title */}
-      <div className="md:hidden text-center">
+    <section className="relative py-10 md:py-20 overflow-clip">
+      {/* GRADIENT */}
+      <div className="absolute right-1/4 top-1/2 -translate-y-1/2 h-40 w-60 rounded-full bg-radial from-primary to-secondary blur-[400px]" />
+
+      {/* TITLE - MOBILE */}
+      <div className="lg:hidden text-center">
         <Heading title={"Beyond Portfolio"} subtitle={"More about me"} />
       </div>
 
-      <div className="md:container md:mx-auto px-4 mt-8 md:mt-12 grid grid-cols-1 lg:grid-cols-3 md:grid-rows-6 gap-6">
+      <div className="md:container md:mx-auto px-4 mt-8 lg:mt-0 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* TITLE */}
-        <div className="hidden md:inline-block relative col-start-1 row-start-1 row-span-2">
+        <div className="hidden lg:inline-block relative col-start-1 row-start-1 row-span-2">
           <Heading
             title={"Beyond Portfolio"}
             subtitle={"More about me"}
@@ -57,7 +49,7 @@ export default function PersonalSection() {
         >
           <motion.div
             whileHover={{ y: -5 }}
-            className="relative h-60 rounded-xl bg-muted p-0 border shadow-sm"
+            className="relative h-60 rounded-xl bg-card p-0 border shadow-sm"
           >
             <Image
               src="/map.png"
@@ -72,7 +64,7 @@ export default function PersonalSection() {
             </div>
             <div className="p-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 size-12 rounded-full gradient-light flex items-center justify-center">
               <Image
-                src="/emoji2.png"
+                src="/emoji.png"
                 alt="Memoji"
                 width={200}
                 height={200}
@@ -85,11 +77,18 @@ export default function PersonalSection() {
         {/* HOBBIES */}
         <ScrollAnimation
           delay={0.3}
-          className="lg:col-start-2 lg:row-span-6 h-[250px] lg:h-auto "
+          className="relative lg:col-start-2 lg:row-span-6 h-[250px] lg:h-auto"
         >
+          <Image
+            src={headphones}
+            alt=""
+            width={500}
+            height={500}
+            className="absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
+          />
           <motion.div
             whileHover={{ y: -5 }}
-            className="z-0 relative h-full rounded-xl bg-muted p-6 border shadow-sm overflow-clip"
+            className="z-0 relative h-full rounded-xl bg-muted/20 backdrop-blur-2xl p-6 border shadow-sm overflow-clip"
           >
             {/* Heading */}
             <div className="flex items-center gap-2">
@@ -98,17 +97,28 @@ export default function PersonalSection() {
                 When I&apos;m Not Coding
               </h3>
             </div>
+
             <div className="absolute inset-0 px-6 justify-center mx-auto items-center flex">
-              <RotateWords words={hobbies.map((hobby) => hobby.word)} />
+              <RotateWords words={hobbies} />
             </div>
           </motion.div>
         </ScrollAnimation>
 
         {/* MUSIC */}
-        <ScrollAnimation delay={0.5} className="lg:col-start-3 lg:row-span-6">
+        <ScrollAnimation
+          delay={0.5}
+          className="lg:col-start-3 lg:row-span-6 relative"
+        >
+          <Image
+            src={shape1}
+            alt=""
+            width={500}
+            height={500}
+            className="absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
+          />
           <motion.div
             whileHover={{ y: -5 }}
-            className="relative overflow-clip h-full rounded-xl bg-muted p-6 border shadow-sm backdrop-blur-md"
+            className="relative overflow-clip h-full rounded-xl bg-muted/20 p-6 border shadow-sm backdrop-blur-2xl"
           >
             <div className="flex items-center gap-2 mb-4">
               <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-music-icon" />

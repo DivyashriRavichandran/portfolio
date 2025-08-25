@@ -20,8 +20,7 @@ export default function ScrollAnimation({
   direction = "up",
   duration = 0.5,
   once = true,
-}: //   threshold = 0.2,
-ScrollAnimationProps) {
+}: ScrollAnimationProps) {
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once });

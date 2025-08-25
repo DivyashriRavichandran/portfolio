@@ -1,102 +1,87 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import Heading from "../Heading";
 import TimelineSection from "./TimelineSection";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TextAnimator from "../custom/TextAnimator";
-
-gsap.registerPlugin(ScrollTrigger);
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
+import circle from "@/assets/images/circle.png";
 
 const AboutSection = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLDivElement>(null);
+  const ref = useRef(null);
+  // get scroll progress relative to section
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"], // start animating when section enters viewport
+  });
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const textEl = textRef.current;
-    if (!section || !textEl) return;
-
-    // Split text into words while preserving inner <span> elements
-    textEl.querySelectorAll("p").forEach((p) => {
-      const newHTML = Array.from(p.childNodes)
-        .map((node) => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            // Split plain text nodes into word spans
-            return node
-              .textContent!.split(" ")
-              .map(
-                (w) =>
-                  `<span class="word text-muted-foreground/50 transition-colors duration-300">${w}</span>`
-              )
-              .join(" ");
-          } else if (node.nodeType === Node.ELEMENT_NODE) {
-            // Wrap existing elements (like italic) in word spans
-            const el = node as HTMLElement;
-            const words = el.innerText.split(" ");
-            return `<span class="word text-muted-foreground/50 transition-colors duration-300">${words
-              .map((w) => `<span class="${el.className}">${w}</span>`)
-              .join(" ")}</span>`;
-          }
-          return "";
-        })
-        .join(" ");
-
-      p.innerHTML = newHTML;
-    });
-
-    const words = textEl.querySelectorAll<HTMLElement>(".word");
-
-    // Timeline with pinning the whole section
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "+=200%",
-        pin: true,
-        scrub: true,
-      },
-    });
-
-    tl.to(words, {
-      className: "word text-foreground",
-      stagger: 0.08,
-      duration: 0.2,
-      ease: "none",
-    });
-  }, []);
+  // create a parallax transform
+  const y = useTransform(scrollYProgress, [0, 1], ["-100px", "100px"]);
 
   return (
     <>
       {/* ABOUT SECTION */}
-      <div ref={sectionRef} className="pt-10 md:pt-20">
-        <div className="bg-muted/50 py-10 md:py-20">
-          <div className="md:container md:mx-auto px-4 md:max-w-6xl">
-            <Heading title={"About Me"} subtitle={"Know who am I"} />
+      <div
+        ref={ref}
+        className="relative md:container md:mx-auto py-10 md:py-20 px-4"
+      >
+        {/* BACKGROUND SHAPES */}
+        <motion.div style={{ y }}>
+          <Image
+            src={circle}
+            alt=""
+            width={500}
+            height={500}
+            className="absolute -top-10 -left-10 w-[150px] md:w-[300px] opacity-80"
+          />
+        </motion.div>
 
-            <div className="mt-6 md:my-12 mx-auto">
-              <TextAnimator animateOnScroll={true} delay={0.2}>
-                <div className="text-xl md:text-4xl leading-snug text-muted-foreground">
-                  My background in{" "}
-                  <span className="tracking-normal playfair-display italic">
-                    Computer Science
-                  </span>{" "}
-                  from the University of Leeds gave me a solid foundation in
-                  software engineering and algorithms. Along the way, I
-                  discovered a love for{" "}
-                  <span className="tracking-normal playfair-display italic">
-                    frontend development
-                  </span>
-                  , where I could blend creativity with functionality. I also
-                  enjoy designing{" "}
-                  <span className="tracking-normal playfair-display italic">
-                    UI/UX
-                  </span>
-                  , which helps me craft intuitive and engaging digital
-                  experiences.
+        <Image
+          src={circle}
+          alt=""
+          width={500}
+          height={500}
+          className="absolute -bottom-10 -right-10 w-[150px] md:w-[300px] opacity-80"
+        />
+
+        <div className="bg-muted/20 backdrop-blur-2xl dark:text-zinc-200 shadow-2xl border px-6 md:px-24 py-10 md:py-20 rounded-xl">
+          <Heading title={"About Me"} subtitle={"Know who am I"} />
+          <div className="mt-6 flex flex-col md:flex-row md:justify-between w-full items-center gap-y-4 md:gap-y-0 md:gap-x-4">
+            {/* TEXT */}
+            <div className="z-20 md:flex-1 text-xl md:text-2xl leading-snug tracking-tighter max-w-prose">
+              <TextAnimator>
+                <div>
+                  My background in Computer Science from the University of Leeds
+                  gave me a solid foundation in software engineering and
+                  algorithms. Along the way, I discovered a love for frontend
+                  development, where I could blend creativity with
+                  functionality. I also enjoy designing UI/UX, which helps me
+                  craft intuitive and engaging digital experiences.
                 </div>
               </TextAnimator>
+            </div>
+
+            {/* IMAGE */}
+            <div className="w-1/2 md:w-1/4 lg:w-1/5 z-20">
+              <motion.div
+                whileHover={{ scale: 1.05, rotateZ: 2 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <motion.div
+                  animate={{
+                    y: [0, -5, 0],
+                    rotate: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                  }}
+                >
+                  <Image src={"/emoji.png"} alt="" width={500} height={500} />
+                </motion.div>
+              </motion.div>
             </div>
           </div>
         </div>
