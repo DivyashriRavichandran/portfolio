@@ -4,7 +4,7 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../ui/button";
 import { LuMouse } from "react-icons/lu";
 import { useRef } from "react";
-import TextAnimator from "../custom/TextAnimator";
+import TextAnimator from "../animations/TextAnimator";
 import Image from "next/image";
 import shape2 from "@/assets/images/2.png";
 import pyramid from "@/assets/images/pyramid.png";

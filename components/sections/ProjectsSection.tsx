@@ -22,6 +22,15 @@ import {
 import { ProjectItem } from "@/models/ProjectItem";
 import ActionButton from "../ActionButton";
 import { Button } from "../ui/button";
+import Report_image1 from "@/assets/images/report-images/1.png";
+import Report_image2 from "@/assets/images/report-images/2.png";
+import Report_image3 from "@/assets/images/report-images/3.png";
+import Report_image4 from "@/assets/images/report-images/4.png";
+import Report_image5 from "@/assets/images/report-images/5.png";
+import Report_image6 from "@/assets/images/report-images/6.png";
+
+import Image from "next/image";
+import AutoSlideshow from "../animations/AutoSlideshow";
 
 export const Projects: ProjectItem[] = [
   {
@@ -39,7 +48,7 @@ export const Projects: ProjectItem[] = [
   {
     title: "CV Builder",
     description:
-      "CV Builder is a user-friendly web app that allows users to create and customize their CVs using pre-designed templates.",
+      "CV Builder is a user-friendly web app to create and customize CVs using pre-designed templates and download it as a pdf.",
     techStack: [
       { name: "Next.js", icon: SiNextdotjs },
       { name: "Tailwind CSS", icon: SiTailwindcss },
@@ -60,7 +69,7 @@ export const Projects: ProjectItem[] = [
       { name: "Firebase", icon: SiFirebase },
       { name: "Zustand", icon: GiBearFace },
     ],
-    video: "/cv-builder-video.mp4",
+    video: "/paygez-video.mp4",
     websiteLink: "https://paygez.com",
   },
   {
@@ -71,6 +80,14 @@ export const Projects: ProjectItem[] = [
       { name: "Keras", icon: SiKeras },
       { name: "TensorFlow", icon: SiTensorflow },
       { name: "PyTest", icon: SiPytest },
+    ],
+    images: [
+      Report_image1,
+      Report_image2,
+      Report_image3,
+      Report_image4,
+      Report_image5,
+      Report_image6,
     ],
     githubLink:
       "https://github.com/DivyashriRavichandran/Lung-Cancer-Classifier",
@@ -111,6 +128,13 @@ const ProjectsSection = () => {
                 muted
                 className="w-full h-auto object-cover"
               />
+              {project.images && (
+                <Image
+                  src={project.images[0]}
+                  alt=""
+                  className="w-full h-auto object-cover"
+                />
+              )}
             </div>
 
             <div className="mt-6 flex items-center justify-between">
@@ -225,20 +249,28 @@ const ProjectsSection = () => {
                       {project.description}
                     </p>
                     <div className="mt-6 flex gap-4 mb-6">
-                      <Link
-                        href={project.websiteLink ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button>Visit Website</Button>
-                      </Link>
-                      <Link
-                        href={project.githubLink ?? "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button variant="outline">GitHub Repo</Button>
-                      </Link>
+                      {project.websiteLink && (
+                        <Link
+                          href={project.websiteLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button>
+                            {project.title == "Dissertation"
+                              ? "View Report"
+                              : "Visit Website"}
+                          </Button>
+                        </Link>
+                      )}
+                      {project.githubLink && (
+                        <Link
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button variant="outline">View Code</Button>
+                        </Link>
+                      )}
                     </div>
                   </motion.div>
                 )}
@@ -249,7 +281,7 @@ const ProjectsSection = () => {
                 {hoveredIndex === index && (
                   <motion.div
                     key="video"
-                    className="group/video absolute right-0 top-4 bottom-4"
+                    className="group/video absolute right-0 top-4 bottom-4 aspect-video"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -258,13 +290,22 @@ const ProjectsSection = () => {
                       ease: "easeInOut",
                     }}
                   >
-                    <video
-                      src={project.video}
-                      loop
-                      autoPlay
-                      muted
-                      className="w-full h-full object-cover rounded-lg"
-                    />
+                    {project.video && (
+                      <video
+                        src={project.video}
+                        loop
+                        autoPlay
+                        muted
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    )}
+
+                    {project.images && (
+                      <AutoSlideshow
+                        images={project.images}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

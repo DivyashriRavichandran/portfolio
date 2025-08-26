@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import ScrollAnimation from "../custom/ScrollAnimation";
+import ScrollAnimation from "../animations/ScrollAnimation";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ContactForm from "../ContactForm";
@@ -53,7 +53,7 @@ const ContactSection = () => {
           alt=""
           width={500}
           height={500}
-          className="absolute -right-10 top-40 md:-top-10 md:-left-10  rotate-200 md:-rotate-220 w-[150px] md:w-[350px] opacity-80"
+          className="hidden md:block absolute -top-10 -left-10 -rotate-220 w-[350px] opacity-80"
         />
       </motion.div>
 

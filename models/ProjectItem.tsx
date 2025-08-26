@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 import { IconType } from "react-icons";
 
 export interface ProjectItem {
@@ -7,6 +8,7 @@ export interface ProjectItem {
     name: string;
     icon: IconType;
   }[];
+  images?: StaticImageData[];
   video?: string;
   githubLink?: string;
   websiteLink?: string;

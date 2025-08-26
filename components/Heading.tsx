@@ -1,5 +1,5 @@
 import React from "react";
-import ScrollAnimation from "./custom/ScrollAnimation";
+import ScrollAnimation from "./animations/ScrollAnimation";
 import { cn } from "@/lib/utils";
 
 const Heading = ({

@@ -16,7 +16,7 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { SendButton } from "./SendButton";
+import { SendButton } from "./animations/SendButton";
 
 // FORM VALIDATION
 const contactFormSchema = z.object({

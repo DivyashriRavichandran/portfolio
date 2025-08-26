@@ -3,7 +3,7 @@
 import type React from "react";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import ScrollAnimation from "../custom/ScrollAnimation";
+import ScrollAnimation from "../animations/ScrollAnimation";
 import {
   SiReact,
   SiNextdotjs,

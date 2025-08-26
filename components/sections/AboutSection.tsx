@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import Heading from "../Heading";
 import TimelineSection from "./TimelineSection";
-import TextAnimator from "../custom/TextAnimator";
+import TextAnimator from "../animations/TextAnimator";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import circle from "@/assets/images/circle.png";

@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import ScrollAnimation from "../custom/ScrollAnimation";
+import ScrollAnimation from "../animations/ScrollAnimation";
 import Heading from "../Heading";
 import shape1 from "@/assets/images/25.png";
 import headphones from "@/assets/images/headphones.png";
 
-import { RotateWords } from "../custom/RotateWords";
+import { RotateWords } from "../animations/RotateWords";
 
 export default function PersonalSection() {
   const hobbies = [
@@ -114,7 +114,7 @@ export default function PersonalSection() {
             alt=""
             width={500}
             height={500}
-            className="absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
+            className="hidden md:block absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
           />
           <motion.div
             whileHover={{ y: -5 }}
