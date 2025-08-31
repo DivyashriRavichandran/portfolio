@@ -17,7 +17,8 @@ const AboutSection = () => {
   });
 
   // create a parallax transform
-  const y = useTransform(scrollYProgress, [0, 1], ["-100px", "100px"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-70px", "70px"]);
+  const y2 = useTransform(scrollYProgress, [0, 1], ["70px", "-70px"]);
 
   return (
     <>
@@ -27,29 +28,34 @@ const AboutSection = () => {
         className="relative md:container md:mx-auto py-10 md:py-20 px-4"
       >
         {/* BACKGROUND SHAPES */}
-        <motion.div style={{ y }}>
+        <motion.div style={{ y }} className="-z-10">
           <Image
             src={circle}
             alt=""
             width={500}
             height={500}
-            className="absolute -top-10 -left-10 w-[150px] md:w-[300px] opacity-80"
+            className="-z-10 absolute -top-0 md:-top-10 -left-10 w-[150px] md:w-[300px] opacity-80"
           />
         </motion.div>
 
-        <Image
-          src={circle}
-          alt=""
-          width={500}
-          height={500}
-          className="absolute -bottom-10 -right-10 w-[150px] md:w-[300px] opacity-80"
-        />
+        <motion.div
+          style={{ y: y2 }}
+          className="-z-10 absolute -bottom-10 -right-10"
+        >
+          <Image
+            src={circle}
+            alt=""
+            width={500}
+            height={500}
+            className="w-[150px] md:w-[300px] opacity-80"
+          />
+        </motion.div>
 
         <div className="bg-muted/20 backdrop-blur-2xl dark:text-zinc-200 shadow-2xl border px-6 md:px-24 py-10 md:py-20 rounded-xl">
           <Heading title={"About Me"} subtitle={"Know who am I"} />
-          <div className="mt-6 flex flex-col md:flex-row md:justify-between w-full items-center gap-y-4 md:gap-y-0 md:gap-x-4">
+          <div className="mt-6 md:mt-10 flex flex-col md:flex-row md:justify-between w-full items-center gap-y-4 md:gap-y-0 md:gap-x-4">
             {/* TEXT */}
-            <div className="z-20 md:flex-1 text-xl md:text-2xl leading-snug tracking-tighter max-w-prose">
+            <div className="z-20 md:flex-1 text-xl md:text-2xl leading-snug tracking-tight">
               <TextAnimator>
                 <div>
                   My background in Computer Science from the University of Leeds

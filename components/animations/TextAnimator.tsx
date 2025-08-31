@@ -40,6 +40,7 @@ export default function TextAnimator({
 
     // cleanup and resplit
     splitRef.current?.revert();
+
     splitRef.current = new SplitText(containerRef.current, { type: "lines" });
     const lines = splitRef.current.lines;
 

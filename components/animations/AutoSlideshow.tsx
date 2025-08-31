@@ -5,7 +5,7 @@ import Image, { StaticImageData } from "next/image";
 
 const AutoSlideshow = ({
   images,
-  interval = 1200,
+  interval = 1500,
   className,
 }: {
   images: StaticImageData[];

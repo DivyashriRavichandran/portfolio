@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Menu } from "lucide-react";
+import { ArrowRight, ChevronRight, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Variants } from "framer-motion";
 import Confetti from "react-confetti";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 interface NavItem {
   name: string;
@@ -186,43 +187,68 @@ export default function Navbar() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent className="w-[60%] overflow-hidden">
+              <SheetContent className="w-[100%] overflow-hidden flex flex-col justify-between">
                 <VisuallyHidden>
                   <SheetTitle />
                 </VisuallyHidden>
-                <div className="-z-20 absolute left-0 bottom-20 rounded-full size-32 bg-gradient-to-br from-primary to-secondary blur-[150px]"></div>
-                <div className="-z-20 absolute right-0 top-0 rounded-full size-20 bg-gradient-to-br from-primary to-secondary blur-[80px]"></div>
 
-                <div className="flex flex-col space-y-4 mt-8">
+                {/* Background blobs */}
+                <div className="-z-20 absolute left-0 bottom-20 rounded-full size-32 bg-gradient-to-br from-primary to-secondary blur-[150px]" />
+                <div className="-z-20 absolute right-0 top-0 rounded-full size-20 bg-gradient-to-br from-primary to-secondary blur-[80px]" />
+
+                {/* Nav links */}
+                <div className="flex flex-col mt-20 gap-4 px-16 text-2xl">
                   {navItems.map((item, index) => (
                     <motion.div
                       key={item.name}
-                      className="relative"
                       custom={index}
                       initial="hidden"
                       animate="visible"
                       variants={itemVariants}
+                      className="w-full"
                     >
                       <button
-                        className={`w-full text-left px-6 py-3 font-medium ${
-                          item.isActive
-                            ? "bg-card text-foreground"
-                            : "text-muted-foreground hover:text-foreground hover:bg-card/50"
-                        }`}
+                        className={`w-full flex items-center justify-between py-3 transition-all duration-300 
+                          ${
+                            item.isActive
+                              ? "text-foreground font-semibold"
+                              : "text-muted-foreground/70"
+                          }`}
                         onClick={() => handleNavClick(item.href)}
                       >
                         {item.name}
+                        <ChevronRight className="size-7" />
                       </button>
                     </motion.div>
                   ))}
+                  <Button
+                    className="mt-10 gap-2 w-full"
+                    onClick={() => handleNavClick("#contact")}
+                  >
+                    Let&apos;s Connect
+                    <ArrowRight />
+                  </Button>
                 </div>
-                <Button
-                  className="absolute gap-2 justify-between flex bottom-0 left-0 w-full px-5 py-4 rounded-none"
-                  onClick={() => handleNavClick("#contact")}
-                >
-                  Let&apos;s Connect
-                  <ArrowRight />
-                </Button>
+
+                {/* Footer with socials */}
+                <div className="flex justify-center gap-6 px-6 py-6 border-t">
+                  <Link
+                    href={"https://github.com/DivyashriRavichandran"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground"
+                  >
+                    <FaGithub size={28} />
+                  </Link>
+                  <Link
+                    href={"https://www.linkedin.com/in/divyashri-ravichandran/"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground"
+                  >
+                    <FaLinkedin size={28} />
+                  </Link>
+                </div>
               </SheetContent>
             </Sheet>
           </div>

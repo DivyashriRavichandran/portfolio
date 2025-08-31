@@ -26,6 +26,9 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
+        <link rel="preconnect" href="https://open.spotify.com" />
+        <link rel="preconnect" href="https://i.scdn.co" />
+
         {/* FONTS */}
         <link
           href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap"

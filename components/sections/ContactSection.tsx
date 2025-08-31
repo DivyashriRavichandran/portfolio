@@ -66,7 +66,7 @@ const ContactSection = () => {
       />
       <Heading title={"Get in Touch"} subtitle={"Contact me"} />
 
-      <div className="mt-6 md:mt-12 mx-auto grid max-w-6xl gap-6 lg:gap-12 md:grid-cols-3 lg:grid-cols-2">
+      <div className="backdrop-blur-2xl mt-6 md:mt-12 mx-auto grid max-w-6xl gap-6 lg:gap-12 md:grid-cols-3 lg:grid-cols-2">
         {/* CONTACT DETAILS */}
         <ScrollAnimation direction="right">
           <div className="space-y-3 md:space-y-4">
@@ -104,6 +104,7 @@ const ContactSection = () => {
         <ScrollAnimation
           direction="left"
           className="md:col-span-2 lg:col-span-1"
+          delay={0.2}
         >
           <div className="rounded-lg bg-muted/20 backdrop-blur-2xl p-6 md:p-8 border">
             <h3 className="mb-6 text-lg md:text-xl font-semibold">

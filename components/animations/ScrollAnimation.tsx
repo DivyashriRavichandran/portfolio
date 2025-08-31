@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useRef, useEffect, useState } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
 
 interface ScrollAnimationProps {
@@ -10,7 +10,7 @@ interface ScrollAnimationProps {
   direction?: "up" | "down" | "left" | "right" | "none";
   duration?: number;
   once?: boolean;
-  threshold?: number;
+  threshold?: number; // optional threshold for intersection
 }
 
 export default function ScrollAnimation({
@@ -20,31 +20,41 @@ export default function ScrollAnimation({
   direction = "up",
   duration = 0.5,
   once = true,
+  threshold = 0.2,
 }: ScrollAnimationProps) {
   const controls = useAnimation();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once });
-  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
 
-  // Set initial animation states based on direction
+  // Detect mobile for smaller animation offsets
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const isInView = useInView(ref, { once, amount: isMobile ? 0.1 : threshold });
+
+  // Compute initial positions based on direction & device
+  const offset = isMobile ? 20 : 40;
   const getInitialState = () => {
     switch (direction) {
       case "up":
-        return { opacity: 0, y: 40 };
+        return { opacity: 0, y: offset };
       case "down":
-        return { opacity: 0, y: -40 };
+        return { opacity: 0, y: -offset };
       case "left":
-        return { opacity: 0, x: 40 };
+        return { opacity: 0, x: offset };
       case "right":
-        return { opacity: 0, x: -40 };
+        return { opacity: 0, x: -offset };
       case "none":
         return { opacity: 0 };
       default:
-        return { opacity: 0, y: 40 };
+        return { opacity: 0, y: offset };
     }
   };
 
-  // Set animation target states based on direction
   const getTargetState = () => {
     switch (direction) {
       case "up":
@@ -61,21 +71,22 @@ export default function ScrollAnimation({
   };
 
   useEffect(() => {
-    if (isInView && !hasAnimated) {
+    if (isInView) {
       controls.start(getTargetState());
-      if (once) {
-        setHasAnimated(true);
-      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInView, controls, hasAnimated, once]);
+  }, [isInView, controls, direction]);
 
   return (
     <motion.div
       ref={ref}
       initial={getInitialState()}
       animate={controls}
-      transition={{ duration, delay, ease: "easeOut" }}
+      transition={{
+        duration,
+        delay,
+        ease: "easeOut",
+      }}
+      style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
       className={className}
     >
       {children}

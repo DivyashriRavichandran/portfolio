@@ -4,7 +4,6 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../ui/button";
 import { LuMouse } from "react-icons/lu";
 import { useRef } from "react";
-import TextAnimator from "../animations/TextAnimator";
 import Image from "next/image";
 import shape2 from "@/assets/images/2.png";
 import pyramid from "@/assets/images/pyramid.png";
@@ -32,37 +31,68 @@ const HeroSection = () => {
   return (
     <div
       ref={ref}
-      className="md:container px-4 md:mx-auto h-svh overflow-clip pt-16"
+      className="md:container px-4 md:mx-auto h-[100svh] md:overflow-hidden"
     >
       {/* INTRO */}
-      <div className="relative h-full flex flex-col justify-center">
-        <TextAnimator delay={0.4}>
-          <div className="flex flex-col text-7xl md:text-9xl font-black tracking-tight pathway-gothic uppercase text-gradient2 leading-[0.9]">
+      <div className="relative h-full flex flex-col justify-center pt-16">
+        <div className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col text-6xl md:text-8xl font-mono tracking-tighter font-bold text-gradient2"
+          >
             Divyashri
             <span>Ravichandran</span>
-          </div>
-        </TextAnimator>
+          </motion.div>
 
-        <div className="mt-10 md:mt-16">
-          <TextAnimator delay={0.7}>
-            <div className="text-2xl md:text-3xl leading-tight tracking-tighter max-w-[800px]">
-              I&apos;m a{" "}
-              <span className="tracking-normal playfair-display italic">
-                Frontend Developer
-              </span>{" "}
-              currently working at KP Platforms in Qatar. I build web
-              applications with a focus on animations and user interaction using{" "}
-              <span className="tracking-normal playfair-display italic">
-                React
-              </span>{" "}
-              and{" "}
-              <span className="tracking-normal playfair-display italic">
-                Next.js
-              </span>
-              .
-            </div>
-          </TextAnimator>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <Image
+              src={pyramid}
+              alt=""
+              width={500}
+              height={500}
+              className="absolute -top-40 rotate-30 -right-5 md:hidden size-[180px]"
+            />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.5 }}
+          >
+            <Image
+              src={shape2}
+              alt=""
+              width={500}
+              height={500}
+              className="absolute top-66 right-0 md:hidden size-[150px]"
+            />
+          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.5 }}
+          className="mt-6 md:mt-10 text-2xl md:text-3xl leading-tight tracking-tighter max-w-[800px]"
+        >
+          I&apos;m a{" "}
+          <span className="tracking-normal playfair-display italic">
+            Frontend Developer
+          </span>{" "}
+          currently working at KP Platforms in Qatar. I build web applications
+          with a focus on animations and user interaction using{" "}
+          <span className="tracking-normal playfair-display italic">React</span>{" "}
+          and{" "}
+          <span className="tracking-normal playfair-display italic">
+            Next.js
+          </span>
+          .
+        </motion.div>
 
         {/* BUTTONS */}
         <motion.div
@@ -73,7 +103,7 @@ const HeroSection = () => {
             stiffness: 80,
             damping: 14,
             duration: 0.6,
-            delay: 1.2,
+            delay: 1.4,
           }}
           className="mt-6 flex gap-3"
         >
@@ -103,8 +133,8 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
-          style={{ y }}
-          className="-z-10 absolute rotate-30 md:rotate-0 top-0 md:top-1/2 md:-translate-y-1/2 right-0 md:right-10 w-[200px] md:w-1/4"
+          style={{ y, willChange: "transform" }}
+          className="hidden md:block -z-10 absolute rotate-30 md:rotate-0 top-1/2 md:top-1/2 md:-translate-y-1/2 right-0 md:right-10 w-[200px] md:w-1/4"
         >
           {/* scroll / parallax */}
           <motion.div
@@ -121,13 +151,13 @@ const HeroSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* SHAPE2 */}
+        {/* CUBE */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          style={{ y: y2 }}
-          className="-z-10 absolute bottom-16 md:top-1/6 right-0 md:right-1/4 w-[150px] md:w-1/6"
+          style={{ y: y2, willChange: "transform" }}
+          className="hidden md:block -z-10 absolute bottom-16 md:top-1/6 right-0 md:right-1/4 w-[150px] md:w-1/6"
         >
           {/* scroll / parallax */}
           <motion.div
@@ -146,7 +176,7 @@ const HeroSection = () => {
 
         {/* SCROLL DOWN MOUSE ICON */}
         <motion.div
-          className="absolute left-1/2  -translate-x-1/2 bottom-4 md:bottom-6"
+          className="absolute left-1/2 -translate-x-1/2 bottom-4 md:bottom-6"
           initial={{ opacity: 0, y: 0 }}
           animate={{
             opacity: isInView ? 1 : 0, // fades out when not in view

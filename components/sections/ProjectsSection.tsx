@@ -20,7 +20,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ProjectItem } from "@/models/ProjectItem";
-import ActionButton from "../ActionButton";
 import { Button } from "../ui/button";
 import Report_image1 from "@/assets/images/report-images/1.png";
 import Report_image2 from "@/assets/images/report-images/2.png";
@@ -28,20 +27,21 @@ import Report_image3 from "@/assets/images/report-images/3.png";
 import Report_image4 from "@/assets/images/report-images/4.png";
 import Report_image5 from "@/assets/images/report-images/5.png";
 import Report_image6 from "@/assets/images/report-images/6.png";
-
-import Image from "next/image";
 import AutoSlideshow from "../animations/AutoSlideshow";
+import Image from "next/image";
+import shape1 from "@/assets/images/3.png";
+import ScrollAnimation from "../animations/ScrollAnimation";
 
 export const Projects: ProjectItem[] = [
   {
     title: "CineDB",
     description:
-      "CINEDB is a movie/tv-show database app leveraging TMDB API, with search, filters, and detailed movie pages including trailers and ratings.",
+      "CineDB is a movie and tv-show database app using TMDB API, with search, filters, and detailed movie pages including trailers and ratings.",
     techStack: [
       { name: "Next.js", icon: SiNextdotjs },
       { name: "Tailwind CSS", icon: SiTailwindcss },
     ],
-    video: "/cv-builder-video.mp4",
+    video: "/cinedb-video.mp4",
     githubLink: "https://github.com/DivyashriRavichandran/cine-db",
     websiteLink: "https://cinedb-web.vercel.app",
   },
@@ -106,71 +106,93 @@ const ProjectsSection = () => {
       {/* PROJECTS - MOBILE */}
       <div className="mt-6 md:hidden space-y-8">
         {Projects.map((project, index) => (
-          <motion.div
-            key={index}
-            className="relative rounded-2xl border bg-muted backdrop-blur-sm shadow-sm p-4 overflow-clip"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.2 }}
-          >
-            {/* GRADIENT */}
-            <div className="-z-20 inset-0 absolute from-0% to-50% bg-gradient-to-br from-primary/30 to-secondary/30" />
-            <div className="-z-10 inset-0 absolute from-0% to-50% bg-gradient-to-b from-transparent to-muted" />
-
-            {/* VIDEO */}
-            <div className="overflow-hidden border">
-              <video
-                src={project.video}
-                loop
-                playsInline
-                webkit-playsinline="true"
-                autoPlay
-                muted
-                className="w-full h-auto object-cover"
+          <ScrollAnimation key={index} delay={0.1 * index}>
+            <div className="z-20 relative rounded-2xl border bg-muted backdrop-blur-sm shadow-sm p-4 overflow-clip">
+              <Image
+                src={shape1}
+                alt=""
+                width={500}
+                height={500}
+                className="-z-20 blur-[80px] delay-500 absolute -left-5 -top-4/5 md:-bottom-2/3 w-full object-cover opacity-70"
               />
-              {project.images && (
-                <Image
-                  src={project.images[0]}
-                  alt=""
-                  className="w-full h-auto object-cover"
-                />
-              )}
-            </div>
-
-            <div className="mt-6 flex items-center justify-between">
-              {/* TITLE */}
-              <div className="flex items-baseline gap-2">
-                <span className="text-sm text-muted-foreground font-mono">
-                  0{index + 1}
-                </span>
-                <h1 className="text-4xl font-semibold tracking-tighter">
-                  {project.title}
-                </h1>
+              {/* VIDEO/IMAGE */}
+              <div className="overflow-hidden border relative aspect-video">
+                {project.video ? (
+                  <video
+                    src={project.video}
+                    loop
+                    playsInline
+                    autoPlay
+                    muted
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  project.images && (
+                    <AutoSlideshow
+                      images={project.images}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  )
+                )}
               </div>
 
-              {/* TECH STACK ICONS */}
-              <div className="flex flex-wrap justify-center gap-1">
-                {project.techStack.map((tech, i) => (
-                  <TooltipProvider key={i}>
-                    <Tooltip>
-                      <TooltipTrigger className="rounded-full p-2 bg-muted shadow-sm">
-                        <tech.icon className="size-4" />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{tech.name}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                ))}
+              <div className="mt-6 flex items-center justify-between">
+                {/* TITLE */}
+                <div className="flex items-baseline gap-2">
+                  <span className="text-sm text-muted-foreground font-mono">
+                    0{index + 1}
+                  </span>
+                  <h1 className="text-4xl font-semibold tracking-tighter">
+                    {project.title}
+                  </h1>
+                </div>
+
+                {/* TECH STACK ICONS */}
+                <div className="flex flex-wrap justify-center gap-1">
+                  {project.techStack.map((tech, i) => (
+                    <TooltipProvider key={i}>
+                      <Tooltip>
+                        <TooltipTrigger className="rounded-full p-2 bg-muted shadow-sm">
+                          <tech.icon className="size-4" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{tech.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ))}
+                </div>
+              </div>
+
+              {/* BUTTONS */}
+              <div className="mt-6 flex items-center gap-3 justify-center">
+                {project.websiteLink && (
+                  <Link
+                    href={project.websiteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button size={"sm"}>
+                      {project.title == "Dissertation"
+                        ? "View Report"
+                        : "Visit Website"}
+                    </Button>
+                  </Link>
+                )}
+                {project.githubLink && (
+                  <Link
+                    href={project.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button variant="outline" size={"sm"} className="h-9">
+                      View Code
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
-
-            {/* BUTTONS */}
-            <div className="mt-6 flex gap-3 justify-center">
-              <ActionButton text="Visit Website" />
-              <ActionButton text="GitHub Repo" />
-            </div>
-          </motion.div>
+          </ScrollAnimation>
         ))}
       </div>
 

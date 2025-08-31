@@ -4,8 +4,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollAnimation from "../animations/ScrollAnimation";
 import Heading from "../Heading";
-import shape1 from "@/assets/images/25.png";
-import headphones from "@/assets/images/headphones.png";
+import shape1 from "@/assets/images/13.png";
+import shape2 from "@/assets/images/cube.png";
 
 import { RotateWords } from "../animations/RotateWords";
 
@@ -25,7 +25,7 @@ export default function PersonalSection() {
   return (
     <section className="relative py-10 md:py-20 overflow-clip">
       {/* GRADIENT */}
-      <div className="absolute right-1/4 top-1/2 -translate-y-1/2 h-40 w-60 rounded-full bg-radial from-primary to-secondary blur-[400px]" />
+      <div className="absolute right-1/4 top-1/2 -translate-y-1/2 h-40 w-60 rounded-full bg-radial from-primary/50 to-secondary/50 blur-[200px]" />
 
       {/* TITLE - MOBILE */}
       <div className="lg:hidden text-center">
@@ -34,7 +34,7 @@ export default function PersonalSection() {
 
       <div className="md:container md:mx-auto px-4 mt-8 lg:mt-0 grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* TITLE */}
-        <div className="hidden lg:inline-block relative col-start-1 row-start-1 row-span-2">
+        <div className="hidden lg:inline-block relative col-start-1 row-start-1 lg:row-span-2">
           <Heading
             title={"Beyond Portfolio"}
             subtitle={"More about me"}
@@ -49,14 +49,14 @@ export default function PersonalSection() {
         >
           <motion.div
             whileHover={{ y: -5 }}
-            className="relative h-60 rounded-xl bg-card p-0 border shadow-sm"
+            className="relative h-full rounded-xl bg-card p-0 border shadow-sm"
           >
             <Image
               src="/map.png"
               alt=""
               width={1000}
               height={1000}
-              className="zoom-in-90 w-full h-60 rounded-xl object-cover object-left"
+              className="zoom-in-90 w-full h-full rounded-xl object-cover object-left"
             />
             <div className="absolute bottom-4 left-4 bg-card/20 dark:bg-card border backdrop-blur-sm px-2.5 py-2 rounded-full flex items-center gap-1">
               <div className="size-4 bg-gradient-to-t from-primary to-secondary mask-location-icon" />
@@ -79,17 +79,18 @@ export default function PersonalSection() {
           delay={0.3}
           className="relative lg:col-start-2 lg:row-span-6 h-[250px] lg:h-auto"
         >
-          <Image
-            src={headphones}
-            alt=""
-            width={500}
-            height={500}
-            className="absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
-          />
           <motion.div
             whileHover={{ y: -5 }}
-            className="z-0 relative h-full rounded-xl bg-muted/20 backdrop-blur-2xl p-6 border shadow-sm overflow-clip"
+            className="z-0 relative h-full rounded-xl bg-muted/20 p-6 border shadow-sm overflow-clip"
           >
+            <Image
+              src={shape1}
+              alt=""
+              width={500}
+              height={500}
+              className="blur-[80px] absolute -left-5 top-1/2 -rotate-20 w-full object-cover opacity-70"
+            />
+
             {/* Heading */}
             <div className="flex items-center gap-2">
               <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-sparkle-icon" />
@@ -109,17 +110,17 @@ export default function PersonalSection() {
           delay={0.5}
           className="lg:col-start-3 lg:row-span-6 relative"
         >
-          <Image
-            src={shape1}
-            alt=""
-            width={500}
-            height={500}
-            className="hidden md:block absolute rotate-20 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[300px] object-cover"
-          />
           <motion.div
             whileHover={{ y: -5 }}
-            className="relative overflow-clip h-full rounded-xl bg-muted/20 p-6 border shadow-sm backdrop-blur-2xl"
+            className="relative overflow-clip h-full rounded-xl bg-muted/20 p-6 border shadow-sm"
           >
+            <Image
+              src={shape2}
+              alt=""
+              width={500}
+              height={500}
+              className="blur-2xl absolute rotate-20 top-0 right-0 w-[250px] object-cover"
+            />
             <div className="flex items-center gap-2 mb-4">
               <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-music-icon" />
               <h3 className="text-lg md:text-xl font-semibold">
@@ -128,7 +129,7 @@ export default function PersonalSection() {
             </div>
             <div className="space-y-4">
               {tracks.map((track, i) => (
-                <div key={i} className="hover:scale-[1.02] transition">
+                <div key={i} className="lg:hover:scale-[1.02] transition">
                   <iframe
                     style={{ borderRadius: "16px" }}
                     src={`https://open.spotify.com/embed/track/${track.id}?utm_source=generator`}
