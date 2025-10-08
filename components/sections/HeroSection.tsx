@@ -118,7 +118,11 @@ const HeroSection = () => {
               <ArrowRight className="size-4" />
             </span>
           </Button>
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+          <a
+            href="/Divyashri_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button variant="outline" className="group relative font-normal">
               Resume
               <span className="ml-2 md:ml-0 max-w-[1.5rem] md:max-w-0 overflow-hidden md:opacity-0 transition-all duration-300 group-hover:ml-2 group-hover:max-w-[1.5rem] group-hover:opacity-100">
