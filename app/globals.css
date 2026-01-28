@@ -85,23 +85,25 @@
   }
 
   .dark {
-    --background: rgb(9, 9, 11); /* zinc-950 */
-    --foreground: oklch(98.5% 0 0); /* text zinc-50 */
+    --background: #0b0b0c; /* bg */
+    --foreground: #f2f2dc; /* text */
     --muted: rgb(24, 24, 27); /* zinc-900 */
-    --muted-foreground: oklch(87.111% 0.00555 286.025); /* subtext zinc-300 */
+    --muted-foreground: #d0d0bc; /* subtext */
 
     --card: oklch(27.4% 0.006 286.033); /* zinc-800 */
     --card-foreground: oklch(87.1% 0.006 286.286); /* zinc-300 */
 
-    --primary: oklch(70.192% 0.15767 160.464); /* emerald-500 */
     --primary-light: oklch(98.2% 0.018 155.826); /* emerald-50 */
     --primary-dark: oklch(37.8% 0.077 168.94); /* emerald-900 */
     --primary-foreground: oklch(14.1% 0.005 285.823); /* text zinc-950 */
 
-    --secondary: oklch(84.1% 0.238 128.85); /* lime-400 */
     --secondary-light: oklch(98.6% 0.031 120.757); /* lime-50 */
     --secondary-dark: oklch(40.5% 0.101 131.063); /* lime-900 */
     --secondary-foreground: oklch(98.4% 0.003 247.858);
+
+    --primary: #d0fe38; /* neon green */
+    --secondary: #ffa447; /* orange */
+    --teritary: #a977ff; /* neon purple */
 
     --popover: oklch(24% 0.02 260);
     --popover-foreground: oklch(95% 0.005 260);
@@ -119,16 +121,18 @@
 
 @layer base {
   * {
-    @apply border-muted-foreground/20;
+    @apply border-foreground/50;
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    font-family: "Space Grotesk", sans-serif;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+    font-family: "General Sans", sans-serif;
   }
 }
 
-.playfair-display {
+/* .playfair-display {
   font-family: "Playfair Display", serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -136,7 +140,7 @@
 .pathway-gothic {
   font-family: "Pathway Gothic One", sans-serif;
   font-style: normal;
-}
+} */
 
 /* ROLLING TEXT HOVER ANIMATION */
 .text:hover .letter,

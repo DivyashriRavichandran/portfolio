@@ -125,7 +125,7 @@ const TimelineItem = (item: TimelineItemProps) => {
             <div className="absolute z-40 size-20 rounded-full blur-[150px] right-0 top-0 opacity-80 bg-gradient-to-br from-primary to-secondary" />
 
             {/* INNER CONTENT */}
-            <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border group-hover/card:border-transparent">
+            <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border border-muted-foreground/20  group-hover/card:border-transparent">
               {/* HEADER */}
               <div className="-ml-1 flex items-end justify-between flex-row-reverse mr-1">
                 <div className="p-1 md:p-1.5 rounded-lg bg-card">

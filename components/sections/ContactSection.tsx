@@ -81,7 +81,7 @@ const ContactSection = () => {
                   href={method.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 md:gap-4 rounded-lg border bg-muted/20 backdrop-blur-2xl p-3 md:p-4 transition-all duration-300 hover:border-foreground/40"
+                  className="group flex items-center gap-2 md:gap-4 rounded-lg border border-muted-foreground/20 bg-muted/20 backdrop-blur-2xl p-3 md:p-4 transition-all duration-300 hover:border-foreground/40"
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-full gradient-10 text-primary transition-all duration-300 group-hover:scale-110">
                     {method.icon}
@@ -106,7 +106,7 @@ const ContactSection = () => {
           className="md:col-span-2 lg:col-span-1"
           delay={0.2}
         >
-          <div className="rounded-lg bg-muted/20 backdrop-blur-2xl p-6 md:p-8 border">
+          <div className="rounded-lg bg-muted/20 backdrop-blur-2xl p-6 md:p-8 border border-muted-foreground/20 ">
             <h3 className="mb-6 text-lg md:text-xl font-semibold">
               Send me a message
             </h3>

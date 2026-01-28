@@ -107,7 +107,7 @@ const ProjectsSection = () => {
       <div className="mt-6 md:hidden space-y-8">
         {Projects.map((project, index) => (
           <ScrollAnimation key={index} delay={0.1 * index}>
-            <div className="z-20 relative rounded-2xl border bg-muted backdrop-blur-sm shadow-sm p-4 overflow-clip">
+            <div className="z-20 relative rounded-2xl border border-muted-foreground/20 bg-muted backdrop-blur-sm shadow-sm p-4 overflow-clip">
               <Image
                 src={shape1}
                 alt=""
@@ -116,7 +116,7 @@ const ProjectsSection = () => {
                 className="-z-20 blur-[80px] delay-500 absolute -left-5 -top-4/5 md:-bottom-2/3 w-full object-cover opacity-70"
               />
               {/* VIDEO/IMAGE */}
-              <div className="overflow-hidden border relative aspect-video">
+              <div className="overflow-hidden border border-muted-foreground/20 relative aspect-video">
                 {project.video ? (
                   <video
                     src={project.video}
@@ -197,7 +197,7 @@ const ProjectsSection = () => {
       </div>
 
       {/* PROJECT - DESKTOP */}
-      <div className="mt-20 border-t hidden md:block">
+      <div className="mt-20 border-t border-muted-foreground/20  hidden md:block">
         {Projects.map((project, index) => (
           <motion.div
             key={index}

@@ -51,7 +51,7 @@ const AboutSection = () => {
           />
         </motion.div>
 
-        <div className="bg-muted/20 backdrop-blur-2xl dark:text-zinc-200 shadow-2xl border px-6 md:px-24 py-10 md:py-20 rounded-xl">
+        <div className="bg-muted/20 backdrop-blur-2xl dark:text-zinc-200 shadow-2xl border border-muted-foreground/20  px-6 md:px-24 py-10 md:py-20 rounded-xl">
           <Heading title={"About Me"} subtitle={"Know who am I"} />
           <div className="mt-6 md:mt-10 flex flex-col md:flex-row md:justify-between w-full items-center gap-y-4 md:gap-y-0 md:gap-x-4">
             {/* TEXT */}

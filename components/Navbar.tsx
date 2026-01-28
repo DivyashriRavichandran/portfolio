@@ -64,7 +64,7 @@ export default function Navbar() {
           }
         });
       },
-      { threshold: 0.2 } // Adjust this value to change when the section is considered "in view"
+      { threshold: 0.2 }, // Adjust this value to change when the section is considered "in view"
     );
 
     sections.forEach((section) => {
@@ -127,7 +127,6 @@ export default function Navbar() {
     const elements = document.querySelectorAll(".text");
 
     elements.forEach((element) => {
-      // 🛑 If already processed, skip
       if (element.querySelector(".block")) return;
 
       const innerText = element.textContent || "";
@@ -257,12 +256,12 @@ export default function Navbar() {
 
       {/* DESKTOP */}
       <motion.nav
-        variants={navbarVariants}
-        initial="hidden"
-        animate="visible"
+        // variants={navbarVariants}
+        // initial="hidden"
+        // animate="visible"
         className="hidden lg:inline fixed top-0 w-full z-50"
       >
-        <div className="mt-4 lg:max-w-3xl xl:max-w-5xl mx-auto transition-all duration-300 border rounded-full p-1 backdrop-blur-lg bg-gradient-to-r from-transparent via-muted/80 to-transparent">
+        <div className="mt-4 lg:max-w-3xl xl:max-w-5xl mx-auto transition-all duration-300 border border-muted-foreground/20  rounded-full p-1 backdrop-blur-lg bg-gradient-to-r from-transparent via-muted/80 to-transparent">
           <div className="relative flex items-center">
             {/* Left: Logo */}
             <div className="flex-shrink-0 ml-4 text-2xl font-bold">DR.</div>
@@ -272,7 +271,7 @@ export default function Navbar() {
               {navItems.map((item) => (
                 <div
                   key={item.name}
-                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] leading-[24px] tracking-tight h-[24px]  ${
+                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] h-[24px]  ${
                     item.isActive
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
@@ -291,7 +290,7 @@ export default function Navbar() {
             <Button
               variant={"outline"}
               onClick={() => handleContactButtonClick()}
-              className="z-20 ml-auto"
+              className="z-20 ml-auto border-muted-foreground/20"
             >
               Let&apos;s Connect
             </Button>

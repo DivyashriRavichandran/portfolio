@@ -40,7 +40,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="flex flex-col text-6xl md:text-8xl font-mono tracking-tighter font-bold text-gradient2"
+            className="flex flex-col text-6xl md:text-8xl font-mono tracking-tight font-semibold text-gradient2"
           >
             Divyashri
             <span>Ravichandran</span>

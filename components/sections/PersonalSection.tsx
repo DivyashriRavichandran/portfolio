@@ -81,7 +81,7 @@ export default function PersonalSection() {
         >
           <motion.div
             whileHover={{ y: -5 }}
-            className="z-0 relative h-full rounded-xl bg-muted/20 p-6 border shadow-sm overflow-clip"
+            className="z-0 relative h-full rounded-xl bg-muted/20 p-6 border border-muted-foreground/20 shadow-sm overflow-clip"
           >
             <Image
               src={shape1}
@@ -94,9 +94,7 @@ export default function PersonalSection() {
             {/* Heading */}
             <div className="flex items-center gap-2">
               <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-sparkle-icon" />
-              <h3 className="text-xl font-bold tracking-tight">
-                When I&apos;m Not Coding
-              </h3>
+              <h3 className="text-xl font-medium">When I&apos;m Not Coding</h3>
             </div>
 
             <div className="absolute inset-0 px-6 justify-center mx-auto items-center flex">
@@ -112,7 +110,7 @@ export default function PersonalSection() {
         >
           <motion.div
             whileHover={{ y: -5 }}
-            className="relative overflow-clip h-full rounded-xl bg-muted/20 p-6 border shadow-sm"
+            className="relative overflow-clip h-full rounded-xl bg-muted/20 p-6 border border-muted-foreground/20  shadow-sm"
           >
             <Image
               src={shape2}
