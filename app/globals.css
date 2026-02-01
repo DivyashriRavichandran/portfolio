@@ -111,8 +111,8 @@
     --accent: oklch(42% 0.035 220); /* blue-gray accent */
     --accent-foreground: oklch(96% 0.01 260);
 
-    --destructive: oklch(52% 0.18 30); /* soft red */
-    --destructive-foreground: oklch(98% 0.01 260);
+    --destructive: oklch(74.113% 0.15755 21.594); /* Vibrant Coral-Red */
+    --destructive-foreground: #000000;
 
     --input: oklch(30% 0.02 260);
     --ring: oklch(70.192% 0.15767 160.464); /* vibrant green ring */

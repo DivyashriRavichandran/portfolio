@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Title from "./Title";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,8 @@ import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod.js";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Please enter your name"),
@@ -25,6 +27,8 @@ const formSchema = z.object({
 });
 
 const Contact = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,6 +37,43 @@ const Contact = () => {
       message: "",
     },
   });
+  type ContactFormValues = z.infer<typeof formSchema>;
+
+  const onSubmit = async (values: ContactFormValues) => {
+    setIsSubmitting(true);
+
+    try {
+      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error("EmailJS environment variables are not set.");
+      }
+
+      const templateParams = {
+        name: values.firstName,
+        email: values.email,
+        message: values.message,
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+
+      toast.message("Message sent successfully!", {
+        description: "Thank you for reaching out. I'll get back to you soon.",
+      });
+      form.reset();
+    } catch (error) {
+      console.error("EmailJS error:", error);
+
+      toast.message("Failed to send message.", {
+        description: "Please try again or contact me via linkedin.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="px-4 md:px-16 py-10 md:py-20">
       <Title>Contact</Title>
@@ -49,7 +90,10 @@ const Contact = () => {
         </div>
 
         <Form {...form}>
-          <form className="grid md:grid-cols-2 gap-5 md:gap-10">
+          <form
+            className="grid md:grid-cols-2 gap-5 md:gap-10"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="firstName"
@@ -87,7 +131,13 @@ const Contact = () => {
               )}
             />
 
-            <Button className="mt-5 md:col-span-2">Send</Button>
+            <Button
+              className="mt-5 md:col-span-2"
+              type="submit"
+              disabled={isSubmitting}
+            >
+              Send
+            </Button>
           </form>
         </Form>
       </div>
