@@ -64,7 +64,7 @@ export default function TechStackSection() {
   return (
     <div className="relative py-10 md:py-20 overflow-clip">
       {/* GRADIENT */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-40 md:h-60 w-60 md:w-80 rounded-full bg-radial from-primary/50 to-secondary/50 blur-[200px]" />
+      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-40 md:h-60 w-60 md:w-80 rounded-full bg-tertiary/40 blur-[200px]" />
 
       <div className="relative container mx-auto px-4 text-center">
         <Heading title={"Tech Stack"} subtitle={"Skills"} />

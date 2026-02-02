@@ -41,6 +41,9 @@
   --color-secondary-dark: var(--secondary-dark);
   --color-secondary-foreground: var(--secondary-foreground);
 
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
+
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -67,6 +70,7 @@
     --secondary-dark: oklch(40.1% 0.17 325.612); /* fuchsia-900 */
     --secondary-foreground: oklch(18% 0.015 260);
 
+    --tertiary: #a977ff; /* purple-400 */
     --card: oklch(92% 0.004 286.32); /* zinc-200 */
     --card-foreground: oklch(44.2% 0.017 285.786); /* zinc-600 subtext */
 
@@ -103,7 +107,7 @@
 
     --primary: #d0fe38; /* neon green */
     --secondary: #ffa447; /* orange */
-    --teritary: #a977ff; /* neon purple */
+    --tertiary: #a977ff; /* neon purple */
 
     --popover: oklch(24% 0.02 260);
     --popover-foreground: oklch(95% 0.005 260);
@@ -256,25 +260,25 @@
 
 @layer components {
   .text-gradient {
-    @apply bg-gradient-to-t from-primary to-secondary bg-clip-text text-transparent;
+    @apply bg-gradient-to-t from-primary to-primary bg-clip-text text-transparent;
   }
   .text-gradient2 {
     @apply bg-gradient-to-tr from-muted-foreground via-foreground to-muted-foreground bg-clip-text text-transparent;
   }
   .gradient {
-    @apply bg-gradient-to-tl from-primary to-secondary;
+    @apply bg-gradient-to-tl from-primary to-primary;
   }
   .gradient-border {
-    @apply bg-gradient-to-t from-primary-dark to-secondary-dark;
+    @apply bg-gradient-to-t from-primary-dark to-primary-dark;
   }
   .gradient-10 {
-    @apply bg-gradient-to-tl from-primary/10 to-secondary/10;
+    @apply bg-gradient-to-tl from-primary/10 to-primary/10;
   }
   .gradient-light {
-    @apply bg-gradient-to-t from-primary/40 to-secondary/40 backdrop-blur-xs;
+    @apply bg-gradient-to-t from-primary/40 to-primary/40 backdrop-blur-xs;
   }
   .test {
-    @apply bg-muted border  transition hover:bg-gradient-to-t from-primary/40 to-secondary/40;
+    @apply bg-muted border  transition hover:bg-gradient-to-t from-primary/40 to-primary/40;
   }
   .glow {
     @apply absolute z-40 size-40 rounded-full blur-[150px] dark:blur-3xl;

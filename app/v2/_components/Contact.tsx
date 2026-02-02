@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -76,15 +74,18 @@ const Contact = () => {
 
   return (
     <div className="px-4 md:px-16 py-10 md:py-20">
-      <Title>Contact</Title>
       <div className="grid md:grid-cols-2 gap-5 md:gap-24">
         <div>
-          <div className="mt-4 md:mt-6 md:text-2xl leading-snug">
-            Lorem, ipsum dolor sit amets necessitatibus quos ex ea cumque
-            provident velit excepturi et!
+          <div className=" md:text-3xl leading-snug">
+            Have a project in mind or just want to say hi? <br />
+            Feel free to reach out!
           </div>
 
-          <Button variant={"outline"} className="font-normal mt-4 md:mt-6">
+          <Button
+            variant={"outline"}
+            size={"lg"}
+            className="font-normal mt-4 md:mt-6"
+          >
             contact@divyashri.nl
           </Button>
         </div>

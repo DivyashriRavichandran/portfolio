@@ -1,12 +1,14 @@
 {
   "education": [
     {
+      "image": "/logos/rug.png",
       "title": "MSc Computing Science (SEDS Track)",
       "period": "Aug 2026 – Present",
       "institution": "University of Groningen, Netherlands",
       "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },
     {
+      "image": "/logos/leeds.png",
       "title": "BSc Computer Science",
       "period": "Sep 2021 - Jul 2024",
       "institution": "University of Leeds, UK",
@@ -17,8 +19,10 @@
   ],
   "experience": [
     {
+      "image": "/logos/kp.png",
       "title": "Frontend Developer",
       "period": "Oct 2024 - Jul 2026",
+      "duration": "1 year 10 months",
       "institution": "KP Platform, Qatar",
       "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       "description_2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "

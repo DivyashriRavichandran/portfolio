@@ -119,10 +119,10 @@ const TimelineItem = (item: TimelineItemProps) => {
         >
           <div className="group/card relative">
             {/* GRADIENT BORDER */}
-            <div className="rounded-[13px] absolute -inset-[1px] bg-gradient-to-br from-primary to-secondary opacity-0 group-hover/card:opacity-100 transition duration-300 z-0" />
+            <div className="rounded-[13px] absolute -inset-[1px] bg-primary/50 opacity-0 group-hover/card:opacity-100 transition duration-300 z-0" />
 
             {/* GRADIENT GLOW */}
-            <div className="absolute z-40 size-20 rounded-full blur-[150px] right-0 top-0 opacity-80 bg-gradient-to-br from-primary to-secondary" />
+            <div className="absolute z-40 size-20 rounded-full blur-[150px] right-0 top-0 opacity-80 bg-primary" />
 
             {/* INNER CONTENT */}
             <div className="relative z-10 rounded-xl px-6 py-4 dark:bg-muted bg-white border border-muted-foreground/20  group-hover/card:border-transparent">
@@ -137,7 +137,7 @@ const TimelineItem = (item: TimelineItemProps) => {
                 </div>
               </div>
 
-              <h3 className="mt-1 md:mt-3 text-lg md:text-2xl tracking-tight font-semibold">
+              <h3 className="mt-1 md:mt-3 text-lg md:text-2xl tracking-tight font-medium">
                 {item.title}
               </h3>
               <div className="flex items-center justify-between gap-2">

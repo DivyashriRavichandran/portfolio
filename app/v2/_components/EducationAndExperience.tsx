@@ -4,6 +4,7 @@ import React from "react";
 import Title from "./Title";
 import { motion } from "framer-motion";
 import data from "@/data/data.json";
+import Image from "next/image";
 
 const EducationAndExperience = () => {
   return (
@@ -17,33 +18,44 @@ const EducationAndExperience = () => {
           {data.education.map((item, index) => (
             <motion.div
               key={index}
+              className="flex items-start gap-x-4 md:gap-x-6"
               initial={{ opacity: 0, translateY: 20 }}
               whileInView={{ opacity: 1, translateY: 0 }}
               transition={{ duration: 0.3, delay: index * 0.3 }}
-              className="border-b pb-10 md:pb-16"
             >
-              {/* HEADER */}
-              <div className="flex justify-between font-medium gap-3">
-                <div className="font-medium text-lg md:text-4xl line-clamp-2 flex-1">
-                  {item.title}
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={80}
+                height={80}
+                className="border size-12 md:size-20"
+              />
+
+              {/* CONTENT */}
+              <div className="border-b pb-10 md:pb-16">
+                {/* HEADER */}
+                <div className="flex justify-between font-medium gap-3">
+                  <div className="font-medium text-lg md:text-4xl line-clamp-2 flex-1">
+                    {item.title}
+                  </div>
+                  <div className="mt-1 text-sm md:text-2xl">{item.period}</div>
                 </div>
-                <div className="mt-1 text-sm md:text-2xl">{item.period}</div>
-              </div>
 
-              {/* SUBHEADER */}
-              <div className="mt-1 md:mt-2 font-medium md:text-2xl">
-                {item.institution}
-              </div>
+                {/* SUBHEADER */}
+                <div className="mt-1 md:mt-2 font-medium md:text-2xl">
+                  {item.institution}
+                </div>
 
-              {/* DESCRIPTION */}
-              <div className="mt-4 md:mt-6 text-sm md:text-xl">
-                {item.description_1}
-              </div>
-              {item.description_2 && (
+                {/* DESCRIPTION */}
                 <div className="mt-4 md:mt-6 text-sm md:text-xl">
-                  {item.description_2}
+                  {item.description_1}
                 </div>
-              )}
+                {item.description_2 && (
+                  <div className="mt-4 md:mt-6 text-sm md:text-xl">
+                    {item.description_2}
+                  </div>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>
@@ -58,33 +70,49 @@ const EducationAndExperience = () => {
           {data.experience.map((item, index) => (
             <motion.div
               key={index}
+              className="flex items-start gap-x-4 md:gap-x-6"
               initial={{ opacity: 0, translateY: 20 }}
               whileInView={{ opacity: 1, translateY: 0 }}
               transition={{ duration: 0.3, delay: index * 0.3 }}
-              className="border-b pb-10 md:pb-16"
             >
-              {/* HEADER */}
-              <div className="flex justify-between font-medium gap-3">
-                <div className="font-medium text-lg md:text-4xl line-clamp-2 flex-1">
-                  {item.title}
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={80}
+                height={80}
+                className="bg-white border size-12 md:size-20"
+              />
+
+              {/* CONTENT */}
+              <div className="border-b pb-10 md:pb-16">
+                {/* HEADER */}
+                <div className="flex justify-between font-medium gap-3">
+                  <div className="font-medium text-lg md:text-4xl line-clamp-2 flex-1">
+                    {item.title}
+                  </div>
+                  <div className="mt-1 text-sm md:text-2xl">{item.period}</div>
                 </div>
-                <div className="mt-1 text-sm md:text-2xl">{item.period}</div>
-              </div>
 
-              {/* SUBHEADER */}
-              <div className="mt-1 md:mt-2 font-medium md:text-2xl">
-                {item.institution}
-              </div>
+                {/* SUBHEADER */}
+                <div className="flex justify-between font-medium">
+                  <div className="mt-1 md:mt-2 md:text-2xl">
+                    {item.institution}
+                  </div>
+                  <div className="text-sm md:text-lg opacity-80">
+                    ({item.duration})
+                  </div>
+                </div>
 
-              {/* DESCRIPTION */}
-              <div className="mt-4 md:mt-6 text-sm md:text-xl">
-                {item.description_1}
-              </div>
-              {item.description_2 && (
+                {/* DESCRIPTION */}
                 <div className="mt-4 md:mt-6 text-sm md:text-xl">
-                  {item.description_2}
+                  {item.description_1}
                 </div>
-              )}
+                {item.description_2 && (
+                  <div className="mt-4 md:mt-6 text-sm md:text-xl">
+                    {item.description_2}
+                  </div>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>

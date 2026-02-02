@@ -8,6 +8,7 @@ import shape1 from "@/assets/images/13.png";
 import shape2 from "@/assets/images/cube.png";
 
 import { RotateWords } from "../animations/RotateWords";
+import { MapPinIcon, MusicIcon, SparkleIcon } from "lucide-react";
 
 export default function PersonalSection() {
   const hobbies = [
@@ -59,7 +60,7 @@ export default function PersonalSection() {
               className="zoom-in-90 w-full h-full rounded-xl object-cover object-left"
             />
             <div className="absolute bottom-4 left-4 bg-card/20 dark:bg-card border backdrop-blur-sm px-2.5 py-2 rounded-full flex items-center gap-1">
-              <div className="size-4 bg-gradient-to-t from-primary to-secondary mask-location-icon" />
+              <MapPinIcon className="size-4 text-primary" />{" "}
               <span className="text-xs tracking-tight">Doha, Qatar</span>
             </div>
             <div className="p-1 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 size-12 rounded-full gradient-light flex items-center justify-center">
@@ -93,7 +94,7 @@ export default function PersonalSection() {
 
             {/* Heading */}
             <div className="flex items-center gap-2">
-              <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-sparkle-icon" />
+              <SparkleIcon className="size-5 text-primary" />{" "}
               <h3 className="text-xl font-medium">When I&apos;m Not Coding</h3>
             </div>
 
@@ -120,7 +121,7 @@ export default function PersonalSection() {
               className="blur-2xl absolute rotate-20 top-0 right-0 w-[250px] object-cover"
             />
             <div className="flex items-center gap-2 mb-4">
-              <div className="size-5 bg-gradient-to-t from-primary to-secondary mask-music-icon" />
+              <MusicIcon className="size-5 text-primary" />{" "}
               <h3 className="text-lg md:text-xl font-semibold">
                 Currently listening to
               </h3>

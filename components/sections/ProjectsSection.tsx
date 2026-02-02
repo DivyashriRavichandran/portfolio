@@ -203,7 +203,7 @@ const ProjectsSection = () => {
             key={index}
             onHoverStart={() => setHoveredIndex(index)}
             onHoverEnd={() => setHoveredIndex(null)}
-            className="relative group border-b overflow-hidden"
+            className="relative group border-b border-muted-foreground/20 overflow-hidden"
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
@@ -337,8 +337,8 @@ const ProjectsSection = () => {
       </div>
 
       {/* GRADIENTS */}
-      <div className="-z-20 absolute left-0 md:-left-20 top-0 md:top-20 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[100px] md:blur-[150px]"></div>
-      <div className="-z-20 absolute right-0 top-1/4 md:top-1/2 rounded-full size-20 md:size-60 bg-gradient-to-br from-primary to-secondary blur-[80px] md:blur-[200px]"></div>
+      <div className="-z-20 absolute left-0 md:-left-20 top-0 md:top-20 rounded-full size-20 md:size-40 bg-primary/50 blur-[100px] md:blur-[150px]"></div>
+      <div className="-z-20 absolute right-0 top-1/4 md:top-1/2 rounded-full size-20 md:size-60 bg-secondary/50 blur-[80px] md:blur-[200px]"></div>
     </div>
   );
 };

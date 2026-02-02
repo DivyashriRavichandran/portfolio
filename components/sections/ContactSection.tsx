@@ -8,22 +8,19 @@ import Heading from "../Heading";
 import Image from "next/image";
 import shape from "@/assets/images/13.png";
 import shape2 from "@/assets/images/3.png";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 const ContactSection = () => {
   const contactMethods = [
     {
       label: "Linkedin",
-      icon: (
-        <div className="size-6 bg-gradient-to-t from-primary to-secondary mask-linkedin-icon" />
-      ),
+      icon: <FaLinkedin size={28} />,
       link: "https://www.linkedin.com/in/divyashri-ravichandran/",
       description: "Connect professionally",
     },
     {
       label: "GitHub",
-      icon: (
-        <div className="size-6 bg-gradient-to-t from-primary to-secondary mask-github-icon" />
-      ),
+      icon: <FaGithub size={28} />,
       link: "https://github.com/DivyashriRavichandran",
       description: "Check out my projects",
     },
@@ -44,8 +41,8 @@ const ContactSection = () => {
       className="relative py-10 md:py-20 md:container md:mx-auto px-4 overflow-y-clip"
     >
       {/* GRADIENTS */}
-      <div className="-z-20 absolute left-0 md:-left-20 top-0 md:top-20 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[100px] md:blur-[150px]"></div>
-      <div className="-z-20 absolute right-0 top-1/4 md:top-3/4 rounded-full size-20 md:size-40 bg-gradient-to-br from-primary to-secondary blur-[80px] md:blur-[150px]"></div>
+      <div className="-z-20 absolute left-0 md:-left-20 top-0 md:top-20 rounded-full size-20 md:size-40 bg-secondary blur-[100px] md:blur-[150px]"></div>
+      <div className="-z-20 absolute right-0 top-1/4 md:top-3/4 rounded-full size-20 md:size-40 bg-tertiary blur-[80px] md:blur-[150px]"></div>
 
       <motion.div style={{ y }}>
         <Image
@@ -83,7 +80,7 @@ const ContactSection = () => {
                   rel="noopener noreferrer"
                   className="group flex items-center gap-2 md:gap-4 rounded-lg border border-muted-foreground/20 bg-muted/20 backdrop-blur-2xl p-3 md:p-4 transition-all duration-300 hover:border-foreground/40"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full gradient-10 text-primary transition-all duration-300 group-hover:scale-110">
+                  <div className="text-primary transition-all duration-300 group-hover:scale-110">
                     {method.icon}
                   </div>
                   <div>
