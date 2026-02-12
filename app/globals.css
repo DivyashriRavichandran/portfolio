@@ -375,3 +375,25 @@ html {
     stroke-dashoffset: 0; /* reveal stroke */
   }
 }
+
+@theme {
+  --inline-animation-slide-in-top-right: slide-in-from-top-right 0.3s ease-out;
+  --inline-animation-slide-out-top-right: slide-out-to-top-right 0.3s ease-in;
+
+  @keyframes slide-in-from-top-right {
+    from {
+      transform: translate(100%, -100%);
+    }
+    to {
+      transform: translate(0, 0);
+    }
+  }
+  @keyframes slide-out-to-top-right {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(100%, -100%);
+    }
+  }
+}

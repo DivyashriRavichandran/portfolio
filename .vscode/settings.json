@@ -3,5 +3,9 @@
     "cSpell.words": [
         "cinedb",
         "paygez"
+    ],
+    "i18n-ally.localesPaths": [
+        "i18n",
+        "messages"
     ]
 }

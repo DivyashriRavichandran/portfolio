@@ -24,7 +24,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
+import LangSwitcher from "./LangSwitcher";
 interface NavItem {
   name: string;
   href: string;
@@ -32,7 +34,11 @@ interface NavItem {
 }
 
 export default function Navbar() {
+  const locale = useLocale();
+  const t = useTranslations();
+
   const [activeSection, setActiveSection] = useState<string>("home");
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -154,173 +160,33 @@ export default function Navbar() {
     });
   }, []);
 
-  const handleNavClick = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-    }
-  };
-
-  const handleContactButtonClick = () => {
-    handleNavClick("#contact");
-    setShowConfetti(true);
-  };
-
-  const [open, setOpen] = useState(false);
-
   return (
     <>
-      {/* MOBILE */}
-      <motion.nav
-        variants={navbarVariants}
-        initial="hidden"
-        animate="visible"
-        className="lg:hidden fixed top-0 left-0 w-full z-50"
-      >
-        <div
-          className={`flex items-center justify-between transition-all duration-300 px-4   ${
-            scrolled ? "py-3" : "py-4"
-          } backdrop-blur-lg `}
-        >
-          <Link href="#home" className="text-2xl font-bold">
-            DR.
-          </Link>
-          <div className="flex items-center space-x-2">
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="size-6 stroke-[1.5px]" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent className="w-[100%] overflow-hidden flex flex-col justify-between">
-                <VisuallyHidden>
-                  <SheetTitle />
-                </VisuallyHidden>
-
-                {/* Background blobs */}
-                <div className="-z-20 absolute left-0 bottom-20 rounded-full size-32 bg-gradient-to-br from-primary to-secondary blur-[150px]" />
-                <div className="-z-20 absolute right-0 top-0 rounded-full size-20 bg-gradient-to-br from-primary to-secondary blur-[80px]" />
-
-                {/* Nav links */}
-                <div className="flex flex-col mt-20 gap-4 px-16 text-2xl">
-                  {navItems.map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      custom={index}
-                      initial="hidden"
-                      animate="visible"
-                      variants={itemVariants}
-                      className="w-full"
-                    >
-                      <button
-                        className={`w-full flex items-center justify-between py-3 transition-all duration-300 
-                          ${
-                            item.isActive
-                              ? "text-foreground font-semibold"
-                              : "text-muted-foreground/70"
-                          }`}
-                        onClick={() => handleNavClick(item.href)}
-                      >
-                        {item.name}
-                        <ChevronRight className="size-7" />
-                      </button>
-                    </motion.div>
-                  ))}
-                  <Button
-                    className="mt-10 gap-2 w-full"
-                    onClick={() => handleNavClick("#contact")}
-                  >
-                    Let&apos;s Connect
-                    <ArrowRight />
-                  </Button>
-                </div>
-
-                {/* Footer with socials */}
-                <div className="flex justify-center gap-6 px-6 py-6 border-t">
-                  <Link
-                    href={"https://github.com/DivyashriRavichandran"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground"
-                  >
-                    <FaGithub size={28} />
-                  </Link>
-                  <Link
-                    href={"https://www.linkedin.com/in/divyashri-ravichandran/"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground"
-                  >
-                    <FaLinkedin size={28} />
-                  </Link>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </div>
-      </motion.nav>
-
       {/* DESKTOP */}
-      <motion.nav
-        // variants={navbarVariants}
-        // initial="hidden"
-        // animate="visible"
-        className="hidden lg:inline fixed top-0 w-full z-50"
-      >
-        <div className="mt-4 lg:max-w-3xl xl:max-w-5xl mx-auto transition-all duration-300 border border-muted-foreground/20  rounded-full p-1 backdrop-blur-lg bg-gradient-to-r from-transparent via-muted/80 to-transparent">
-          <div className="relative flex items-center">
-            {/* Left: Logo */}
-            <div className="flex-shrink-0 ml-4 text-2xl font-bold">DR.</div>
+      <nav className="hidden lg:flex top-0 w-full justify-between z-50 py-6 px-10">
+        <h1 className="text-4xl font-semibold">DR. </h1>
+        <div className="flex items-center gap-2 md:gap-3">
+          <LangSwitcher />
 
-            {/* Center: Nav Items */}
-            <div className="absolute left-1/2 -translate-x-1/2 flex items-center space-x-3 xl:space-x-8">
-              {navItems.map((item) => (
-                <div
-                  key={item.name}
-                  className={`cursor-pointer transition-colors text overflow-hidden text-[16px] h-[24px]  ${
-                    item.isActive
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.href);
-                  }}
-                >
-                  {item.name}
-                </div>
-              ))}
-            </div>
-
-            {/* Right: Button */}
-            {/* <Button
-              onClick={() => handleContactButtonClick()}
-              className="z-20 ml-auto gap-2"
-            >
-              <span className="text-2xl">🇬🇧</span>
-              EN
-            </Button> */}
-            <Button
-              onClick={() => setOpen(true)}
-              className="z-20 ml-auto gap-2"
-            >
-              MENU
-            </Button>
-          </div>
+          <Button onClick={() => setOpen(true)} className="uppercase">
+            {t("menu")}
+          </Button>
         </div>
-        <Sheet open={open} onOpenChange={setOpen}>
-          <SheetContent className="h-[400px] px-10 py-14 bg-primary rounded-4xl rounded-tr-none text-black font-medium text-4xl flex flex-col justify-center ">
-            <span className="text-base">09:23 CET</span>
+      </nav>
+
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent className="h-[400px] px-10 py-14 bg-primary rounded-4xl rounded-tr-none text-black font-medium text-4xl flex flex-col justify-center items-start">
+          <span className="text-base">09:23 CET</span>
+          {/* MENU ITEMS */}
+          <div className="flex flex-col gap-4 mt-4">
             <span className="">Work</span>
             <span className="">About Me</span>
             <span className="">Skills</span>
             <span className="">Projects</span>
             <span className="">Contact</span>
-          </SheetContent>
-        </Sheet>
-      </motion.nav>
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

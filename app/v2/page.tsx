@@ -4,16 +4,18 @@ import About from "./_components/About";
 import Contact from "./_components/Contact";
 import Footer from "./_components/Footer";
 import Navbar from "./_components/Navbar";
+import Hero from "./_components/Hero";
+import Project from "./_components/Project";
 
 const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="py-10 md:py-20">
-        <About />
-        <EducationAndExperience />
-        <Contact />
-      </div>
+      <Hero />
+      <About />
+      <Project />
+      <EducationAndExperience />
+      <Contact />
       <Footer />
     </>
   );

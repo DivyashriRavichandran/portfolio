@@ -1,17 +1,37 @@
 {
   "education": [
     {
+      "id": 1,
       "image": "/logos/rug.png",
-      "title": "MSc Computing Science (SEDS Track)",
-      "period": "Aug 2026 – Present",
-      "institution": "University of Groningen, Netherlands",
+      "title": {
+        "en": "MSc Computing Science (SEDS Track)",
+        "nl": "MSc Computerwetenschappen (SEDS Track)"
+      },
+      "period": {
+        "en": "Aug 2026 – present",
+        "nl": "Aug 2026 – heden"
+      },
+      "institution": {
+        "en": "University of Groningen, Netherlands",
+        "nl": "Rijksuniversiteit Groningen, Nederland"
+      },
       "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     },
     {
+      "id": 2,
       "image": "/logos/leeds.png",
-      "title": "BSc Computer Science",
-      "period": "Sep 2021 - Jul 2024",
-      "institution": "University of Leeds, UK",
+      "title": {
+        "en": "BSc Computer Science",
+        "nl": "BSc Computerwetenschappen"
+      },
+      "period": {
+        "en": "Sep 2021 – Jul 2024",
+        "nl": "Sep 2021 – Jul 2024"
+      },
+      "institution": {
+        "en": "University of Leeds, United Kingdom",
+        "nl": "Universiteit van Leeds, Verenigd Koninkrijk"
+      },
       "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       "description_2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       "thesis_link": ""
@@ -19,13 +39,58 @@
   ],
   "experience": [
     {
+      "id": 1,
       "image": "/logos/kp.png",
-      "title": "Frontend Developer",
-      "period": "Oct 2024 - Jul 2026",
-      "duration": "1 year 10 months",
-      "institution": "KP Platform, Qatar",
+      "title": {
+        "en": "Frontend Developer",
+        "nl": "Frontend Ontwikkelaar"
+      },
+      "period": {
+        "en": "Oct 2024 – Jul 2026",
+        "nl": "Okt 2024 – Jul 2026"
+      },
+      "duration": {
+        "en": "1 year 10 months",
+        "nl": "1 jaar 10 maanden"
+      },
+      "institution": {
+        "en": "KP Platforms, Qatar",
+        "nl": "KP Platforms, Qatar"
+      },
       "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       "description_2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "logo": "/logos/dubbel-dutch.svg",
+      "title": {
+        "en": "DubbelDutch",
+        "nl": "DubbelDutch"
+      },
+      "year": "2026",
+      "tech_stack": ["React", "TypeScript", "WXT", "CSS"],
+      "images": [
+        "/logos/dubbel-dutch.svg",
+        "/logos/dubbel-dutch.svg",
+        "/logos/dubbel-dutch.svg"
+      ],
+      "description": "DubbelDutch is a Google Chrome extension that provides real-time english translations for npo.nl and kijk.nl. It uses the google translation API to deliver accurate translations while maintaining the original website's layout and design. It has dual language support, allowing users to view both the original Dutch content and the English translation side by side.",
+      "features": [
+        "dual subtitle",
+        "real-time translation",
+        "user-friendly interface",
+        "customizable settings"
+      ],
+      "challenges": [
+        "Integrating the google translation API and ensuring accurate translations while maintaining the original website's layout and design.",
+        "Implementing real-time translation without causing significant delays or performance issues for users.",
+        "Designing a user-friendly interface that allows users to easily toggle between the original Dutch content and the English translation."
+      ],
+      "solution": "DubbelDutch leverages the Google Translation API to provide accurate translations while maintaining the original website's layout and design. The extension supports dual language viewing, allowing users to see both the original Dutch content and the English translation side by side.",
+      "project_link": "https://www.dubbeldutch.com",
+      "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
     }
   ]
 }
