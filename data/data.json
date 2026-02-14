@@ -71,24 +71,14 @@
       },
       "year": "2026",
       "tech_stack": ["React", "TypeScript", "WXT", "CSS"],
+      "categories": ["Frontend", "Browser Extension"],
       "images": [
-        "/logos/dubbel-dutch.svg",
-        "/logos/dubbel-dutch.svg",
-        "/logos/dubbel-dutch.svg"
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "DubbelDutch is a Google Chrome extension that provides real-time english translations for npo.nl and kijk.nl. It uses the google translation API to deliver accurate translations while maintaining the original website's layout and design. It has dual language support, allowing users to view both the original Dutch content and the English translation side by side.",
-      "features": [
-        "dual subtitle",
-        "real-time translation",
-        "user-friendly interface",
-        "customizable settings"
-      ],
-      "challenges": [
-        "Integrating the google translation API and ensuring accurate translations while maintaining the original website's layout and design.",
-        "Implementing real-time translation without causing significant delays or performance issues for users.",
-        "Designing a user-friendly interface that allows users to easily toggle between the original Dutch content and the English translation."
-      ],
-      "solution": "DubbelDutch leverages the Google Translation API to provide accurate translations while maintaining the original website's layout and design. The extension supports dual language viewing, allowing users to see both the original Dutch content and the English translation side by side.",
+      "description": "DubbelDutch is a Google Chrome extension that provides real-time english translations for npo.nl and kijk.nl. It uses the google translation API to deliver accurate translations of the dutch subtitbles. It has dual language support, allowing users to view both the original Dutch content and the English translation simultaneously.",
+
       "project_link": "https://www.dubbeldutch.com",
       "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
     }

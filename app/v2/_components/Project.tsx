@@ -14,12 +14,12 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Project = () => {
   const t = useTranslations();
@@ -27,124 +27,99 @@ const Project = () => {
   const project = data.projects[0];
 
   return (
-    <div className="h-svh bg-primary text-[#2F3D00] md:p-10 flex flex-col justify-between">
-      {/* HEADER */}
-      <div>
-        <div className="flex justify-between">
-          <div className="flex gap-3 items-center">
-            <Image
-              src={project.logo}
-              alt={project.title.en}
-              width={100}
-              height={100}
-              className="size-12 md:size-16 border-[#2F3D00] border rounded-full"
-            />
-            <h1 className="text-4xl md:text-6xl font-semibold">
-              {project.title.en}
-            </h1>
+    <section className="bg-primary ">
+      <div className="h-svh  mx-auto text-[#2F3D00] p-5 md:p-10 flex flex-col justify-between">
+        {/* HEADER */}
+        <div>
+          <div className="flex justify-between items-center">
+            <div className="flex gap-3 items-center">
+              <Image
+                src={project.logo}
+                alt={project.title.en}
+                width={100}
+                height={100}
+                className="size-12 md:size-16 border-[#2F3D00] border rounded-full"
+              />
+              <h1 className="text-2xl md:text-6xl font-semibold">
+                {project.title.en}
+              </h1>
+            </div>
+
+            <span className="text-sm md:text-xl font-medium">
+              {project.year}
+            </span>
           </div>
 
-          <span className="text-xl font-medium">{project.year}</span>
+          <article className="mt-3 md:mt-6 flex flex-col gap-4 md:gap-6">
+            <p className="text-sm md:text-xl">{project.description}</p>
+            <div className="flex gap-2">
+              {project.categories.map((category, index) => (
+                <span
+                  key={index}
+                  className="text-xs md:text-base border border-[#2F3D00]/30 bg-[#2F3D00]/5 px-2 py-1 md:px-4 md:py-1.5 rounded-full backdrop-blur-md hover:bg-[#2F3D00] hover:text-primary transition-colors cursor-default"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+          </article>
         </div>
 
-        <article className="mt-6">
-          <p className="text-xl">{project.description}</p>
-          <button
-            onClick={() => setOpen(true)}
-            className="ml-auto flex items-center gap-2 text-sm font-bold uppercase tracking-widest border-b-2 border-[#2F3D00] pb-1 hover:opacity-60 transition-all"
-          >
-            Learn More <LightbulbIcon className="size-4" />
-          </button>
-        </article>
+        {/* PROJECT IMAGES CAROUSEL */}
+        {project.images && project.images.length > 0 && (
+          <Carousel>
+            <CarouselContent className="mt-6">
+              {project.images.map((image, index) => (
+                <CarouselItem key={index} className="basis-1/2">
+                  <Image
+                    key={index}
+                    src={image}
+                    alt={`Project screenshot ${index}`}
+                    width={800}
+                    height={600}
+                    className="max-h-80"
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="text-black" />
+            <CarouselNext className="text-black" />
+          </Carousel>
+        )}
 
-        {/* KEY FEATURES */}
-        <section className="mt-6">
-          <h2 className="text-sm font-bold uppercase tracking-widest opacity-70">
-            Project Features
-          </h2>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Authentication",
-                desc: "Secure JWT-based login with role management.",
-              },
-              {
-                title: "Real-time Data",
-                desc: "Live updates using WebSockets for dashboard stats.",
-              },
-              {
-                title: "Responsive Design",
-                desc: "Optimized for mobile, tablet, and desktop views.",
-              },
-            ].map((feature, i) => (
-              <div
-                key={i}
-                className="p-4 border border-[#2F3D00]/20 rounded-2xl bg-white/10 backdrop-blur-sm"
-              >
-                <h3 className="font-bold text-lg">{feature.title}</h3>
-                <p className="text-sm leading-relaxed opacity-80">
-                  {feature.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
-
-      {/* PROJECT IMAGES CAROUSEL */}
-      {project.images && project.images.length > 0 && (
-        <section className="mt-6 flex gap-4 items-center">
-          {project.images.length > 1 &&
-            project.images.map((image, index) => (
-              <Image
-                key={index}
-                src={image}
-                alt={""}
-                width={500}
-                height={500}
-                className="w-1/4 max-h-60 object-cover border border-[#2F3D00]"
-              />
-            ))}
-        </section>
-      )}
-
-      {/* BOTTOM */}
-      <div className="d">
-        {/* TECH STACK SECTION */}
-        <section className="mt-6 pt-6 border-t border-[#2F3D00]/10 z-10">
-          <div className="flex items-center gap-3">
-            <span className="text-sm md:text-base font-bold uppercase tracking-wider w-full mb-2">
+        {/* BOTTOM */}
+        <div className="mt-6 border-t border-[#2F3D00]/20">
+          {/* TECH STACK SECTION */}
+          <section className="mt-4 md:mt-0 flex flex-col md:flex-row md:items-center gap-3 h-20 border-b border-[#2F3D00]/20">
+            <span className="text-sm md:text-base font-bold uppercase tracking-wider w-full">
               Built with
             </span>
-            {project.tech_stack.map((tech, index) => (
-              <span
-                key={index}
-                className="text-sm md:text-base border border-[#2F3D00]/30 bg-[#2F3D00]/5 px-4 py-1.5 rounded-full backdrop-blur-md hover:bg-[#2F3D00] hover:text-primary transition-colors cursor-default"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </section>
+            <div className="flex gap-2">
+              {project.tech_stack.map((tech, index) => (
+                <div
+                  key={index}
+                  className="text-xs md:text-base border border-[#2F3D00]/30 bg-[#2F3D00]/5 px-2 py-1 md:px-4 md:py-1.5 rounded-full backdrop-blur-md hover:bg-[#2F3D00] hover:text-primary transition-colors cursor-default"
+                >
+                  {tech}
+                </div>
+              ))}
+            </div>
+          </section>
 
-        {/* LINKS SECTION */}
-        <section className="mt-6 pt-6 border-t border-[#2F3D00]/10">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            {/* Heading: Removed w-full so it doesn't block the row */}
-            <h2 className="text-sm md:text-base font-bold uppercase tracking-wider whitespace-nowrap">
+          {/* LINKS SECTION */}
+          <section className="mt-4 md:mt-0 border-b border-[#2F3D00]/20 flex flex-col md:flex-row md:items-center gap-3 h-20">
+            <h2 className="text-sm md:text-base font-bold uppercase tracking-wider whitespace-nowrap w-full">
               Explore the Project
             </h2>
-
-            {/* Buttons Container: Pushed to the right by justify-between */}
             <div className="flex items-center gap-4">
               {project.github_link && (
                 <a
                   href={project.github_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-fit flex items-center gap-2 px-6 py-3 border border-[#2F3D00] rounded-full text-[#2F3D00] bg-transparent hover:bg-[#2F3D00] hover:text-primary transition-all text-base font-medium whitespace-nowrap"
+                  className="w-fit flex items-center gap-2 px-3 md:px-6 py-2 md:py-3 border border-[#2F3D00] rounded-full text-[#2F3D00] bg-transparent hover:bg-[#2F3D00] hover:text-primary transition-all text-sm md:text-base font-medium whitespace-nowrap"
                 >
-                  <GithubIcon className="size-5" />
+                  <GithubIcon className="size-4 md:size-5" />
                   <span>GitHub</span>
                 </a>
               )}
@@ -154,69 +129,17 @@ const Project = () => {
                   href={project.project_link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-fit flex items-center gap-2 px-6 py-3 bg-[#2F3D00] text-primary rounded-full hover:bg-opacity-90 transition-all text-base font-medium whitespace-nowrap"
+                  className="w-fit flex items-center gap-2 px-3 md:px-6 py-2 md:py-3 bg-[#2F3D00] text-primary rounded-full hover:bg-opacity-90 transition-all text-sm md:text-base font-medium whitespace-nowrap"
                 >
-                  <GlobeIcon className="size-5" />
+                  <GlobeIcon className="size-4 md:size-5" />
                   <span>Live Site</span>
                 </a>
               )}
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
       </div>
-
-      {/* LEARN MORE DIALOG */}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="bg-primary text-[#2F3D00] border-[#2F3D00]/20 min-w-2xl p-8 md:p-12 overflow-y-auto max-h-[90vh]">
-          <DialogHeader>
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-px w-8 bg-[#2F3D00]/40" />
-              <span className="text-xs font-bold uppercase tracking-[0.2em] opacity-60">
-                Technical Case Study
-              </span>
-            </div>
-            <DialogTitle className="text-4xl md:text-5xl font-semibold italic">
-              Challenges & Solutions
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="mt-10 space-y-10">
-            {/* THE CHALLENGE SECTION */}
-            <div className="relative p-6 border border-[#2F3D00]/20 rounded-2xl bg-white/5 shadow-inner">
-              <div className="absolute -top-4 left-6 bg-primary px-3 flex items-center gap-2">
-                <ShieldAlertIcon className="size-5 text-red-600" />
-                <span className="font-bold uppercase tracking-tighter text-sm">
-                  The Problem
-                </span>
-              </div>
-              <p className="text-lg md:text-xl leading-relaxed">
-                {project.challenges}
-              </p>
-            </div>
-
-            {/* THE SOLUTION SECTION */}
-            <div className="relative p-6 border border-[#2F3D00] rounded-2xl bg-[#2F3D00] text-primary shadow-xl">
-              <div className="absolute -top-4 left-6 bg-primary text-[#2F3D00] border border-[#2F3D00]/20 px-3 flex items-center gap-2 rounded-full">
-                <CheckCircle2Icon className="size-5 text-green-600" />
-                <span className="font-bold uppercase tracking-tighter text-sm">
-                  The Resolution
-                </span>
-              </div>
-              <p className="text-lg md:text-xl leading-relaxed">
-                {project.solution}
-              </p>
-            </div>
-          </div>
-
-          {/* FOOTER DECORATION */}
-          <div className="mt-8 flex justify-end">
-            <p className="text-[10px] uppercase tracking-widest opacity-40">
-              Documentation v1.0 — {project.title.en}
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
-    </div>
+    </section>
   );
 };
 

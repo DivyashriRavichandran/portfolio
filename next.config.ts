@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
     locales: ["en", "nl"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      new URL(
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+      ),
+    ],
+  },
 };
 const withNextIntl = createNextIntlPlugin();
 
