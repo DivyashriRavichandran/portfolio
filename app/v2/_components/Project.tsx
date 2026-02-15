@@ -1,18 +1,7 @@
 "use client";
-
-import React, { useState } from "react";
-import data from "@/data/data.json";
-import {
-  ArrowDownLeftIcon,
-  CheckCircle2Icon,
-  GithubIcon,
-  GlobeIcon,
-  LightbulbIcon,
-  ShieldAlertIcon,
-} from "lucide-react";
+import React from "react";
+import { GithubIcon, GlobeIcon } from "lucide-react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { cn } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
@@ -21,122 +10,120 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const Project = () => {
-  const t = useTranslations();
-  const [open, setOpen] = useState(false);
-  const project = data.projects[0];
+interface ProjectProps {
+  project: {
+    id: number;
+    title: string;
+    description: string;
+    year: number;
+    categories: string[];
+    tech_stack: string[];
+    github_link?: string;
+    project_link: string;
+    images: string[];
+  };
+  index: number;
+}
+
+// Fixed Color Palette for better legibility
+const colorThemes = [
+  { bg: "#d0fe38", text: "#2F3D00", border: "#2F3D00" }, // Primary (Lime)
+  { bg: "#ffa447", text: "#2d1600", border: "#4e2900" }, // Secondary (Orange/Amber)
+  { bg: "#a977ff", text: "#1a0044", border: "#2d0074" }, // Tertiary (Purple)
+];
+
+const Project = ({ project, index }: ProjectProps) => {
+  const theme = colorThemes[index % colorThemes.length];
 
   return (
-    <section className="bg-primary ">
-      <div className="h-svh  mx-auto text-[#2F3D00] p-5 md:p-10 flex flex-col justify-between">
-        {/* HEADER */}
-        <div>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-3 items-center">
-              <Image
-                src={project.logo}
-                alt={project.title.en}
-                width={100}
-                height={100}
-                className="size-12 md:size-16 border-[#2F3D00] border rounded-full"
-              />
-              <h1 className="text-2xl md:text-6xl font-semibold">
-                {project.title.en}
-              </h1>
-            </div>
-
-            <span className="text-sm md:text-xl font-medium">
-              {project.year}
+    <section
+      style={{ backgroundColor: theme.bg }}
+      className="h-svh w-full border-t border-black/10 flex flex-col overflow-hidden"
+    >
+      <div
+        style={{ color: theme.text }}
+        className="h-full mx-auto p-6 md:p-20 flex flex-col w-full max-w-7xl"
+      >
+        {/* TOP: Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-4">
+          <div className="flex flex-col gap-2">
+            <span className="text-xs font-bold uppercase tracking-widest opacity-70">
+              {project.year} / {project.categories.join(", ")}
             </span>
+            <h1 className="text-4xl md:text-7xl font-bold tracking-tighter leading-none">
+              {project.title}
+            </h1>
           </div>
 
-          <article className="mt-3 md:mt-6 flex flex-col gap-4 md:gap-6">
-            <p className="text-sm md:text-xl">{project.description}</p>
-            <div className="flex gap-2">
-              {project.categories.map((category, index) => (
-                <span
-                  key={index}
-                  className="text-xs md:text-base border border-[#2F3D00]/30 bg-[#2F3D00]/5 px-2 py-1 md:px-4 md:py-1.5 rounded-full backdrop-blur-md hover:bg-[#2F3D00] hover:text-primary transition-colors cursor-default"
-                >
-                  {category}
-                </span>
-              ))}
-            </div>
-          </article>
+          <div className="flex gap-3">
+            {project.github_link && (
+              <a
+                href={project.github_link}
+                target="_blank"
+                style={{ borderColor: theme.border }}
+                className="size-12 flex justify-center items-center border rounded-full hover:opacity-70 transition-all"
+              >
+                <GithubIcon size={22} />
+              </a>
+            )}
+            <a
+              href={project.project_link}
+              target="_blank"
+              style={{ backgroundColor: theme.text, color: theme.bg }}
+              className="size-12 flex justify-center items-center rounded-full hover:scale-105 transition-all"
+            >
+              <GlobeIcon size={22} />
+            </a>
+          </div>
         </div>
 
-        {/* PROJECT IMAGES CAROUSEL */}
-        {project.images && project.images.length > 0 && (
-          <Carousel>
-            <CarouselContent className="mt-6">
-              {project.images.map((image, index) => (
-                <CarouselItem key={index} className="basis-1/2">
-                  <Image
-                    key={index}
-                    src={image}
-                    alt={`Project screenshot ${index}`}
-                    width={800}
-                    height={600}
-                    className="max-h-80"
-                  />
+        {/* MIDDLE: Carousel */}
+        <div className="flex-1 flex items-center justify-center my-6 md:my-10 w-full relative group">
+          <Carousel className="w-full max-w-5xl">
+            <CarouselContent>
+              {project.images.map((img, i) => (
+                <CarouselItem key={i} className="basis-full md:basis-11/12">
+                  <div className="relative h-[35vh] md:h-[50vh] w-full rounded-2xl overflow-hidden shadow-2xl">
+                    <Image
+                      src={img}
+                      fill
+                      className="object-cover"
+                      alt={`${project.title} screenshot ${i + 1}`}
+                    />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="text-black" />
-            <CarouselNext className="text-black" />
+            <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">
+              <CarouselPrevious
+                style={{ borderColor: theme.border }}
+                className="bg-transparent -left-12"
+              />
+              <CarouselNext
+                style={{ borderColor: theme.border }}
+                className="bg-transparent -right-12"
+              />
+            </div>
           </Carousel>
-        )}
+        </div>
 
-        {/* BOTTOM */}
-        <div className="mt-6 border-t border-[#2F3D00]/20">
-          {/* TECH STACK SECTION */}
-          <section className="mt-4 md:mt-0 flex flex-col md:flex-row md:items-center gap-3 h-20 border-b border-[#2F3D00]/20">
-            <span className="text-sm md:text-base font-bold uppercase tracking-wider w-full">
-              Built with
-            </span>
-            <div className="flex gap-2">
-              {project.tech_stack.map((tech, index) => (
-                <div
-                  key={index}
-                  className="text-xs md:text-base border border-[#2F3D00]/30 bg-[#2F3D00]/5 px-2 py-1 md:px-4 md:py-1.5 rounded-full backdrop-blur-md hover:bg-[#2F3D00] hover:text-primary transition-colors cursor-default"
-                >
-                  {tech}
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* LINKS SECTION */}
-          <section className="mt-4 md:mt-0 border-b border-[#2F3D00]/20 flex flex-col md:flex-row md:items-center gap-3 h-20">
-            <h2 className="text-sm md:text-base font-bold uppercase tracking-wider whitespace-nowrap w-full">
-              Explore the Project
-            </h2>
-            <div className="flex items-center gap-4">
-              {project.github_link && (
-                <a
-                  href={project.github_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-fit flex items-center gap-2 px-3 md:px-6 py-2 md:py-3 border border-[#2F3D00] rounded-full text-[#2F3D00] bg-transparent hover:bg-[#2F3D00] hover:text-primary transition-all text-sm md:text-base font-medium whitespace-nowrap"
-                >
-                  <GithubIcon className="size-4 md:size-5" />
-                  <span>GitHub</span>
-                </a>
-              )}
-
-              {project.project_link && (
-                <a
-                  href={project.project_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-fit flex items-center gap-2 px-3 md:px-6 py-2 md:py-3 bg-[#2F3D00] text-primary rounded-full hover:bg-opacity-90 transition-all text-sm md:text-base font-medium whitespace-nowrap"
-                >
-                  <GlobeIcon className="size-4 md:size-5" />
-                  <span>Live Site</span>
-                </a>
-              )}
-            </div>
-          </section>
+        {/* BOTTOM: Footer */}
+        <div className="mt-auto flex flex-col gap-8">
+          <p className="text-lg md:text-2xl">{project.description}</p>
+          <div className="flex flex-wrap gap-2">
+            {project.tech_stack.map((tech) => (
+              <span
+                key={tech}
+                style={{
+                  borderColor: `${theme.text}40`,
+                  backgroundColor: `${theme.text}10`,
+                }}
+                className="text-[10px] md:text-xs font-bold uppercase border px-4 py-1.5 rounded-full backdrop-blur-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

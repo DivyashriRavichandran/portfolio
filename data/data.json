@@ -15,7 +15,12 @@
         "en": "University of Groningen, Netherlands",
         "nl": "Rijksuniversiteit Groningen, Nederland"
       },
-      "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+      "key_modules": [
+        "Advanced Software Engineering",
+        "Data Science & Machine Learning",
+        "Cloud Computing & DevOps",
+        "Research Methods in Computer Science"
+      ]
     },
     {
       "id": 2,
@@ -24,17 +29,27 @@
         "en": "BSc Computer Science",
         "nl": "BSc Computerwetenschappen"
       },
-      "period": {
-        "en": "Sep 2021 – Jul 2024",
-        "nl": "Sep 2021 – Jul 2024"
-      },
+      "period": { "en": "Sep 2021 – Jul 2024", "nl": "Sep 2021 – Jul 2024" },
       "institution": {
-        "en": "University of Leeds, United Kingdom",
-        "nl": "Universiteit van Leeds, Verenigd Koninkrijk"
+        "en": "University of Leeds, UK",
+        "nl": "Universiteit van Leeds, VK"
       },
-      "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      "description_2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      "thesis_link": ""
+      "grade": "Upper Second Class Honours (2:1)",
+      "thesis": {
+        "title": "DCGAN Model for Lung Cancer Detection",
+        "link": "https://github.com/"
+      },
+      "key_modules": [
+        "Distributed Systems",
+        "Artificial Intelligence",
+        "Cyber Security",
+        "Software Engineering"
+      ],
+      "relevant_projects": [
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!"
+      ]
     }
   ],
   "experience": [
@@ -57,19 +72,27 @@
         "en": "KP Platforms, Qatar",
         "nl": "KP Platforms, Qatar"
       },
-      "description_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      "description_2": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+      "key_outcomes": [
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!"
+      ],
+      "technologies": [
+        "Convex",
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "WorkOS"
+      ]
     }
   ],
   "projects": [
     {
       "id": 1,
       "logo": "/logos/dubbel-dutch.svg",
-      "title": {
-        "en": "DubbelDutch",
-        "nl": "DubbelDutch"
-      },
-      "year": "2026",
+      "title": "DubbelDutch",
+      "year": 2026,
       "tech_stack": ["React", "TypeScript", "WXT", "CSS"],
       "categories": ["Frontend", "Browser Extension"],
       "images": [
@@ -81,6 +104,42 @@
 
       "project_link": "https://www.dubbeldutch.com",
       "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
+    },
+    {
+      "id": 2,
+      "logo": "/logos/portfolio.svg",
+      "title": "AgriteQ",
+      "year": 2026,
+      "tech_stack": [
+        "Next.js",
+        "TypeScript",
+        "Convex",
+        "WorkOS",
+        "Tailwind CSS"
+      ],
+      "categories": ["Fullstack", "KP Platforms"],
+      "images": [
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      ],
+      "description": "The Qatar International Agricultural Exhibition (AgriteQ) is an annual event that showcases the latest innovations and technologies in the agricultural industry. The AgriteQ website provides information about the exhibition, including event details, exhibitor information, and visitor registration.",
+      "project_link": ""
+    },
+    {
+      "id": 3,
+      "logo": "/logos/portfolio.svg",
+      "title": "Portfolio Website",
+      "year": 2024,
+      "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "categories": ["Frontend", "Personal Project"],
+      "images": [
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      ],
+      "description": "This portfolio website is built using Next.js, TypeScript, and Tailwind CSS. It showcases my projects, experience, and education in a clean and modern design.",
+      "project_link": ""
     }
   ]
 }

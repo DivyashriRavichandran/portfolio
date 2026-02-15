@@ -5,7 +5,7 @@ import Contact from "./_components/Contact";
 import Footer from "./_components/Footer";
 import Navbar from "./_components/Navbar";
 import Hero from "./_components/Hero";
-import Project from "./_components/Project";
+import ProjectSection from "./_components/ProjectSection";
 
 const Home = () => {
   return (
@@ -13,9 +13,9 @@ const Home = () => {
       <Navbar />
       <Hero />
       <About />
-      <Project />
+      <ProjectSection />
       <EducationAndExperience />
-      <Contact />
+      {/* <Contact /> */}
       <Footer />
     </>
   );
