@@ -46,9 +46,9 @@
         "Software Engineering"
       ],
       "relevant_projects": [
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!"
+        "Vertex - Sports Centre Management System (Fullstack Web Application)",
+        "PGM Image Manipulation Program in C",
+        "Video Player Application using C++ and Qt"
       ]
     }
   ],
@@ -129,17 +129,135 @@
     {
       "id": 3,
       "logo": "/logos/portfolio.svg",
-      "title": "Portfolio Website",
-      "year": 2024,
+      "title": "CineDB",
+      "year": 2025,
       "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS"],
-      "categories": ["Frontend", "Personal Project"],
+      "categories": ["Frontend", "TMDB API"],
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "This portfolio website is built using Next.js, TypeScript, and Tailwind CSS. It showcases my projects, experience, and education in a clean and modern design.",
+      "description": "CineDB is a web application that allows users to browse and search for movies using the TMDB API. It provides detailed information about each movie, including ratings, reviews, and trailers.",
+      "project_link": ""
+    },
+    {
+      "id": 4,
+      "logo": "/logos/portfolio.svg",
+      "title": "REST API Project",
+      "year": 2026,
+      "tech_stack": ["Java", "Spring Boot", "MySQL"],
+      "categories": ["Backend", "REST API"],
+      "images": [
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      ],
+      "description": "This project involves developing a RESTful API using Java and Spring Boot. The API provides endpoints for managing resources such as users, products, and orders. It includes features such as authentication, validation, and error handling to ensure a robust and secure API.",
+      "project_link": ""
+    },
+    {
+      "id": 5,
+      "logo": "/logos/portfolio.svg",
+      "title": "Entso-E Dashboard",
+      "year": 2025,
+      "tech_stack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "D3.js",
+        "Java",
+        "Spring Boot",
+        "MySQL"
+      ],
+      "categories": ["Fullstack", "Data Visualization"],
+      "images": [
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      ],
+      "description": "A full-stack dashboard for energy management. The dashboard provides real-time data visualization and analytics for energy consumption, production, and distribution. It allows users to monitor and optimize their energy usage, track performance metrics, and make informed decisions to improve energy efficiency.",
+      "project_link": ""
+    },
+    {
+      "id": 6,
+      "logo": "/logos/portfolio.svg",
+      "title": "Lung Cancer Detection",
+      "year": 2024,
+      "tech_stack": ["Python", "TensorFlow", "Keras", "FastAPI"],
+      "categories": ["Deep Learning", "Healthcare", "BSc Thesis"],
+      "images": [
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      ],
+      "description": "This project involves developing a Deep Convolutional Generative Adversarial Network (DCGAN) model for lung cancer detection. The model is trained on a dataset of lung CT scans to identify and classify cancerous nodules. The goal is to improve early detection and diagnosis of lung cancer, ultimately enhancing patient outcomes.",
       "project_link": ""
     }
-  ]
+  ],
+  "open-source": [
+    {
+      "id": 1,
+      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+
+      "title": "Advent of Code",
+      "description": "A collection of coding challenges and puzzles from the Advent of Code event. Each challenge tests problem-solving skills and algorithmic thinking, providing an opportunity to improve coding proficiency and learn new techniques.",
+      "tech_stack": ["JavaScript"],
+      "github_link": ""
+    },
+    {
+      "id": 2,
+      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+      "title": "Flip Card Component - Animate UI",
+      "description": "A reusable flip card component with smooth animations for interactive user interfaces. This component can be used to display content on both sides of the card, enhancing the visual appeal and user experience of web applications.",
+      "tech_stack": ["React", "Tailwind CSS"],
+      "github_link": ""
+    },
+    {
+      "id": 3,
+      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+      "title": "Open Source Project 3",
+      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
+      "tech_stack": ["React", "Tailwind CSS"],
+      "github_link": ""
+    }
+  ],
+  "about": {
+    "description": "",
+    "skills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "SQL",
+      "Python",
+      "TensorFlow",
+      "Keras"
+    ],
+    "sections": [
+      {
+        "logo": "/movieicon.png",
+        "title": "Favourite Film",
+        "content": "Harry Potter and the Prisoner of Azkaban (2004)"
+      },
+      {
+        "logo": "/bookicon.png",
+        "title": "Favourite Book",
+        "content": "The Alchemist by Paulo Coelho"
+      },
+      {
+        "logo": "/hobbiesicon.png",
+        "title": "Hobbies",
+        "content": "Traveling, Cooking, Playing Football, Photography"
+      },
+      {
+        "logo": "/funfacticon.png",
+        "title": "Fun Fact",
+        "content": "I have a collection of over 100 vinyl records from various genres and artists."
+      }
+    ]
+  }
 }

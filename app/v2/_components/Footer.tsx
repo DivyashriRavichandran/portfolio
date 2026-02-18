@@ -92,8 +92,8 @@ const Footer = () => {
       className="relative w-full bg-background pt-24 pb-12 px-6 md:px-16 overflow-hidden border-t border-foreground/5"
     >
       {/* Background Watermark - High End Branding */}
-      <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03] dark:opacity-[0.05]">
-        <h2 className="text-[20vw] font-black leading-none tracking-tighter">
+      <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03]">
+        <h2 className="text-[40vw] font-black leading-none tracking-tighter">
           DIVYASHRI.
         </h2>
       </div>

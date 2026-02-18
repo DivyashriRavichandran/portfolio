@@ -38,7 +38,7 @@ const Project = ({ project, index }: ProjectProps) => {
   return (
     <section
       style={{ backgroundColor: theme.bg }}
-      className="h-svh w-full border-t border-black/10 flex flex-col overflow-hidden"
+      className="h-svh w-full border-t border-black/10 flex flex-col overflow-hidden rounded-4xl"
     >
       <div
         style={{ color: theme.text }}
@@ -79,11 +79,11 @@ const Project = ({ project, index }: ProjectProps) => {
 
         {/* MIDDLE: Carousel */}
         <div className="flex-1 flex items-center justify-center my-6 md:my-10 w-full relative group">
-          <Carousel className="w-full max-w-5xl">
+          <Carousel className="w-full">
             <CarouselContent>
               {project.images.map((img, i) => (
-                <CarouselItem key={i} className="basis-full md:basis-11/12">
-                  <div className="relative h-[35vh] md:h-[50vh] w-full rounded-2xl overflow-hidden shadow-2xl">
+                <CarouselItem key={i} className="basis-full md:basis-1/2">
+                  <div className="relative h-[40vh] md:max-h-[50vh] w-full rounded-2xl overflow-hidden shadow-2xl">
                     <Image
                       src={img}
                       fill

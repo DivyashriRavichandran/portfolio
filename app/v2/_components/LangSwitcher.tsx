@@ -15,23 +15,25 @@ const LangSwitcher = ({ className }: { className?: string }) => {
     window.location.reload();
   };
   return (
-    <Button
-      variant={"secondary"}
-      className={cn("gap-2", className)}
+    <button
+      className={cn(
+        "flex items-center gap-3 px-4 py-2 rounded-full bg-[#d0fe38] text-black transition-all duration-300 group",
+        className,
+      )}
       onClick={() => handleOnLocaleChange(locale == "nl" ? "en" : "nl")}
     >
       {locale == "en" ? (
         <>
-          <Image src="/nl-flag.png" alt="Dutch Flag" width={20} height={20} />
           NL
+          <Image src="/nl-flag.png" alt="Dutch Flag" width={20} height={20} />
         </>
       ) : (
         <>
-          <Image src="/uk-flag.png" alt="UK Flag" width={20} height={20} />
           EN
+          <Image src="/uk-flag.png" alt="UK Flag" width={20} height={20} />
         </>
       )}
-    </Button>
+    </button>
   );
 };
 
