@@ -58,7 +58,7 @@ const TimelineItem = ({
           alt={title}
           width={64}
           height={64}
-          className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 size-12 lg:size-16 rounded-full border border-foreground/10 bg-white"
+          className="w-full object-contain transition-all duration-500 size-12 lg:size-16 rounded-full border border-foreground/10 bg-white"
         />
       </div>
 
@@ -96,10 +96,10 @@ const TimelineItem = ({
         {/* THESIS */}
         {item.thesis && (
           <div className="mt-6 px-4 py-2 bg-foreground/[0.03] border-l-4 border-[#d0fe38] rounded-r-xl">
-            <span className="text-[10px] uppercase font-sembold tracking-widest opacity-80">
+            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
               Research Thesis
             </span>
-            <p className="text-base lg:text-lg font-medium mt-1 leading-tight">
+            <p className="text-base mt-1 md:mt-2 tracking-wide italic opacity-70">
               {item.thesis.title}
             </p>
             {item.thesis.link && (

@@ -36,7 +36,7 @@
       },
       "grade": "Upper Second Class Honours (2:1)",
       "thesis": {
-        "title": "DCGAN Model for Lung Cancer Detection",
+        "title": "Classification of Histopathological Images for Lung Cancer Detection using Deep Convolutional Generative Adversarial Network (DCGAN) Model",
         "link": "https://github.com/"
       },
       "key_modules": [
@@ -103,7 +103,8 @@
       "description": "DubbelDutch is a Google Chrome extension that provides real-time english translations for npo.nl and kijk.nl. It uses the google translation API to deliver accurate translations of the dutch subtitbles. It has dual language support, allowing users to view both the original Dutch content and the English translation simultaneously.",
 
       "project_link": "https://www.dubbeldutch.com",
-      "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
+      "github_link": "https://github.com/divyashriravichandran/dubbel-dutch",
+      "icon": "MdSubtitles"
     },
     {
       "id": 2,
@@ -124,7 +125,9 @@
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
       "description": "The Qatar International Agricultural Exhibition (AgriteQ) is an annual event that showcases the latest innovations and technologies in the agricultural industry. The AgriteQ website provides information about the exhibition, including event details, exhibitor information, and visitor registration.",
-      "project_link": ""
+      "project_link": "",
+      "github_link": "",
+      "icon": "MdAgriculture"
     },
     {
       "id": 3,
@@ -134,12 +137,14 @@
       "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS"],
       "categories": ["Frontend", "TMDB API"],
       "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+        "/cinedb-1.png",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
       "description": "CineDB is a web application that allows users to browse and search for movies using the TMDB API. It provides detailed information about each movie, including ratings, reviews, and trailers.",
-      "project_link": ""
+      "project_link": "",
+      "github_link": "",
+      "icon": "MdMovieCreation"
     },
     {
       "id": 4,
@@ -154,7 +159,9 @@
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
       "description": "This project involves developing a RESTful API using Java and Spring Boot. The API provides endpoints for managing resources such as users, products, and orders. It includes features such as authentication, validation, and error handling to ensure a robust and secure API.",
-      "project_link": ""
+      "project_link": "",
+      "github_link": "",
+      "icon": "MdCode"
     },
     {
       "id": 5,
@@ -177,7 +184,9 @@
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
       "description": "A full-stack dashboard for energy management. The dashboard provides real-time data visualization and analytics for energy consumption, production, and distribution. It allows users to monitor and optimize their energy usage, track performance metrics, and make informed decisions to improve energy efficiency.",
-      "project_link": ""
+      "project_link": "",
+      "github_link": "",
+      "icon": "RiDashboard3Fill"
     },
     {
       "id": 6,
@@ -192,7 +201,9 @@
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
       "description": "This project involves developing a Deep Convolutional Generative Adversarial Network (DCGAN) model for lung cancer detection. The model is trained on a dataset of lung CT scans to identify and classify cancerous nodules. The goal is to improve early detection and diagnosis of lung cancer, ultimately enhancing patient outcomes.",
-      "project_link": ""
+      "project_link": "",
+      "github_link": "",
+      "icon": "MdHealthAndSafety"
     }
   ],
   "open-source": [
@@ -224,7 +235,7 @@
   ],
   "about": {
     "description": "",
-    "skills": [
+    "tech_stack": [
       "JavaScript",
       "TypeScript",
       "React",
@@ -237,7 +248,23 @@
       "TensorFlow",
       "Keras"
     ],
-    "sections": [
+    "spotify_tracks": [
+      "3c0IzRLA4OtKgcsaub6Yv9",
+      "2WfaOiMkCvy7F5fcp2zZ8L",
+      "13M4YIND38VDlSfdxKLgpl",
+      "40XiAOitWuV9bJKh4DHHpB"
+    ],
+    "hardwares": [
+      { "name": "MacBook Pro M5", "icon": "/macbookpro.png" },
+      { "name": "Apple Studio Display", "icon": "/studiadisplay.png" },
+      { "name": "Logitech MX Master 3S", "icon": "/mxmaster3s.png" },
+      {
+        "name": "Keychron Q1 Pro (Brown Switches)",
+        "icon": "/keychronq1pro.png"
+      },
+      { "name": "34 Dell UltraSharp Curved", "icon": "/dellultrasharp.png" }
+    ],
+    "beyond_code": [
       {
         "logo": "/movieicon.png",
         "title": "Favourite Film",
