@@ -17,7 +17,8 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Linkedin, Github, ArrowUp } from "lucide-react";
+import { ArrowUpRight, Linkedin, Github, ArrowUp, Link } from "lucide-react";
+import { SignedIn } from "@clerk/nextjs";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -241,6 +242,14 @@ const Footer = () => {
             <a href="#works" className="hover:opacity-100 transition-opacity">
               Works
             </a>
+            <SignedIn>
+              <Link
+                href="/admin"
+                className="text-xs opacity-50 hover:opacity-100"
+              >
+                Access Terminal
+              </Link>
+            </SignedIn>
           </div>
         </div>
       </div>

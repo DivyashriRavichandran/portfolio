@@ -18,6 +18,8 @@ const buttonVariants = cva(
         ghost: "backdrop-blur-sm text-foreground hover:bg-muted/40",
         link: "text-primary underline-offset-4 hover:underline",
         none: "",
+        admin:
+          "bg-primary hover:opacity-80 text-primary-foreground uppercase tracking-widest font-bold text-xs gap-2",
       },
       size: {
         default: "h-10 px-4 py-2",
