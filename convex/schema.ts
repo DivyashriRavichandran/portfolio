@@ -34,17 +34,24 @@ export default defineSchema({
     image: v.string(),
     title: localeString,
     institution: localeString, // Used as Company Name
+    duration: v.string(),
     period: localeString,
     key_outcomes: v.optional(v.array(v.string())),
     technologies: v.optional(v.array(v.string())),
   }),
 
-  siteSettings: defineTable({
-    aboutBio: v.string(),
+  about: defineTable({
+    heroTitle: v.string(),
     navbarLinks: v.array(v.object({ label: v.string(), href: v.string() })),
+    aboutBio: v.string(),
+    techStack: v.array(v.string()),
+    spotify_playlist: v.optional(v.array(v.string())),
+    hardware_setup: v.optional(v.array(v.string())),
+    interests: v.optional(
+      v.array(v.object({ title: v.string(), description: v.string() })),
+    ),
     resumeUrl: v.string(),
     linkedinUrl: v.string(),
     githubUrl: v.string(),
-    heroTitle: v.string(),
   }),
 });

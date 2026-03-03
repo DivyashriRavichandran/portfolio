@@ -1,16 +1,12 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 
-// 1. FETCH ALL EDUCATION ENTRIES
-// Used by both the public portfolio and the Admin Table
 export const get = query({
   handler: async (ctx) => {
     return await ctx.db.query("education").collect();
   },
 });
 
-// 2. CREATE A NEW EDUCATION ENTRY
-// Used by your AddDegreeCMS form
 export const create = mutation({
   args: {
     image: v.string(),
@@ -31,8 +27,7 @@ export const create = mutation({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
-    // Safety check: Only you can modify the academic record
-    if (!identity || identity.email !== "your-email@example.com") {
+    if (!identity) {
       throw new Error("Unauthorised: System access denied.");
     }
 
@@ -40,8 +35,6 @@ export const create = mutation({
   },
 });
 
-// 3. REMOVE AN ENTRY
-// Used by the Trash icon in your Admin Table
 export const remove = mutation({
   args: { id: v.id("education") },
   handler: async (ctx, args) => {

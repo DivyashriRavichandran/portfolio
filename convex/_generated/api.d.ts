@@ -8,11 +8,11 @@
  * @module
  */
 
+import type * as about from "../about.js";
 import type * as education from "../education.js";
 import type * as experience from "../experience.js";
 import type * as images from "../images.js";
 import type * as projects from "../projects.js";
-import type * as siteSetttings from "../siteSetttings.js";
 
 import type {
   ApiFromModules,
@@ -21,11 +21,11 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  about: typeof about;
   education: typeof education;
   experience: typeof experience;
   images: typeof images;
   projects: typeof projects;
-  siteSetttings: typeof siteSetttings;
 }>;
 
 /**

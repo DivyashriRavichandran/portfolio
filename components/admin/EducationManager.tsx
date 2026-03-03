@@ -1,4 +1,3 @@
-// components/admin/EducationManager.tsx
 "use client";
 
 import { useQuery, useMutation } from "convex/react";
@@ -11,59 +10,106 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Trash2, Plus, GraduationCap } from "lucide-react";
+import { Trash2, FolderCode, Edit, Plus } from "lucide-react";
+import { toast } from "sonner";
+import ProjectDialog from "./dialogs/ProjectDialog";
+import { Id } from "@/convex/_generated/dataModel";
+import { Button } from "../ui/button";
 
 export default function EducationManager() {
-  const education = useQuery(api.education.get); // Write this query in convex/education.ts
-  const remove = useMutation(api.education.remove);
+  const education = useQuery(api.education.get);
+  const removeEducation = useMutation(api.education.remove);
+
+  if (education === undefined)
+    return (
+      <div className="animate-pulse opacity-20 py-20 text-center uppercase tracking-widest">
+        Loading Education....
+      </div>
+    );
+
+  const handleDelete = async (id: Id<"education">) => {
+    if (
+      confirm(
+        "Are you sure you want to permanently delete this education entry?",
+      )
+    ) {
+      try {
+        await removeEducation({ id });
+        toast.success("Education entry purged from archive.");
+      } catch (err) {
+        toast.error(`Error: Could not delete entry: ${err}`);
+      }
+    }
+  };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
+      {/* HEADER AREA */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-black uppercase flex items-center gap-2">
-          <GraduationCap className="text-[#d0fe38]" /> Education
-        </h2>
-        <Button className="bg-[#d0fe38] text-black font-bold rounded-full text-xs px-6">
-          <Plus size={14} className="mr-2" /> Add Degree
-        </Button>
+        <div className="flex items-center gap-4">
+          <div className="p-2.5 bg-foreground/10 rounded-full size-10 flex items-center justify-center border border-foreground/10">
+            <FolderCode size={32} className="text-[#d0fe38]" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-semibold uppercase tracking-wide">
+              Education
+            </h2>
+            <p className="text-[10px] uppercase opacity-60 font-semibold tracking-widest">
+              Total: {education.length.toString().padStart(2, "0")}
+            </p>
+          </div>
+        </div>
+        <ProjectDialog>
+          <Button variant={"admin"}>
+            <Plus /> New Entry
+          </Button>
+        </ProjectDialog>
       </div>
-
-      <div className="border border-white/5 rounded-2xl overflow-hidden bg-white/[0.02]">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-white/5 hover:bg-transparent uppercase text-[10px] tracking-widest">
-              <TableHead>Degree (EN)</TableHead>
-              <TableHead>Institution</TableHead>
-              <TableHead>Grade</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+      {/* TABLE AREA */}
+      <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
+        <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
+          <TableRow className="border-white/5">
+            <TableHead className="pl-8 w-100">Education Detail</TableHead>
+            <TableHead>Institution</TableHead>
+            <TableHead>Period</TableHead>
+            <TableHead className="pr-8 text-right">Management</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {education.length === 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={5}
+                className="text-center py-32 opacity-50 italic"
+              >
+                The vault is currently empty.
+              </TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {education?.map((item) => (
-              <TableRow key={item._id} className="border-white/5">
-                <TableCell className="font-bold">{item.title.en}</TableCell>
-                <TableCell className="opacity-60">
-                  {item.institution.en}
+          ) : (
+            education.map((entry) => (
+              <TableRow key={entry._id}>
+                <TableCell className="font-medium text-lg pl-8">
+                  {entry.title.en}
                 </TableCell>
-                <TableCell className="text-[#d0fe38] font-mono">
-                  {item.grade || "N/A"}
-                </TableCell>
-                <TableCell className="text-right">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => remove({ id: item._id })}
-                    className="hover:text-red-500 hover:bg-red-500/10"
+                <TableCell className="">{entry.institution.en}</TableCell>
+                <TableCell className="">{entry.period.en}</TableCell>
+
+                <TableCell className="text-right pr-8 gap-4 flex justify-end">
+                  <button className="p-2 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all">
+                    <Edit size={20} />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(entry._id)}
+                    className="p-2 rounded-full hover:bg-red-500/10 hover:text-red-500 transition-all"
                   >
-                    <Trash2 size={16} />
-                  </Button>
+                    <Trash2 size={20} />
+                  </button>
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            ))
+          )}
+        </TableBody>
+      </Table>
     </div>
   );
 }

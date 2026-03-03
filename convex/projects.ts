@@ -26,11 +26,38 @@ export const create = mutation({
   },
 });
 
+export const update = mutation({
+  args: {
+    id: v.id("projects"),
+    title: v.object({ en: v.string(), nl: v.string() }),
+    year: v.number(),
+    icon: v.string(),
+    categories: v.array(v.string()),
+    description: v.object({ en: v.string(), nl: v.string() }),
+    tech_stack: v.array(v.string()),
+    project_link: v.string(),
+    github_link: v.optional(v.string()),
+    images: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, {
+      title: args.title,
+      year: args.year,
+      icon: args.icon,
+      categories: args.categories,
+      description: args.description,
+      tech_stack: args.tech_stack,
+      project_link: args.project_link,
+      github_link: args.github_link,
+      images: args.images,
+    });
+  },
+});
+
 export const remove = mutation({
   args: { id: v.id("projects") },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    // Only you (the admin) can delete
     if (!identity) {
       throw new Error("Unauthorised");
     }

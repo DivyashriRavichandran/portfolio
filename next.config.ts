@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
       new URL(
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
       ),
+      {
+        protocol: "https",
+        hostname: "trustworthy-husky-54.eu-west-1.convex.cloud",
+        port: "",
+        pathname: "/api/storage/**",
+      },
     ],
   },
 };
