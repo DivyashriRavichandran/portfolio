@@ -8,7 +8,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
-  Save,
   UserCircle,
   Cpu,
   Plus,
@@ -18,16 +17,34 @@ import {
   Globe,
   Terminal,
   Music,
+  Command,
+  Layers,
 } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 import Subheading from "@/app/v2/_components/Subheading";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Badge } from "../ui/badge";
+import { CommandGroup, CommandInput, CommandItem } from "../ui/command";
+import StackIcon from "tech-stack-icons";
 
-// Renamed interface for consistency
+const techOptions = [
+  "js",
+  "typescript",
+  "react",
+  "nextjs",
+  "python",
+  "java",
+  "postgresql",
+  "springboot",
+  "convex",
+  "workos",
+];
+
 interface AboutData {
   _id?: Id<"about">;
   _creationTime?: number;
   heroTitle: string;
-  aboutBio: string;
+  biography: string;
   navbarLinks: { label: string; href: string }[];
   techStack: string[];
   resumeUrl: string;
@@ -35,38 +52,27 @@ interface AboutData {
   githubUrl: string;
   spotify_playlist?: string[];
   hardware_setup?: string[];
-  interests?: { title: string; description: string }[];
+  interests?: { title: string; description: string; image?: string }[];
 }
-
-const DEFAULT_ABOUT: AboutData = {
-  heroTitle: "Frontend Developer",
-  aboutBio:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  navbarLinks: [{ label: "Home", href: "/" }],
-  techStack: ["React", "Next.js", "TypeScript"],
-  hardware_setup: [
-    "16-inch MacBook Pro",
-    "Dell UltraSharp Monitor",
-    "Logitech MX Master 3 Mouse",
-  ],
-  interests: [
-    {
-      title: "Coding",
-      description: "I love coding and building new projects.",
-    },
-  ],
-  spotify_playlist: ["Track 1", "Track 2", "Track 3"],
-  resumeUrl: "https://example.com/resume.pdf",
-  linkedinUrl: "https://www.linkedin.com/in/example",
-  githubUrl: "https://github.com/example",
-};
 
 export default function AboutManager() {
   const about = useQuery(api.about.get);
   const updateAbout = useMutation(api.about.update);
 
-  const [formData, setFormData] = useState<AboutData>(DEFAULT_ABOUT);
+  const [formData, setFormData] = useState<AboutData>({
+    heroTitle: "",
+    biography: "",
+    navbarLinks: [],
+    techStack: [],
+    resumeUrl: "",
+    linkedinUrl: "",
+    githubUrl: "",
+    spotify_playlist: [],
+    hardware_setup: [],
+    interests: [],
+  });
   const [isSyncing, setIsSyncing] = useState(false);
+  const [spotifyInput, setSpotifyInput] = useState("");
 
   useEffect(() => {
     if (about) {
@@ -76,29 +82,28 @@ export default function AboutManager() {
   }, [about]);
 
   const handleSave = async () => {
+    setIsSyncing(true);
     if (!formData._id)
       return toast.error(
         "No document ID found. Please create an entry in Convex first.",
       );
 
-    const toastId = toast.loading("Updating global context...");
     try {
       const { _id, _creationTime, ...updateData } = formData;
 
       await updateAbout({
         id: _id,
         ...updateData,
-        // Ensure optional arrays are at least empty arrays if undefined
         interests: updateData.interests || [],
         hardware_setup: updateData.hardware_setup || [],
         spotify_playlist: updateData.spotify_playlist || [],
       });
-      toast.success("Global Identity Synchronized", { id: toastId });
+      toast.success("About section updated!");
     } catch (e) {
-      toast.error("Protocol failure: Check mutation arguments", {
-        id: toastId,
-      });
+      toast.error("Failed to update About section.");
       console.error(e);
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -154,15 +159,14 @@ export default function AboutManager() {
           </label>
           <Textarea
             variant="admin"
-            className="min-h-[120px]"
-            value={formData.aboutBio}
+            className="min-h-30"
+            value={formData.biography}
             onChange={(e) =>
-              setFormData({ ...formData, aboutBio: e.target.value })
+              setFormData({ ...formData, biography: e.target.value })
             }
           />
         </div>
       </div>
-
       {/* NAVIGATION LINKS */}
       <div className="space-y-4">
         <Subheading icon={Layout} text="System Nav" />
@@ -199,7 +203,7 @@ export default function AboutManager() {
                 size="icon"
                 variant="ghost"
                 onClick={() => removeFromArray("navbarLinks", idx)}
-                className="hover:text-red-500 flex-shrink-0"
+                className="hover:text-red-500 shrink-0"
               >
                 <Trash2 size={16} />
               </Button>
@@ -215,21 +219,58 @@ export default function AboutManager() {
         </div>
       </div>
 
+      {/* TECH STACK */}
       <div className="space-y-4">
         <Subheading icon={Terminal} text="Tech Stack" />
-        <Input
-          variant="admin"
-          value={formData.techStack.join(", ")}
-          onChange={(e) =>
-            setFormData({
-              ...formData,
-              techStack: e.target.value
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean),
-            })
-          }
-        />
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full justify-start">
+              Select Tech Stack
+            </Button>
+          </PopoverTrigger>
+
+          <PopoverContent className="w-80 p-0">
+            <Command>
+              <CommandInput placeholder="Search tech..." />
+
+              <CommandGroup>
+                {techOptions.map((tech) => (
+                  <CommandItem
+                    key={tech}
+                    onSelect={() => {
+                      if (!formData.techStack.includes(tech)) {
+                        setFormData({
+                          ...formData,
+                          techStack: [...formData.techStack, tech],
+                        });
+                      }
+                    }}
+                  >
+                    <StackIcon name={tech} />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </Command>
+          </PopoverContent>
+        </Popover>
+
+        {/* Selected tech stack */}
+        <div className="flex flex-wrap gap-2">
+          {formData.techStack.map((tech) => (
+            <div
+              key={tech}
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  techStack: formData.techStack.filter((t) => t !== tech),
+                })
+              }
+            >
+              <StackIcon name={tech} className="size-6" />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="space-y-4">
@@ -249,8 +290,60 @@ export default function AboutManager() {
         />
       </div>
 
+      {/* SPOTIFY */}
       <div className="space-y-4">
         <Subheading icon={Music} text="Spotify Top Tracks" />
+
+        {/* Input */}
+        <div className="flex gap-2">
+          <Input
+            variant="admin"
+            placeholder="Enter Spotify track ID..."
+            value={spotifyInput}
+            onChange={(e) => setSpotifyInput(e.target.value)}
+          />
+          <Button
+            type="button"
+            onClick={() => {
+              if (!spotifyInput.trim()) return;
+
+              setFormData({
+                ...formData,
+                spotify_playlist: [
+                  ...(formData.spotify_playlist || []),
+                  spotifyInput.trim(),
+                ],
+              });
+
+              setSpotifyInput("");
+            }}
+          >
+            <Plus size={16} />
+          </Button>
+        </div>
+
+        {/* Track IDs */}
+        <div className="flex flex-wrap gap-2">
+          {formData.spotify_playlist?.map((id, i) => (
+            <Badge
+              key={i}
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  spotify_playlist: formData?.spotify_playlist?.filter(
+                    (_, index) => index !== i,
+                  ),
+                })
+              }
+            >
+              {id} ✕
+            </Badge>
+          ))}
+        </div>
+
+        {/* Preview */}
         <div className="grid grid-cols-2 gap-4">
           {formData.spotify_playlist?.map((id, i) => (
             <iframe
@@ -267,6 +360,7 @@ export default function AboutManager() {
         </div>
       </div>
 
+      {/* SOCIAL LINKS */}
       <div className="space-y-4">
         <Subheading icon={Globe} text="Social Links" />
         {["resumeUrl", "linkedinUrl", "githubUrl"].map((key) => (
@@ -285,6 +379,101 @@ export default function AboutManager() {
         ))}
       </div>
 
+      {/* OTHER INTERESTS */}
+      <div className="space-y-4 col-span-2">
+        <Subheading icon={Layers} text="Beyond Code" />
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {formData.interests?.map((interest, index) => (
+            <div
+              key={index}
+              className="relative rounded-2xl border  bg-background p-5 space-y-4 shadow-sm"
+            >
+              {/* REMOVE BUTTON */}
+              <Button
+                size="icon"
+                variant="destructive"
+                className="absolute top-3 right-3 h-7 w-7"
+                onClick={() =>
+                  setFormData({
+                    ...formData,
+                    interests: formData.interests?.filter(
+                      (_, i) => i !== index,
+                    ),
+                  })
+                }
+              >
+                ✕
+              </Button>
+
+              {/* IMAGE PREVIEW */}
+              {interest.image && (
+                <div className="overflow-hidden rounded-xl h-60">
+                  <img
+                    src={interest.image}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+
+              {/* TITLE */}
+              <Input
+                variant="admin"
+                placeholder="Title (Music, Movies, Design...)"
+                value={interest.title}
+                onChange={(e) => {
+                  const updated = [...(formData.interests ?? [])];
+                  updated[index].title = e.target.value;
+                  setFormData({ ...formData, interests: updated });
+                }}
+              />
+
+              {/* DESCRIPTION */}
+              <textarea
+                placeholder="Short description..."
+                value={interest.description}
+                onChange={(e) => {
+                  const updated = [...(formData.interests ?? [])];
+                  updated[index].description = e.target.value;
+                  setFormData({ ...formData, interests: updated });
+                }}
+                className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+
+              {/* IMAGE URL */}
+              <Input
+                variant="admin"
+                placeholder="Image URL"
+                value={interest.image || ""}
+                onChange={(e) => {
+                  const updated = [...(formData.interests ?? [])];
+                  updated[index].image = e.target.value;
+                  setFormData({ ...formData, interests: updated });
+                }}
+              />
+            </div>
+          ))}
+
+          {/* ADD CARD */}
+          <button
+            type="button"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                interests: [
+                  ...(formData.interests || []),
+                  { title: "", description: "", image: "" },
+                ],
+              })
+            }
+            className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border p-10 hover:bg-muted/40 transition text-sm opacity-70 hover:opacity-100"
+          >
+            <div className="text-3xl mb-2">＋</div>
+            Add Interest
+          </button>
+        </div>
+      </div>
       {/* SAVE BUTTON */}
       <Button
         onClick={handleSave}

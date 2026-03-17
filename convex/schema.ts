@@ -43,12 +43,18 @@ export default defineSchema({
   about: defineTable({
     heroTitle: v.string(),
     navbarLinks: v.array(v.object({ label: v.string(), href: v.string() })),
-    aboutBio: v.string(),
+    biography: v.string(),
     techStack: v.array(v.string()),
     spotify_playlist: v.optional(v.array(v.string())),
     hardware_setup: v.optional(v.array(v.string())),
     interests: v.optional(
-      v.array(v.object({ title: v.string(), description: v.string() })),
+      v.array(
+        v.object({
+          title: v.string(),
+          description: v.string(),
+          image: v.optional(v.string()),
+        }),
+      ),
     ),
     resumeUrl: v.string(),
     linkedinUrl: v.string(),

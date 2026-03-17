@@ -12,8 +12,7 @@ export const update = mutation({
   args: {
     id: v.id("about"),
     heroTitle: v.string(),
-    aboutBio: v.string(),
-    // Arrays of objects need specific sub-validators
+    biography: v.string(),
     navbarLinks: v.array(
       v.object({
         label: v.string(),
@@ -21,7 +20,6 @@ export const update = mutation({
       }),
     ),
     techStack: v.array(v.string()),
-    // Use v.optional for fields that might not be there
     spotify_playlist: v.optional(v.array(v.string())),
     hardware_setup: v.optional(v.array(v.string())),
     interests: v.optional(
@@ -39,7 +37,6 @@ export const update = mutation({
   handler: async (ctx, args) => {
     const { id, ...settings } = args;
 
-    // Check if document exists first
     const existing = await ctx.db.get(id);
     if (!existing) {
       throw new Error("About configuration document not found.");
