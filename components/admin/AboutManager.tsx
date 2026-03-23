@@ -19,6 +19,7 @@ import {
   Music,
   Command,
   Layers,
+  ImagePlus,
 } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 import Subheading from "@/app/v2/_components/Subheading";
@@ -26,6 +27,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Badge } from "../ui/badge";
 import { CommandGroup, CommandInput, CommandItem } from "../ui/command";
 import StackIcon from "tech-stack-icons";
+import Image from "next/image";
+import { InterestSection } from "./InterestSection";
 
 const techOptions = [
   "js",
@@ -52,7 +55,7 @@ interface AboutData {
   githubUrl: string;
   spotify_playlist?: string[];
   hardware_setup?: string[];
-  interests?: { title: string; description: string; image?: string }[];
+  interests?: { title: string; description: string; image: string }[];
 }
 
 export default function AboutManager() {
@@ -167,6 +170,7 @@ export default function AboutManager() {
           />
         </div>
       </div>
+
       {/* NAVIGATION LINKS */}
       <div className="space-y-4">
         <Subheading icon={Layout} text="System Nav" />
@@ -380,100 +384,8 @@ export default function AboutManager() {
       </div>
 
       {/* OTHER INTERESTS */}
-      <div className="space-y-4 col-span-2">
-        <Subheading icon={Layers} text="Beyond Code" />
+      <InterestSection formData={formData} setFormData={setFormData} />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {formData.interests?.map((interest, index) => (
-            <div
-              key={index}
-              className="relative rounded-2xl border  bg-background p-5 space-y-4 shadow-sm"
-            >
-              {/* REMOVE BUTTON */}
-              <Button
-                size="icon"
-                variant="destructive"
-                className="absolute top-3 right-3 h-7 w-7"
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    interests: formData.interests?.filter(
-                      (_, i) => i !== index,
-                    ),
-                  })
-                }
-              >
-                ✕
-              </Button>
-
-              {/* IMAGE PREVIEW */}
-              {interest.image && (
-                <div className="overflow-hidden rounded-xl h-60">
-                  <img
-                    src={interest.image}
-                    alt=""
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-
-              {/* TITLE */}
-              <Input
-                variant="admin"
-                placeholder="Title (Music, Movies, Design...)"
-                value={interest.title}
-                onChange={(e) => {
-                  const updated = [...(formData.interests ?? [])];
-                  updated[index].title = e.target.value;
-                  setFormData({ ...formData, interests: updated });
-                }}
-              />
-
-              {/* DESCRIPTION */}
-              <textarea
-                placeholder="Short description..."
-                value={interest.description}
-                onChange={(e) => {
-                  const updated = [...(formData.interests ?? [])];
-                  updated[index].description = e.target.value;
-                  setFormData({ ...formData, interests: updated });
-                }}
-                className="w-full rounded-xl border border-border bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-
-              {/* IMAGE URL */}
-              <Input
-                variant="admin"
-                placeholder="Image URL"
-                value={interest.image || ""}
-                onChange={(e) => {
-                  const updated = [...(formData.interests ?? [])];
-                  updated[index].image = e.target.value;
-                  setFormData({ ...formData, interests: updated });
-                }}
-              />
-            </div>
-          ))}
-
-          {/* ADD CARD */}
-          <button
-            type="button"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                interests: [
-                  ...(formData.interests || []),
-                  { title: "", description: "", image: "" },
-                ],
-              })
-            }
-            className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border p-10 hover:bg-muted/40 transition text-sm opacity-70 hover:opacity-100"
-          >
-            <div className="text-3xl mb-2">＋</div>
-            Add Interest
-          </button>
-        </div>
-      </div>
       {/* SAVE BUTTON */}
       <Button
         onClick={handleSave}

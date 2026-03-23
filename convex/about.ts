@@ -8,6 +8,19 @@ export const get = query({
   },
 });
 
+// ADD THIS: Needed to turn Storage IDs into viewable URLs
+export const getUrl = query({
+  args: { storageId: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId);
+  },
+});
+
+// Add this to your mutations file
+export const generateUploadUrl = mutation(async (ctx) => {
+  return await ctx.storage.generateUploadUrl();
+});
+
 export const update = mutation({
   args: {
     id: v.id("about"),
@@ -22,11 +35,13 @@ export const update = mutation({
     techStack: v.array(v.string()),
     spotify_playlist: v.optional(v.array(v.string())),
     hardware_setup: v.optional(v.array(v.string())),
+    // Update your existing 'update' mutation interests object:
     interests: v.optional(
       v.array(
         v.object({
           title: v.string(),
           description: v.string(),
+          image: v.string(), // This will store the Convex Storage ID
         }),
       ),
     ),

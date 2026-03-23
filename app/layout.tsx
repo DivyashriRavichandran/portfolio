@@ -22,7 +22,6 @@ export default async function RootLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo.png" />
-        {/* Preconnects are great for performance! */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -32,7 +31,6 @@ export default async function RootLayout({
       </head>
       <body>
         <NextIntlClientProvider locale={locale}>
-          {/* Wrap everything in our custom Provider */}
           <ConvexClientProvider>
             <ThemeProvider
               attribute="class"

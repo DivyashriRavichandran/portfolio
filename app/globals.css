@@ -397,3 +397,127 @@ html {
     }
   }
 }
+
+/* Toggler Animation */
+.nav-toggler span {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: var(--color-foreground);
+  transition: all 0.4s ease;
+}
+
+.nav-toggler.open span:nth-child(1) {
+  transform: translateY(3.5px) rotate(45deg) scaleX(0.75);
+}
+
+.nav-toggler.open span:nth-child(2) {
+  transform: translateY(-3.5px) rotate(-45deg) scaleX(0.75);
+}
+
+/* Background Panels Reveal */
+.nav-background {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Content Clipping */
+.nav-items {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  will-change: clip-path;
+}
+
+.nav-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* 2. Toggle this class via JS when handleToggle is called */
+.nav-content.is-open {
+  pointer-events: auto; /* Enable clicks when open */
+}
+
+.nav-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  transform: scaleY(0);
+  transform-origin: top;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.nav-bg:nth-child(1) {
+  background-color: #57cea5;
+}
+
+.nav-bg:nth-child(2) {
+  background-color: #063124;
+}
+
+.nav-bg:nth-child(3) {
+  background-color: #0b5c43;
+}
+
+.nav-bg:nth-child(4) {
+  background-color: #21ba80;
+}
+/* Navigation Column Layouts */
+.nav-items-col:nth-child(1) {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.nav-items-col:nth-child(2) {
+  flex: 6;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.nav-items-col:nth-child(3) {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Typography & Link Styles */
+.nav-socials a {
+  font-size: 1.25rem;
+}
+
+.nav-legal a {
+  font-size: 0.9rem;
+  opacity: 50%;
+}
+
+.nav-primary-links a {
+  font-size: 3rem;
+}
+
+.nav-secondary-links a {
+  font-size: 1.1rem;
+}
+
+/* Link Animation Initial State */
+.nav-content a .line {
+  position: relative;
+  will-change: transform;
+  transform: translateY(100%);
+}

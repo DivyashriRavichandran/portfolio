@@ -1,128 +1,218 @@
 "use client";
-import React, { useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useTranslations } from "next-intl";
-import { ArrowRight, X } from "lucide-react";
-import LangSwitcher from "./LangSwitcher";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { SplitText } from "gsap/SplitText";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(SplitText);
 }
 
 export default function Navbar() {
-  const t = useTranslations();
-  const navRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const tl = useRef<gsap.core.Timeline | null>(null);
+  const isMenuOpen = useRef(false);
+  const isAnimating = useRef(false);
+  const navTogglerRef = useRef<HTMLButtonElement | null>(null);
+  const navContentRef = useRef<HTMLDivElement | null>(null);
 
-  // --- 1. Navbar Scroll Animation ---
-  useGSAP(
-    () => {
-      if (!navRef.current) return;
-
-      gsap.to(navRef.current, {
-        marginTop: "12px",
-        padding: "8px 16px",
-        backgroundColor: "rgba(255, 255, 255, 0.05)",
-        backdropFilter: "blur(16px)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        borderRadius: "100px",
-        // Changed width to 95% to avoid 'auto' calculation bugs
-        width: "95%",
-        maxWidth: "fit-content",
-        scrollTrigger: {
-          start: "top +=20",
-          end: "+=1px",
-          toggleActions: "play none none reverse",
-        },
-      });
-    },
-    { scope: navRef },
-  );
-
-  const menuItems = [
-    { name: "Work", href: "#works" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+  // Define the link blocks (moved outside for accessibility)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const linkBlocks = [
+    ".nav-socials .line, .nav-legal .line", // Bottom-left
+    ".nav-primary-links .line", // Center
+    ".nav-secondary-links .line, .nav-secondary-links button .line", // Right side
   ];
 
+  useEffect(() => {
+    // 2. Register Plugin only on the client
+    gsap.registerPlugin(SplitText);
+
+    // 3. Initialize SplitText
+    const splitLinks = SplitText.create(".nav-items a", {
+      type: "lines",
+      mask: "lines",
+      linesClass: "line",
+    });
+
+    // 4. Build the GSAP Timeline
+    const navBgs = document.querySelectorAll(".nav-bg");
+
+    tl.current = gsap.timeline({
+      paused: true,
+      onComplete: () => {
+        isAnimating.current = false;
+      },
+      onReverseComplete: () => {
+        gsap.set(linkBlocks.join(", "), { y: "100%" });
+        isAnimating.current = false;
+      },
+    });
+
+    tl.current
+      .to(navBgs, {
+        scaleY: 1,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: "power3.inOut",
+      })
+
+      .to(
+        ".nav-items",
+        {
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          duration: 0.75,
+          ease: "power3.inOut",
+        },
+        "-=0.6",
+      );
+
+    // Cleanup: Kill timeline and revert SplitText when component unmounts
+    return () => {
+      tl.current?.kill();
+
+      splitLinks.revert();
+    };
+  }, [linkBlocks]);
+
+  // 5. Action functions
+  const animateLinksIn = () => {
+    linkBlocks.forEach((selector) => {
+      gsap.fromTo(
+        selector,
+        { y: "100%" },
+        {
+          y: "0%",
+          duration: 0.75,
+          stagger: 0.05,
+          ease: "power3.out",
+          delay: 0.85,
+        },
+      );
+    });
+  };
+
+  const handleToggle = () => {
+    if (isAnimating.current || !tl.current) return;
+    isAnimating.current = true;
+
+    // Toggle the 'open' class on the button ref
+    navTogglerRef.current?.classList.toggle("open");
+
+    if (!isMenuOpen.current) {
+      navContentRef.current?.classList.add("pointer-events-auto");
+      tl.current.play();
+      animateLinksIn();
+    } else {
+      tl.current.reverse();
+    }
+    isMenuOpen.current = !isMenuOpen.current;
+  };
+
+  // Update your GSAP timeline in useEffect to handle pointer-events on reverse
+  tl.current = gsap.timeline({
+    paused: true,
+    onComplete: () => {
+      isAnimating.current = false;
+    },
+    onReverseComplete: () => {
+      gsap.set(linkBlocks.join(", "), { y: "100%" });
+
+      // Disable interaction when menu is fully hidden
+      navContentRef.current?.classList.remove("pointer-events-auto");
+      isAnimating.current = false;
+    },
+  });
+  const locale = "en";
+
   return (
-    <header className="fixed top-0 left-0 w-full flex justify-center z-[100] pointer-events-none p-6">
-      <nav
-        ref={navRef}
-        className="flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top"
-      >
-        {/* LOGO */}
-        <div className="flex items-center gap-2 px-2">
-          <span className="text-lg font-black tracking-tighter uppercase">
+    <header>
+      <nav className="fixed w-full flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top p-4 z-100">
+        <div className="logo">
+          <div className="text-2xl font-black tracking-tighter uppercase text-foreground">
             DR.
-          </span>
+          </div>
         </div>
-
-        {/* ACTIONS */}
-        <div className="flex items-center gap-4">
-          <LangSwitcher className="bg-foreground border-none hover:bg-foreground/50 text-[10px] font-bold" />
-
-          <button
-            onClick={() => setIsOpen(true)}
-            className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#d0fe38] text-black transition-all duration-300 group"
-          >
-            <span className="text-[10px] uppercase font-black tracking-widest">
-              {t("menu")}
-            </span>
-            <div className="flex flex-col gap-1 w-4">
-              <div className="h-[1.5px] w-full bg-black" />
-              <div className="h-[1.5px] w-full bg-black" />
-            </div>
-          </button>
-        </div>
+        <button
+          ref={navTogglerRef}
+          onClick={handleToggle}
+          className="nav-toggler p-4 cursor-pointer bg-none flex flex-col justify-center items-center gap-1"
+        >
+          <span></span>
+          <span></span>
+        </button>
       </nav>
 
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent
-          side="top"
-          className="h-svh bg-[#d0fe38] border-none p-0 outline-none overflow-hidden"
-        >
-          {/* Close Button Container */}
-          <div className="absolute top-0 left-0 w-full p-6 flex justify-center z-50">
-            <div className="w-full max-w-7xl flex justify-end px-4">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#2F3D00] text-[#d0fe38] transition-transform active:scale-95"
-              >
-                <span className="text-[10px] uppercase font-black tracking-widest">
-                  Close
-                </span>
-                <X size={18} strokeWidth={3} />
-              </button>
+      <div className="nav-content">
+        <div className="nav-bg"></div>
+        <div className="nav-bg"></div>
+        <div className="nav-bg"></div>
+        <div className="nav-bg"></div>
+
+        <div className="nav-items flex gap-8 bg-primary-dark p-32">
+          <div className="nav-items-col">
+            <div className="nav-socials">
+              <p className="text-xs opacity-50 uppercase mb-4">Socials</p>
+              <a href="#">Github</a>
+              <a href="#">Linkedin</a>
+            </div>
+            <div className="nav-legal">
+              <p className="text-xs opacity-50 uppercase mb-2">Location</p>
+              <a href="#">Groningen, NL</a>
+              <a href="#">09:30 GMT</a>
             </div>
           </div>
+          <div className="nav-items-col">
+            <div className="nav-primary-links">
+              <p className="text-xs opacity-50 uppercase mb-4">Menu</p>
+              <a href="#">Projects</a>
+              <a href="#">About</a>
+              <a href="#">Experience</a>
+              <a href="#">Contact</a>
+            </div>
+          </div>
+          <div className="nav-items-col">
+            <div className="nav-secondary-links">
+              <p className="text-xs opacity-50 uppercase mb-4">Language</p>
+              <div className="flex items-center gap-4 font-medium">
+                {/* EN Button */}
+                <a
+                  href=""
+                  className={`group relative flex items-center gap-2 ${locale === "en" ? "opacity-100" : "opacity-50"}`}
+                >
+                  <Image src="/uk-flag.png" alt="UK" width={18} height={18} />
+                  <span className="inline-block">EN</span>
+                  <div
+                    className={`absolute -bottom-1 left-0 h-[1px] bg-white transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                  />
+                </a>
 
-          {/* Menu Items */}
-          <div className="flex flex-col justify-center items-center h-full gap-2 relative z-10">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="group flex items-center gap-4 py-2 hover:scale-105 transition-transform duration-300"
-              >
-                <span className="text-[12vw] md:text-[8vw] font-black uppercase leading-none tracking-tighter text-[#2F3D00] group-hover:italic transition-all duration-300">
-                  {item.name}
+                <span className="opacity-30">/</span>
+
+                {/* NL Button */}
+                <a
+                  href=""
+                  className={`flex items-center gap-2 ${locale !== "en" ? "opacity-100" : "opacity-50"}`}
+                >
+                  <Image src="/nl-flag.png" alt="NL" width={18} height={18} />
+                  <span className="">NL</span>
+                  <div
+                    className={`absolute -bottom-1 left-0 h-[1px] bg-white transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                  />
+                </a>
+              </div>
+            </div>
+            <div className="nav-secondary-links">
+              <p className="text-xs opacity-50 uppercase mb-2">Documents</p>
+              <a href="#" className="flex items-baseline">
+                <span>Resume</span>
+                <span className="text-xs opacity-50 ml-2">
+                  (Updated 03/2026)
                 </span>
-                <ArrowRight className="size-10 md:size-20 text-[#2F3D00] opacity-0 -translate-x-10 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
               </a>
-            ))}
+            </div>
           </div>
-
-          {/* Background Text */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-[0.05] select-none pointer-events-none">
-            <h2 className="text-[40vw] font-black text-[#2F3D00]">MENU</h2>
-          </div>
-        </SheetContent>
-      </Sheet>
+        </div>
+      </div>
     </header>
   );
 }
