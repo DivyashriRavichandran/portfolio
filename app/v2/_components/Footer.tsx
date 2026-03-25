@@ -82,6 +82,7 @@ const Footer = () => {
       form.reset();
     } catch (error) {
       toast.error("Failed to send message.");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -159,7 +160,7 @@ const Footer = () => {
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-7 bg-foreground/[0.02] p-8 md:p-12 rounded-3xl border border-foreground/5 backdrop-blur-sm">
+          <div className="lg:col-span-7 bg-foreground/2 p-8 md:p-12 rounded-3xl border border-foreground/5 backdrop-blur-sm">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -178,7 +179,7 @@ const Footer = () => {
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                         <FormMessage className="text-[10px] uppercase" />
                       </FormItem>
                     )}
@@ -195,7 +196,7 @@ const Footer = () => {
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                         <FormMessage className="text-[10px] uppercase" />
                       </FormItem>
                     )}
@@ -208,11 +209,11 @@ const Footer = () => {
                         <FormControl>
                           <Textarea
                             placeholder="Message"
-                            className="min-h-[120px] border-none bg-transparent px-0 py-4 text-xl focus-visible:ring-0 resize-none"
+                            className="min-h-30 border-none bg-transparent px-0 py-4 text-xl focus-visible:ring-0 resize-none"
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                         <FormMessage className="text-[10px] uppercase" />
                       </FormItem>
                     )}

@@ -46,7 +46,7 @@
         "Software Engineering"
       ],
       "relevant_projects": [
-        "Vertex - Sports Centre Management System (Fullstack Web Application)",
+        "Vertex - Sports Centre Management System",
         "PGM Image Manipulation Program in C",
         "Video Player Application using C++ and Qt"
       ]
@@ -73,10 +73,11 @@
         "nl": "KP Platforms, Qatar"
       },
       "key_outcomes": [
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!"
+        "Developed 10+ e-commerce web applications using React, Next.js, TypeScript, and Tailwind CSS.",
+        "Collaborated with UI/UX designers and backend developers to implement Figma designs and integrate RESTful APIs respectively.",
+        "Coordinated with stackholders upon design and execution.",
+        "Implemented SSR, SSG, and dynamic routing in Next.js to improve SEO and optimize content delivery.",
+        "Integrated internationalization (i18n) for multilingual support (EN/AR) and dynamic content rendering."
       ],
       "technologies": [
         "Convex",
@@ -87,6 +88,7 @@
       ]
     }
   ],
+
   "projects": [
     {
       "id": 1,
@@ -95,19 +97,27 @@
       "year": 2026,
       "tech_stack": ["React", "TypeScript", "WXT", "CSS"],
       "categories": ["Frontend", "Browser Extension"],
-      "role": "Solo Developer & Creator",
-      "impact": "Empowered expats to achieve A2 Dutch proficiency through immersive media consumption.",
-      "challenge": "Bypassing native video player constraints to inject synchronized dual-language subtitle tracks.",
+
+      "description": "A Google Chrome extension that adds dual subtitles (Dutch + English) to platforms - NPO Start and Kijk.nl.",
+
+      "problem": "Most Dutch streaming platforms don’t offer dual subtitles, which makes it hard for beginners to follow along.",
+
+      "solution": "I built a browser extension that injects its own subtitle layer and syncs it with the video using DOM observers and timing offsets.",
+
+      "outcome": "Made it easier for learners to follow native content and practice Dutch in a more natural and passive way.",
+
+      "challenge": "Working around native video players and keeping subtitles in sync without access to internal APIs.",
+
       "mockup": "/mockup-2.png",
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "A Google Chrome extension providing real-time English translations for NPO.nl and Kijk.nl. It bridges the gap for language learners by displaying dual Dutch/English subtitles simultaneously.",
       "project_link": "https://www.dubbeldutch.com",
       "github_link": "https://github.com/divyashriravichandran/dubbel-dutch",
       "icon": "MdSubtitles"
     },
+
     {
       "id": 2,
       "logo": "/logos/portfolio.svg",
@@ -122,18 +132,27 @@
       ],
       "categories": ["Fullstack", "GovTech"],
       "role": "Lead Frontend Developer",
-      "impact": "Streamlined application workflows for over 500 international exhibitors and contractors.",
-      "challenge": "Implementing a complex, multi-role administrative dashboard with real-time approval states.",
+
+      "description": "A platform built for Qatar’s International Agricultural Exhibition, with a public site and an internal dashboard for managing applications and workflows.",
+
+      "problem": "Handling exhibitor applications and approvals manually was slow and messy, especially with multiple roles involved.",
+
+      "solution": "We built a centralized system with a role-based dashboard to manage applications, approvals, and analytics in one place.",
+
+      "outcome": "Helped organize workflows for 500+ exhibitors and made the approval process much smoother.",
+
+      "challenge": "Designing a multi-role dashboard where different users see different data and actions in real time.",
+
       "mockup": "/agriteq-mockup.png",
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "A comprehensive digital suite for Qatar's International Agricultural Exhibition. Includes a multilingual public site and an admin dashboard for analytics, application management, and task tracking.",
       "project_link": "",
       "github_link": "",
       "icon": "MdAgriculture"
     },
+
     {
       "id": 3,
       "logo": "/logos/portfolio.svg",
@@ -142,18 +161,24 @@
       "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS"],
       "categories": ["Frontend", "API Integration"],
       "role": "Frontend Developer",
-      "impact": "Created a high-performance movie discovery tool with optimized image loading and search.",
-      "challenge": "Managing complex state for dynamic filtering and infinite scrolling across thousands of TMDB entries.",
+
+      "description": "A movie browsing app using the TMDB API to explore films, trailers, and ratings.",
+
+      "problem": "Needed a project to explore frontend development and design while working with real-world data.",
+      "solution": "Built a responsive frontend with search, filtering, and infinite scrolling, focusing on performance and smooth UX.",
+
+      "challenge": "Handling filtering and pagination together while keeping scrolling smooth and avoiding unnecessary re-renders.",
+
       "mockup": "/cinedb-mockup.png",
       "images": [
         "/cinedb-1.png",
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "A sleek movie database application. It leverages the TMDB API to provide detailed film insights, trailers, and ratings within a responsive, high-contrast interface.",
       "project_link": "",
       "github_link": "",
       "icon": "MdMovieCreation"
     },
+
     {
       "id": 4,
       "logo": "/logos/portfolio.svg",
@@ -162,17 +187,22 @@
       "tech_stack": ["Java", "Spring Boot", "MySQL", "JUnit"],
       "categories": ["Backend", "Architecture"],
       "role": "Backend Engineer",
-      "impact": "Standardized data access patterns for internal user and product management services.",
-      "challenge": "Securing sensitive endpoints using JWT-based authentication and custom validation logic.",
+
+      "description": "A REST API built with Spring Boot for managing users and products, with a focus on structure and security.",
+
+      "outcome": "Provided a clean and consistent way to handle data and authentication across services.",
+
+      "challenge": "Implementing JWT authentication and making sure protected routes were properly secured.",
+
       "mockup": "/agriteq-mockup.png",
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "A robust RESTful API built with Java and Spring Boot. Focuses on scalable architecture, secure authentication, and optimized database querying for enterprise resource management.",
       "project_link": "",
       "github_link": "",
       "icon": "MdCode"
     },
+
     {
       "id": 5,
       "logo": "/logos/portfolio.svg",
@@ -181,17 +211,22 @@
       "tech_stack": ["Next.js", "D3.js", "Spring Boot", "MySQL"],
       "categories": ["Fullstack", "Data Viz"],
       "role": "Fullstack Developer",
-      "impact": "Visualized complex energy grid data into actionable insights for efficiency monitoring.",
-      "challenge": "Rendering large-scale real-time datasets using D3.js without sacrificing UI responsiveness.",
+
+      "description": "A dashboard for visualizing energy data from the ENTSO-E API using interactive charts.",
+
+      "outcome": "Made large and complex energy datasets easier to explore and understand visually.",
+
+      "challenge": "Rendering large datasets with D3 while keeping the UI responsive and smooth.",
+
       "mockup": "/cinedb-mockup.png",
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "An energy management platform that transforms raw ENTSO-E data into interactive visualizations, allowing users to track consumption and production trends globally.",
       "project_link": "",
       "github_link": "",
       "icon": "RiDashboard3Fill"
     },
+
     {
       "id": 6,
       "logo": "/logos/portfolio.svg",
@@ -200,13 +235,16 @@
       "tech_stack": ["Python", "TensorFlow", "FastAPI", "Keras"],
       "categories": ["Deep Learning", "Thesis"],
       "role": "ML Researcher & Developer",
-      "impact": "Contributed to early detection research with a DCGAN model capable of identifying cancerous nodules.",
-      "challenge": "Training a Generative Adversarial Network on high-resolution CT scans with limited GPU memory.",
+
+      "description": "Bachelor thesis project focused on detecting lung cancer from CT scans using deep learning. Achieved a first-class grade for the project.",
+      "problem": "Detecting lung cancer early from CT scans is difficult due to limited available medical image dataset.",
+      "solution": "Developed a Deep Convolutional Generative Adversarial Network (DCGAN) to generate additional training images and train a classification model for improved detection.",
+      "outcome": "Achieved 92% accuracy using the augmented dataset, demonstrating the potential of generative models in medical imaging.",
+      "challenge": "Handling high-resolution CT scans with limited GPU memory while ensuring the DCGAN produced realistic and useful images.",
       "mockup": "/report-mockup.png",
       "images": [
         "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
       ],
-      "description": "BSc Thesis project utilizing Deep Convolutional Generative Adversarial Networks (DCGAN) to improve the accuracy of lung cancer screening from medical imaging.",
       "project_link": "",
       "github_link": "",
       "icon": "MdHealthAndSafety"
@@ -216,9 +254,8 @@
     {
       "id": 1,
       "image": "/advent-of-code.png",
-
       "title": "Advent of Code Challenge 2025",
-      "description": "A collection of coding challenges and puzzles from the Advent of Code event. Each challenge tests problem-solving skills and algorithmic thinking, providing an opportunity to improve coding proficiency and learn new techniques.",
+      "description": "A series of coding puzzles from the Advent of Code event, designed to practice algorithmic thinking, problem-solving, and learning new programming techniques in JavaScript.",
       "tech_stack": ["JavaScript"],
       "project_link": "https://www.google.com",
       "github_link": "https://github.com/divyashriravichandran/"
@@ -227,7 +264,7 @@
       "id": 2,
       "image": "/Screenshot 2026-03-25 at 1.10.00 pm.png",
       "title": "Flip Card Component - Animate UI",
-      "description": "A reusable flip card component with smooth animations for interactive user interfaces. This component can be used to display content on both sides of the card, enhancing the visual appeal and user experience of web applications.",
+      "description": "A reusable React component that flips smoothly to reveal content on the back side, adding interactive animations to web interfaces and enhancing user experience with motion and Tailwind CSS.",
       "tech_stack": ["React", "Tailwind CSS", "Motion"],
       "github_link": "https://github.com/divyashriravichandran/"
     },
@@ -235,7 +272,7 @@
       "id": 3,
       "image": "/java-challenge.webp",
       "title": "1 Billion Rows Challenge (Java)",
-      "description": "An exploration of high-performance file processing in Java. This project focuses on parsing and aggregating large-scale weather data efficiently while experimenting with streams, hash maps, and multithreading techniques.",
+      "description": "An experiment in high-performance Java data processing, focused on efficiently parsing and aggregating massive weather datasets using streams, hash maps, and multithreading techniques.",
       "tech_stack": ["Java"],
       "github_link": "https://github.com/divyashriravichandran/"
     }

@@ -5,23 +5,18 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import {
   Terminal,
-  Layers,
   Music,
   Monitor,
   Keyboard,
   CpuIcon,
-  FilmIcon,
   Laptop,
   Mouse,
-  ZapIcon,
-  TvIcon,
   Gamepad2Icon,
   HeadphonesIcon,
   ChevronDown,
   BookIcon,
   LanguagesIcon,
   StarIcon,
-  CompassIcon,
   PodcastIcon,
 } from "lucide-react";
 import data from "@/data/data.json";
@@ -124,7 +119,9 @@ const About = () => {
         opacity: 0,
         duration: 0.5,
         ease: "power2.inOut",
-        onComplete: () => gsap.set(el, { display: "none" }),
+        onComplete: () => {
+          gsap.set(el, { display: "none" });
+        },
       });
     }
 
@@ -186,7 +183,7 @@ const About = () => {
           >
             <span className="text-sm uppercase tracking-widest opacity-60 group-hover:opacity-100 transition relative">
               Explore beyond code
-              <span className="absolute left-0 -bottom-1 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300" />
+              <span className="absolute left-0 -bottom-1 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
             </span>
 
             <ChevronDown
@@ -230,7 +227,7 @@ const About = () => {
               {setup.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-foreground/[0.03] border border-foreground/5"
+                  className="flex items-center gap-3 p-4 rounded-2xl bg-foreground/3 border border-foreground/5"
                 >
                   <span className="text-primary opacity-80">{item.icon}</span>
                   <span className="text-sm opacity-80">{item.name}</span>
@@ -247,7 +244,7 @@ const About = () => {
             {personalSections.map((item, i) => (
               <div
                 key={i}
-                className="relative group overflow-hidden p-6 rounded-3xl border border-foreground/5 bg-foreground/[0.03]"
+                className="relative group overflow-hidden p-6 rounded-3xl border border-foreground/5 bg-foreground/3"
               >
                 {/* image */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500">

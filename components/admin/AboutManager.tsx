@@ -384,7 +384,7 @@ export default function AboutManager() {
       </div>
 
       {/* OTHER INTERESTS */}
-      <InterestSection formData={formData} setFormData={setFormData} />
+      {/* <InterestSection formData={formData} setFormData={setFormData} /> */}
 
       {/* SAVE BUTTON */}
       <Button

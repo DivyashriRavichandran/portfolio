@@ -19,7 +19,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ProjectItem } from "@/models/ProjectItem";
 import { Button } from "../ui/button";
 import Report_image1 from "@/assets/images/report-images/1.png";
 import Report_image2 from "@/assets/images/report-images/2.png";
@@ -31,8 +30,9 @@ import AutoSlideshow from "../animations/AutoSlideshow";
 import Image from "next/image";
 import shape1 from "@/assets/images/3.png";
 import ScrollAnimation from "../animations/ScrollAnimation";
+import { ProjectItemOld } from "@/models/ProjectItemOld";
 
-export const Projects: ProjectItem[] = [
+export const Projects: ProjectItemOld[] = [
   {
     title: "CineDB",
     description:

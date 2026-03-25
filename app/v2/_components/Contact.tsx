@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Mail, Linkedin, Github } from "lucide-react";
+import { ArrowUpRight, Linkedin, Github } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -75,6 +75,7 @@ const Contact = () => {
       form.reset();
     } catch (error) {
       toast.error("Something went wrong. Try LinkedIn?");
+      console.error(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -147,7 +148,7 @@ const Contact = () => {
                           {...field}
                         />
                       </FormControl>
-                      <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                      <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                       <FormMessage className="text-[10px] uppercase font-semibold text-red-500" />
                     </FormItem>
                   )}
@@ -165,7 +166,7 @@ const Contact = () => {
                           {...field}
                         />
                       </FormControl>
-                      <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                      <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                       <FormMessage className="text-[10px] uppercase font-semibold text-red-500" />
                     </FormItem>
                   )}
@@ -179,11 +180,11 @@ const Contact = () => {
                       <FormControl>
                         <Textarea
                           placeholder="How can I help you?"
-                          className="min-h-[150px] border-none bg-transparent px-0 py-4 text-xl placeholder:opacity-30 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
+                          className="min-h-37.5 border-none bg-transparent px-0 py-4 text-xl placeholder:opacity-30 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
                           {...field}
                         />
                       </FormControl>
-                      <div className="contact-line absolute bottom-0 left-0 h-[1px] bg-foreground/20 w-full" />
+                      <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
                       <FormMessage className="text-[10px] uppercase font-semibold text-red-500" />
                     </FormItem>
                   )}

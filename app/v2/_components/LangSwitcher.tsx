@@ -4,7 +4,6 @@ import React from "react";
 import { useLocale } from "next-intl";
 import Cookies from "js-cookie";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 const LangSwitcher = ({ className }: { className?: string }) => {

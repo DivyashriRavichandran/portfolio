@@ -41,7 +41,7 @@ const ProjectSection = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="p-3 rounded-full bg-background/50 backdrop-blur-xl border border-foreground/10 hover:bg-[var(--project-color)] hover:text-black transition-all duration-300 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+                          className="p-3 rounded-full bg-background/50 backdrop-blur-xl border border-foreground/10 hover:bg-(--project-color) hover:text-black transition-all duration-300 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
                         >
                           <Github size={18} />
                         </a>
@@ -51,7 +51,7 @@ const ProjectSection = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="p-3 rounded-full bg-background/50 backdrop-blur-xl border border-foreground/10 hover:bg-[var(--project-color)] hover:text-black transition-all duration-300 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+                        className="p-3 rounded-full bg-background/50 backdrop-blur-xl border border-foreground/10 hover:bg-(--project-color) hover:text-black transition-all duration-300 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
                       >
                         <ArrowUpRight size={18} />
                       </a>
@@ -71,7 +71,7 @@ const ProjectSection = () => {
                           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80">
                             {project.year}
                           </span>
-                          <div className="h-[1px] w-8 bg-foreground/40" />
+                          <div className="h-px w-8 bg-foreground/40" />
                           <span className="text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80">
                             {project.categories.join(" / ")}
                           </span>

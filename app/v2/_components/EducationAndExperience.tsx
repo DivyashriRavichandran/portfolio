@@ -48,7 +48,7 @@ const TimelineItem = ({
     <div className="group relative flex gap-x-6 lg:gap-x-12 pb-16">
       {/* VERTICAL LINE CONNECTOR */}
       {!isLast && (
-        <div className="absolute left-[23px] lg:left-[31px] top-12 lg:top-16 w-[1px] h-full bg-foreground/10 origin-top" />
+        <div className="absolute left-5.75 lg:left-7.75 top-12 lg:top-16 w-px h-full bg-foreground/10 origin-top" />
       )}
 
       {/* LOGO CONTAINER */}
@@ -94,8 +94,8 @@ const TimelineItem = ({
         </div>
 
         {/* THESIS */}
-        {item.thesis && (
-          <div className="mt-6 px-4 py-2 bg-foreground/[0.03] border-l-4 border-primary rounded-r-xl">
+        {/* {item.thesis && (
+          <div className="mt-6 px-4 py-2 bg-foreground/3 border-l-4 border-primary rounded-r-xl">
             <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
               Research Thesis
             </span>
@@ -111,21 +111,18 @@ const TimelineItem = ({
               </a>
             )}
           </div>
-        )}
+        )} */}
 
         {/* KEY OUTCOMES / PROJECTS (Bullet points) */}
         {(item.key_outcomes || item.relevant_projects) && (
           <div className="mt-8 mb-10">
-            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
+            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
               {item.key_outcomes ? "Core Contributions" : "Notable Projects"}
             </span>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-2 space-y-2">
               {(item.key_outcomes || item.relevant_projects)?.map(
                 (point, i) => (
-                  <li
-                    key={i}
-                    className="text-base lg:text-lg opacity-70 leading-snug flex gap-4"
-                  >
+                  <li key={i} className="text-base flex gap-4">
                     <span className="mt-2.5 size-1.5 rounded-full bg-foreground/50 shrink-0" />
                     {point}
                   </li>
@@ -141,7 +138,7 @@ const TimelineItem = ({
             {(item.key_modules || item.technologies)?.map((tag) => (
               <span
                 key={tag}
-                className="text-xs border border-foreground/20 text-foreground/70 rounded-full px-3 py-1 bg-foreground/[0.03]"
+                className="text-sm border border-foreground/20 text-foreground/70 rounded-full px-3 py-1 bg-foreground/3"
               >
                 {tag}
               </span>

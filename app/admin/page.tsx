@@ -5,13 +5,7 @@ import EducationManager from "@/components/admin/EducationManager";
 import ExperienceManager from "@/components/admin/ExperienceManager";
 import ProjectManager from "@/components/admin/ProjectManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Briefcase,
-  GraduationCap,
-  FolderCode,
-  Layout,
-  UserCircle,
-} from "lucide-react";
+import { Briefcase, GraduationCap, FolderCode, UserCircle } from "lucide-react";
 
 export default function AdminPage() {
   return (

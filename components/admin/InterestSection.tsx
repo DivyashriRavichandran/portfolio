@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import { ImagePlus, Trash2, Loader2 } from "lucide-react";
+import { ImagePlus, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import Image from "next/image";
 
 interface Interest {
   title: string;
@@ -12,14 +13,12 @@ interface Interest {
 
 interface FormData {
   interests?: Interest[];
-  // Include other fields if you use them inside this component,
-  // or use Record<string, any> if it's a large object
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface InterestSectionProps {
   formData: FormData;
-  setFormData: React.Dispatch<React.SetStateAction<any>>; // Or your specific State type
+  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
 // Helper Component to display Convex Images
@@ -28,7 +27,13 @@ const InterestImage = ({ storageId }: { storageId: string }) => {
   if (!imageUrl)
     return <div className="w-full h-full bg-muted animate-pulse" />;
   return (
-    <img src={imageUrl} className="w-full h-full object-cover" alt="Interest" />
+    <Image
+      width={500}
+      height={500}
+      src={imageUrl}
+      className="w-full h-full object-cover"
+      alt="Interest"
+    />
   );
 };
 
@@ -106,7 +111,7 @@ export const InterestSection = ({
               value={interest.title}
               placeholder="Title"
               onChange={(e) => {
-                const updated = [...formData.interests];
+                const updated = [...(formData.interests ?? [])];
                 updated[index].title = e.target.value;
                 setFormData({ ...formData, interests: updated });
               }}
@@ -116,7 +121,7 @@ export const InterestSection = ({
               value={interest.description}
               placeholder="Description"
               onChange={(e) => {
-                const updated = [...formData.interests];
+                const updated = [...(formData.interests ?? [])];
                 updated[index].description = e.target.value;
                 setFormData({ ...formData, interests: updated });
               }}

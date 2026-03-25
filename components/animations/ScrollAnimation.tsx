@@ -55,6 +55,7 @@ export default function ScrollAnimation({
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getTargetState = () => {
     switch (direction) {
       case "up":
@@ -74,7 +75,7 @@ export default function ScrollAnimation({
     if (isInView) {
       controls.start(getTargetState());
     }
-  }, [isInView, controls, direction]);
+  }, [isInView, controls, direction, getTargetState]);
 
   return (
     <motion.div

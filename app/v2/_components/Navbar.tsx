@@ -210,7 +210,7 @@ export default function Navbar() {
                   <Image src="/uk-flag.png" alt="UK" width={18} height={18} />
                   <span className="inline-block ">EN</span>
                   <div
-                    className={`absolute -bottom-1 left-0 h-[1px] bg-background transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                    className={`absolute -bottom-1 left-0 h-px bg-background transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
                   />
                 </a>
 
@@ -224,7 +224,7 @@ export default function Navbar() {
                   <Image src="/nl-flag.png" alt="NL" width={18} height={18} />
                   <span className="">NL</span>
                   <div
-                    className={`absolute -bottom-1 left-0 h-[1px] bg-background transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                    className={`absolute -bottom-1 left-0 h-px bg-background transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
                   />
                 </a>
               </div>
