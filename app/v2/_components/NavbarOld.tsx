@@ -67,7 +67,7 @@ export default function NavbarOld() {
 
           <button
             onClick={() => setIsOpen(true)}
-            className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#d0fe38] text-black transition-all duration-300 group"
+            className="flex items-center gap-3 px-4 py-2 rounded-full bg-primary text-black transition-all duration-300 group"
           >
             <span className="text-[10px] uppercase font-black tracking-widest">
               {t("menu")}
@@ -83,14 +83,14 @@ export default function NavbarOld() {
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent
           side="top"
-          className="h-svh bg-[#d0fe38] border-none p-0 outline-none overflow-hidden"
+          className="h-svh bg-primary border-none p-0 outline-none overflow-hidden"
         >
           {/* Close Button Container */}
           <div className="absolute top-0 left-0 w-full p-6 flex justify-center z-50">
             <div className="w-full max-w-7xl flex justify-end px-4">
               <button
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#2F3D00] text-[#d0fe38] transition-transform active:scale-95"
+                className="flex items-center gap-3 px-4 py-2 rounded-full bg-[#2F3D00] text-primary transition-transform active:scale-95"
               >
                 <span className="text-[10px] uppercase font-black tracking-widest">
                   Close

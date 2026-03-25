@@ -76,17 +76,17 @@ const TimelineItem = ({
           </div>
 
           {/* PERIOD + BADGE */}
-          <div className="flex flex-col md:items-end gap-1 shrink-0">
+          <div className="flex flex-col md:items-end gap-1 shrink-0 mt-1">
             <span className="text-sm font-mono font-medium opacity-50 uppercase">
               {period}
             </span>
             {item.grade && (
-              <span className="text-[10px] font-medium uppercase text-[#d0fe38] tracking-widest">
+              <span className="text-[10px] font-medium uppercase tracking-widest text-primary">
                 {item.grade}
               </span>
             )}
             {item.duration && (
-              <span className="text-[10px] font-medium text-[#d0fe38] uppercase tracking-widest">
+              <span className="text-[10px] font-medium text-primary uppercase tracking-widest">
                 {item.duration[locale]}
               </span>
             )}
@@ -95,7 +95,7 @@ const TimelineItem = ({
 
         {/* THESIS */}
         {item.thesis && (
-          <div className="mt-6 px-4 py-2 bg-foreground/[0.03] border-l-4 border-[#d0fe38] rounded-r-xl">
+          <div className="mt-6 px-4 py-2 bg-foreground/[0.03] border-l-4 border-primary rounded-r-xl">
             <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
               Research Thesis
             </span>
@@ -105,7 +105,7 @@ const TimelineItem = ({
             {item.thesis.link && (
               <a
                 href={item.thesis.link}
-                className="inline-flex items-center gap-1 text-xs mt-2 font-medium hover:underline text-[#d0fe38]"
+                className="inline-flex items-center gap-1 text-xs mt-2 font-medium hover:underline text-primary"
               >
                 View Thesis <ArrowRight size={12} />
               </a>
@@ -126,7 +126,7 @@ const TimelineItem = ({
                     key={i}
                     className="text-base lg:text-lg opacity-70 leading-snug flex gap-4"
                   >
-                    <span className="mt-2.5 size-1.5 rounded-full bg-[#d0fe38] shrink-0" />
+                    <span className="mt-2.5 size-1.5 rounded-full bg-foreground/50 shrink-0" />
                     {point}
                   </li>
                 ),

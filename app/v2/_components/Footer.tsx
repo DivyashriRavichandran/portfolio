@@ -105,8 +105,7 @@ const Footer = () => {
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <h2 className="text-5xl md:text-7xl font-semibold tracking-tighter uppercase leading-[0.9]">
-                Let&apos;s <br />{" "}
-                <span className="text-[#d0fe38]">Connect.</span>
+                Let&apos;s <br /> <span className="text-primary">Connect.</span>
               </h2>
               <div className="mt-12 space-y-8">
                 <div>
@@ -116,13 +115,13 @@ const Footer = () => {
                   <div className="flex gap-4">
                     <a
                       href="#"
-                      className="p-4 rounded-full border border-foreground/10 hover:bg-[#d0fe38] hover:text-black transition-all"
+                      className="p-4 rounded-full border border-foreground/10 hover:bg-primary hover:text-black transition-all"
                     >
                       <Linkedin size={22} />
                     </a>
                     <a
                       href="#"
-                      className="p-4 rounded-full border border-foreground/10 hover:bg-[#d0fe38] hover:text-black transition-all"
+                      className="p-4 rounded-full border border-foreground/10 hover:bg-primary hover:text-black transition-all"
                     >
                       <Github size={22} />
                     </a>
@@ -135,7 +134,7 @@ const Footer = () => {
                   </span>
                   <a
                     href="mailto:contact@divyashri.nl"
-                    className="text-xl md:text-2xl hover:text-[#d0fe38] transition-colors inline-flex items-center gap-2"
+                    className="text-xl md:text-2xl hover:text-primary transition-colors inline-flex items-center gap-2"
                   >
                     contact@divyashri.nl <ArrowUpRight size={20} />
                   </a>
@@ -148,7 +147,7 @@ const Footer = () => {
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="group flex items-center gap-3"
               >
-                <div className="size-10 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-[#d0fe38] group-hover:text-black transition-all">
+                <div className="size-10 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
                   <ArrowUp size={18} />
                 </div>
                 <span className="text-[10px] uppercase font-semibold tracking-widest opacity-40">
@@ -221,7 +220,7 @@ const Footer = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto py-7 px-10 rounded-full bg-[#d0fe38] text-black font-semibold uppercase tracking-widest hover:scale-105 transition-all"
+                  className="w-full md:w-auto py-7 px-10 rounded-full bg-primary text-black font-semibold uppercase tracking-widest hover:scale-105 transition-all"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

@@ -51,7 +51,7 @@ export default function ProjectManager() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="p-2.5 bg-foreground/10 rounded-full size-10 flex items-center justify-center border border-foreground/10">
-            <FolderCode size={32} className="text-[#d0fe38]" />
+            <FolderCode size={32} className="text-primary" />
           </div>
           <div>
             <h2 className="text-2xl font-semibold uppercase tracking-wide">
@@ -119,13 +119,13 @@ export default function ProjectManager() {
                       <a href={project.project_link} target="_blank">
                         <ExternalLink
                           size={20}
-                          className="hover:text-[#d0fe38]"
+                          className="hover:text-primary"
                         />
                       </a>
                     )}
                     {project.github_link && (
                       <a href={project.github_link} target="_blank">
-                        <Github size={20} className="hover:text-[#d0fe38]" />
+                        <Github size={20} className="hover:text-primary" />
                       </a>
                     )}
                   </div>

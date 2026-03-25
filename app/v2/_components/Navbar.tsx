@@ -148,7 +148,7 @@ export default function Navbar() {
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
 
-        <div className="nav-items flex gap-8 bg-primary-dark p-32">
+        <div className="nav-items flex gap-8 p-32">
           <div className="nav-items-col">
             <div className="nav-socials">
               <p className="text-xs opacity-50 uppercase mb-4">Socials</p>

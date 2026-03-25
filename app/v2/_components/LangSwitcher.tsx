@@ -17,7 +17,7 @@ const LangSwitcher = ({ className }: { className?: string }) => {
   return (
     <button
       className={cn(
-        "flex items-center gap-3 px-4 py-2 rounded-full bg-[#d0fe38] text-black transition-all duration-300 group",
+        "flex items-center gap-3 px-4 py-2 rounded-full bg-primary text-black transition-all duration-300 group",
         className,
       )}
       onClick={() => handleOnLocaleChange(locale == "nl" ? "en" : "nl")}

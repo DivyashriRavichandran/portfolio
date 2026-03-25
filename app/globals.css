@@ -105,7 +105,7 @@
     --secondary-dark: oklch(40.5% 0.101 131.063); /* lime-900 */
     --secondary-foreground: oklch(98.4% 0.003 247.858);
 
-    --primary: #d0fe38; /* neon green */
+    --primary: #a977ff; /* neon green */
     --secondary: #ffa447; /* orange */
     --tertiary: #a977ff; /* neon purple */
 
@@ -459,20 +459,21 @@ html {
 }
 
 .nav-bg:nth-child(1) {
-  background-color: #57cea5;
+  background-color: #a977ff;
 }
 
 .nav-bg:nth-child(2) {
-  background-color: #063124;
+  background-color: #1a0044;
 }
 
 .nav-bg:nth-child(3) {
-  background-color: #0b5c43;
+  background-color: #9f4fff;
 }
 
 .nav-bg:nth-child(4) {
-  background-color: #21ba80;
+  background-color: #5b21b6;
 }
+
 /* Navigation Column Layouts */
 .nav-items-col:nth-child(1) {
   flex: 4;

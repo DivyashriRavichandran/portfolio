@@ -48,7 +48,7 @@ export default function EducationManager() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="p-2.5 bg-foreground/10 rounded-full size-10 flex items-center justify-center border border-foreground/10">
-            <FolderCode size={32} className="text-[#d0fe38]" />
+            <FolderCode size={32} className="text-primary" />
           </div>
           <div>
             <h2 className="text-2xl font-semibold uppercase tracking-wide">

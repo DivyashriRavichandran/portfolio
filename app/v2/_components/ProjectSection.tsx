@@ -28,12 +28,12 @@ const ProjectSection = () => {
   const projects = data.projects;
 
   return (
-    <section className="px-5 py-10 md:py-2 md:container md:mx-auto">
+    <section className="px-5 py-10 md:py-16 md:container md:mx-auto">
       <div className="mx-auto">
         {/* Section Header */}
         <div className="flex justify-between items-end mb-16 border-b border-foreground/10 pb-6">
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-none">
-            Selected <span className="text-[#d0fe38]">Works.</span>
+            Selected <span className="text-primary">Works.</span>
           </h2>
           <p className="text-[10px] uppercase font-medium tracking-[0.2em] opacity-40 text-right">
             {projects.length.toString().padStart(2, "0")} Projects

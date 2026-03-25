@@ -19,7 +19,7 @@ export default function AdminPage() {
       {/* HEADER */}
       <div className="flex flex-col gap-2 border-b border-foreground/10 pb-2">
         <h1 className="text-6xl font-bold uppercase tracking-tight">
-          Admin <span className="text-[#d0fe38]">Dashboard</span>
+          Admin <span className="text-primary">Dashboard</span>
         </h1>
         <p className="font-medium opacity-60">
           Management of all Portfolio content & settings

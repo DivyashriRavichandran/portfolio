@@ -206,31 +206,32 @@
       "icon": "MdHealthAndSafety"
     }
   ],
-  "open-source": [
+  "side-projects": [
     {
       "id": 1,
-      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+      "image": "/advent-of-code.png",
 
-      "title": "Advent of Code",
+      "title": "Advent of Code Challenge 2025",
       "description": "A collection of coding challenges and puzzles from the Advent of Code event. Each challenge tests problem-solving skills and algorithmic thinking, providing an opportunity to improve coding proficiency and learn new techniques.",
       "tech_stack": ["JavaScript"],
-      "github_link": ""
+      "project_link": "https://www.google.com",
+      "github_link": "https://github.com/divyashriravichandran/"
     },
     {
       "id": 2,
-      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
+      "image": "/Screenshot 2026-03-25 at 1.10.00 pm.png",
       "title": "Flip Card Component - Animate UI",
       "description": "A reusable flip card component with smooth animations for interactive user interfaces. This component can be used to display content on both sides of the card, enhancing the visual appeal and user experience of web applications.",
-      "tech_stack": ["React", "Tailwind CSS"],
-      "github_link": ""
+      "tech_stack": ["React", "Tailwind CSS", "Motion"],
+      "github_link": "https://github.com/divyashriravichandran/"
     },
     {
       "id": 3,
-      "image": "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
-      "title": "Open Source Project 3",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, error!",
-      "tech_stack": ["React", "Tailwind CSS"],
-      "github_link": ""
+      "image": "/java-challenge.webp",
+      "title": "1 Billion Rows Challenge (Java)",
+      "description": "An exploration of high-performance file processing in Java. This project focuses on parsing and aggregating large-scale weather data efficiently while experimenting with streams, hash maps, and multithreading techniques.",
+      "tech_stack": ["Java"],
+      "github_link": "https://github.com/divyashriravichandran/"
     }
   ],
   "about": {

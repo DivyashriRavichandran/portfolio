@@ -380,7 +380,7 @@ export default function ProjectDialog({
                 ))}
                 <label className="relative aspect-square rounded-xl bg-white/5 border-2 border-dashed border-white/10 hover:border-[#d0fe38]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-2">
                   {uploading ? (
-                    <Loader2 className="animate-spin text-[#d0fe38]" />
+                    <Loader2 className="animate-spin text-primary" />
                   ) : (
                     <ImagePlus className="text-white/20" />
                   )}

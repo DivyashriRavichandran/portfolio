@@ -29,7 +29,7 @@ const ProjectDialog = ({ project }: { project: Project }) => {
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col border-l border-foreground/5 order-2 md:order-1">
           <DialogHeader className="mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <div className="size-2 bg-[#d0fe38] rounded-full animate-pulse" />
+              <div className="size-2 bg-primary rounded-full animate-pulse" />
               <span className="text-[10px] font-bold uppercase tracking-[0.3em] opacity-40">
                 System Log // {project.year}
               </span>
@@ -57,8 +57,7 @@ const ProjectDialog = ({ project }: { project: Project }) => {
             <div className="space-y-8">
               <div>
                 <h4 className="flex items-center gap-2 text-xs font-black uppercase tracking-widest mb-4">
-                  <Layers size={14} className="text-[#d0fe38]" /> Technical
-                  Stack
+                  <Layers size={14} className="text-primary" /> Technical Stack
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {project.tech_stack.map((tech) => (
@@ -78,7 +77,7 @@ const ProjectDialog = ({ project }: { project: Project }) => {
             <a
               href={project.project_link}
               target="_blank"
-              className="flex-1 flex items-center justify-center gap-2 py-4 bg-[#d0fe38] text-black rounded-full font-bold uppercase text-xs tracking-widest hover:scale-[1.02] transition-transform"
+              className="flex-1 flex items-center justify-center gap-2 py-4 bg-primary text-black rounded-full font-bold uppercase text-xs tracking-widest hover:scale-[1.02] transition-transform"
             >
               Launch Project <ExternalLink size={14} />
             </a>
