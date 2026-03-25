@@ -77,16 +77,16 @@ const TimelineItem = ({
 
           {/* PERIOD + BADGE */}
           <div className="flex flex-col md:items-end gap-1 shrink-0 mt-1">
-            <span className="text-sm font-mono font-medium opacity-50 uppercase">
+            <span className="text-sm font-medium opacity-60 uppercase">
               {period}
             </span>
             {item.grade && (
-              <span className="text-[10px] font-medium uppercase tracking-widest text-primary">
+              <span className="text-xs font-semibold uppercase tracking-wide text-background px-0.5 bg-primary">
                 {item.grade}
               </span>
             )}
             {item.duration && (
-              <span className="text-[10px] font-medium text-primary uppercase tracking-widest">
+              <span className="text-xs font-semibold uppercase tracking-wide text-background px-0.5 bg-primary">
                 {item.duration[locale]}
               </span>
             )}
@@ -105,9 +105,9 @@ const TimelineItem = ({
             {item.thesis.link && (
               <a
                 href={item.thesis.link}
-                className="inline-flex items-center gap-1 text-xs mt-2 font-medium hover:underline text-primary"
+                className="inline-flex items-center gap-1 text-xs mt-2 md:mt-3 font-semibold uppercase tracking-wide hover:underline text-background px-1 bg-primary"
               >
-                View Thesis <ArrowRight size={12} />
+                View Thesis <ArrowRight size={16} />
               </a>
             )}
           </div>

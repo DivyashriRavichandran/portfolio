@@ -104,8 +104,9 @@ const Footer = () => {
           {/* LEFT: Connect & Info */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h2 className="text-5xl md:text-7xl font-semibold tracking-tighter uppercase leading-[0.9]">
-                Let&apos;s <br /> <span className="text-primary">Connect.</span>
+              <h2 className="text-5xl md:text-6xl font-semibold tracking-tight uppercase leading-tight">
+                <span>Let&apos;s </span> <br />{" "}
+                <span className="px-1 text-black/90 bg-primary">Connect.</span>
               </h2>
               <div className="mt-12 space-y-8">
                 <div>
@@ -142,7 +143,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="mt-12 lg:mt-0 flex items-center gap-8">
+            <div className="mt-12 lg:mt-8 flex items-center gap-8">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="group flex items-center gap-3"

@@ -38,7 +38,7 @@ export default function ProjectManager() {
     if (confirm("Are you sure you want to permanently delete this project?")) {
       try {
         await removeProject({ id });
-        toast.success("Project purged from archive.");
+        toast.success("Project deleted.");
       } catch (err) {
         toast.error(`Error: Could not delete entry: ${err}`);
       }
@@ -98,7 +98,7 @@ export default function ProjectManager() {
                 <TableCell className="">{project.year}</TableCell>
                 <TableCell>
                   <div className="flex gap-1 items-center">
-                    {project.categories.slice(0, 2).map((cat: string) => (
+                    {project.categories.en.slice(0, 2).map((cat: string) => (
                       <span
                         key={cat}
                         className="text-xs px-2 py-0.5 rounded-full border border-white/20 bg-white/5 uppercase font-medium"
@@ -106,9 +106,9 @@ export default function ProjectManager() {
                         {cat}
                       </span>
                     ))}
-                    {project.categories.length > 2 && (
+                    {project.categories.en.length > 2 && (
                       <span className="text-xs opacity-50">
-                        +{project.categories.length - 2}
+                        +{project.categories.en.length - 2}
                       </span>
                     )}
                   </div>

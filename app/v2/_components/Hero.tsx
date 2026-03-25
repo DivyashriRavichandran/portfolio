@@ -41,7 +41,9 @@ const Hero = () => {
         <div className="overflow-hidden hero-title">
           <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase flex flex-col gap-2">
             <span className="inline-block">Frontend</span>{" "}
-            <span className="inline-block text-primary">Developer</span>
+            <span className="text-background px-1 w-fit bg-primary">
+              Developer.
+            </span>
           </h1>
         </div>
 

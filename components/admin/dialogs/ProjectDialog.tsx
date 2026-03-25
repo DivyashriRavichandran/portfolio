@@ -35,13 +35,14 @@ const projectSchema = z.object({
   title_nl: z.string().min(1, "Dutch title is required"),
   description_en: z.string().optional(),
   description_nl: z.string().optional(),
+  categories_en: z.string(),
+  categories_nl: z.string(),
   year: z.string().min(4, "Invalid year"),
-  icon: z.string().optional(),
-  categories: z.string().optional(),
   tech_stack: z.string().optional(),
   project_link: z.string().url().optional().or(z.literal("")),
   github_link: z.string().url().optional().or(z.literal("")),
   images: z.array(z.string()),
+  mockup: z.string(),
 });
 
 type ProjectFormValues = z.infer<typeof projectSchema>;
@@ -69,12 +70,13 @@ export default function ProjectDialog({
       description_en: "",
       description_nl: "",
       year: new Date().getFullYear().toString(),
-      icon: "",
-      categories: "",
+      categories_en: "",
+      categories_nl: "",
       tech_stack: "",
       project_link: "",
       github_link: "",
       images: [],
+      mockup: "",
     },
   });
 
@@ -87,8 +89,8 @@ export default function ProjectDialog({
         description_en: data.description.en,
         description_nl: data.description.nl,
         year: data.year.toString(),
-        icon: data.icon || "",
-        categories: data.categories?.join(", ") || "",
+        categories_en: data.categories?.en?.join(", ") || "",
+        categories_nl: data.categories?.nl?.join(", ") || "",
         tech_stack: data.tech_stack?.join(", ") || "",
         project_link: data.project_link || "",
         github_link: data.github_link || "",
@@ -108,20 +110,27 @@ export default function ProjectDialog({
         nl: values.description_nl || "",
       },
       year: Number(values.year),
-      icon: values.icon || "",
       project_link: values.project_link || "",
       github_link: values.github_link || "",
-      categories:
-        values.categories
-          ?.split(",")
-          .map((s) => s.trim())
-          .filter(Boolean) || [],
+      categories: {
+        en:
+          values.categories_en
+            ?.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean) || [],
+        nl:
+          values.categories_nl
+            ?.split(",")
+            .map((s) => s.trim())
+            .filter(Boolean) || [],
+      },
       tech_stack:
         values.tech_stack
           ?.split(",")
           .map((s) => s.trim())
           .filter(Boolean) || [],
       images: values.images,
+      mockup: values.mockup,
     };
 
     try {
@@ -141,14 +150,17 @@ export default function ProjectDialog({
     }
   }
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    onSuccess?: (id: string) => void,
+  ) => {
     const files = Array.from(e.target.files || []);
     if (files.length === 0) return;
 
     setUploading(true);
     try {
-      const currentImages = form.getValues("images");
       const uploadedIds: string[] = [];
+
       for (const file of files) {
         const postUrl = await generateUploadUrl();
         const result = await fetch(postUrl, {
@@ -156,15 +168,30 @@ export default function ProjectDialog({
           headers: { "Content-Type": file.type },
           body: file,
         });
+
+        if (!result.ok) throw new Error("Upload failed");
+
         const { storageId } = await result.json();
         uploadedIds.push(storageId);
       }
-      form.setValue("images", [...currentImages, ...uploadedIds]);
-      toast.success("Images uploaded");
+
+      // LOGIC SPLIT:
+      if (onSuccess) {
+        // If a callback exists (Mockup mode), return the first uploaded ID
+        onSuccess(uploadedIds[0]);
+      } else {
+        // Default (Gallery mode), append to the images array
+        const currentImages = form.getValues("images") || [];
+        form.setValue("images", [...currentImages, ...uploadedIds]);
+      }
+
+      toast.success("Upload successful");
     } catch (error) {
       toast.error(`Upload failed: ${error}`);
     } finally {
       setUploading(false);
+      // Reset the input so the same file can be uploaded again if deleted
+      e.target.value = "";
     }
   };
 
@@ -257,10 +284,26 @@ export default function ProjectDialog({
 
             <FormField
               control={form.control}
-              name="categories"
+              name="categories_en"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Categories</FormLabel>
+                  <FormLabel>Categories (EN)</FormLabel>
+                  <FormControl>
+                    <Input
+                      variant={"admin"}
+                      placeholder="Frontend, UI/UX"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="categories_nl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Categories (NL)</FormLabel>
                   <FormControl>
                     <Input
                       variant={"admin"}
@@ -287,74 +330,108 @@ export default function ProjectDialog({
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="year"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Year</FormLabel>
+                  <FormControl>
+                    <Input type="number" variant={"admin"} {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-            <div className="grid grid-cols-2 gap-4 col-span-2">
-              <FormField
-                control={form.control}
-                name="year"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Year</FormLabel>
-                    <FormControl>
-                      <Input type="number" variant={"admin"} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="icon"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Icon Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        variant={"admin"}
-                        placeholder="LuCode"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="project_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Project Link</FormLabel>
-                    <FormControl>
-                      <Input
-                        variant={"admin"}
-                        placeholder="https://..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="github_link"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Github Link</FormLabel>
-                    <FormControl>
-                      <Input
-                        variant={"admin"}
-                        placeholder="https://github.com/..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="project_link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Project Link</FormLabel>
+                  <FormControl>
+                    <Input
+                      variant={"admin"}
+                      placeholder="https://..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="github_link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Github Link</FormLabel>
+                  <FormControl>
+                    <Input
+                      variant={"admin"}
+                      placeholder="https://github.com/..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Mockup Section */}
+            <FormField
+              control={form.control}
+              name="mockup"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Mockup Image</FormLabel>
+                  <FormControl>
+                    <div className="space-y-3">
+                      {field.value ? (
+                        /* Single Image Preview State */
+                        <div className="relative aspect-video w-full max-w-md rounded-xl bg-white/5 border border-white/10 overflow-hidden group">
+                          <ImagePreview storageId={field.value} />
+                          <button
+                            type="button"
+                            onClick={() => field.onChange("")} // Clear the field
+                            className="absolute top-2 right-2 p-1.5 bg-red-500/80 hover:bg-red-500 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-20"
+                          >
+                            <X size={16} className="text-white" />
+                          </button>
+                        </div>
+                      ) : (
+                        /* Upload Trigger State */
+                        <label className="relative aspect-video w-full max-w-md rounded-xl bg-white/5 border-2 border-dashed border-white/10 hover:border-[#d0fe38]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-2">
+                          {uploading ? (
+                            <Loader2 className="animate-spin text-primary" />
+                          ) : (
+                            <>
+                              <ImagePlus className="text-white/20" />
+                              <span className="text-xs text-white/40">
+                                Upload Mockup
+                              </span>
+                            </>
+                          )}
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={uploading}
+                            onChange={(e) => {
+                              handleImageUpload(e, (id) => field.onChange(id));
+                            }}
+                          />
+                        </label>
+                      )}
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* Gallery Section */}
-            <div className="space-y-3 col-span-2">
+            <div className="space-y-3">
               <FormLabel>Project Gallery</FormLabel>
               <div className="grid grid-cols-4 gap-4">
                 {form.watch("images").map((storageId) => (

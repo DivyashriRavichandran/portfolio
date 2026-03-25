@@ -105,7 +105,7 @@
     --secondary-dark: oklch(40.5% 0.101 131.063); /* lime-900 */
     --secondary-foreground: oklch(98.4% 0.003 247.858);
 
-    --primary: #a977ff; /* neon green */
+    --primary: #eff28d; /* neon green */
     --secondary: #ffa447; /* orange */
     --tertiary: #a977ff; /* neon purple */
 
@@ -459,19 +459,19 @@ html {
 }
 
 .nav-bg:nth-child(1) {
-  background-color: #a977ff;
+  background-color: #f4f7b5; /* very light soft yellow */
 }
 
 .nav-bg:nth-child(2) {
-  background-color: #1a0044;
+  background-color: #e6d86a; /* warm yellow */
 }
 
 .nav-bg:nth-child(3) {
-  background-color: #9f4fff;
+  background-color: #a88e2f; /* mustard / dark gold */
 }
 
 .nav-bg:nth-child(4) {
-  background-color: #5b21b6;
+  background-color: #eff28d; /* your favorite - keep */
 }
 
 /* Navigation Column Layouts */

@@ -17,9 +17,10 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-background px-5 md:container md:mx-auto py-10">
       {/* HEADER */}
-      <div className="flex flex-col gap-2 border-b border-foreground/10 pb-2">
-        <h1 className="text-6xl font-bold uppercase tracking-tight">
-          Admin <span className="text-primary">Dashboard</span>
+      <div className="flex flex-col gap-4 border-b border-foreground/30 pb-4">
+        <h1 className="text-6xl font-bold uppercase tracking-tighter">
+          Admin{" "}
+          <span className="text-background px-1 bg-primary">Dashboard</span>
         </h1>
         <p className="font-medium opacity-60">
           Management of all Portfolio content & settings

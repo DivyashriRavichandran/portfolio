@@ -4,8 +4,10 @@ export interface ProjectItem {
   _id?: Id<"projects">;
   title: { en: string; nl: string };
   year: number;
-  icon: string;
-  categories: string[];
+  categories: {
+    en: string[];
+    nl: string[];
+  };
   description: { en: string; nl: string };
   tech_stack: string[];
   project_link: string;

@@ -27,6 +27,7 @@ import {
 import data from "@/data/data.json";
 import Subheading from "./Subheading";
 import Image from "next/image";
+import Heading from "./Heading";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -136,11 +137,7 @@ const About = () => {
       className="px-6 md:container md:mx-auto py-10 md:py-16"
     >
       {/* Header */}
-      <div className="flex justify-between items-end mb-16 border-b border-foreground/10 pb-6">
-        <h2 className="text-4xl md:text-6xl font-black tracking-tighter uppercase leading-none">
-          About <span className="text-primary">Me.</span>
-        </h2>
-      </div>
+      <Heading text1={"About"} text2={"Me"} total={0} />
 
       {/* Intro */}
       <div className="grid lg:grid-cols-12 gap-12 items-start">
@@ -229,7 +226,7 @@ const About = () => {
           {/* Setup */}
           <div className="lg:col-span-3 about-panel">
             <Subheading icon={CpuIcon} text="Hardware Setup" />
-            <div className="grid gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
               {setup.map((item, i) => (
                 <div
                   key={i}

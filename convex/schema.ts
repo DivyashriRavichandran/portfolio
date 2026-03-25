@@ -3,18 +3,22 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 const localeString = v.object({ en: v.string(), nl: v.string() });
+const localeArrString = v.object({
+  en: v.array(v.string()),
+  nl: v.array(v.string()),
+});
 
 export default defineSchema({
   projects: defineTable({
     title: localeString,
-    year: v.number(),
-    icon: v.string(),
-    categories: v.array(v.string()),
     description: localeString,
+    year: v.number(),
+    categories: localeArrString,
     tech_stack: v.array(v.string()),
     project_link: v.string(),
     github_link: v.optional(v.string()),
     images: v.array(v.string()),
+    mockup: v.string(),
   }),
   education: defineTable({
     image: v.string(),

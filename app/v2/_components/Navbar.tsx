@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import Image from "next/image";
+import { GithubIcon, LinkedinIcon } from "lucide-react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(SplitText);
@@ -20,7 +21,7 @@ export default function Navbar() {
   const linkBlocks = [
     ".nav-socials .line, .nav-legal .line", // Bottom-left
     ".nav-primary-links .line", // Center
-    ".nav-secondary-links .line, .nav-secondary-links button .line", // Right side
+    ".nav-secondary-links .line", // Right side
   ];
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Navbar() {
     gsap.registerPlugin(SplitText);
 
     // 3. Initialize SplitText
-    const splitLinks = SplitText.create(".nav-items a", {
+    const splitLinks = SplitText.create(".nav-items .split", {
       type: "lines",
       mask: "lines",
       linesClass: "line",
@@ -142,7 +143,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <div className="nav-content">
+      <div className="nav-content text-background">
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
@@ -151,38 +152,65 @@ export default function Navbar() {
         <div className="nav-items flex gap-8 p-32">
           <div className="nav-items-col">
             <div className="nav-socials">
-              <p className="text-xs opacity-50 uppercase mb-4">Socials</p>
-              <a href="#">Github</a>
-              <a href="#">Linkedin</a>
+              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
+                Socials
+              </p>
+              <a href="#" className="flex items-center gap-2 split">
+                <GithubIcon size={16} />
+                <span className="split">Github</span>
+              </a>
+
+              <a href="#" className="flex items-center gap-2 split">
+                <LinkedinIcon size={16} />
+                <span className="split">Linkedin</span>
+              </a>
             </div>
-            <div className="nav-legal">
-              <p className="text-xs opacity-50 uppercase mb-2">Location</p>
-              <a href="#">Groningen, NL</a>
-              <a href="#">09:30 GMT</a>
+            <div className="nav-legal font-medium">
+              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
+                Location
+              </p>
+              <a href="#" className="split">
+                Groningen, NL
+              </a>
+              <a href="#" className="split">
+                09:30 GMT
+              </a>
             </div>
           </div>
           <div className="nav-items-col">
-            <div className="nav-primary-links">
-              <p className="text-xs opacity-50 uppercase mb-4">Menu</p>
-              <a href="#">Projects</a>
-              <a href="#">About</a>
-              <a href="#">Experience</a>
-              <a href="#">Contact</a>
+            <div className="nav-primary-links font-medium">
+              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
+                Menu
+              </p>
+              <a href="#">
+                <span className="split">Projects</span>
+              </a>
+              <a href="#">
+                <span className="split">About</span>
+              </a>
+              <a href="#">
+                <span className="split">Experience</span>
+              </a>
+              <a href="#">
+                <span className="split">Contact</span>
+              </a>
             </div>
           </div>
           <div className="nav-items-col">
             <div className="nav-secondary-links">
-              <p className="text-xs opacity-50 uppercase mb-4">Language</p>
+              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
+                Language
+              </p>
               <div className="flex items-center gap-4 font-medium">
                 {/* EN Button */}
                 <a
                   href=""
-                  className={`group relative flex items-center gap-2 ${locale === "en" ? "opacity-100" : "opacity-50"}`}
+                  className={` group relative flex items-center gap-2 ${locale === "en" ? "opacity-100" : "opacity-80"}`}
                 >
                   <Image src="/uk-flag.png" alt="UK" width={18} height={18} />
-                  <span className="inline-block">EN</span>
+                  <span className="inline-block ">EN</span>
                   <div
-                    className={`absolute -bottom-1 left-0 h-[1px] bg-white transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                    className={`absolute -bottom-1 left-0 h-[1px] bg-background transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
                   />
                 </a>
 
@@ -191,23 +219,23 @@ export default function Navbar() {
                 {/* NL Button */}
                 <a
                   href=""
-                  className={`flex items-center gap-2 ${locale !== "en" ? "opacity-100" : "opacity-50"}`}
+                  className={`flex items-center gap-2 ${locale !== "en" ? "opacity-100" : "opacity-80"}`}
                 >
                   <Image src="/nl-flag.png" alt="NL" width={18} height={18} />
                   <span className="">NL</span>
                   <div
-                    className={`absolute -bottom-1 left-0 h-[1px] bg-white transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
+                    className={`absolute -bottom-1 left-0 h-[1px] bg-background transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
                   />
                 </a>
               </div>
             </div>
             <div className="nav-secondary-links">
-              <p className="text-xs opacity-50 uppercase mb-2">Documents</p>
-              <a href="#" className="flex items-baseline">
+              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
+                Documents
+              </p>
+              <a href="#" className="flex items-baseline split">
                 <span>Resume</span>
-                <span className="text-xs opacity-50 ml-2">
-                  (Updated 03/2026)
-                </span>
+                <span className="text-xs ml-2">(Updated 03/2026)</span>
               </a>
             </div>
           </div>

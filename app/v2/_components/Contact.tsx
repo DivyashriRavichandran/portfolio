@@ -89,8 +89,9 @@ const Contact = () => {
         {/* LEFT SIDE: Editorial Info */}
         <div className="lg:col-span-5 flex flex-col justify-between">
           <div>
-            <h2 className="text-5xl md:text-4xl font-semibold tracking-tighter uppercase leading-[0.9]">
-              Let&apos;s <br /> <span className="text-primary">Connect.</span>
+            <h2 className="text-5xl md:text-4xl font-semibold tracking-tight uppercase leading-[0.9]">
+              Let&apos;s <br />{" "}
+              <span className="text-black/90 px-1 bg-primary">Connect.</span>
             </h2>
             <p className="mt-8 text-lg md:text-xl opacity-60 max-w-sm leading-relaxed">
               Whether you have a question, want to collaborate, or just want to

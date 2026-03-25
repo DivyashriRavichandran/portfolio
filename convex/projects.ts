@@ -8,17 +8,22 @@ export const list = query({
   },
 });
 
+const categoriesSchema = v.object({
+  en: v.array(v.string()),
+  nl: v.array(v.string()),
+});
+
 export const create = mutation({
   args: {
     title: v.object({ en: v.string(), nl: v.string() }),
     year: v.number(),
-    icon: v.string(),
-    categories: v.array(v.string()),
+    categories: categoriesSchema,
     description: v.object({ en: v.string(), nl: v.string() }),
     tech_stack: v.array(v.string()),
     project_link: v.string(),
     github_link: v.optional(v.string()),
     images: v.array(v.string()),
+    mockup: v.string(),
   },
   handler: async (ctx, args) => {
     const newProjectId = await ctx.db.insert("projects", args);
@@ -31,25 +36,25 @@ export const update = mutation({
     id: v.id("projects"),
     title: v.object({ en: v.string(), nl: v.string() }),
     year: v.number(),
-    icon: v.string(),
-    categories: v.array(v.string()),
+    categories: categoriesSchema,
     description: v.object({ en: v.string(), nl: v.string() }),
     tech_stack: v.array(v.string()),
     project_link: v.string(),
     github_link: v.optional(v.string()),
     images: v.array(v.string()),
+    mockup: v.string(),
   },
   handler: async (ctx, args) => {
     await ctx.db.patch(args.id, {
       title: args.title,
       year: args.year,
-      icon: args.icon,
       categories: args.categories,
       description: args.description,
       tech_stack: args.tech_stack,
       project_link: args.project_link,
       github_link: args.github_link,
       images: args.images,
+      mockup: args.mockup,
     });
   },
 });
@@ -67,4 +72,11 @@ export const remove = mutation({
 
 export const generateUploadUrl = mutation(async (ctx) => {
   return await ctx.storage.generateUploadUrl();
+});
+
+export const getFileUrl = query({
+  args: { storageId: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId);
+  },
 });
