@@ -16,13 +16,13 @@ import {
   SiCypress,
   SiJira,
   SiHtml5,
-  SiCss3,
   SiJavascript,
 } from "react-icons/si";
 import { IconType } from "react-icons";
 import { GrMysql } from "react-icons/gr";
 import Heading from "../Heading";
 import { GiBearFace } from "react-icons/gi";
+import { FaCss3 } from "react-icons/fa6";
 
 interface TechItem {
   name: string;
@@ -35,7 +35,7 @@ export default function TechStackSection() {
 
   const techStack: TechItem[] = [
     { name: "HTML", icon: SiHtml5, category: "languages" },
-    { name: "CSS", icon: SiCss3, category: "languages" },
+    { name: "CSS", icon: FaCss3, category: "languages" },
     { name: "JavaScript", icon: SiJavascript, category: "languages" },
     { name: "TypeScript", icon: SiTypescript, category: "languages" },
     { name: "React", icon: SiReact, category: "frameworks" },
