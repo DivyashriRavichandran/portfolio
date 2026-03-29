@@ -148,7 +148,7 @@ export default function AboutManager() {
     <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* HERO & ABOUT */}
       <div className="space-y-4">
-        <Subheading icon={UserCircle} text="Identity" />
+        <Subheading icon={UserCircle} text="About me" />
 
         {["en", "nl"].map((locale) => (
           <div key={locale} className="space-y-2">

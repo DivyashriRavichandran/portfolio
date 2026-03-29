@@ -124,27 +124,14 @@
 }
 
 @layer base {
-  * {
-    @apply border-foreground/50;
-  }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-general-sans), sans-serif;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
-    font-family: "General Sans", sans-serif;
   }
 }
-
-/* .playfair-display {
-  font-family: "Playfair Display", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-}
-.pathway-gothic {
-  font-family: "Pathway Gothic One", sans-serif;
-  font-style: normal;
-} */
 
 /* ROLLING TEXT HOVER ANIMATION */
 .text:hover .letter,
