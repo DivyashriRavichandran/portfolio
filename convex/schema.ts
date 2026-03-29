@@ -1,9 +1,9 @@
-// convex/schema.ts
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
-const localeString = v.object({ en: v.string(), nl: v.string() });
-const localeArrString = v.object({
+// Multilingual support
+export const localeString = v.object({ en: v.string(), nl: v.string() });
+export const localeArrString = v.object({
   en: v.array(v.string()),
   nl: v.array(v.string()),
 });
@@ -20,6 +20,7 @@ export default defineSchema({
     images: v.array(v.string()),
     mockup: v.string(),
   }),
+
   education: defineTable({
     image: v.string(),
     title: localeString,
@@ -28,40 +29,38 @@ export default defineSchema({
     duration: v.optional(localeString),
     grade: v.optional(v.string()),
     thesis: v.optional(
-      v.object({ title: v.string(), link: v.optional(v.string()) }),
+      v.object({ title: localeString, link: v.optional(v.string()) }),
     ),
     relevant_projects: v.optional(v.array(v.string())),
-    key_modules: v.optional(v.array(v.string())),
+    key_modules: v.optional(localeArrString),
   }),
 
   experience: defineTable({
     image: v.string(),
     title: localeString,
-    institution: localeString, // Used as Company Name
-    duration: v.string(),
+    institution: localeString,
+    duration: localeString,
     period: localeString,
-    key_outcomes: v.optional(v.array(v.string())),
+    key_outcomes: v.optional(localeArrString),
     technologies: v.optional(v.array(v.string())),
   }),
 
   about: defineTable({
-    heroTitle: v.string(),
-    navbarLinks: v.array(v.object({ label: v.string(), href: v.string() })),
-    biography: v.string(),
-    techStack: v.array(v.string()),
+    menu_items: v.array(v.object({ label: localeString, href: v.string() })),
+    about: localeString,
+    tech_stack: v.array(v.string()),
     spotify_playlist: v.optional(v.array(v.string())),
-    hardware_setup: v.optional(v.array(v.string())),
+    hardware: v.optional(localeArrString),
     interests: v.optional(
       v.array(
         v.object({
-          title: v.string(),
-          description: v.string(),
-          image: v.optional(v.string()),
+          title: localeString,
+          description: localeString,
         }),
       ),
     ),
-    resumeUrl: v.string(),
-    linkedinUrl: v.string(),
-    githubUrl: v.string(),
+    resume: v.optional(v.string()), // storageId
+    linkedin: v.string(),
+    github: v.string(),
   }),
 });

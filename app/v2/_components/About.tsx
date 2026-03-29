@@ -23,14 +23,20 @@ import data from "@/data/data.json";
 import Subheading from "./Subheading";
 import Image from "next/image";
 import Heading from "./Heading";
+import { Badge } from "@/components/ui/badge";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
 const About = () => {
+  const about = useQuery(api.about.get);
+
   const containerRef = useRef(null);
   const extraRef = useRef<HTMLDivElement>(null);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const personalSections = [
@@ -134,7 +140,7 @@ const About = () => {
       className="px-6 md:container md:mx-auto py-10 md:py-16"
     >
       {/* Header */}
-      <Heading text1={"About"} text2={"Me"} total={0} />
+      <Heading text1={"About"} text2={"Me"} />
 
       {/* Intro */}
       <div className="grid lg:grid-cols-12 gap-12 items-start">
@@ -165,13 +171,8 @@ const About = () => {
           <div className="about-panel">
             <Subheading icon={Terminal} text="Tech Stack" />
             <div className="flex flex-wrap gap-2">
-              {data.about.tech_stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 bg-foreground/5 border border-foreground/10 rounded-lg text-sm font-medium"
-                >
-                  {tech}
-                </span>
+              {about?.tech_stack.map((tech) => (
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
           </div>

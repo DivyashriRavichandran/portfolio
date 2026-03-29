@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -136,12 +136,7 @@ const TimelineItem = ({
         {(item.key_modules || item.technologies) && (
           <div className="mt-6 flex flex-wrap gap-2">
             {(item.key_modules || item.technologies)?.map((tag) => (
-              <span
-                key={tag}
-                className="text-sm border border-foreground/20 text-foreground/70 rounded-full px-3 py-1 bg-foreground/3"
-              >
-                {tag}
-              </span>
+              <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
         )}

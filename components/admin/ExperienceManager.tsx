@@ -92,7 +92,7 @@ export default function ExperienceManager() {
                   {entry.title.en}
                 </TableCell>
                 <TableCell className="">{entry.institution.en}</TableCell>
-                <TableCell className="">{entry.duration}</TableCell>
+                <TableCell className="">{entry.duration.en}</TableCell>
 
                 <TableCell className="text-right pr-8 gap-4 flex justify-end">
                   <button className="p-2 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all">

@@ -7,7 +7,7 @@ const Heading = ({
 }: {
   text1: string;
   text2: string;
-  total: number;
+  total?: number;
 }) => {
   return (
     <div className="flex justify-between items-end mb-16 border-b border-foreground/10 pb-6">
@@ -15,9 +15,11 @@ const Heading = ({
         {text1}{" "}
         <span className="text-background bg-primary px-1">{text2}.</span>
       </h2>
-      <p className="text-[10px] uppercase font-medium tracking-[0.2em] opacity-40 text-right">
-        {total.toString().padStart(2, "0")} Projects
-      </p>
+      {total && (
+        <p className="text-[10px] uppercase font-medium tracking-[0.2em] opacity-40 text-right">
+          {total.toString().padStart(2, "0")} Projects
+        </p>
+      )}
     </div>
   );
 };

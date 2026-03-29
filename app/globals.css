@@ -459,19 +459,19 @@ html {
 }
 
 .nav-bg:nth-child(1) {
-  background-color: #f4f7b5; /* very light soft yellow */
+  background-color: #f4f7b5;
 }
 
 .nav-bg:nth-child(2) {
-  background-color: #e6d86a; /* warm yellow */
+  background-color: #e6d86a;
 }
 
 .nav-bg:nth-child(3) {
-  background-color: #a88e2f; /* mustard / dark gold */
+  background-color: #a88e2f;
 }
 
 .nav-bg:nth-child(4) {
-  background-color: #eff28d; /* your favorite - keep */
+  background-color: #eff28d;
 }
 
 /* Navigation Column Layouts */

@@ -10,9 +10,7 @@ interface ImagePreviewProps {
 }
 
 export const ImagePreview = ({ storageId }: ImagePreviewProps) => {
-  // This query should point to a function in your Convex 'projects.ts'
-  // or 'files.ts' that returns the metadata for a storageId
-  const imageUrl = useQuery(api.projects.getFileUrl, { storageId });
+  const imageUrl = useQuery(api.images.getUrl, { storageId });
 
   if (imageUrl === undefined) {
     return (

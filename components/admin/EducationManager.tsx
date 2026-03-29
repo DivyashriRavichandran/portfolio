@@ -17,7 +17,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
 
 export default function EducationManager() {
-  const education = useQuery(api.education.get);
+  const education = useQuery(api.education.list);
   const removeEducation = useMutation(api.education.remove);
 
   if (education === undefined)

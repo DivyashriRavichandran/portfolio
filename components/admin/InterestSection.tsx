@@ -23,7 +23,7 @@ interface InterestSectionProps {
 
 // Helper Component to display Convex Images
 const InterestImage = ({ storageId }: { storageId: string }) => {
-  const imageUrl = useQuery(api.about.getUrl, { storageId });
+  const imageUrl = useQuery(api.images.getUrl, { storageId });
   if (!imageUrl)
     return <div className="w-full h-full bg-muted animate-pulse" />;
   return (
@@ -41,7 +41,7 @@ export const InterestSection = ({
   formData,
   setFormData,
 }: InterestSectionProps) => {
-  const generateUploadUrl = useMutation(api.about.generateUploadUrl);
+  const generateUploadUrl = useMutation(api.images.generateUploadUrl);
   const [isUploading, setIsUploading] = useState<number | null>(null);
 
   const handleUpload = async (

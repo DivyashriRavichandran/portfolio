@@ -60,7 +60,7 @@ export default function ProjectDialog({
 
   const addProject = useMutation(api.projects.create);
   const updateProject = useMutation(api.projects.update);
-  const generateUploadUrl = useMutation(api.projects.generateUploadUrl);
+  const generateUploadUrl = useMutation(api.images.generateUploadUrl);
 
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectSchema),

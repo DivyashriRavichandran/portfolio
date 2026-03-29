@@ -1,32 +1,42 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useQuery } from "convex/react";
 import { Layers, Trophy, Zap, BugIcon, LightbulbIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
+export type Project = {
+  _id: Id<"projects">;
+  _creationTime: number;
+  github_link?: string | undefined;
+  title: {
+    en: string;
+    nl: string;
+  };
   year: number;
+  categories: {
+    en: string[];
+    nl: string[];
+  };
+  description: {
+    en: string;
+    nl: string;
+  };
   tech_stack: string[];
-  categories: string[];
+  project_link: string;
   images: string[];
   mockup: string;
-  project_link: string;
-  github_link?: string;
-  role?: string;
-  outcome?: string;
-  challenge?: string;
-  problem?: string;
-  solution?: string;
-  key_features?: string;
-  logo?: string;
-  icon?: string;
 };
 
 const ProjectDialog = ({ project }: { project: Project }) => {
-  if (!project) return null;
+  const imageUrls = useQuery(api.images.getUrls, {
+    storageIds: project.images ?? [],
+  });
+
+  if (!project || !imageUrls) return null;
 
   return (
     <div className="md:flex-row h-full overflow-hidden grid grid-cols-1 md:grid-cols-3">
@@ -34,14 +44,14 @@ const ProjectDialog = ({ project }: { project: Project }) => {
       <div className="w-full md:col-span-2 p-8 md:p-10 flex flex-col border-r border-white/5 order-2 md:order-1 overflow-y-auto custom-scrollbar">
         <DialogHeader>
           <DialogTitle className="text-4xl font-semibold uppercase tracking-tighter leading-none">
-            {project.title}
+            {project.title.en}
           </DialogTitle>
 
           <div className="mt-2 flex flex-wrap gap-2">
             <span className="text-xs font-medium uppercase tracking-widest bg-primary px-2 py-1 rounded-md border border-white/10 text-background">
               {project.year}
             </span>
-            {project.categories?.map((cat) => (
+            {project.categories?.en.map((cat) => (
               <span
                 key={cat}
                 className="text-xs font-medium uppercase tracking-widest opacity-80 bg-white/5 px-2 py-1 rounded-md border border-white/10"
@@ -54,10 +64,10 @@ const ProjectDialog = ({ project }: { project: Project }) => {
 
         <div className="mt-6 space-y-6">
           <p className="text-sm md:text-base leading-relaxed">
-            {project.description}
+            {project.description.en}
           </p>
 
-          <div className="grid grid-cols-1 gap-6 border-y border-foreground/20 py-8">
+          {/* <div className="grid grid-cols-1 gap-6 border-y border-foreground/20 py-8">
             {project.problem && (
               <div className="flex gap-4">
                 <BugIcon size={18} className="text-primary shrink-0" />
@@ -102,7 +112,7 @@ const ProjectDialog = ({ project }: { project: Project }) => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
 
           <div>
             <h4 className="flex items-center gap-2 text-xs font-black uppercase tracking-widest">
@@ -110,12 +120,7 @@ const ProjectDialog = ({ project }: { project: Project }) => {
             </h4>
             <div className="flex flex-wrap gap-2 mt-4">
               {project.tech_stack.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1 rounded-xl bg-foreground/10 border border-white/10 text-xs"
-                >
-                  {tech}
-                </span>
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
           </div>
@@ -146,14 +151,15 @@ const ProjectDialog = ({ project }: { project: Project }) => {
       {/* Visuals Side */}
       <div className="w-full md:col-span-1 p-4 md:p-6 overflow-y-auto custom-scrollbar order-1 md:order-2">
         <div className="space-y-6">
-          {project.images?.map((img, i) => (
+          {imageUrls.map((url, i) => (
             <div
               key={i}
               className="relative aspect-video rounded overflow-hidden border border-white/10 group"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none" />
+
               <Image
-                src={img}
+                src={url ?? ""}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 alt={`${project.title} gallery ${i}`}
