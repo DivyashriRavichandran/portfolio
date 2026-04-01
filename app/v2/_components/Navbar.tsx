@@ -127,7 +127,7 @@ export default function Navbar() {
 
   return (
     <header>
-      <nav className="fixed w-full flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top p-4 z-100">
+      <nav className="fixed w-full flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top p-4 z-100 backdrop-blur-lg">
         <div className="logo">
           <div className="text-2xl font-black tracking-tighter uppercase text-foreground">
             DR.

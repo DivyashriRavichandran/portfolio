@@ -131,6 +131,9 @@
       "rlig" 1,
       "calt" 1;
   }
+  * {
+    @apply border-foreground/30;
+  }
 }
 
 /* ROLLING TEXT HOVER ANIMATION */

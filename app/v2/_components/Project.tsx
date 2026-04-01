@@ -1,12 +1,25 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
-import { useQuery } from "convex/react";
-import { Layers, Trophy, Zap, BugIcon, LightbulbIcon } from "lucide-react";
-import Image from "next/image";
+"use client";
+
 import React from "react";
+import Image from "next/image";
+import { ArrowUpRight, Github, Layers } from "lucide-react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+
+import { useMediaQuery } from "@/lib/use-media-query";
+import { Id } from "@/convex/_generated/dataModel";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export type Project = {
   _id: Id<"projects">;
@@ -31,145 +44,183 @@ export type Project = {
   mockup: string;
 };
 
-const ProjectDialog = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project }: { project: Project }) => {
+  const mockupProjectUrl = useQuery(api.images.getUrl, {
+    storageId: project.mockup,
+  });
+
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
   const imageUrls = useQuery(api.images.getUrls, {
     storageIds: project.images ?? [],
   });
 
-  if (!project || !imageUrls) return null;
+  if (!mockupProjectUrl) return null;
 
-  return (
-    <div className="md:flex-row h-full overflow-hidden grid grid-cols-1 md:grid-cols-3">
-      {/* Information Side */}
-      <div className="w-full md:col-span-2 p-8 md:p-10 flex flex-col border-r border-white/5 order-2 md:order-1 overflow-y-auto custom-scrollbar">
-        <DialogHeader>
-          <DialogTitle className="text-4xl font-semibold uppercase tracking-tighter leading-none">
-            {project.title.en}
-          </DialogTitle>
+  const Card = (
+    <div className="group relative rounded-xl md:rounded-2xl overflow-hidden border cursor-pointer h-56 md:h-80 lg:h-105">
+      {/* Image */}
+      <Image
+        src={mockupProjectUrl}
+        alt=""
+        fill
+        className="object-cover transition-transform duration-500 scale-130"
+      />
 
-          <div className="mt-2 flex flex-wrap gap-2">
-            <span className="text-xs font-medium uppercase tracking-widest bg-primary px-2 py-1 rounded-md border border-white/10 text-background">
-              {project.year}
-            </span>
-            {project.categories?.en.map((cat) => (
-              <span
-                key={cat}
-                className="text-xs font-medium uppercase tracking-widest opacity-80 bg-white/5 px-2 py-1 rounded-md border border-white/10"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-        </DialogHeader>
+      {/* Gradient */}
+      <div className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-black/90" />
 
-        <div className="mt-6 space-y-6">
-          <p className="text-sm md:text-base leading-relaxed">
-            {project.description.en}
-          </p>
-
-          {/* <div className="grid grid-cols-1 gap-6 border-y border-foreground/20 py-8">
-            {project.problem && (
-              <div className="flex gap-4">
-                <BugIcon size={18} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest opacity-60">
-                    Problem
-                  </h4>
-                  <p className="text-xs md:text-sm">{project.problem}</p>
-                </div>
-              </div>
-            )}
-            {project.solution && (
-              <div className="flex gap-4">
-                <LightbulbIcon size={18} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest opacity-60">
-                    Solution
-                  </h4>
-                  <p className="text-xs md:text-sm">{project.solution}</p>
-                </div>
-              </div>
-            )}
-            {project.challenge && (
-              <div className="flex gap-4">
-                <Zap size={18} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest opacity-60">
-                    Key Challenge
-                  </h4>
-                  <p className="text-xs md:text-sm">{project.challenge}</p>
-                </div>
-              </div>
-            )}
-            {project.outcome && (
-              <div className="flex gap-4">
-                <Trophy size={18} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[10px] font-semibold uppercase tracking-widest opacity-60">
-                    Outcome
-                  </h4>
-                  <p className="text-xs md:text-sm">{project.outcome}</p>
-                </div>
-              </div>
-            )}
-          </div> */}
-
-          <div>
-            <h4 className="flex items-center gap-2 text-xs font-black uppercase tracking-widest">
-              <Layers size={14} className="text-primary" /> Tech Stack
-            </h4>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {project.tech_stack.map((tech) => (
-                <Badge key={tech}>{tech}</Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-6 mt-auto gap-4 grid grid-cols-2">
+      {/* Top actions */}
+      <div className="absolute top-4 right-4 flex gap-2 z-20">
+        {project.github_link && (
           <a
-            href={project.project_link || "#"}
+            href={project.github_link}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="p-2 rounded-full bg-background/60 backdrop-blur border hover:bg-primary hover:text-black transition"
           >
-            <Button className="w-full">Live Site</Button>
+            <Github size={16} />
           </a>
-          {project.github_link && (
-            <a
-              href={project.github_link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button className="w-full" variant={"outline"}>
-                Code
-              </Button>
-            </a>
-          )}
-        </div>
+        )}
+
+        <a
+          href={project.project_link}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="p-2 rounded-full bg-background/60 backdrop-blur border hover:bg-primary hover:text-black transition"
+        >
+          <ArrowUpRight size={16} />
+        </a>
       </div>
 
-      {/* Visuals Side */}
-      <div className="w-full md:col-span-1 p-4 md:p-6 overflow-y-auto custom-scrollbar order-1 md:order-2">
-        <div className="space-y-6">
-          {imageUrls.map((url, i) => (
-            <div
-              key={i}
-              className="relative aspect-video rounded overflow-hidden border border-white/10 group"
-            >
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none" />
+      {/* Bottom info */}
+      <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 z-20">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2 text-[10px] uppercase opacity-80 tracking-widest">
+            <span>{project.year}</span>
+            <div className="h-px w-6 bg-white/40" />
+            <span>{project.categories.en.join(" / ")}</span>
+          </div>
 
-              <Image
-                src={url ?? ""}
-                fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                alt={`${project.title} gallery ${i}`}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-            </div>
-          ))}
+          <h3 className="text-lg md:text-3xl font-semibold uppercase leading-tight">
+            {project.title.en}
+          </h3>
         </div>
       </div>
     </div>
   );
+
+  if (isDesktop) {
+    return (
+      <Dialog>
+        <DialogTrigger asChild>{Card}</DialogTrigger>
+
+        <DialogContent className="max-w-[95vw] w-full lg:max-w-6xl h-[90vh] bg-background p-0 rounded-3xl">
+          <VisuallyHidden>
+            <DialogTitle />
+          </VisuallyHidden>
+          <div className="grid md:grid-cols-3 h-full overflow-hidden">
+            {/* LEFT: INFORMATION */}
+            <div className="md:col-span-2 flex flex-col p-6 md:p-10 overflow-y-auto border-b md:border-b-0 md:border-r border-foreground/10">
+              {/* HEADER */}
+              <div>
+                <h2 className="text-2xl md:text-4xl font-semibold tracking-tight uppercase">
+                  {project.title.en}
+                </h2>
+
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-widest bg-primary text-background px-2 py-1 rounded">
+                    {project.year}
+                  </span>
+
+                  {project.categories.en.map((cat) => (
+                    <span
+                      key={cat}
+                      className="text-xs uppercase tracking-widest px-2 py-1 border border-foreground/20 rounded"
+                    >
+                      {cat}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* DESCRIPTION */}
+              <p className="mt-6 text-sm md:text-base leading-relaxed max-w-xl">
+                {project.description.en}
+              </p>
+
+              {/* TECH STACK */}
+              <div className="mt-8">
+                <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-80">
+                  <Layers size={14} /> Tech Stack
+                </h4>
+
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.tech_stack.map((tech) => (
+                    <Badge key={tech}>{tech}</Badge>
+                  ))}
+                </div>
+              </div>
+
+              {/* ACTION BUTTONS */}
+              <div className="mt-auto pt-8 flex gap-3">
+                <a
+                  href={project.project_link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full"
+                >
+                  <Button className="w-full">
+                    Live Site <ArrowUpRight size={16} />
+                  </Button>
+                </a>
+
+                {project.github_link && (
+                  <a
+                    href={project.github_link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full"
+                  >
+                    <Button variant="outline" className="w-full">
+                      Code <Github size={16} />
+                    </Button>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* RIGHT: IMAGE GALLERY */}
+            <div className="md:col-span-1 overflow-y-auto p-4 md:p-6 space-y-5">
+              {imageUrls?.map((url, i) => (
+                <div
+                  key={i}
+                  className="relative aspect-video rounded-lg overflow-hidden border border-foreground/10 group"
+                >
+                  <Image
+                    src={url ?? ""}
+                    alt={`${project.title.en} preview ${i}`}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width:768px) 100vw, 33vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer>
+      <DrawerTrigger asChild>{Card}</DrawerTrigger>
+      <DrawerContent className="h-[90vh] rounded-t-xl"></DrawerContent>
+    </Drawer>
+  );
 };
-export default ProjectDialog;
+
+export default ProjectCard;

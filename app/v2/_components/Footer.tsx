@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -29,24 +29,7 @@ const formSchema = z.object({
 
 const Footer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [time, setTime] = useState("");
   const container = useRef(null);
-
-  // Time Logic
-  useEffect(() => {
-    const updateTime = () => {
-      setTime(
-        new Date().toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: "Europe/Amsterdam",
-        }),
-      );
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -94,7 +77,7 @@ const Footer = () => {
       ref={container}
       className="relative w-full bg-background pt-24 pb-12 px-6 md:px-16 overflow-hidden border-t border-foreground/5"
     >
-      {/* Background Watermark - High End Branding */}
+      {/* Background Watermark */}
       <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03]">
         <h2 className="text-[40vw] font-black leading-none tracking-tighter">
           DIVYASHRI.
@@ -106,13 +89,13 @@ const Footer = () => {
           {/* LEFT: Connect & Info */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h2 className="text-5xl md:text-6xl font-semibold tracking-tight uppercase leading-tight">
+              <h2 className="text-3xl md:text-6xl font-semibold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
                 <span className="px-1 text-black/90 bg-primary">Connect.</span>
               </h2>
-              <div className="mt-12 space-y-8">
+              <div className="mt-12 space-y-8 md:flex md:justify-between lg:flex-col">
                 <div>
-                  <span className="text-[10px] uppercase font-semibold opacity-40 tracking-[0.2em] block mb-2">
+                  <span className="text-[10px] uppercase font-semibold opacity-80 tracking-[0.2em] block mb-2">
                     Socials
                   </span>
                   <div className="flex gap-4">
@@ -132,12 +115,12 @@ const Footer = () => {
                 </div>
 
                 <div>
-                  <span className="text-[10px] uppercase font-semibold opacity-40 tracking-[0.2em] block mb-2">
+                  <span className="text-[10px] uppercase font-semibold opacity-80 tracking-[0.2em] block mb-2">
                     Email
                   </span>
                   <a
                     href="mailto:contact@divyashri.nl"
-                    className="text-xl md:text-2xl hover:text-primary transition-colors inline-flex items-center gap-2"
+                    className="md:text-xl hover:text-primary transition-colors inline-flex items-center gap-2"
                   >
                     contact@divyashri.nl <ArrowUpRight size={20} />
                   </a>
@@ -145,7 +128,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="mt-12 lg:mt-8 flex items-center gap-8">
+            <div className="mt-4 md:mt-10 lg:mt-8 flex items-center gap-8">
               <button
                 onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 className="group flex items-center gap-3"
@@ -153,7 +136,7 @@ const Footer = () => {
                 <div className="size-10 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
                   <ArrowUp size={18} />
                 </div>
-                <span className="text-[10px] uppercase font-semibold tracking-widest opacity-40">
+                <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
                   Go to the Top
                 </span>
               </button>
@@ -161,11 +144,11 @@ const Footer = () => {
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-7 bg-foreground/2 p-8 md:p-12 rounded-3xl border border-foreground/5 backdrop-blur-sm">
+          <div className="lg:col-span-7 bg-foreground/5 p-6 md:p-12 rounded-lg md:rounded-3xl border backdrop-blur-sm">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-10"
+                className="space-y-6 md:space-y-10"
               >
                 <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
                   <FormField
@@ -176,12 +159,12 @@ const Footer = () => {
                         <FormControl>
                           <Input
                             placeholder="Name"
-                            className="border-none bg-transparent px-0 py-4 text-xl focus-visible:ring-0"
+                            className="border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0"
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
-                        <FormMessage className="text-[10px] uppercase" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
+                        <FormMessage className="text-[10px]" />
                       </FormItem>
                     )}
                   />
@@ -193,12 +176,12 @@ const Footer = () => {
                         <FormControl>
                           <Input
                             placeholder="Email"
-                            className="border-none bg-transparent px-0 py-4 text-xl focus-visible:ring-0"
+                            className="border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0"
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
-                        <FormMessage className="text-[10px] uppercase" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
+                        <FormMessage className="text-[10px]" />
                       </FormItem>
                     )}
                   />
@@ -210,11 +193,11 @@ const Footer = () => {
                         <FormControl>
                           <Textarea
                             placeholder="Message"
-                            className="min-h-30 border-none bg-transparent px-0 py-4 text-xl focus-visible:ring-0 resize-none"
+                            className="min-h-30 border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0 resize-none"
                             {...field}
                           />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/20 w-full" />
+                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
                         <FormMessage className="text-[10px] uppercase" />
                       </FormItem>
                     )}
@@ -223,7 +206,7 @@ const Footer = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto py-7 px-10 rounded-full bg-primary text-black font-semibold uppercase tracking-widest hover:scale-105 transition-all"
+                  className="w-full md:w-auto py-5 md:py-7 px-8 md:px-10 rounded-full bg-primary font-semibold uppercase tracking-widest hover:scale-105 transition-all"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>
@@ -233,11 +216,11 @@ const Footer = () => {
         </div>
 
         {/* Footnote */}
-        <div className="mt-24 pt-8 border-t border-foreground/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] uppercase font-semibold tracking-[0.3em] opacity-30">
+        <div className="mt-12 md:mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[10px] uppercase font-semibold tracking-[0.2em] opacity-50">
             © 2026 DIVYASHRI. ALL RIGHTS RESERVED.
           </p>
-          <div className="flex gap-8 text-[10px] uppercase font-semibold tracking-[0.3em] opacity-30">
+          <div className="flex gap-6 md:gap-8 text-[10px] uppercase font-semibold tracking-[0.2em] opacity-50">
             <a href="#about" className="hover:opacity-100 transition-opacity">
               About
             </a>

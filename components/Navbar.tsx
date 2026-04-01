@@ -170,7 +170,7 @@ export default function Navbar() {
         className="lg:hidden fixed top-0 left-0 w-full z-50"
       >
         <div
-          className={`flex items-center justify-between transition-all duration-300 px-4   ${
+          className={`flex items-center justify-between transition-all duration-300 px-4 backdrop-blur-lg    ${
             scrolled ? "py-3" : "py-4"
           } backdrop-blur-lg `}
         >

@@ -137,16 +137,16 @@ const About = () => {
   return (
     <section
       ref={containerRef}
-      className="px-6 md:container md:mx-auto py-10 md:py-16"
+      className="px-5 md:container md:mx-auto py-8 md:py-16"
     >
       {/* Header */}
       <Heading text1={"About"} text2={"Me"} />
 
       {/* Intro */}
-      <div className="grid lg:grid-cols-12 gap-12 items-start">
+      <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start">
         {/* 1. INTRO & TECH STACK */}
-        <div className="lg:col-span-7 space-y-8">
-          <p className="reveal-text text-xl md:text-2xl max-w-2xl">
+        <div className="lg:col-span-7 md:space-y-8">
+          <p className="reveal-text text-lg md:text-2xl max-w-2xl">
             <span>
               Hi! I&apos;m Divyashri, a frontend developer based in Qatar. I
               have a passion for crafting immersive digital experiences that
@@ -170,7 +170,7 @@ const About = () => {
           {/* Tech */}
           <div className="about-panel">
             <Subheading icon={Terminal} text="Tech Stack" />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 capitalize">
               {about?.tech_stack.map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
@@ -180,9 +180,9 @@ const About = () => {
           {/* BUTTON */}
           <button
             onClick={toggleSection}
-            className="ml-auto mt-8 flex items-center gap-3 group"
+            className="ml-auto mt-4 md:mt-8 flex items-center gap-1 md:gap-3 group"
           >
-            <span className="text-sm uppercase tracking-widest opacity-60 group-hover:opacity-100 transition relative">
+            <span className="text-xs md:text-sm uppercase tracking-wide md:tracking-widest opacity-60 group-hover:opacity-100 transition relative">
               Explore beyond code
               <span className="absolute left-0 -bottom-1 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
             </span>
@@ -228,10 +228,12 @@ const About = () => {
               {setup.map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-3 p-4 rounded-2xl bg-foreground/3 border border-foreground/5"
+                  className="flex items-center gap-2 md:gap-3 p-3 md:p-4 rounded-md md:rounded-2xl bg-foreground/5 border"
                 >
-                  <span className="text-primary opacity-80">{item.icon}</span>
-                  <span className="text-sm opacity-80">{item.name}</span>
+                  <span className="text-primary">{item.icon}</span>
+                  <span className="text-xs md:text-sm text-muted-foreground">
+                    {item.name}
+                  </span>
                 </div>
               ))}
             </div>
@@ -245,7 +247,7 @@ const About = () => {
             {personalSections.map((item, i) => (
               <div
                 key={i}
-                className="relative group overflow-hidden p-6 rounded-3xl border border-foreground/5 bg-foreground/3"
+                className="relative group overflow-hidden p-3 md:p-6 rounded-lg md:rounded-2xl border bg-foreground/5"
               >
                 {/* image */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
@@ -261,11 +263,13 @@ const About = () => {
                 <div className="relative z-10 flex flex-col h-full">
                   <item.logo className="text-primary mb-6" />
 
-                  <div className="mt-auto">
-                    <h4 className="text-xs uppercase opacity-60 font-medium mb-1 group-hover:text-primary">
+                  <div className="mt-auto text-muted-foreground">
+                    <h4 className="text-[10px] text-xs uppercase opacity-80 font-medium mb-1 group-hover:text-primary">
                       {item.title}
                     </h4>
-                    <p className="text-sm font-medium">{item.content}</p>
+                    <p className="text-xs md:text-sm font-medium">
+                      {item.content}
+                    </p>
                   </div>
                 </div>
               </div>
