@@ -58,19 +58,25 @@ const ProjectCard = ({ project }: { project: Project }) => {
   if (!mockupProjectUrl) return null;
 
   const Card = (
-    <div className="group relative rounded-xl md:rounded-2xl overflow-hidden border cursor-pointer h-56 md:h-80 lg:h-105">
+    <div className="group relative rounded-xl md:rounded-2xl overflow-hidden border transition-all duration-300 hover:border-primary cursor-pointer h-50 md:h-80 lg:h-100">
       {/* Image */}
       <Image
         src={mockupProjectUrl}
         alt=""
         fill
-        className="object-cover transition-transform duration-500 scale-130"
+        className="object-cover scale-130"
       />
 
       {/* Gradient */}
       <div className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-black/90" />
 
-      {/* Top actions */}
+      {/* 3. HOVER BADGE */}
+      <div className="absolute top-3 left-3 md:opacity-0 group-hover:opacity-100 transition-all duration-300 md:-translate-x-2 group-hover:translate-x-0 z-30">
+        <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-black bg-primary">
+          View Project
+        </span>
+      </div>
+
       <div className="absolute top-4 right-4 flex gap-2 z-20">
         {project.github_link && (
           <a
@@ -78,7 +84,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="p-2 rounded-full bg-background/60 backdrop-blur border hover:bg-primary hover:text-black transition"
+            className="p-1 size-6 md:size-10 flex items-center justify-center rounded-full bg-background/60 backdrop-blur border hover:bg-primary hover:text-black transition"
           >
             <Github size={16} />
           </a>
@@ -89,7 +95,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="p-2 rounded-full bg-background/60 backdrop-blur border hover:bg-primary hover:text-black transition"
+          className="p-1 size-6 md:size-10 rounded-full flex items-center justify-center bg-muted border hover:bg-primary hover:text-black transition"
         >
           <ArrowUpRight size={16} />
         </a>
@@ -98,13 +104,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
       {/* Bottom info */}
       <div className="absolute bottom-0 left-0 w-full p-4 md:p-8 z-20">
         <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2 text-[10px] uppercase opacity-80 tracking-widest">
+          <div className="flex items-center gap-2 text-[10px] md:text-xs font-semibold uppercase text-muted-foreground tracking-widest">
             <span>{project.year}</span>
             <div className="h-px w-6 bg-white/40" />
             <span>{project.categories.en.join(" / ")}</span>
           </div>
 
-          <h3 className="text-lg md:text-3xl font-semibold uppercase leading-tight">
+          <h3 className="text-lg md:text-4xl font-semibold uppercase leading-tight">
             {project.title.en}
           </h3>
         </div>

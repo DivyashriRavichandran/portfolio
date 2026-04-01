@@ -1,6 +1,5 @@
 "use client";
 import React, { useRef } from "react";
-import Title from "./Title";
 import data from "@/data/data.json";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
@@ -8,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { Badge } from "@/components/ui/badge";
+import Heading from "./Heading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -149,11 +149,15 @@ const EducationAndExperience = () => {
   );
 
   return (
-    <section ref={containerRef} className="px-4 md:px-6 lg:px-0 py-10 md:py-20">
+    <section
+      ref={containerRef}
+      className="px-4 md:container md:mx-auto py-8 md:py-16"
+    >
       {/* EDUCATION */}
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 lg:gap-24">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
         <div className="lg:w-1/4">
-          <Title className="lg:sticky lg:top-24">{t("education")}</Title>
+          {/* Header */}
+          <Heading text2={t("education")} />
         </div>
 
         <div className="flex-1">
@@ -169,9 +173,9 @@ const EducationAndExperience = () => {
       </div>
 
       {/* EXPERIENCE */}
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 lg:gap-24 mt-16 md:mt-24">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-24 mt-16 md:mt-24">
         <div className="lg:w-1/4">
-          <Title className="lg:sticky lg:top-24">{t("experience")}</Title>
+          <Heading text2={t("experience")} />
         </div>
 
         <div className="flex-1">

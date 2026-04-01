@@ -247,30 +247,17 @@ const About = () => {
             {personalSections.map((item, i) => (
               <div
                 key={i}
-                className="relative group overflow-hidden p-3 md:p-6 rounded-lg md:rounded-2xl border bg-foreground/5"
+                className="flex flex-col h-full p-3 md:p-6 rounded-lg md:rounded-2xl border bg-foreground/5"
               >
-                {/* image */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <Image
-                    src={item.image ?? "/fallback.jpg"}
-                    alt={item.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-br from-black via-black/70 to-transparent" />
-                </div>
+                <item.logo className="text-primary mb-6" />
 
-                <div className="relative z-10 flex flex-col h-full">
-                  <item.logo className="text-primary mb-6" />
-
-                  <div className="mt-auto text-muted-foreground">
-                    <h4 className="text-[10px] text-xs uppercase opacity-80 font-medium mb-1 group-hover:text-primary">
-                      {item.title}
-                    </h4>
-                    <p className="text-xs md:text-sm font-medium">
-                      {item.content}
-                    </p>
-                  </div>
+                <div className="mt-auto text-muted-foreground">
+                  <h4 className="text-[10px] text-xs uppercase opacity-80 font-medium mb-1">
+                    {item.title}
+                  </h4>
+                  <p className="text-xs md:text-sm font-medium">
+                    {item.content}
+                  </p>
                 </div>
               </div>
             ))}

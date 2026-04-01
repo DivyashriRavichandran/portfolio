@@ -8,18 +8,23 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      new URL(
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
-      ),
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+      },
       {
         protocol: "https",
         hostname: "trustworthy-husky-54.eu-west-1.convex.cloud",
-        port: "",
         pathname: "/api/storage/**",
+      },
+      {
+        protocol: "https",
+        hostname: "excalidraw.nyc3.cdn.digitaloceanspaces.com",
+        pathname: "/**",
       },
     ],
   },
 };
-const withNextIntl = createNextIntlPlugin();
 
+const withNextIntl = createNextIntlPlugin();
 export default withNextIntl(nextConfig);

@@ -16,7 +16,6 @@ export default function Navbar() {
   const navTogglerRef = useRef<HTMLButtonElement | null>(null);
   const navContentRef = useRef<HTMLDivElement | null>(null);
 
-  // Define the link blocks (moved outside for accessibility)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const linkBlocks = [
     ".nav-socials .line, .nav-legal .line", // Bottom-left
@@ -95,8 +94,6 @@ export default function Navbar() {
   const handleToggle = () => {
     if (isAnimating.current || !tl.current) return;
     isAnimating.current = true;
-
-    // Toggle the 'open' class on the button ref
     navTogglerRef.current?.classList.toggle("open");
 
     if (!isMenuOpen.current) {
@@ -155,14 +152,12 @@ export default function Navbar() {
               <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
                 Socials
               </p>
-              <a href="#" className="flex items-center gap-2 split">
-                <GithubIcon size={16} />
-                <span className="split">Github</span>
+              <a href="#" className=" split">
+                Github
               </a>
 
-              <a href="#" className="flex items-center gap-2 split">
-                <LinkedinIcon size={16} />
-                <span className="split">Linkedin</span>
+              <a href="#" className=" split">
+                Linkedin
               </a>
             </div>
             <div className="nav-legal font-medium">

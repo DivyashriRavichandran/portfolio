@@ -89,7 +89,7 @@ const Footer = () => {
           {/* LEFT: Connect & Info */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl md:text-6xl font-semibold tracking-tight uppercase leading-tight">
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
                 <span className="px-1 text-black/90 bg-primary">Connect.</span>
               </h2>
@@ -101,13 +101,13 @@ const Footer = () => {
                   <div className="flex gap-4">
                     <a
                       href="#"
-                      className="p-4 rounded-full border border-foreground/10 hover:bg-primary hover:text-black transition-all"
+                      className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
                     >
                       <Linkedin size={22} />
                     </a>
                     <a
                       href="#"
-                      className="p-4 rounded-full border border-foreground/10 hover:bg-primary hover:text-black transition-all"
+                      className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
                     >
                       <Github size={22} />
                     </a>
