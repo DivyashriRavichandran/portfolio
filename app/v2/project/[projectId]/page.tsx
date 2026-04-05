@@ -3,7 +3,8 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useLocale } from "next-intl"; // Import this
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -12,35 +13,45 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import data from "../../../../data/data.json";
-import { FaGithub, FaGlobe } from "react-icons/fa6";
-import { BiLinkExternal } from "react-icons/bi";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import Heading3 from "../../_components/Heading3";
 import ProjectNotFound from "../../_components/ProjectNotFound";
+import { FaGlobe, FaGithub } from "react-icons/fa6";
+import LangSwitcher from "../../_components/LangSwitcher";
 
 export default function ProjectDetailsPage() {
   const params = useParams();
-  const projectId = Number(params.projectId);
+  const locale = useLocale() as "en" | "nl"; // Get current locale ('en' or 'nl')
+  const projectId = params.projectId as Id<"projects">;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const currentIndex = data.projects.findIndex((p: any) => p.id === projectId);
-  const project = data.projects[currentIndex];
+  const project = useQuery(api.projects.getById, { id: projectId });
+  const allProjects = useQuery(api.projects.list);
 
-  const nextProject = data.projects[(currentIndex + 1) % data.projects.length];
-  const imageUrls = project?.images ?? [];
+  if (project === undefined || allProjects === undefined) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="animate-spin text-primary" size={40} />
+      </div>
+    );
+  }
 
   if (!project) return <ProjectNotFound />;
+
+  const currentIndex = allProjects.findIndex((p) => p._id === projectId);
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
     <main className="min-h-screen">
       {/* NAVBAR */}
-      <nav className="border-b sticky top-0 z-50 backdrop-blur-sm">
+      <nav className="border-b sticky top-0 z-50 backdrop-blur-sm bg-background/80">
         <div className="md:container md:mx-auto px-5 flex items-center justify-between py-4">
           <Link
-            href="/"
-            className="group text-xs md:text-sm font-medium flex items-center gap-2 hover:text-primary transition-colors"
+            href="/v2"
+            className="group text-xs md:text-sm font-medium flex items-center gap-2"
           >
-            <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+            <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary transition-all">
               <ChevronLeft size={16} />
             </div>
             <span>Back to Portfolio</span>
@@ -68,103 +79,88 @@ export default function ProjectDetailsPage() {
                 <FaGithub size={20} />
               </a>
             )}
-
             <Link
-              href={`/projects/${nextProject.id}`}
-              className="group flex items-center gap-3 md:gap-4 text-right border-l pl-4"
+              href={`/v2/project/${nextProject._id}`}
+              className="group flex items-center gap-3 border-l pl-4"
             >
-              <div className="hidden sm:block">
+              <div className="hidden sm:block text-right">
                 <p className="text-[10px] uppercase tracking-tight text-muted-foreground font-semibold">
-                  Up Next
+                  Next Project
                 </p>
+
                 <p className="text-sm font-semibold group-hover:text-primary transition-colors">
-                  {nextProject.title}
+                  {nextProject.title[locale]}
                 </p>
               </div>
-              <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                <ChevronRight size={16} />
-              </div>
+              <ChevronRight size={16} />
             </Link>
+            <LangSwitcher />
           </div>
         </div>
       </nav>
 
       <section className="md:container md:mx-auto px-5 py-8 md:py-16">
-        {/* HERO */}
-        <header className="space-y-4 md:space-y-6">
+        <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
             <span>{project.year}</span>
-            <span className="h-px w-4 md:w-8 bg-foreground" />
-            <span className="truncate">{project.categories.join(" • ")}</span>
+            <span className="h-px w-8 bg-primary/30" />
+            <span>{project.categories[locale].join(" • ")}</span>{" "}
           </div>
-
           <h1 className="text-3xl md:text-6xl font-semibold tracking-tight leading-[0.9] md:leading-[0.8] uppercase wrap-break-word">
-            {project.title}
+            {project.title[locale]}
           </h1>
-
           <div className="border-l-2 border-primary pl-4 md:pl-4 mt-4 md:mt-8">
             <p className="md:text-xl text-muted-foreground leading-snug">
-              {project.description}
+              {project.description[locale]}
             </p>
           </div>
         </header>
 
         {/* CAROUSEL */}
         <div className="mt-8 md:mt-12">
-          <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <Carousel opts={{ align: "start", loop: true }} className="w-full ">
             <CarouselContent>
-              {imageUrls.map((url, idx) => (
-                <CarouselItem key={idx}>
-                  <div className="relative aspect-video rounded-sm overflow-hidden border">
-                    <Image
-                      src={url}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      priority={idx === 0}
-                    />
+              {project.images.map((storageId) => (
+                <CarouselItem key={storageId} className="basis-1/2">
+                  <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10">
+                    <ConvexImage storageId={storageId} />
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-end gap-1 mt-4">
-              <CarouselPrevious className="static translate-y-0 h-10 w-10 md:h-12 md:w-12" />
-              <CarouselNext className="static translate-y-0 h-10 w-10 md:h-12 md:w-12" />
+            <div className="flex justify-end gap-2 mt-4">
+              <CarouselPrevious className="static translate-y-0 h-12 w-12" />
+              <CarouselNext className="static translate-y-0 h-12 w-12" />
             </div>
           </Carousel>
         </div>
 
-        {/* CONTENT */}
-        <div className="md:mt-8 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
-          <div className="md:col-span-8 space-y-12 md:space-y-16">
-            {/* Story */}
-            <article>
-              <Heading3 text1={"The Build"} text2={"Story"} />
-              <div className="space-y-6 md:text-lg leading-relaxed">
-                <p>{project.context}</p>
-                <p>{project.execution}</p>
+        {/* CONTENT GRID */}
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-12">
+          <div className="md:col-span-7 space-y-16">
+            <article className="space-y-8">
+              <Heading3 text1="The Build" text2="Story" />
+              <div className="space-y-8 text-muted-foreground text-sm md:text-lg">
+                <p>{project.motivation?.[locale]}</p>{" "}
+                <p>{project.execution?.[locale]}</p>
+                <p>{project.result?.[locale]}</p>
               </div>
             </article>
 
-            {/* System Design */}
-            <article>
-              <Heading3 text1={"System"} text2={"Design"} />
-              <div className="relative aspect-video rounded-sm border bg-foreground/30 p-4 md:p-10 group overflow-hidden">
-                <Image
-                  src="https://excalidraw.nyc3.cdn.digitaloceanspaces.com/lp-cms/media/Software%20Architecture%20Diagrams%20-%20a%20microservices%20pattern.png"
-                  alt="Architecture"
-                  fill
-                  className="object-contain p-2 md:p-6"
-                />
-              </div>
-            </article>
+            {project.architecture && (
+              <article className="space-y-8">
+                <Heading3 text1="System" text2="Design" />
+                <div className="relative aspect-video rounded-sm border bg-foreground/5 p-4">
+                  <ConvexImage storageId={project.architecture} contain />
+                </div>
+              </article>
+            )}
           </div>
 
-          {/* Sidebar */}
-          <aside className="mt-6 md:mt-0 md:col-span-4 space-y-12 md:space-y-16">
+          <aside className="md:col-span-5 space-y-12">
             <div>
-              <Heading3 text1={"Tech"} text2={"Stack"} />
-              <div className="flex flex-wrap gap-1.5">
+              <Heading3 text1="Tech" text2="Stack" />
+              <div className="flex flex-wrap gap-2 mt-6">
                 {project.tech_stack.map((tech) => (
                   <Badge key={tech}>{tech}</Badge>
                 ))}
@@ -172,10 +168,16 @@ export default function ProjectDetailsPage() {
             </div>
 
             <div>
-              <Heading3 text1={"Key"} text2={"Features"} />
-              <ul className="space-y-3 md:space-y-4 list-disc px-4">
+              <Heading3 text1="Key" text2="Features" />
+              <ul className="space-y-4 mt-6">
                 {project.features?.map((feature, i) => (
-                  <li key={i} className="text-sm md:text-base">
+                  <li
+                    key={i}
+                    className="text-sm md:text-lg flex gap-3 text-muted-foreground"
+                  >
+                    <span className="text-primary font-semibold">
+                      0{i + 1}.
+                    </span>
                     {feature}
                   </li>
                 ))}
@@ -183,50 +185,39 @@ export default function ProjectDetailsPage() {
             </div>
 
             <div>
-              <Heading3 text1={"The"} text2={"Challenge"} />
-              <p className="text-sm md:text-base">{project.challenge}</p>
+              <Heading3 text1="The" text2="Challenge" />
+              <p className="text-sm md:text-lg mt-4 text-muted-foreground">
+                {project.challenge?.[locale]}
+              </p>
+            </div>
+            <div>
+              <Heading3 text1="The" text2="Solution" />
+              <p className="text-sm md:text-lg mt-4 text-muted-foreground">
+                {project.solution?.[locale]}
+              </p>
             </div>
           </aside>
         </div>
       </section>
-
-      {/* FOOTER: */}
-      <footer className="mt-4 md:mt-8 border-t">
-        <div className=" md:container md:mx-auto px-5 py-10 md:py-20 flex flex-col md:flex-row items-center text-center md:text-left md:justify-between w-full">
-          <div className="space-y-2 md:space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
-              <span>Are you</span>{" "}
-              <span className="px-1 text-black/90 bg-primary">
-                {" "}
-                Interested?
-              </span>
-            </h2>
-            <p className="text-muted-foreground max-w-xl text-base md:text-xl">
-              Explore the live application and source code to see the full
-              technical implementation.
-            </p>
-          </div>
-
-          <div className="mt-6 md:mt-0 flex flex-col gap-3 w-full md:w-auto">
-            <a
-              href={project.project_link}
-              target="_blank"
-              className="bg-primary text-primary-foreground px-8 md:px-12 py-4 md:py-5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:opacity-90 transition-all flex items-center justify-center gap-3"
-            >
-              Launch Project <BiLinkExternal size={18} />
-            </a>
-            {project.github_link && (
-              <a
-                href={project.github_link}
-                target="_blank"
-                className="border px-8 md:px-12 py-4 md:py-5 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] hover:bg-muted transition-all flex items-center justify-center gap-3"
-              >
-                View Source <FaGithub size={18} />
-              </a>
-            )}
-          </div>
-        </div>
-      </footer>
     </main>
+  );
+}
+
+function ConvexImage({
+  storageId,
+  contain,
+}: {
+  storageId: string;
+  contain?: boolean;
+}) {
+  const imageUrl = useQuery(api.images.getUrl, { storageId });
+  if (!imageUrl) return <div className="size-full animate-pulse bg-white/5" />;
+  return (
+    <Image
+      src={imageUrl}
+      alt="Project Visual"
+      fill
+      className={contain ? "object-contain" : "object-cover"}
+    />
   );
 }

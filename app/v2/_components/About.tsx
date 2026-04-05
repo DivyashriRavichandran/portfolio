@@ -56,11 +56,7 @@ const personalFocus = [
     title: "Linguistics",
     subtitle: "Dutch (A2 Level)",
   },
-  {
-    logo: MusicIcon,
-    title: "Instrument",
-    subtitle: "Piano & Guitar",
-  },
+
   {
     logo: Gamepad2Icon,
     title: "Gaming",
@@ -189,7 +185,7 @@ const About = () => {
           </div>
 
           <div className="lg:col-span-8 about-panel p-6 rounded-lg border bg-foreground/5">
-            <Subheading icon={Music} text="Current Rotation" />
+            <Subheading icon={Music} text="Currently Listening" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.about.spotify_tracks.map((id, i) => (
                 <iframe

@@ -17,14 +17,17 @@ import {
   FolderCode,
   Edit,
   Plus,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { toast } from "sonner";
-import ProjectDialog from "./dialogs/ProjectDialog";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function ProjectManager() {
   const projects = useQuery(api.projects.list);
+  const reorderProject = useMutation(api.projects.reorder);
   const removeProject = useMutation(api.projects.remove);
 
   if (projects === undefined)
@@ -45,9 +48,31 @@ export default function ProjectManager() {
     }
   };
 
+  const handleMove = async (currentIndex: number, direction: "up" | "down") => {
+    if (!projects) return;
+
+    const targetIndex =
+      direction === "up" ? currentIndex - 1 : currentIndex + 1;
+    if (targetIndex < 0 || targetIndex >= projects.length) return;
+
+    const currentProject = projects[currentIndex];
+    const targetProject = projects[targetIndex];
+
+    // Use optional chaining or a fallback if your DB is currently empty of 'order' values
+    const currentOrder = currentProject.order ?? currentIndex;
+    const targetOrder = targetProject.order ?? targetIndex;
+
+    try {
+      await reorderProject({ id: currentProject._id, newOrder: targetOrder });
+      await reorderProject({ id: targetProject._id, newOrder: currentOrder });
+      toast.success("Position shifted");
+    } catch (err) {
+      toast.error("Database sync failed");
+    }
+  };
+
   return (
     <div className="space-y-8">
-      {/* HEADER AREA */}
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="p-2.5 bg-foreground/10 rounded-full size-10 flex items-center justify-center border border-foreground/10">
@@ -62,90 +87,73 @@ export default function ProjectManager() {
             </p>
           </div>
         </div>
-        <ProjectDialog>
+        <Link href="/admin/projects/new">
           <Button variant={"admin"}>
-            <Plus /> New Entry
+            <Plus className="mr-2 h-4 w-4" /> New Entry
           </Button>
-        </ProjectDialog>
+        </Link>
       </div>
       {/* TABLE AREA */}
       <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
         <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
           <TableRow className="border-white/5">
-            <TableHead className="pl-8 w-100">Project Details</TableHead>
+            <TableHead className="w-16 text-center">Pos</TableHead>
+            <TableHead className="pl-8">Project Details</TableHead>
             <TableHead>Year</TableHead>
-            <TableHead>Categories</TableHead>
-            <TableHead className="w-20">Links</TableHead>
             <TableHead className="pr-8 text-right">Management</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {projects.length === 0 ? (
-            <TableRow>
-              <TableCell
-                colSpan={5}
-                className="text-center py-32 opacity-50 italic"
-              >
-                The vault is currently empty.
+          {projects.map((project, index) => (
+            <TableRow key={project._id} className="group">
+              <TableCell>
+                <div className="flex flex-col items-center gap-1">
+                  <button
+                    disabled={index === 0}
+                    onClick={() => handleMove(index, "up")}
+                    className="disabled:opacity-10 hover:text-primary transition-colors"
+                  >
+                    <ChevronUp size={16} />
+                  </button>
+                  <span className="text-[10px] font-mono opacity-50">
+                    {index + 1}
+                  </span>
+                  <button
+                    disabled={index === projects.length - 1}
+                    onClick={() => handleMove(index, "down")}
+                    className="disabled:opacity-10 hover:text-primary transition-colors"
+                  >
+                    <ChevronDown size={16} />
+                  </button>
+                </div>
+              </TableCell>
+              <TableCell className="font-medium text-lg pl-8">
+                {project.title.en}
+              </TableCell>
+              <TableCell>{project.year}</TableCell>
+              <TableCell className="text-right pr-8">
+                <div className="flex justify-end gap-2">
+                  <Link href={`/admin/projects/${project._id}`}>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="rounded-full hover:bg-yellow-500/10 hover:text-yellow-500"
+                    >
+                      <Edit size={18} />
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDelete(project._id)}
+                    className="rounded-full hover:bg-red-500/10 hover:text-red-500"
+                  >
+                    <Trash2 size={18} />
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
-          ) : (
-            projects.map((project) => (
-              <TableRow key={project._id}>
-                <TableCell className="font-medium text-lg pl-8">
-                  {project.title.en}
-                </TableCell>
-                <TableCell className="">{project.year}</TableCell>
-                <TableCell>
-                  <div className="flex gap-1 items-center">
-                    {project.categories.en.slice(0, 2).map((cat: string) => (
-                      <span
-                        key={cat}
-                        className="text-xs px-2 py-0.5 rounded-full border border-white/20 bg-white/5 uppercase font-medium"
-                      >
-                        {cat}
-                      </span>
-                    ))}
-                    {project.categories.en.length > 2 && (
-                      <span className="text-xs opacity-50">
-                        +{project.categories.en.length - 2}
-                      </span>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-5 items-center">
-                    {project.project_link && (
-                      <a href={project.project_link} target="_blank">
-                        <ExternalLink
-                          size={20}
-                          className="hover:text-primary"
-                        />
-                      </a>
-                    )}
-                    {project.github_link && (
-                      <a href={project.github_link} target="_blank">
-                        <Github size={20} className="hover:text-primary" />
-                      </a>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell className="text-right pr-8 gap-4 flex justify-end">
-                  <ProjectDialog data={project}>
-                    <button className="p-2 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all">
-                      <Edit size={20} />
-                    </button>
-                  </ProjectDialog>
-                  <button
-                    onClick={() => handleDelete(project._id)}
-                    className="p-2 rounded-full hover:bg-red-500/10 hover:text-red-500 transition-all"
-                  >
-                    <Trash2 size={20} />
-                  </button>
-                </TableCell>
-              </TableRow>
-            ))
-          )}
+          ))}
         </TableBody>
       </Table>
     </div>

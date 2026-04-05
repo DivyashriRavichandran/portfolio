@@ -145,7 +145,7 @@ const Footer = () => {
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-7 bg-foreground/5 p-6 md:p-12 rounded-lg md:rounded-3xl border backdrop-blur-sm">
+          <div className="lg:col-span-7 bg-foreground/5 p-6 md:p-12 rounded-md border backdrop-blur-sm">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -207,7 +207,7 @@ const Footer = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto py-5 md:py-7 px-8 md:px-10 rounded-full bg-primary font-semibold uppercase tracking-widest hover:scale-105 transition-all"
+                  className="w-full md:w-auto font-semibold"
                 >
                   {isSubmitting ? "Sending..." : "Send Message"}
                 </Button>

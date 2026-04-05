@@ -1,41 +1,95 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
-// Common schema for localized fields
 const localeString = v.object({ en: v.string(), nl: v.string() });
+
 const categoriesSchema = v.object({
   en: v.array(v.string()),
   nl: v.array(v.string()),
 });
 
 const projectFields = {
+  order: v.optional(v.number()),
   title: localeString,
-  year: v.number(),
-  categories: categoriesSchema,
   description: localeString,
+  year: v.number(),
+
+  motivation: v.optional(localeString),
+  execution: v.optional(localeString),
+  result: v.optional(localeString),
+  challenge: v.optional(localeString),
+  solution: v.optional(localeString),
+
+  categories: categoriesSchema,
   tech_stack: v.array(v.string()),
+  features: v.optional(v.array(v.string())),
+
   project_link: v.string(),
   github_link: v.optional(v.string()),
+
+  mockup: v.optional(v.string()),
+  architecture: v.optional(v.string()),
   images: v.array(v.string()),
-  mockup: v.string(),
+};
+const inputFields = {
+  title: localeString,
+  description: localeString,
+  year: v.number(),
+
+  motivation: v.optional(localeString),
+  execution: v.optional(localeString),
+  result: v.optional(localeString),
+  challenge: v.optional(localeString),
+  solution: v.optional(localeString),
+
+  categories: categoriesSchema,
+  tech_stack: v.array(v.string()),
+  features: v.optional(v.array(v.string())),
+
+  project_link: v.string(),
+  github_link: v.optional(v.string()),
+
+  mockup: v.optional(v.string()),
+  architecture: v.optional(v.string()),
+  images: v.array(v.string()),
 };
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db.query("projects").collect();
+    return await ctx.db.query("projects").order("asc").collect();
+  },
+});
+
+export const getById = query({
+  args: { id: v.id("projects") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
   },
 });
 
 export const create = mutation({
-  args: projectFields,
+  args: inputFields,
   handler: async (ctx, args) => {
-    return await ctx.db.insert("projects", args);
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Unauthorized");
+
+    const firstProject = await ctx.db.query("projects").order("asc").first();
+    const currentFirstOrder = firstProject?.order ?? 0;
+    const newOrder = currentFirstOrder - 1;
+
+    return await ctx.db.insert("projects", {
+      ...args,
+      order: newOrder,
+    });
   },
 });
 
 export const update = mutation({
   args: { id: v.id("projects"), ...projectFields },
   handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Unauthorized: Access Denied");
+
     const { id, ...data } = args;
     await ctx.db.patch(id, data);
   },
@@ -45,7 +99,21 @@ export const remove = mutation({
   args: { id: v.id("projects") },
   handler: async (ctx, { id }) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Unauthorized");
+    if (!identity) throw new Error("Unauthorized: Access Denied");
+
     await ctx.db.delete(id);
+  },
+});
+
+export const reorder = mutation({
+  args: {
+    id: v.id("projects"),
+    newOrder: v.number(),
+  },
+  handler: async (ctx, { id, newOrder }) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Unauthorized");
+
+    await ctx.db.patch(id, { order: newOrder });
   },
 });

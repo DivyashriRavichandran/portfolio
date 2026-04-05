@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import Image from "next/image";
 import { GithubIcon, LinkedinIcon } from "lucide-react";
+import LangSwitcher from "./LangSwitcher";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(SplitText);
@@ -130,14 +131,17 @@ export default function Navbar() {
             DR.
           </div>
         </div>
-        <button
-          ref={navTogglerRef}
-          onClick={handleToggle}
-          className="nav-toggler p-4 cursor-pointer bg-none flex flex-col justify-center items-center gap-1"
-        >
-          <span></span>
-          <span></span>
-        </button>
+        <div className="flex gap-3 items-center">
+          <button
+            ref={navTogglerRef}
+            onClick={handleToggle}
+            className="nav-toggler p-4 cursor-pointer bg-none flex flex-col justify-center items-center gap-1"
+          >
+            <span></span>
+            <span></span>
+          </button>
+          <LangSwitcher />
+        </div>
       </nav>
 
       <div className="nav-content text-background">

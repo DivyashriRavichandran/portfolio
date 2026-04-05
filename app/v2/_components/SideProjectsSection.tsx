@@ -19,7 +19,7 @@ const SideProjectsSection = () => {
           return (
             <div
               key={project.id}
-              className="group relative rounded-lg md:rounded-2xl overflow-hidden border transition-all duration-300 hover:border-primary"
+              className="group relative rounded-md overflow-hidden border transition-all duration-300 hover:border-primary"
             >
               {/* IMAGE */}
               <div className="relative h-40 md:h-60 w-full overflow-hidden">
@@ -35,7 +35,7 @@ const SideProjectsSection = () => {
 
                 {/* 3. HOVER BADGE */}
                 <div className="absolute top-3 left-3 md:opacity-0 group-hover:opacity-100 transition-all duration-300 md:-translate-x-2 group-hover:translate-x-0 z-30">
-                  <span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-black bg-primary">
+                  <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest text-black bg-primary">
                     View Code
                   </span>
                 </div>

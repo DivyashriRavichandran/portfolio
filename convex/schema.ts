@@ -10,17 +10,29 @@ export const localeArrString = v.object({
 
 export default defineSchema({
   projects: defineTable({
+    order: v.optional(v.number()),
     title: localeString,
-    description: localeString,
     year: v.number(),
-    categories: localeArrString,
+    description: localeString,
+
+    motivation: v.optional(localeString),
+    execution: v.optional(localeString),
+    result: v.optional(localeString),
+    challenge: v.optional(localeString),
+    solution: v.optional(localeString),
+
+    categories: v.object({
+      en: v.array(v.string()),
+      nl: v.array(v.string()),
+    }),
     tech_stack: v.array(v.string()),
+    features: v.optional(v.array(v.string())),
     project_link: v.string(),
     github_link: v.optional(v.string()),
-    images: v.array(v.string()),
-    mockup: v.string(),
+    mockup: v.optional(v.string()), // StorageID
+    images: v.array(v.string()), // Array of StorageIDs
+    architecture: v.optional(v.string()),
   }),
-
   education: defineTable({
     image: v.string(),
     title: localeString,
