@@ -64,6 +64,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
         src={mockupProjectUrl}
         alt=""
         fill
+        width={500}
+        height={500}
         className="object-cover scale-130"
       />
 

@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useLocale } from "next-intl"; // Import this
+import { useLocale, useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -22,8 +22,9 @@ import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
 
 export default function ProjectDetailsPage() {
+  const t = useTranslations();
   const params = useParams();
-  const locale = useLocale() as "en" | "nl"; // Get current locale ('en' or 'nl')
+  const locale = useLocale() as "en" | "nl";
   const projectId = params.projectId as Id<"projects">;
 
   const project = useQuery(api.projects.getById, { id: projectId });
@@ -54,7 +55,8 @@ export default function ProjectDetailsPage() {
             <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary transition-all">
               <ChevronLeft size={16} />
             </div>
-            <span>Back to Portfolio</span>
+            <span className="md:hidden">Back</span>
+            <span className="hidden md:block">{t("back-to-portfolio")}</span>
           </Link>
 
           <div className="flex items-center gap-4 md:gap-6">
@@ -64,7 +66,7 @@ export default function ProjectDetailsPage() {
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <span>Live Site</span>
+                <span className="hidden md:block">{t("live-site")}</span>
                 <FaGlobe size={20} />
               </a>
             )}
@@ -75,7 +77,7 @@ export default function ProjectDetailsPage() {
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <span>Source Code</span>
+                <span className="hidden md:block">{t("source-code")}</span>
                 <FaGithub size={20} />
               </a>
             )}
@@ -85,14 +87,16 @@ export default function ProjectDetailsPage() {
             >
               <div className="hidden sm:block text-right">
                 <p className="text-[10px] uppercase tracking-tight text-muted-foreground font-semibold">
-                  Next Project
+                  {t("next-project")}
                 </p>
 
                 <p className="text-sm font-semibold group-hover:text-primary transition-colors">
                   {nextProject.title[locale]}
                 </p>
               </div>
-              <ChevronRight size={16} />
+              <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary transition-all">
+                <ChevronRight size={16} />
+              </div>
             </Link>
             <LangSwitcher />
           </div>
@@ -100,6 +104,7 @@ export default function ProjectDetailsPage() {
       </nav>
 
       <section className="md:container md:mx-auto px-5 py-8 md:py-16">
+        {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
             <span>{project.year}</span>
@@ -110,7 +115,7 @@ export default function ProjectDetailsPage() {
             {project.title[locale]}
           </h1>
           <div className="border-l-2 border-primary pl-4 md:pl-4 mt-4 md:mt-8">
-            <p className="md:text-xl text-muted-foreground leading-snug">
+            <p className="text-sm md:text-xl text-muted-foreground leading-snug">
               {project.description[locale]}
             </p>
           </div>
@@ -121,7 +126,7 @@ export default function ProjectDetailsPage() {
           <Carousel opts={{ align: "start", loop: true }} className="w-full ">
             <CarouselContent>
               {project.images.map((storageId) => (
-                <CarouselItem key={storageId} className="basis-1/2">
+                <CarouselItem key={storageId} className="md:basis-1/2">
                   <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10">
                     <ConvexImage storageId={storageId} />
                   </div>
@@ -136,11 +141,11 @@ export default function ProjectDetailsPage() {
         </div>
 
         {/* CONTENT GRID */}
-        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-12">
-          <div className="md:col-span-7 space-y-16">
-            <article className="space-y-8">
+        <div className="mt-8 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div className="md:col-span-7 space-y-8 md:space-y-16">
+            <article>
               <Heading3 text1="The Build" text2="Story" />
-              <div className="space-y-8 text-muted-foreground text-sm md:text-lg">
+              <div className="space-y-4 md:space-y-8 text-muted-foreground text-sm md:text-lg">
                 <p>{project.motivation?.[locale]}</p>{" "}
                 <p>{project.execution?.[locale]}</p>
                 <p>{project.result?.[locale]}</p>
@@ -148,7 +153,7 @@ export default function ProjectDetailsPage() {
             </article>
 
             {project.architecture && (
-              <article className="space-y-8">
+              <article>
                 <Heading3 text1="System" text2="Design" />
                 <div className="relative aspect-video rounded-sm border bg-foreground/5 p-4">
                   <ConvexImage storageId={project.architecture} contain />
@@ -157,10 +162,10 @@ export default function ProjectDetailsPage() {
             )}
           </div>
 
-          <aside className="md:col-span-5 space-y-12">
+          <aside className="md:col-span-5 space-y-8 md:space-y-12">
             <div>
               <Heading3 text1="Tech" text2="Stack" />
-              <div className="flex flex-wrap gap-2 mt-6">
+              <div className="flex flex-wrap gap-2">
                 {project.tech_stack.map((tech) => (
                   <Badge key={tech}>{tech}</Badge>
                 ))}
@@ -169,7 +174,7 @@ export default function ProjectDetailsPage() {
 
             <div>
               <Heading3 text1="Key" text2="Features" />
-              <ul className="space-y-4 mt-6">
+              <ul className="space-y-3 md:space-y-4">
                 {project.features?.map((feature, i) => (
                   <li
                     key={i}
@@ -186,13 +191,13 @@ export default function ProjectDetailsPage() {
 
             <div>
               <Heading3 text1="The" text2="Challenge" />
-              <p className="text-sm md:text-lg mt-4 text-muted-foreground">
+              <p className="text-sm md:text-lg text-muted-foreground">
                 {project.challenge?.[locale]}
               </p>
             </div>
             <div>
               <Heading3 text1="The" text2="Solution" />
-              <p className="text-sm md:text-lg mt-4 text-muted-foreground">
+              <p className="text-sm md:text-lg text-muted-foreground">
                 {project.solution?.[locale]}
               </p>
             </div>

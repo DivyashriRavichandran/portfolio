@@ -17,7 +17,7 @@ const LangSwitcher = ({ className }: { className?: string }) => {
   return (
     <Button
       variant={"outline"}
-      className={cn(" gap-3 px-4 py-2 not-only:group", className)}
+      className={cn(" gap-3 px-3 py-1 md:px-4 md:py-2", className)}
       onClick={() => handleOnLocaleChange(locale == "nl" ? "en" : "nl")}
     >
       {locale == "en" ? (

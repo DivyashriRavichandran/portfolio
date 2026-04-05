@@ -6,5 +6,9 @@
   "projects": "Projects",
   "contact": "Contact",
   "education": "Education",
-  "experience": "Experience"
+  "experience": "Experience",
+  "back-to-portfolio": "Back to Portfolio",
+  "next-project": "Next Project",
+  "source-code": "Source Code",
+  "live-site": "Live Site"
 }
