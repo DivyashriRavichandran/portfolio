@@ -58,7 +58,7 @@ const Hero = () => {
             <span className="text-primary transition-transform group-hover:-translate-x-1">
               [
             </span>
-            <span className="px-4">Let's Talk</span>
+            <span className="px-4">Let&apos;s Talk</span>
             <span className="text-primary transition-transform group-hover:translate-x-1">
               ]
             </span>
