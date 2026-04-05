@@ -2,31 +2,20 @@
 import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowDown } from "lucide-react";
+import Link from "next/link";
 
 const Hero = () => {
   const container = useRef(null);
 
   useGSAP(
     () => {
-      const tl = gsap.timeline();
-
-      // Animate title words
-      tl.from(".hero-title span", {
-        y: 120,
+      gsap.from(".reveal", {
+        y: 40,
         opacity: 0,
-        stagger: 0.15,
+        stagger: 0.1,
         duration: 1,
-        ease: "power4.out",
-      })
-        // Animate subtitle
-        .from(".hero-sub", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6")
-        // Animate scroll indicator
-        .from(
-          ".hero-scroll",
-          { scale: 0, opacity: 0, duration: 0.6, ease: "back.out(1.7)" },
-          "-=0.3",
-        );
+        ease: "power3.out",
+      });
     },
     { scope: container },
   );
@@ -34,38 +23,56 @@ const Hero = () => {
   return (
     <section
       ref={container}
-      className="relative h-svh w-full flex flex-col justify-center px-6 md:px-16 overflow-hidden pt-16"
+      className="relative h-svh w-full flex flex-col justify-center px-6 md:px-24 bg-background"
     >
-      <div className="flex flex-col gap-8">
-        {/* Hero Title */}
-        <div className="overflow-hidden hero-title">
-          <h1 className="text-6xl md:text-9xl font-bold tracking-tighter uppercase flex flex-col gap-2">
-            <span className="inline-block">Frontend</span>{" "}
-            <span className="text-background px-1 w-fit bg-primary">
-              Developer.
+      <div className="space-y-12">
+        {/* The "Who"  - good */}
+        <div className="space-y-4">
+          <p className="reveal text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold">
+            Frontend Developer / Based in Doha, Qatar
+          </p>
+          {/* suggest other text here */}
+          <h1 className="reveal text-5xl md:text-8xl font-semibold tracking-tighter uppercase leading-[0.9]">
+            Lorem ipsum dolor sit. <br />
+            <span className="text-foreground/30 font-normal tracking-tight">
+              Lorem, ipsum dolor.
             </span>
           </h1>
         </div>
 
-        {/* Hero Subtitle */}
-        <p className="px-3 hero-sub max-w-3xl text-lg md:text-2xl opacity-80 leading-tight">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-          iusto repellat, architecto maiores facilis quidem cumque.
-        </p>
+        {/* The "What" */}
+        <div className="reveal max-w-2xl">
+          <p className="text-base md:text-lg text-foreground/60 leading-relaxed">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
+            blanditiis cumque iure itaque exercitationem quas numquam neque
+            eveniet, similique eius.
+          </p>
+        </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute hero-scroll flex items-center gap-4 group cursor-pointer right-16 bottom-16">
-          <div className="text-right hidden md:block">
-            <p className="text-[10px] uppercase font-bold tracking-widest opacity-40">
-              Scroll
-            </p>
-            <p className="text-[10px] uppercase font-bold tracking-widest opacity-40">
-              To Explore
-            </p>
-          </div>
-          <div className="size-12 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all animate-bounce">
-            <ArrowDown size={20} />
-          </div>
+        {/* Minimal Action */}
+        <div className="reveal pt-4">
+          <Link
+            href="/contact"
+            className="group flex items-center text-[10px] uppercase tracking-[0.3em] font-black"
+          >
+            <span className="text-primary transition-transform group-hover:-translate-x-1">
+              [
+            </span>
+            <span className="px-4">Let's Talk</span>
+            <span className="text-primary transition-transform group-hover:translate-x-1">
+              ]
+            </span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Footer - good */}
+      <div className="absolute bottom-12 right-6 md:right-24 flex items-center gap-6 rotate-90 origin-right translate-y-full">
+        <p className="text-[10px] uppercase tracking-[0.4em] text-foreground/80 whitespace-nowrap">
+          Scroll to explore
+        </p>
+        <div className="h-px w-24 bg-border overflow-hidden">
+          <div className="h-full bg-primary w-1/3 animate-scroll-progress" />
         </div>
       </div>
     </section>

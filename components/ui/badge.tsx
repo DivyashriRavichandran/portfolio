@@ -1,40 +1,50 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Slot } from "radix-ui";
+import { Slot } from "@radix-ui/react-slot"; // Ensure this is the correct radix import
 
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  "inline-flex bg-white/10 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-white/10 px-2 md:px-3 py-0.5 md:py-1 text-[10px] md:text-sm whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3",
+  // Base styles: Focus on sharp edges and mono typography
+  "inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden border px-2 py-0.5 text-[10px] md:text-xs font-medium uppercase tracking-wide transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:size-3",
   {
     variants: {
       variant: {
-        default: "hover:opacity-90",
+        default: "bg-muted-foreground/10 border hover:bg-muted-foreground/20",
         secondary:
-          "bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        admin: "hover:bg-red-500/20 cursor-pointer",
+          "bg-muted/30 text-foreground border-border hover:bg-muted/50 hover:border-foreground/50",
+        outline:
+          "bg-transparent text-foreground border-border hover:border-primary hover:text-primary",
+        ghost:
+          "border-transparent bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted",
+      },
+      size: {
+        sm: "px-2 py-0.5 text-[9px]",
+        default: "px-2.5 py-1 text-[10px]",
+        lg: "px-4 py-1.5 text-xs",
       },
     },
     defaultVariants: {
       variant: "default",
+      size: "default",
     },
   },
 );
 
 function Badge({
   className,
-  variant = "default",
+  variant,
+  size,
   asChild = false,
   ...props
 }: React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : "span";
+  const Comp = asChild ? Slot : "span";
 
   return (
     <Comp
       data-slot="badge"
-      data-variant={variant}
-      className={cn(badgeVariants({ variant }), className)}
+      className={cn(badgeVariants({ variant, size }), className)}
       {...props}
     />
   );

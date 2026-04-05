@@ -20,6 +20,7 @@ import { useGSAP } from "@gsap/react";
 import { ArrowUpRight, Linkedin, Github, ArrowUp } from "lucide-react";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -103,13 +104,13 @@ const Footer = () => {
                       href="#"
                       className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
                     >
-                      <Linkedin size={22} />
+                      <FaLinkedin size={22} />
                     </a>
                     <a
                       href="#"
                       className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
                     >
-                      <Github size={22} />
+                      <FaGithub size={22} />
                     </a>
                   </div>
                 </div>

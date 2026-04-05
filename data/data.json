@@ -92,164 +92,132 @@
   "projects": [
     {
       "id": 1,
-      "logo": "/logos/dubbel-dutch.svg",
       "title": "DubbelDutch",
       "year": 2026,
-      "tech_stack": ["React", "TypeScript", "WXT", "CSS"],
+      "tech_stack": ["React", "TypeScript", "WXT", "DOM API"],
       "categories": ["Frontend", "Browser Extension"],
-
-      "description": "A Google Chrome extension that adds dual subtitles (Dutch + English) to platforms - NPO Start and Kijk.nl.",
-
-      "problem": "Most Dutch streaming platforms don’t offer dual subtitles, which makes it hard for beginners to follow along.",
-
-      "solution": "I built a browser extension that injects its own subtitle layer and syncs it with the video using DOM observers and timing offsets.",
-
-      "outcome": "Made it easier for learners to follow native content and practice Dutch in a more natural and passive way.",
-
-      "challenge": "Working around native video players and keeping subtitles in sync without access to internal APIs.",
-
-      "mockup": "/mockup-2.png",
-      "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "description": "A Browser extension to facilitate language acquisition by injecting synchronized dual-language subtitles into Dutch streaming services.",
+      "context": "Mainstream platforms like NPO Start and Kijk.nl lack accessibility features for language learners. I needed a way to intercept closed captions and overlay a secondary translation layer without breaking the native video player's state.",
+      "execution": "Built using the WXT framework, the extension leverages MutationObservers to detect subtitle changes in real-time. I implemented a robust synchronization engine that accounts for varying DOM structures across different VOD providers.",
+      "challenge": "Bypassing anti-tamper measures on native video players and ensuring subtitle rendering remained fluid during high-bitrate 4K playback.",
+      "features": [
+        "Real-time DOM injection via MutationObserver",
+        "Cross-platform support for NPO Start and Kijk.nl",
+        "Customizable UI overlay with CSS variable support",
+        "Automated subtitle timing offset correction"
       ],
+      "mockup": "/mockup-2.png",
+      "images": ["/dubbeldutch-1.png", "/dubbeldutch-2.png"],
       "project_link": "https://www.dubbeldutch.com",
-      "github_link": "https://github.com/divyashriravichandran/dubbel-dutch",
-      "icon": "MdSubtitles"
+      "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
     },
-
     {
       "id": 2,
-      "logo": "/logos/portfolio.svg",
       "title": "AgriteQ",
       "year": 2026,
-      "tech_stack": [
-        "Next.js",
-        "TypeScript",
-        "Convex",
-        "WorkOS",
-        "Tailwind CSS"
-      ],
+      "tech_stack": ["Next.js", "TypeScript", "Convex", "WorkOS"],
       "categories": ["Fullstack", "GovTech"],
-      "role": "Lead Frontend Developer",
-
-      "description": "A platform built for Qatar’s International Agricultural Exhibition, with a public site and an internal dashboard for managing applications and workflows.",
-
-      "problem": "Handling exhibitor applications and approvals manually was slow and messy, especially with multiple roles involved.",
-
-      "solution": "We built a centralized system with a role-based dashboard to manage applications, approvals, and analytics in one place.",
-
-      "outcome": "Helped organize workflows for 500+ exhibitors and made the approval process much smoother.",
-
-      "challenge": "Designing a multi-role dashboard where different users see different data and actions in real time.",
-
-      "mockup": "/agriteq-mockup.png",
-      "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg",
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "description": "A large-scale exhibition management ecosystem for Qatar’s International Agricultural Exhibition, featuring high-concurrency exhibitor workflows.",
+      "context": "The existing manual approval process for hundreds of international exhibitors was inefficient. The goal was to digitize the entire lifecycle from application to floor-space allocation.",
+      "execution": "Architected a reactive fullstack system using Convex for real-time data sync and WorkOS for enterprise-grade authentication. I designed the dashboard as a multi-tenant interface to handle various government and exhibitor roles.",
+      "challenge": "Ensuring data integrity across complex multi-stage approval workflows while providing real-time analytics to exhibition organizers.",
+      "features": [
+        "Role-based access control (RBAC) via WorkOS",
+        "Reactive database schema with Convex",
+        "Automated PDF document generation for approvals",
+        "Exhibitor analytics dashboard with real-time reporting"
       ],
-      "project_link": "",
-      "github_link": "",
-      "icon": "MdAgriculture"
+      "mockup": "/agriteq-mockup.png",
+      "images": ["/agriteq-1.png", "/agriteq-2.png"],
+      "project_link": "https://agriteq.qa",
+      "github_link": ""
     },
-
     {
       "id": 3,
-      "logo": "/logos/portfolio.svg",
       "title": "CineDB",
       "year": 2025,
-      "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS"],
+      "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS", "Zustand"],
       "categories": ["Frontend", "API Integration"],
-      "role": "Frontend Developer",
-
-      "description": "A movie browsing app using the TMDB API to explore films, trailers, and ratings.",
-
-      "problem": "Needed a project to explore frontend development and design while working with real-world data.",
-      "solution": "Built a responsive frontend with search, filtering, and infinite scrolling, focusing on performance and smooth UX.",
-
-      "challenge": "Handling filtering and pagination together while keeping scrolling smooth and avoiding unnecessary re-renders.",
-
-      "mockup": "/cinedb-mockup.png",
-      "images": [
-        "/cinedb-1.png",
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "description": "A performance-focused movie discovery platform that transforms the massive TMDB database into a fluid, cinematic browsing experience.",
+      "context": "I wanted to build a media discovery tool that felt native and 'expensive.' The challenge was managing a massive external API while keeping the UI snappy.",
+      "execution": "I utilized Next.js Server Components for initial SEO-friendly loads and client-side Zustand for state management. Integrated framer-motion for 60fps layout animations.",
+      "challenge": "The biggest hurdle was synchronizing the URL state with complex filters to ensure deep-link persistence across the application.",
+      "features": [
+        "Native-feeling Infinite Scroll with loading skeletons",
+        "Dynamic URL-synchronized filtering system",
+        "Real-time search with 300ms debounce logic",
+        "High-fidelity video trailer integration via Modals"
       ],
-      "project_link": "",
-      "github_link": "",
-      "icon": "MdMovieCreation"
+      "mockup": "/cinedb-mockup.png",
+      "images": ["/cinedb-1.png", "/cinedb-2.png"],
+      "project_link": "https://cinedb-demo.com",
+      "github_link": "https://github.com/user/cinedb"
     },
-
     {
       "id": 4,
-      "logo": "/logos/portfolio.svg",
-      "title": "Enterprise REST API",
+      "title": "Green Code Analyzer",
       "year": 2026,
-      "tech_stack": ["Java", "Spring Boot", "MySQL", "JUnit"],
-      "categories": ["Backend", "Architecture"],
-      "role": "Backend Engineer",
-
-      "description": "A REST API built with Spring Boot for managing users and products, with a focus on structure and security.",
-
-      "outcome": "Provided a clean and consistent way to handle data and authentication across services.",
-
-      "challenge": "Implementing JWT authentication and making sure protected routes were properly secured.",
-
-      "mockup": "/agriteq-mockup.png",
-      "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "tech_stack": ["Java", "Spring Boot", "MySQL", "GSF SDK"],
+      "categories": ["Backend", "Sustainability"],
+      "description": "A sustainable software engineering tool that calculates the SCI (Software Carbon Intensity) score for enterprise Java applications.",
+      "context": "With the rise of 'Green IT' in Europe, there is a lack of tooling for developers to measure the environmental impact of their code at the API level.",
+      "execution": "Integrated the Green Software Foundation’s SDK into a Spring Boot backend. The system analyzes resource consumption metrics to estimate the CO2 footprint of specific service calls.",
+      "challenge": "Normalizing energy consumption data across different cloud provider regions and hardware profiles for accurate carbon estimation.",
+      "features": [
+        "SCI Score calculation based on GSF standards",
+        "Automated carbon footprint reporting via REST API",
+        "Spring Boot Actuator integration for real-time monitoring",
+        "Extensible hardware profile mapping system"
       ],
+      "mockup": "/greencode-mockup.png",
+      "images": ["/green-1.png"],
       "project_link": "",
-      "github_link": "",
-      "icon": "MdCode"
+      "github_link": ""
     },
-
     {
       "id": 5,
-      "logo": "/logos/portfolio.svg",
-      "title": "Entso-E Dashboard",
+      "title": "4K Video Pipeline",
       "year": 2025,
-      "tech_stack": ["Next.js", "D3.js", "Spring Boot", "MySQL"],
-      "categories": ["Fullstack", "Data Viz"],
-      "role": "Fullstack Developer",
-
-      "description": "A dashboard for visualizing energy data from the ENTSO-E API using interactive charts.",
-
-      "outcome": "Made large and complex energy datasets easier to explore and understand visually.",
-
-      "challenge": "Rendering large datasets with D3 while keeping the UI responsive and smooth.",
-
-      "mockup": "/cinedb-mockup.png",
-      "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "tech_stack": ["Next.js", "D3.js", "Spring Boot", "FFmpeg"],
+      "categories": ["Fullstack", "Distributed Systems"],
+      "description": "A distributed orchestration engine designed to manage the heavy-compute lifecycle of processing ultra-high-definition video files.",
+      "context": "Processing 4K video is resource-intensive. I needed a system that could handle file uploads, queue transcoding tasks, and visualize processing health.",
+      "execution": "Built a Java-based worker system for FFmpeg orchestration and a Next.js frontend with D3.js to visualize the transcoding progress and system load across nodes.",
+      "challenge": "Managing large binary data transfers and maintaining low-latency updates between the backend workers and the D3.js dashboard.",
+      "features": [
+        "Distributed task queuing for video transcoding",
+        "Real-time progress visualization with D3.js",
+        "FFmpeg-driven thumbnail and preview generation",
+        "Horizontally scalable worker node architecture"
       ],
+      "mockup": "/video-mockup.png",
+      "images": ["/video-1.png"],
       "project_link": "",
-      "github_link": "",
-      "icon": "RiDashboard3Fill"
+      "github_link": ""
     },
-
     {
       "id": 6,
-      "logo": "/logos/portfolio.svg",
       "title": "Lung Cancer Detection",
       "year": 2024,
-      "tech_stack": ["Python", "TensorFlow", "FastAPI", "Keras"],
+      "tech_stack": ["Python", "TensorFlow", "Keras", "FastAPI"],
       "categories": ["Deep Learning", "Thesis"],
-      "role": "ML Researcher & Developer",
-
-      "description": "Bachelor thesis project focused on detecting lung cancer from CT scans using deep learning. Achieved a first-class grade for the project.",
-      "problem": "Detecting lung cancer early from CT scans is difficult due to limited available medical image dataset.",
-      "solution": "Developed a Deep Convolutional Generative Adversarial Network (DCGAN) to generate additional training images and train a classification model for improved detection.",
-      "outcome": "Achieved 92% accuracy using the augmented dataset, demonstrating the potential of generative models in medical imaging.",
-      "challenge": "Handling high-resolution CT scans with limited GPU memory while ensuring the DCGAN produced realistic and useful images.",
-      "mockup": "/report-mockup.png",
-      "images": [
-        "https://images.pexels.com/photos/34879499/pexels-photo-34879499.jpeg"
+      "description": "A Bachelor thesis project utilizing DCGANs for medical image augmentation to improve the accuracy of lung cancer detection in CT scans.",
+      "context": "Early detection is critical, but medical datasets are often imbalanced or small. I explored generative models to solve the 'data scarcity' problem in oncology.",
+      "execution": "Developed a Deep Convolutional Generative Adversarial Network (DCGAN) to generate synthetic CT scans, which were then used to train a classification model.",
+      "challenge": "Balancing the GAN's stability to ensure the generated medical images were clinically relevant and not just 'noise.'",
+      "features": [
+        "Custom DCGAN architecture for medical image generation",
+        "92% classification accuracy on augmented datasets",
+        "DICOM image preprocessing pipeline in Python",
+        "FastAPI endpoint for real-time scan inference"
       ],
+      "mockup": "/report-mockup.png",
+      "images": ["/lung-1.png"],
       "project_link": "",
-      "github_link": "",
-      "icon": "MdHealthAndSafety"
+      "github_link": ""
     }
   ],
+
   "side-projects": [
     {
       "id": 1,

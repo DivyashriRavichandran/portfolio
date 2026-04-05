@@ -253,7 +253,6 @@ export default function AboutManager() {
                   tech_stack: formData.tech_stack.filter((t) => t !== tech),
                 })
               }
-              variant="admin"
             >
               {tech}
             </Badge>
@@ -306,7 +305,6 @@ export default function AboutManager() {
             (formData.hardware?.[locale] ?? []).map((hw) => (
               <Badge
                 key={`${locale}-${hw}`}
-                variant="admin"
                 onClick={() => {
                   const updatedHardware = {
                     en:
@@ -358,7 +356,6 @@ export default function AboutManager() {
           {formData.spotify_playlist?.map((id, i) => (
             <Badge
               key={i}
-              variant="admin"
               onClick={() =>
                 setFormData({
                   ...formData,
