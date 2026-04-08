@@ -42,10 +42,14 @@ const ProjectCard = ({ project }: { project: Doc<"projects"> }) => {
   return (
     <Link href={`/v2/project/${project._id}`}>
       <div className="group relative rounded-md overflow-hidden border transition-all duration-300 hover:border-primary cursor-pointer h-80 md:h-80 lg:h-100">
-        <ConvexImage
-          storageId={project.mockup!}
-          className="scale-125 md:scale-130"
-        />
+        {project.mockup ? (
+          <ConvexImage
+            storageId={project.mockup}
+            className="scale-125 md:scale-125"
+          />
+        ) : (
+          <Skeleton className="w-full h-full" />
+        )}
 
         <div className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-black/90" />
 

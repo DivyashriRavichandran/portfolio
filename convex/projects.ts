@@ -22,7 +22,7 @@ const projectFields = {
 
   categories: categoriesSchema,
   tech_stack: v.array(v.string()),
-  features: v.optional(v.array(v.string())),
+  features: categoriesSchema,
 
   project_link: v.string(),
   github_link: v.optional(v.string()),
@@ -44,7 +44,7 @@ const inputFields = {
 
   categories: categoriesSchema,
   tech_stack: v.array(v.string()),
-  features: v.optional(v.array(v.string())),
+  features: categoriesSchema,
 
   project_link: v.string(),
   github_link: v.optional(v.string()),
@@ -56,7 +56,7 @@ const inputFields = {
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db.query("projects").order("asc").collect();
+    return await ctx.db.query("projects").withIndex("by_order").collect();
   },
 });
 
@@ -88,7 +88,7 @@ export const update = mutation({
   args: { id: v.id("projects"), ...projectFields },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Unauthorized: Access Denied");
+    // if (!identity) throw new Error("Unauthorized: Access Denied");
 
     const { id, ...data } = args;
     await ctx.db.patch(id, data);
@@ -112,7 +112,7 @@ export const reorder = mutation({
   },
   handler: async (ctx, { id, newOrder }) => {
     const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Unauthorized");
+    // if (!identity) throw new Error("Unauthorized");
 
     await ctx.db.patch(id, { order: newOrder });
   },

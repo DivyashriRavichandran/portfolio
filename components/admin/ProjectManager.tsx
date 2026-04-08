@@ -12,8 +12,6 @@ import {
 } from "@/components/ui/table";
 import {
   Trash2,
-  ExternalLink,
-  Github,
   FolderCode,
   Edit,
   Plus,
@@ -68,6 +66,7 @@ export default function ProjectManager() {
       toast.success("Position shifted");
     } catch (err) {
       toast.error("Database sync failed");
+      console.log(err);
     }
   };
 

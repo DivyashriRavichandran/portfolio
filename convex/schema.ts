@@ -26,13 +26,18 @@ export default defineSchema({
       nl: v.array(v.string()),
     }),
     tech_stack: v.array(v.string()),
-    features: v.optional(v.array(v.string())),
+    features: v.optional(
+      v.object({
+        en: v.array(v.string()),
+        nl: v.array(v.string()),
+      }),
+    ),
     project_link: v.string(),
     github_link: v.optional(v.string()),
     mockup: v.optional(v.string()), // StorageID
     images: v.array(v.string()), // Array of StorageIDs
     architecture: v.optional(v.string()),
-  }),
+  }).index("by_order", ["order"]),
   education: defineTable({
     image: v.string(),
     title: localeString,

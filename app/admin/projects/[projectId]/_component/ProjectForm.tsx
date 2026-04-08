@@ -47,7 +47,8 @@ interface ProjectFormValues {
   images: string[];
   architecture?: string;
   tech_stack: string; // From a comma-separated string input
-  features: string; // From a comma-separated string input
+  features_en: string;
+  features_nl: string;
   categories_en: string;
   categories_nl: string;
 }
@@ -89,7 +90,8 @@ export default function ProjectForm({
           images: initialData.images || [],
           architecture: initialData.architecture || "",
           tech_stack: initialData.tech_stack.join(", "),
-          features: initialData.features?.join(", ") || "",
+          features_en: initialData.features?.en.join(", ") || "",
+          features_nl: initialData.features?.nl.join(", ") || "",
           categories_en: initialData.categories.en.join(", "),
           categories_nl: initialData.categories.nl.join(", "),
         }
@@ -111,7 +113,8 @@ export default function ProjectForm({
           project_link: "",
           github_link: "",
           tech_stack: "",
-          features: "",
+          features_en: "",
+          features_nl: "",
           categories_en: "",
           categories_nl: "",
           images: [],
@@ -136,22 +139,26 @@ export default function ProjectForm({
       images: data.images || [],
       architecture: data.architecture || "",
 
-      // Technical sections (Optional in Doc, so we provide fallbacks)
       motivation: { en: data.motivation_en, nl: data.motivation_nl },
       execution: { en: data.execution_en, nl: data.execution_nl },
       result: { en: data.result_en, nl: data.result_nl },
       challenge: { en: data.challenge_en, nl: data.challenge_nl },
       solution: { en: data.solution_en, nl: data.solution_nl },
 
-      // Transformations
       tech_stack: data.tech_stack
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean),
-      features: data.features
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
+      features: {
+        en: data.categories_en
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        nl: data.categories_nl
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean),
+      },
       categories: {
         en: data.categories_en
           .split(",")
@@ -329,6 +336,15 @@ export default function ProjectForm({
                 rows={2}
               />
             </div>
+            <div className="space-y-2">
+              <CustomLabel label="Key Features" />
+              <Textarea
+                {...register("features_en")}
+                placeholder="e.g. Real-time DOM injection, Multi-platform support..."
+                variant="admin"
+                rows={2}
+              />
+            </div>
           </div>
 
           {/* DUTCH */}
@@ -378,6 +394,16 @@ export default function ProjectForm({
                 rows={2}
               />
             </div>
+
+            <div className="space-y-2">
+              <CustomLabel label="Belangrijkste Functies" />
+              <Textarea
+                {...register("features_nl")}
+                placeholder="bijv. Real-time DOM-injectie, Multi-platform ondersteuning..."
+                variant="admin"
+                rows={2}
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -391,12 +417,6 @@ export default function ProjectForm({
             <Input
               {...register("tech_stack")}
               placeholder="Next.js, TypeScript, Convex..."
-              variant="admin"
-            />
-            <CustomLabel label="Core Features" />
-            <Input
-              {...register("features")}
-              placeholder="Auth, Real-time, Performance..."
               variant="admin"
             />
           </div>

@@ -245,7 +245,7 @@ export default function ProjectDetailsPage() {
             <div>
               <Heading3 text1={t("key")} text2={t("features")} />
               <ul className="space-y-3 md:space-y-4">
-                {project.features?.map((feature, i) => (
+                {project.features?.[locale]?.map((feature, i) => (
                   <li
                     key={i}
                     className="text-sm md:text-lg flex gap-3 text-muted-foreground"

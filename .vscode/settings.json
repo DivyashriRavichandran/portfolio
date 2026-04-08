@@ -1,25 +1,9 @@
 {
   "git.ignoreLimitWarning": true,
   "cSpell.words": ["cinedb", "paygez"],
-  "i18n-ally.localesPaths": ["i18n", "messages"],
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#f5f7bb",
-    "activityBar.background": "#f5f7bb",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#14a6ab",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "commandCenter.border": "#15202b99",
-    "sash.hoverBorder": "#f5f7bb",
-    "statusBar.background": "#eff28d",
-    "statusBar.foreground": "#15202b",
-    "statusBarItem.hoverBackground": "#e9ed5f",
-    "statusBarItem.remoteBackground": "#eff28d",
-    "statusBarItem.remoteForeground": "#15202b",
-    "titleBar.activeBackground": "#eff28d",
-    "titleBar.activeForeground": "#15202b",
-    "titleBar.inactiveBackground": "#eff28d99",
-    "titleBar.inactiveForeground": "#15202b99"
-  },
+  "i18n-ally.localesPaths": [
+    "i18n",
+    "messages"
+  ],
   "i18n-ally.keystyle": "nested"
 }
