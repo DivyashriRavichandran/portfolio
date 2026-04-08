@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/table";
 import { Trash2, FolderCode, Edit, Plus } from "lucide-react";
 import { toast } from "sonner";
-import ProjectDialog from "./dialogs/ProjectDialog";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export default function ExperienceManager() {
   const experience = useQuery(api.experience.list);
@@ -59,11 +59,11 @@ export default function ExperienceManager() {
             </p>
           </div>
         </div>
-        <ProjectDialog>
+        <Link href="/admin/experience/new">
           <Button variant={"admin"}>
-            <Plus /> New Entry
+            <Plus className="mr-2 h-4 w-4" /> New Entry
           </Button>
-        </ProjectDialog>
+        </Link>
       </div>
       {/* TABLE AREA */}
       <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
