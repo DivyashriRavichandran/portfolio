@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ArrowUpRight, Linkedin, Github, ArrowUp } from "lucide-react";
+import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
@@ -76,7 +76,7 @@ const Footer = () => {
   return (
     <footer
       ref={container}
-      className="relative w-full bg-background pt-24 pb-12 px-6 md:px-16 overflow-hidden border-t border-foreground/5"
+      className="relative w-full bg-background pt-12 md:pt-24 pb-6 md:pb-12 px-5 overflow-hidden border-t"
     >
       {/* Background Watermark */}
       <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03]">
@@ -86,15 +86,17 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-12 gap-16">
+        <div className="grid lg:grid-cols-12 gap-8 md:gap-16">
           {/* LEFT: Connect & Info */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
-                <span className="px-1 text-black/90 bg-primary">Connect.</span>
+                <span className="px-1 text-background/90 bg-primary">
+                  Connect.
+                </span>
               </h2>
-              <div className="mt-12 space-y-8 md:flex md:justify-between lg:flex-col">
+              <div className="mt-6 md:mt-12 space-y-6 md:space-y-8 md:flex md:justify-between lg:flex-col">
                 <div>
                   <span className="text-[10px] uppercase font-semibold opacity-80 tracking-[0.2em] block mb-2">
                     Socials
@@ -102,13 +104,13 @@ const Footer = () => {
                   <div className="flex gap-4">
                     <a
                       href="#"
-                      className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
+                      className="p-2 md:p-4 rounded-full border hover:bg-primary hover:text-background transition-all"
                     >
                       <FaLinkedin size={22} />
                     </a>
                     <a
                       href="#"
-                      className="p-4 rounded-full border hover:bg-primary hover:text-black transition-all"
+                      className="p-2 md:p-4 rounded-full border hover:bg-primary hover:text-background transition-all"
                     >
                       <FaGithub size={22} />
                     </a>
@@ -129,19 +131,17 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="mt-4 md:mt-10 lg:mt-8 flex items-center gap-8">
-              <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                className="group flex items-center gap-3"
-              >
-                <div className="size-10 rounded-full border border-foreground/10 flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
-                  <ArrowUp size={18} />
-                </div>
-                <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
-                  Go to the Top
-                </span>
-              </button>
-            </div>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="mt-4 md:mt-10 group hidden md:flex items-center gap-3"
+            >
+              <div className="size-10 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
+                <ArrowUp size={16} />
+              </div>
+              <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
+                Go to the Top
+              </span>
+            </button>
           </div>
 
           {/* RIGHT: The Form */}
@@ -237,6 +237,17 @@ const Footer = () => {
               </Link>
             </SignedIn>
           </div>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="group flex items-center gap-2 md:hidden"
+          >
+            <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
+              <ArrowUp size={16} />
+            </div>
+            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-50">
+              Go to the Top
+            </span>
+          </button>
         </div>
       </div>
     </footer>

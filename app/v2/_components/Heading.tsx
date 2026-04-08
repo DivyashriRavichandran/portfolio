@@ -10,8 +10,8 @@ const Heading = ({
   total?: number;
 }) => {
   return (
-    <div className="flex justify-between items-end mb-8 md:mb-16 border-b pb-4 md:pb-6">
-      <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase md:leading-none">
+    <div className="flex justify-between items-end mb-8 md:mb-12 border-b pb-4 md:pb-6">
+      <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase">
         {text1}{" "}
         <span className="text-background bg-primary px-1">{text2}.</span>
       </h2>

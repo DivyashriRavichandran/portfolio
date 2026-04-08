@@ -5,21 +5,30 @@ import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Link from "next/link";
-import Image from "next/image";
+import { ConvexImage } from "@/components/helper/ConvexImage";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useTranslations } from "next-intl";
 
 const ProjectSection = () => {
+  const t = useTranslations();
   const projects = useQuery(api.projects.list);
-
-  if (!projects) return null;
 
   return (
     <section className="px-4 md:px-6 lg:container lg:mx-auto py-10 md:py-16">
-      <Heading text1="Selected" text2="Works" total={projects.length} />
+      <Heading
+        text1={t("selected")}
+        text2={t("works")}
+        total={projects ? projects.length : 0}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6">
-        {projects.map((project) => (
-          <ProjectCard key={project._id} project={project} />
-        ))}
+        {!projects
+          ? Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="aspect-video w-full" />
+            ))
+          : projects.map((project) => (
+              <ProjectCard key={project._id} project={project} />
+            ))}
       </div>
     </section>
   );
@@ -28,27 +37,21 @@ const ProjectSection = () => {
 export default ProjectSection;
 
 const ProjectCard = ({ project }: { project: Doc<"projects"> }) => {
-  const mockupProjectUrl = useQuery(api.images.getUrl, {
-    storageId: project.mockup!,
-  });
-
-  if (!mockupProjectUrl) return null;
+  const t = useTranslations();
 
   return (
     <Link href={`/v2/project/${project._id}`}>
       <div className="group relative rounded-md overflow-hidden border transition-all duration-300 hover:border-primary cursor-pointer h-80 md:h-80 lg:h-100">
-        <Image
-          src={mockupProjectUrl}
-          alt={project.title.en}
-          fill
-          className="object-cover scale-130 group-hover:scale-125 transition-transform duration-300"
+        <ConvexImage
+          storageId={project.mockup!}
+          className="scale-125 md:scale-130"
         />
 
         <div className="absolute inset-0 bg-linear-to-b from-transparent from-40% to-black/90" />
 
         <div className="absolute top-3 left-3 md:opacity-0 group-hover:opacity-100 transition-all duration-300 md:-translate-x-2 group-hover:translate-x-0 z-30">
           <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest text-black bg-primary">
-            View Details
+            {t("view-details")}
           </span>
         </div>
 

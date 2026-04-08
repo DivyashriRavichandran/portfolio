@@ -43,7 +43,7 @@ const TimelineItem = ({
   const period = item.period[locale];
 
   return (
-    <div className="group relative flex gap-x-3 md:gap-x-6 lg:gap-x-12 pb-10 md:pb-16">
+    <div className="group relative flex gap-x-3 md:gap-x-6 lg:gap-x-12 pb-8 md:pb-16">
       {/* Timeline connector */}
       {!isLast && (
         <div className="absolute left-4 md:left-7 top-10 md:top-16 w-px h-full bg-foreground/30 origin-top" />
@@ -141,7 +141,7 @@ const EducationAndExperience = () => {
         ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 85%",
+          start: "top 50%",
         },
       });
     },
@@ -151,10 +151,10 @@ const EducationAndExperience = () => {
   return (
     <section
       ref={containerRef}
-      className="px-4 md:container md:mx-auto py-8 md:py-16"
+      className="px-5 md:container md:mx-auto py-8 md:py-16"
     >
       {/* EDUCATION */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-24">
+      <div className="flex flex-col lg:flex-row lg:gap-24">
         <div className="lg:w-1/4">
           {/* Header */}
           <Heading text2={t("education")} />
@@ -173,7 +173,7 @@ const EducationAndExperience = () => {
       </div>
 
       {/* EXPERIENCE */}
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-24 mt-16 md:mt-24">
+      <div className="flex flex-col lg:flex-row lg:gap-24 mt-10 md:mt-16">
         <div className="lg:w-1/4">
           <Heading text2={t("experience")} />
         </div>

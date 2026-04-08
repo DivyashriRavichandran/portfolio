@@ -23,12 +23,16 @@ const LangSwitcher = ({ className }: { className?: string }) => {
       {locale == "en" ? (
         <>
           NL
-          <Image src="/nl-flag.png" alt="Dutch Flag" width={20} height={20} />
+          <span className="hidden md:block">
+            <Image src="/nl-flag.png" alt="NL Flag" width={20} height={20} />
+          </span>
         </>
       ) : (
         <>
           EN
-          <Image src="/uk-flag.png" alt="UK Flag" width={20} height={20} />
+          <span className="hidden md:block">
+            <Image src="/uk-flag.png" alt="UK Flag" width={20} height={20} />
+          </span>
         </>
       )}
     </Button>

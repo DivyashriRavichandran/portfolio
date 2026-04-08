@@ -7,8 +7,21 @@
   "contact": "Contact",
   "education": "Onderwijs",
   "experience": "Ervaring",
-  "back-to-portfolio": "Terug naar Portefeuille",
+  "back-to-portfolio": "Terug naar Portfolio",
   "live-site": "Live-site",
   "next-project": "Volgend project",
-  "source-code": "Broncode"
+  "source-code": "Broncode",
+  "back": "Terug",
+  "challenge": "Uitdaging",
+  "solution": "Oplossing",
+  "the": "De",
+  "features": "Functies",
+  "story": "Bouwverhaal",
+  "the-build": "Het",
+  "key": "Belangrijkste",
+  "system": "Systeem",
+  "design": "Ontwerp",
+  "selected": "Geselecteerde",
+  "works": "Projecten",
+  "view-details": "Bekijk Details"
 }
