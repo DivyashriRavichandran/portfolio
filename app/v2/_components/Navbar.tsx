@@ -124,8 +124,8 @@ export default function Navbar() {
   const locale = "en";
 
   return (
-    <header>
-      <nav className="fixed w-full flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top p-4 z-100 backdrop-blur-lg">
+    <header className="fixed w-full z-100 backdrop-blur-lg border-b">
+      <nav className="flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top px-5 py-4 md:py-6 md:container mx-auto">
         <div className="logo">
           <div className="text-2xl font-black tracking-tighter uppercase text-foreground">
             DR.

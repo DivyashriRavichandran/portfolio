@@ -13,7 +13,14 @@ export function ConvexImage({
   className?: string;
 }) {
   const imageUrl = useQuery(api.images.getUrl, { storageId });
-  if (!imageUrl) return <div className="size-full bg-white/5" />;
+
+  if (imageUrl === undefined) {
+    return <div className="size-full bg-white/5 animate-pulse" />;
+  }
+
+  if (imageUrl === null) {
+    return <div className="size-full bg-white/5" />;
+  }
   return (
     <Image
       src={imageUrl}

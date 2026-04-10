@@ -1,121 +1,153 @@
 "use client";
-import React, { useRef } from "react";
-import data from "@/data/data.json";
-import Image from "next/image";
+
+import React from "react";
 import { useLocale, useTranslations } from "next-intl";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 import { Badge } from "@/components/ui/badge";
 import Heading from "./Heading";
+import { Loader2 } from "lucide-react";
+import { ConvexImage } from "@/components/helper/ConvexImage";
+import { Doc } from "@/convex/_generated/dataModel";
 
-gsap.registerPlugin(ScrollTrigger);
-
-type TimelineData = {
-  id: number;
-  image: string;
-  title: { en: string; nl: string };
-  institution: { en: string; nl: string };
-  period: { en: string; nl: string };
-  duration?: { en: string; nl: string };
-  grade?: string;
-  thesis?: { title: string; link?: string };
-  key_modules?: string[];
-  relevant_projects?: string[];
-  track?: string;
-  core_focus?: { label: string; content: string }[];
-  key_outcomes?: string[];
-  technologies?: string[];
-  impact_metrics?: { label: string; value: string }[];
-};
-
-const TimelineItem = ({
-  item,
-  isLast,
-}: {
-  item: TimelineData;
-  isLast: boolean;
-}) => {
+const CareerSection = () => {
+  const t = useTranslations();
   const locale = useLocale() as "en" | "nl";
 
-  const title = item.title[locale];
-  const institution = item.institution[locale];
-  const period = item.period[locale];
+  const careers = useQuery(api.career.list);
+
+  if (!careers) {
+    return (
+      <div className="flex justify-center py-20">
+        <Loader2 className="animate-spin opacity-50" />
+      </div>
+    );
+  }
+
+  const grouped = {
+    education: careers.filter((c) => c.type === "education"),
+    experience: careers.filter((c) => c.type === "experience"),
+  };
 
   return (
-    <div className="group relative flex gap-x-3 md:gap-x-6 lg:gap-x-12 pb-8 md:pb-16">
-      {/* Timeline connector */}
-      {!isLast && (
-        <div className="absolute left-4 md:left-7 top-10 md:top-16 w-px h-full bg-foreground/30 origin-top" />
-      )}
-
-      {/* Logo */}
-      <div className="relative z-10 shrink-0">
-        <Image
-          src={item.image}
-          alt={title}
-          width={64}
-          height={64}
-          className="size-10 md:size-12 lg:size-16 rounded-full object-contain border bg-white"
-        />
-      </div>
-
-      {/* Content */}
-      <div className="flex-1">
-        {/* Title */}
-        <h3 className="text-lg md:text-2xl lg:text-3xl font-medium tracking-tight">
-          {title}
-        </h3>
-
-        {/* Institution */}
-        <p className="text-sm md:text-base lg:text-lg text-muted-foreground">
-          {institution}
-        </p>
-
-        {/* Meta info */}
-        <div className="flex flex-wrap items-center gap-2 mt-1 md:mt-2 justify-between">
-          <span className="text-xs md:text-sm uppercase opacity-60 font-medium">
-            {period}
-          </span>
-          {item.duration && (
-            <span className="text-xs font-semibold uppercase tracking-wide text-background px-0.5 bg-primary">
-              {item.duration[locale]}
-            </span>
-          )}
-          {item.grade && (
-            <span className="text-xs font-semibold uppercase tracking-wide text-background px-0.5 bg-primary">
-              {item.grade}
-            </span>
-          )}
+    <section className="px-5 md:container md:mx-auto space-y-20">
+      {/* EDUCATION */}
+      <div className="flex flex-col lg:flex-row lg:gap-24">
+        <div className="lg:w-1/4">
+          <Heading text2={t("education")} />
         </div>
 
-        {/* Bullet points */}
-        {(item.key_outcomes || item.relevant_projects) && (
-          <div className="mt-4 md:mt-8">
-            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
-              {item.key_outcomes ? "Core Contributions" : "Notable Projects"}
-            </span>
+        <div className="flex-1 space-y-10">
+          {grouped.education.map((item, index) => (
+            <CareerItem
+              key={item._id}
+              item={item}
+              locale={locale}
+              isLast={index === grouped.education.length - 1}
+            />
+          ))}
+        </div>
+      </div>
 
-            <ul className="mt-3 space-y-2 md:space-y-3">
-              {(item.key_outcomes || item.relevant_projects)?.map(
-                (point, i) => (
-                  <li
-                    key={i}
-                    className="text-sm md:text-base leading-relaxed flex gap-3"
-                  >
-                    <span className="mt-2 size-1.5 rounded-full bg-foreground/50 shrink-0" />
-                    {point}
-                  </li>
-                ),
-              )}
-            </ul>
+      {/* EXPERIENCE */}
+      <div className="flex flex-col lg:flex-row lg:gap-24">
+        <div className="lg:w-1/4">
+          <Heading text2={t("experience")} />
+        </div>
+
+        <div className="flex-1 space-y-10 md:space-y-16">
+          {grouped.experience.map((item, index) => (
+            <CareerItem
+              key={item._id}
+              item={item}
+              locale={locale}
+              isLast={index === grouped.experience.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default CareerSection;
+
+type CareerItemProps = {
+  item: Doc<"career">;
+  locale: "en" | "nl";
+  isLast: boolean;
+};
+
+const CareerItem = ({ item, locale }: CareerItemProps) => {
+  const title = item.title?.[locale];
+  const org = item.organization?.[locale];
+  const location = item.location?.[locale];
+
+  if (!item) {
+    return <div>Item not found</div>;
+  }
+
+  return (
+    <div className="flex gap-5 md:gap-8 group">
+      {/* LOGO */}
+      <div className="shrink-0">
+        {item.logo && (
+          <div className="bg-white relative size-12 md:size-14 rounded-md overflow-hidden border flex items-center justify-center">
+            <ConvexImage storageId={item.logo} />
           </div>
         )}
+      </div>
 
-        {/* Tags */}
-        {(item.key_modules || item.technologies) && (
-          <div className="flex flex-wrap gap-2 md:gap-3 mt-4 md:mt-6">
-            {(item.key_modules || item.technologies)?.map((tag) => (
+      {/* CONTENT */}
+      <div className="flex-1">
+        {/* TITLE */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+          <h3 className="text-lg md:text-xl lg:text-2xl font-medium tracking-tight">
+            {title}
+          </h3>
+
+          <span className="text-[10px] md:text-xs uppercase font-medium">
+            {item.startDate} → {item.endDate || "Present"}
+          </span>
+        </div>
+
+        {/* ORG */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1 text-muted-foreground">
+          <a
+            href={item.url}
+            target="_blank"
+            className="text-sm md:text-base hover:underline underline-offset-2"
+          >
+            {org}
+          </a>
+          {location && <p className="text-xs md:text-sm">{location}</p>}
+        </div>
+
+        {/* GRADE / CATEGORY */}
+        <div className="mt-2 md:mt-4 flex gap-2 flex-wrap">
+          {item.grade && <Badge variant={"primary"}>{item.grade}</Badge>}
+          {item.category && <Badge variant={"outline"}>{item.category}</Badge>}
+        </div>
+
+        {/* ACHIEVEMENTS */}
+        {item.achievements![locale]?.length > 0 && (
+          <ul className="mt-4 space-y-2">
+            {item.achievements![locale].map((a: string, i: number) => (
+              <li
+                key={i}
+                className="text-sm md:text-base flex gap-2 text-muted-foreground"
+              >
+                <span className="mt-2 size-1 bg-foreground/60 rounded-full" />
+                {a}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* TAGS */}
+        {item.tags!.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-2">
+            {item.tags!.map((tag: string) => (
               <Badge key={tag}>{tag}</Badge>
             ))}
           </div>
@@ -124,73 +156,3 @@ const TimelineItem = ({
     </div>
   );
 };
-
-const EducationAndExperience = () => {
-  const t = useTranslations();
-  const containerRef = useRef(null);
-
-  useGSAP(
-    () => {
-      const isMobile = window.innerWidth < 768;
-
-      gsap.from(".timeline-item", {
-        opacity: 0,
-        y: isMobile ? 15 : 30,
-        stagger: 0.12,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 50%",
-        },
-      });
-    },
-    { scope: containerRef },
-  );
-
-  return (
-    <section
-      ref={containerRef}
-      className="px-5 md:container md:mx-auto py-8 md:py-16"
-    >
-      {/* EDUCATION */}
-      <div className="flex flex-col lg:flex-row lg:gap-24">
-        <div className="lg:w-1/4">
-          {/* Header */}
-          <Heading text2={t("education")} />
-        </div>
-
-        <div className="flex-1">
-          {data.education.map((item: TimelineData, index: number) => (
-            <div key={item.id} className="timeline-item">
-              <TimelineItem
-                item={item}
-                isLast={index === data.education.length - 1}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* EXPERIENCE */}
-      <div className="flex flex-col lg:flex-row lg:gap-24 mt-10 md:mt-16">
-        <div className="lg:w-1/4">
-          <Heading text2={t("experience")} />
-        </div>
-
-        <div className="flex-1">
-          {data.experience.map((item: TimelineData, index: number) => (
-            <div key={item.id} className="timeline-item">
-              <TimelineItem
-                item={item}
-                isLast={index === data.experience.length - 1}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default EducationAndExperience;

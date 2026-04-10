@@ -1,11 +1,11 @@
 "use client";
 
 import AboutManager from "@/components/admin/AboutManager";
-import EducationManager from "@/components/admin/EducationManager";
-import ExperienceManager from "@/components/admin/ExperienceManager";
+import CareerManager from "@/components/admin/CareerManager";
+
 import ProjectManager from "@/components/admin/ProjectManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Briefcase, GraduationCap, FolderCode, UserCircle } from "lucide-react";
+import { Briefcase, FolderCode, UserCircle } from "lucide-react";
 
 export default function AdminPage() {
   return (
@@ -27,12 +27,10 @@ export default function AdminPage() {
           <TabsTrigger value="projects">
             <FolderCode size={16} /> Projects
           </TabsTrigger>
-          <TabsTrigger value="experience">
-            <Briefcase size={16} /> Experience
+          <TabsTrigger value="career">
+            <Briefcase size={16} /> Career
           </TabsTrigger>
-          <TabsTrigger value="education">
-            <GraduationCap size={16} /> Education
-          </TabsTrigger>
+
           <TabsTrigger value="about">
             <UserCircle size={16} /> About
           </TabsTrigger>
@@ -43,14 +41,9 @@ export default function AdminPage() {
           <ProjectManager />
         </TabsContent>
 
-        {/* EXPERIENCE SECTION */}
-        <TabsContent value="experience">
-          <ExperienceManager />
-        </TabsContent>
-
-        {/* EDUCATION SECTION */}
-        <TabsContent value="education">
-          <EducationManager />
+        {/* PROJECTS SECTION */}
+        <TabsContent value="career">
+          <CareerManager />
         </TabsContent>
 
         {/* ABOUT SECTION */}

@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Subheading from "@/app/v2/_components/Subheading";
 import { Doc } from "@/convex/_generated/dataModel";
+import { ConvexImage } from "@/components/helper/ConvexImage";
 
 interface ProjectFormValues {
   title_en: string;
@@ -565,30 +566,5 @@ function CustomLabel({ label }: { label: string }) {
     <p className="text-xs uppercase font-semibold tracking-widest text-primary mb-2">
       {label}
     </p>
-  );
-}
-function ConvexImage({
-  storageId,
-  contain,
-}: {
-  storageId: string;
-  contain?: boolean;
-}) {
-  const imageUrl = useQuery(api.images.getUrl, { storageId });
-
-  if (!imageUrl)
-    return (
-      <div className="flex items-center justify-center size-full bg-white/5">
-        <Loader2 className="animate-spin opacity-20" size={16} />
-      </div>
-    );
-
-  return (
-    <Image
-      src={imageUrl}
-      alt="Preview"
-      fill
-      className={`${contain ? "object-contain p-2" : "object-cover"} transition-transform group-hover:scale-105`} // Updated classes
-    />
   );
 }

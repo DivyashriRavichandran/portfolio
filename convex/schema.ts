@@ -14,13 +14,11 @@ export default defineSchema({
     title: localeString,
     year: v.number(),
     description: localeString,
-
     motivation: v.optional(localeString),
     execution: v.optional(localeString),
     result: v.optional(localeString),
     challenge: v.optional(localeString),
     solution: v.optional(localeString),
-
     categories: v.object({
       en: v.array(v.string()),
       nl: v.array(v.string()),
@@ -38,6 +36,7 @@ export default defineSchema({
     images: v.array(v.string()), // Array of StorageIDs
     architecture: v.optional(v.string()),
   }).index("by_order", ["order"]),
+
   education: defineTable({
     image: v.string(),
     title: localeString,
@@ -80,4 +79,21 @@ export default defineSchema({
     linkedin: v.string(),
     github: v.string(),
   }),
+
+  career: defineTable({
+    type: v.union(v.literal("education"), v.literal("experience")),
+    logo: v.optional(v.string()),
+    title: localeString, // Job title or degree
+    organization: localeString, // Company or university
+    location: v.optional(localeString),
+    startDate: v.string(),
+    endDate: v.optional(v.string()),
+    current: v.optional(v.boolean()),
+    achievements: v.optional(localeArrString),
+    tags: v.optional(v.array(v.string())),
+    grade: v.optional(v.string()),
+    category: v.optional(v.string()),
+    url: v.optional(v.string()),
+    order: v.optional(v.number()),
+  }).index("by_order", ["order"]),
 });
