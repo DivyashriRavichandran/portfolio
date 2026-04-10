@@ -59,17 +59,33 @@ const inputFields = {
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db.query("career").withIndex("by_order").collect();
+    const careers = await ctx.db
+      .query("career")
+      .withIndex("by_order")
+      .collect();
+
+    return await Promise.all(
+      careers.map(async (career) => ({
+        ...career,
+        logoUrl: career.logo ? await ctx.storage.getUrl(career.logo) : null,
+      })),
+    );
   },
 });
 
 export const getById = query({
   args: { id: v.id("career") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+    const career = await ctx.db.get(args.id);
+
+    if (!career) return null;
+
+    return {
+      ...career,
+      logoUrl: career.logo ? await ctx.storage.getUrl(career.logo) : null,
+    };
   },
 });
-
 export const create = mutation({
   args: inputFields,
   handler: async (ctx, args) => {

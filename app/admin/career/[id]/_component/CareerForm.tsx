@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Subheading from "@/app/v2/_components/Subheading";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useState } from "react";
-import { ConvexImage } from "@/components/helper/ConvexImage";
+import Image from "next/image";
 
 interface CareerFormValues {
   type: "education" | "experience";
@@ -303,8 +303,7 @@ export default function CareerForm({
 
         {logoId ? (
           <div className="relative size-24 rounded-md border border-white/10 overflow-hidden group bg-foreground/10">
-            <ConvexImage storageId={logoId} />
-
+            {/* <Image src={logoId} alt="" /> */}
             <button
               type="button"
               onClick={() => setValue("logo", "")}

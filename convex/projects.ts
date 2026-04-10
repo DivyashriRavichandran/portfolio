@@ -56,14 +56,35 @@ const inputFields = {
 
 export const list = query({
   handler: async (ctx) => {
-    return await ctx.db.query("projects").withIndex("by_order").collect();
+    const projects = await ctx.db
+      .query("projects")
+      .withIndex("by_order")
+      .collect();
+
+    return await Promise.all(
+      projects.map(async (project) => ({
+        ...project,
+        mockupUrl: project.mockup
+          ? await ctx.storage.getUrl(project.mockup)
+          : null,
+      })),
+    );
   },
 });
 
 export const getById = query({
   args: { id: v.id("projects") },
   handler: async (ctx, args) => {
-    return await ctx.db.get(args.id);
+    const project = await ctx.db.get(args.id);
+
+    if (!project) return null;
+
+    return {
+      ...project,
+      mockupUrl: project.mockup
+        ? await ctx.storage.getUrl(project.mockup)
+        : null,
+    };
   },
 });
 

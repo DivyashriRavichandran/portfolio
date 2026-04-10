@@ -7,8 +7,8 @@ import { api } from "@/convex/_generated/api";
 import { Badge } from "@/components/ui/badge";
 import Heading from "./Heading";
 import { Loader2 } from "lucide-react";
-import { ConvexImage } from "@/components/helper/ConvexImage";
 import { Doc } from "@/convex/_generated/dataModel";
+import Image from "next/image";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -62,6 +62,7 @@ const CareerSection = () => {
               item={item}
               locale={locale}
               isLast={index === grouped.experience.length - 1}
+              logoUrl={item.logoUrl ?? ""}
             />
           ))}
         </div>
@@ -76,9 +77,10 @@ type CareerItemProps = {
   item: Doc<"career">;
   locale: "en" | "nl";
   isLast: boolean;
+  logoUrl?: string;
 };
 
-const CareerItem = ({ item, locale }: CareerItemProps) => {
+const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
   const title = item.title?.[locale];
   const org = item.organization?.[locale];
   const location = item.location?.[locale];
@@ -91,9 +93,9 @@ const CareerItem = ({ item, locale }: CareerItemProps) => {
     <div className="flex gap-5 md:gap-8 group">
       {/* LOGO */}
       <div className="shrink-0">
-        {item.logo && (
+        {logoUrl && (
           <div className="bg-white relative size-12 md:size-14 rounded-md overflow-hidden border flex items-center justify-center">
-            <ConvexImage storageId={item.logo} />
+            <Image src={logoUrl} alt="" fill className="object-contain" />{" "}
           </div>
         )}
       </div>

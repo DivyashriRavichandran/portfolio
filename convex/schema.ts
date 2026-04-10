@@ -37,30 +37,6 @@ export default defineSchema({
     architecture: v.optional(v.string()),
   }).index("by_order", ["order"]),
 
-  education: defineTable({
-    image: v.string(),
-    title: localeString,
-    institution: localeString,
-    period: localeString,
-    duration: v.optional(localeString),
-    grade: v.optional(v.string()),
-    thesis: v.optional(
-      v.object({ title: localeString, link: v.optional(v.string()) }),
-    ),
-    relevant_projects: v.optional(v.array(v.string())),
-    key_modules: v.optional(localeArrString),
-  }),
-
-  experience: defineTable({
-    image: v.string(),
-    title: localeString,
-    institution: localeString,
-    duration: localeString,
-    period: localeString,
-    key_outcomes: v.optional(localeArrString),
-    technologies: v.optional(v.array(v.string())),
-  }),
-
   about: defineTable({
     menu_items: v.array(v.object({ label: localeString, href: v.string() })),
     about: localeString,
