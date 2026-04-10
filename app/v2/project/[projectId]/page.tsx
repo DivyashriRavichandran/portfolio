@@ -20,7 +20,7 @@ import ProjectNotFound from "../../_components/ProjectNotFound";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ConvexImage } from "@/components/helper/ConvexImage";
+import Image from "next/image";
 
 export default function ProjectDetailsPage() {
   const t = useTranslations();
@@ -195,10 +195,15 @@ export default function ProjectDetailsPage() {
         <div className="mt-8 md:mt-12">
           <Carousel opts={{ align: "start", loop: true }} className="w-full ">
             <CarouselContent>
-              {project.images.map((storageId) => (
-                <CarouselItem key={storageId} className="md:basis-1/2">
+              {(project.imageUrls ?? []).map((url, i) => (
+                <CarouselItem key={url ?? i} className="md:basis-1/2">
                   <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <ConvexImage storageId={storageId} />
+                    <Image
+                      src={url ?? ""}
+                      alt={`Project Image ${i + 1}`}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </CarouselItem>
               ))}
@@ -226,7 +231,11 @@ export default function ProjectDetailsPage() {
               <article>
                 <Heading3 text1={t("system")} text2={t("design")} />
                 <div className="relative aspect-video rounded-sm border bg-foreground/5 p-4">
-                  <ConvexImage storageId={project.architecture} contain />
+                  <Image
+                    src={project.architectureUrl ?? ""}
+                    alt="Architecture"
+                    fill
+                  />
                 </div>
               </article>
             )}

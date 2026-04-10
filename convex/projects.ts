@@ -67,6 +67,14 @@ export const list = query({
         mockupUrl: project.mockup
           ? await ctx.storage.getUrl(project.mockup)
           : null,
+
+        architectureUrl: project.architecture
+          ? await ctx.storage.getUrl(project.architecture)
+          : null,
+
+        imageUrls: await Promise.all(
+          project.images.map((img) => ctx.storage.getUrl(img)),
+        ),
       })),
     );
   },
@@ -84,6 +92,14 @@ export const getById = query({
       mockupUrl: project.mockup
         ? await ctx.storage.getUrl(project.mockup)
         : null,
+
+      architectureUrl: project.architecture
+        ? await ctx.storage.getUrl(project.architecture)
+        : null,
+
+      imageUrls: await Promise.all(
+        project.images.map((img) => ctx.storage.getUrl(img)),
+      ),
     };
   },
 });

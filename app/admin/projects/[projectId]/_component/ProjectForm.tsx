@@ -24,7 +24,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Subheading from "@/app/v2/_components/Subheading";
 import { Doc } from "@/convex/_generated/dataModel";
-import { ConvexImage } from "@/components/helper/ConvexImage";
 
 interface ProjectFormValues {
   title_en: string;
@@ -129,6 +128,16 @@ export default function ProjectForm({
   const architectureId = watch("architecture");
   const images = watch("images");
 
+  const mockupUrl = useQuery(
+    api.images.getUrl,
+    mockupId ? { storageId: mockupId } : "skip",
+  );
+
+  const architectureUrl = useQuery(
+    api.images.getUrl,
+    architectureId ? { storageId: architectureId } : "skip",
+  );
+
   const onSubmit = async (data: ProjectFormValues) => {
     const payload = {
       title: { en: data.title_en, nl: data.title_nl },
@@ -226,6 +235,10 @@ export default function ProjectForm({
     }
   };
 
+  const imageUrls = useQuery(
+    api.images.getUrls,
+    images?.length ? { storageIds: images } : "skip",
+  );
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -443,20 +456,28 @@ export default function ProjectForm({
         </div>
       </section>
 
-      {/* SECTION 4*/}
+      {/* SECTION 4 */}
       <section className="space-y-6">
         <Subheading icon={Camera} text="Images" />
+
         <div className="space-y-10 bg-foreground/[0.02] border border-white/5 p-8 rounded-lg">
           <div className="grid grid-cols-2 gap-8 pt-4">
             {/* 4a. Hero Mockup */}
             <div className="space-y-4">
               <CustomLabel label="Hero Mockup" />
-              {mockupId ? (
+
+              {mockupUrl ? (
                 <div className="relative aspect-video rounded-sm border border-white/10 overflow-hidden group">
-                  <ConvexImage storageId={mockupId} />
+                  <Image
+                    src={mockupUrl}
+                    alt="Hero Mockup"
+                    fill
+                    className="object-cover"
+                  />
+
                   <button
                     type="button"
-                    onClick={() => setValue("mockup", "")} // Clear field
+                    onClick={() => setValue("mockup", "")}
                     className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition-all z-20"
                   >
                     <X size={24} className="text-white" />
@@ -485,7 +506,12 @@ export default function ProjectForm({
               <CustomLabel label="System Design / Architecture (Optional)" />
               {architectureId ? (
                 <div className="relative aspect-video rounded-sm border border-white/10 overflow-hidden group bg-foreground/30">
-                  <ConvexImage storageId={architectureId} contain />{" "}
+                  <Image
+                    src={architectureUrl ?? ""}
+                    alt="Architecture Diagram"
+                    fill
+                    className="object-contain"
+                  />
                   <button
                     type="button"
                     onClick={() => setValue("architecture", "")}
@@ -516,12 +542,18 @@ export default function ProjectForm({
           <div className="space-y-4 pt-8 border-t border-white/5">
             <CustomLabel label="Gallery" />
             <div className="flex flex-wrap gap-4">
-              {images?.map((id: string, idx: number) => (
+              {imageUrls?.map((url, idx) => (
                 <div
-                  key={id}
+                  key={url}
                   className="relative w-40 h-24 rounded-lg border border-white/10 overflow-hidden group"
                 >
-                  <ConvexImage storageId={id} />
+                  <Image
+                    src={url ?? ""}
+                    alt="Gallery Image"
+                    fill
+                    className="object-cover"
+                  />
+
                   <button
                     type="button"
                     onClick={() => {
