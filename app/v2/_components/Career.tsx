@@ -31,14 +31,12 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="px-5 md:container md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
+    <section className="px-5 md:max-w-4xl md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
       {/* EDUCATION */}
-      <div className="flex flex-col lg:flex-row lg:gap-24">
-        <div className="lg:w-1/4">
-          <Heading text2={t("education")} />
-        </div>
+      <div className="flex flex-col">
+        <Heading text2={t("education")} />
 
-        <div className="flex-1 space-y-10">
+        <div className="space-y-10">
           {grouped.education.map((item, index) => (
             <CareerItem
               key={item._id}
@@ -52,12 +50,10 @@ const CareerSection = () => {
       </div>
 
       {/* EXPERIENCE */}
-      <div className="flex flex-col lg:flex-row lg:gap-24">
-        <div className="lg:w-1/4">
-          <Heading text2={t("experience")} />
-        </div>
+      <div className="flex flex-col">
+        <Heading text2={t("experience")} />
 
-        <div className="flex-1 space-y-10 md:space-y-16">
+        <div className="space-y-10">
           {grouped.experience.map((item, index) => (
             <CareerItem
               key={item._id}
@@ -103,7 +99,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
       {/* LOGO */}
       <div className="shrink-0">
         {logoUrl && (
-          <div className="bg-white relative size-12 md:size-14 overflow-hidden border flex items-center justify-center">
+          <div className="relative size-12 md:size-14 overflow-hidden border flex items-center justify-center">
             <Image src={logoUrl} alt="" fill className="object-contain" />
           </div>
         )}
@@ -112,38 +108,38 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
       {/* CONTENT */}
       <div className="flex-1">
         {/* TITLE */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-1">
           <h3 className="text-lg md:text-xl lg:text-2xl font-medium tracking-tight">
             {title}
           </h3>
 
-          <span className="text-[10px] md:text-xs uppercase font-medium tracking-wide">
+          <span className="text-xs md:text-sm uppercase font-medium tracking-wide">
             {formatMonthYear(item.startDate)} -{" "}
             {item.endDate ? formatMonthYear(item.endDate) : "Present"}
           </span>
         </div>
 
         {/* ORG */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1 text-muted-foreground">
+        <div className="mt-1 md:mt-0 flex items-center justify-between gap-1 text-muted-foreground text-sm md:text-base">
           <a
             href={item.url}
             target="_blank"
-            className="text-sm md:text-base hover:underline underline-offset-2"
+            className=" hover:underline underline-offset-2"
           >
             {org}
           </a>
-          {location && <p className="text-xs md:text-sm">{location}</p>}
+          {location && <p>{location}</p>}
         </div>
 
         {/* GRADE / CATEGORY */}
-        <div className="mt-2 md:mt-4 flex gap-2 flex-wrap">
+        <div className="mt-4 flex gap-2 flex-wrap">
           {item.category && <Badge variant={"outline"}>{item.category}</Badge>}
           {item.grade && <Badge variant={"primary"}>{item.grade}</Badge>}
         </div>
 
         {/* ACHIEVEMENTS */}
         {item.achievements![locale]?.length > 0 && (
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-6 md:mt-8 space-y-2">
             {item.achievements![locale].map((a: string, i: number) => (
               <li
                 key={i}
@@ -158,7 +154,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* TAGS */}
         {item.tags!.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="mt-4 md:mt-6 flex flex-wrap gap-2">
             {item.tags!.map((tag: string) => (
               <Badge key={tag}>{tag}</Badge>
             ))}

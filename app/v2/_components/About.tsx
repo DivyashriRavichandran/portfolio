@@ -13,12 +13,12 @@ const About = () => {
   const about = useQuery(api.about.get);
 
   return (
-    <section className="px-5 md:container md:mx-auto py-12 md:py-20">
+    <section className="px-5 md:max-w-4xl md:mx-auto py-12 md:py-20">
       <Heading text1="About" text2="Me" />
 
-      <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start">
+      <div className="flex flex-col gap-8 md:gap-12">
         {/* LEFT SIDE */}
-        <div className="lg:col-span-7 space-y-6 text-lg md:text-2xl leading-snug">
+        <div className="space-y-6 text-lg md:text-2xl leading-snug">
           <p>
             Hi! I&apos;m Divyashri, a frontend developer based in Qatar who
             enjoys building immersive web experiences where design and
@@ -36,14 +36,9 @@ const About = () => {
           </p>
         </div>
 
-        {/* RIGHT SIDE */}
-        <div className="lg:col-span-5">
-          <TechStackSection />
-        </div>
-
         <Link
           href="/v2/about"
-          className="flex items-center gap-2 group lg:col-span-12"
+          className="flex items-center gap-2 group ml-auto"
         >
           <span className="text-sm md:text-base font-medium group-hover:text-primary transition">
             More about me
@@ -54,6 +49,9 @@ const About = () => {
             className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary transition"
           />
         </Link>
+
+        {/* RIGHT SIDE */}
+        <TechStackSection />
       </div>
     </section>
   );

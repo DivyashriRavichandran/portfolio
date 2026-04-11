@@ -16,13 +16,13 @@ const badgeVariants = cva(
         secondary:
           "bg-muted/30 text-foreground border-border hover:bg-muted/50 hover:border-foreground/50",
         outline:
-          "bg-transparent text-foreground border-border hover:border-primary hover:text-primary",
+          "bg-transparent text-foreground border hover:border-primary hover:text-primary",
         ghost:
           "border-transparent bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted",
         success: "border bg-primary/10 hover:bg-primary/20",
       },
       size: {
-        sm: "px-2 py-0.5 text-[9px]",
+        sm: "px-1 py-0.5 text-[10px] md:text-[10px] font-normal",
         default: "px-2.5 py-1 text-[10px]",
         lg: "px-4 py-1.5 text-xs",
       },

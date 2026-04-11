@@ -21,6 +21,8 @@ import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 export default function ProjectDetailsPage() {
   const t = useTranslations();
@@ -30,6 +32,38 @@ export default function ProjectDetailsPage() {
 
   const project = useQuery(api.projects.getById, { id: projectId });
   const allProjects = useQuery(api.projects.list);
+
+  const [activeSection, setActiveSection] = useState("");
+
+  // Track scroll position to update active heading
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.5, rootMargin: "-10% 0% -40% 0%" },
+    );
+
+    const sections = ["story", "stack", "challenge", "solution", "design"];
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const tocItems = [
+    { id: "story", label: "Build Story" },
+    { id: "stack", label: "Tech & Features" },
+    { id: "challenge", label: "The Challenge" },
+    { id: "solution", label: "The Solution" },
+    { id: "design", label: "System Design" },
+  ];
 
   if (project == undefined || allProjects === undefined) {
     return (
@@ -115,10 +149,45 @@ export default function ProjectDetailsPage() {
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
+      {/* SIDEBAR TRACKER */}
+      <aside className="hidden xl:block fixed left-[calc(50%+30rem)] top-40 w-64">
+        <div className="space-y-4 border-l border-white/10 pl-6">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold mb-6">
+            On this page
+          </p>
+          {tocItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`block text-sm transition-all duration-300 relative ${
+                activeSection === item.id
+                  ? "text-primary font-medium"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById(item.id)
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
+            >
+              {activeSection === item.id && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute -left-6.5 top-1/2 -translate-y-1/2 w-1 h-4 bg-primary"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </aside>
+
       {/* NAVBAR */}
       <nav className="border-b sticky top-0 z-50 backdrop-blur-sm bg-background/80">
-        <div className="md:container md:mx-auto px-5 flex items-center justify-between py-4">
+        <div className="max-w-4xl mx-auto px-5 flex items-center justify-between py-4">
           <Link
             href="/v2"
             className="group text-xs md:text-sm font-medium flex items-center gap-2"
@@ -136,7 +205,6 @@ export default function ProjectDetailsPage() {
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <span className="hidden md:block">{t("live-site")}</span>
                 <FaGlobe size={20} />
               </a>
             )}
@@ -147,7 +215,6 @@ export default function ProjectDetailsPage() {
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <span className="hidden md:block">{t("source-code")}</span>
                 <FaGithub size={20} />
               </a>
             )}
@@ -160,7 +227,7 @@ export default function ProjectDetailsPage() {
                   {t("next-project")}
                 </p>
 
-                <p className="text-sm font-semibold group-hover:text-primary transition-colors">
+                <p className="text-xs font-semibold group-hover:text-primary transition-colors">
                   {nextProject.title[locale]}
                 </p>
               </div>
@@ -173,7 +240,7 @@ export default function ProjectDetailsPage() {
         </div>
       </nav>
 
-      <section className="md:container md:mx-auto px-5 py-8 md:py-16">
+      <section className="max-w-4xl mx-auto px-5 py-8 md:py-16">
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
@@ -196,7 +263,7 @@ export default function ProjectDetailsPage() {
           <Carousel opts={{ align: "start", loop: true }} className="w-full ">
             <CarouselContent>
               {(project.imageUrls ?? []).map((url, i) => (
-                <CarouselItem key={url ?? i} className="md:basis-1/2">
+                <CarouselItem key={url ?? i} className="md:basis-1/1">
                   <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10">
                     <Image
                       src={url ?? ""}
@@ -215,72 +282,78 @@ export default function ProjectDetailsPage() {
           </Carousel>
         </div>
 
-        {/* CONTENT GRID */}
-        <div className="mt-8 md:mt-16 grid grid-cols-1 md:grid-cols-12 gap-8">
-          <div className="md:col-span-7 space-y-8 md:space-y-16">
-            <article>
-              <Heading3 text1={t("the-build")} text2={t("story")} />
-              <div className="space-y-4 md:space-y-8 text-muted-foreground text-sm md:text-lg">
-                <p>{project.motivation?.[locale]}</p>{" "}
-                <p>{project.execution?.[locale]}</p>
-                <p>{project.result?.[locale]}</p>
-              </div>
-            </article>
+        {/* CONTENT  */}
+        <div className="mt-10 space-y-12">
+          <article id="story" className="scroll-mt-32 space-y-6">
+            <Heading3 text1={t("the-build")} text2={t("story")} />
+            <div className="space-y-6 text-muted-foreground text-base md:text-xl leading-relaxed">
+              <p>{project.motivation?.[locale]}</p>
+              <p>{project.execution?.[locale]}</p>
+            </div>
+          </article>
 
-            {project.architecture && (
-              <article>
-                <Heading3 text1={t("system")} text2={t("design")} />
-                <div className="relative aspect-video rounded-sm border bg-foreground/5 p-4">
-                  <Image
-                    src={project.architectureUrl ?? ""}
-                    alt="Architecture"
-                    fill
-                  />
-                </div>
-              </article>
-            )}
-          </div>
-
-          <aside className="md:col-span-5 space-y-8 md:space-y-12">
-            <div>
+          <div
+            id="stack"
+            className="scroll-mt-32 grid grid-cols-1 md:grid-cols-2 gap-12"
+          >
+            <div className="space-y-4">
               <Heading3 text1="Tech" text2="Stack" />
               <div className="flex flex-wrap gap-2">
                 {project.tech_stack.map((tech) => (
-                  <Badge key={tech}>{tech}</Badge>
+                  <Badge
+                    key={tech}
+                    variant="secondary"
+                    className="px-3 py-1 text-xs"
+                  >
+                    {tech}
+                  </Badge>
                 ))}
               </div>
             </div>
-
-            <div>
+            <div className="space-y-4">
               <Heading3 text1={t("key")} text2={t("features")} />
-              <ul className="space-y-3 md:space-y-4">
+              <ul className="space-y-3">
                 {project.features?.[locale]?.map((feature, i) => (
                   <li
                     key={i}
-                    className="text-sm md:text-lg flex gap-3 text-muted-foreground"
+                    className="text-sm md:text-base flex gap-3 text-muted-foreground"
                   >
-                    <span className="text-primary font-semibold">
-                      0{i + 1}.
-                    </span>
+                    <span className="text-primary font-bold">0{i + 1}.</span>
                     {feature}
                   </li>
                 ))}
               </ul>
             </div>
+          </div>
 
-            <div>
-              <Heading3 text1={t("the")} text2={t("challenge")} />
-              <p className="text-sm md:text-lg text-muted-foreground">
-                {project.challenge?.[locale]}
-              </p>
-            </div>
-            <div>
-              <Heading3 text1={t("the")} text2={t("solution")} />
-              <p className="text-sm md:text-lg text-muted-foreground">
-                {project.solution?.[locale]}
-              </p>
-            </div>
-          </aside>
+          <div id="challenge" className="scroll-mt-32 space-y-4">
+            <Heading3 text1={t("the")} text2={t("challenge")} />
+            <p className="text-base md:text-lg text-muted-foreground">
+              {project.challenge?.[locale]}
+            </p>
+          </div>
+
+          <div id="solution" className="scroll-mt-32 space-y-4">
+            <Heading3 text1={t("the")} text2={t("solution")} />
+            <p className="text-base md:text-lg text-muted-foreground">
+              {project.solution?.[locale]}
+            </p>
+          </div>
+
+          {project.architecture && (
+            <article id="design" className="scroll-mt-32 space-y-8 pb-20">
+              <div className="text-center">
+                <Heading3 text1={t("system")} text2={t("design")} />
+              </div>
+              <Image
+                src={project.architectureUrl ?? ""}
+                alt="Architecture"
+                className="rounded w-full h-auto"
+                width={1200}
+                height={800}
+              />
+            </article>
+          )}
         </div>
       </section>
     </main>

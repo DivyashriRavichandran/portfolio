@@ -1,75 +1,88 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import Link from "next/link";
+import Image from "next/image";
 
 const Hero = () => {
   const container = useRef(null);
+  const [time, setTime] = useState("");
 
-  useGSAP(
-    () => {
-      gsap.from(".reveal", {
-        y: 40,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 1,
-        ease: "power3.out",
-      });
-    },
-    { scope: container },
-  );
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date();
+      setTime(
+        now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Asia/Qatar",
+        }),
+      );
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section
       ref={container}
-      className="relative h-svh w-full flex flex-col justify-center px-6 md:px-24 bg-background"
+      className="relative w-full flex flex-col justify-end px-5 max-w-4xl mx-auto pt-28 md:pb-10 md:pt-40"
     >
-      <div className="space-y-12">
-        <div className="space-y-4">
-          <p className="reveal text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold">
-            Frontend Developer based in Doha, Qatar
-          </p>
-          <h1 className="reveal text-5xl md:text-9xl font-semibold tracking-tighter uppercase leading-[0.9]">
-            Divyashri <br />
-            <span className="text-foreground/30 font-medium">
-              Ravichandran.
-            </span>
-          </h1>
+      {/* HEADER: Adjusted text size and tracking for mobile */}
+      <div className="reveal flex justify-between items-center text-muted-foreground/60 font-semibold text-[10px] md:text-xs uppercase tracking-widest border-b border-muted-foreground/10 pb-4">
+        <p>Groningen, NL</p>
+        <p>{time} AST</p>
+      </div>
+
+      {/* MAIN CONTENT AREA */}
+      <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-12 gap-y-4 md:items-end">
+        {/* AVATAR & NAME: Switched to items-start for better mobile flow */}
+        <div className="md:col-span-12 flex flex-row items-center gap-4">
+          <Image
+            src="/emoji.png"
+            className="shrink-0 rounded-full size-24 md:size-36 border border-muted-foreground/20"
+            alt="avatar"
+            width={80}
+            height={80}
+          />
+
+          <div className="space-y-2 md:space-y-4">
+            <h1 className="reveal text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[0.9]">
+              Divyashri <br />
+              <span className="text-muted-foreground/80">Ravichandran.</span>
+            </h1>
+
+            {/* Mobile-only  */}
+            <div className="md:hidden reveal flex items-center gap-2">
+              <div className="h-px w-8 bg-primary" />
+              <p className="text-[9px] uppercase tracking-widest font-semibold text-muted-foreground/80">
+                Master Student / Software Engineer
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="reveal max-w-3xl">
-          <p className="text-base md:text-xl text-muted-foreground leading-relaxed">
-            I build modern, scalable web applications using React, Next.js and
-            TypeScript, focusing on clean UI, smooth interactions and scalable
-            architecture.
+        {/* BOTTOM ROW: ROLE & EDUCATION */}
+        <div className="hidden md:flex md:col-span-8 reveal items-center gap-3">
+          <div className="h-px w-12 bg-primary" />
+          <p className="text-[10px] md:text-xs uppercase tracking-widest font-semibold text-muted-foreground">
+            Master Student / Software Engineer
           </p>
         </div>
 
-        <div className="reveal pt-4">
-          <Link
-            href="#project"
-            className="group flex items-center text-[10px] uppercase tracking-[0.3em] font-black"
-          >
-            <span className="text-primary transition-transform group-hover:-translate-x-1">
-              [
-            </span>
-            <span className="px-4">My Projects</span>
-            <span className="text-primary transition-transform group-hover:translate-x-1">
-              ]
-            </span>
-          </Link>
+        {/* MOBILE EDUCATION INFO: Clean stack on small screens */}
+        <div className="md:col-span-4 flex-col hidden md:flex md:items-end md:space-y-6 font-mono text-[10px] md:text-xs uppercase tracking-widest text-muted-foreground/60">
+          <div className="reveal text-right md:space-y-1">
+            <p>MSc Computing Science</p>
+            <p>RUG Netherlands &apos;28</p>
+          </div>
         </div>
       </div>
 
-      {/* Footer - good */}
-      <div className="absolute bottom-12 right-6 md:right-24 flex items-center gap-6 rotate-90 origin-right translate-y-full">
-        <p className="text-[10px] uppercase tracking-[0.4em] text-foreground/80 whitespace-nowrap">
-          Scroll to explore
-        </p>
-        <div className="h-px w-24 bg-border overflow-hidden">
-          <div className="h-full bg-primary w-1/3 animate-scroll-progress" />
-        </div>
+      {/* BACKGROUND WATERMARK: Responsive sizing */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-[0.02] pointer-events-none select-none">
+        <span className="text-[25vw] md:text-[12vw] font-black uppercase tracking-tighter leading-none">
+          {/* INDEX */}
+        </span>
       </div>
     </section>
   );

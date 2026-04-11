@@ -76,21 +76,21 @@ const Footer = () => {
   return (
     <footer
       ref={container}
-      className="relative w-full bg-background pt-12 md:pt-24 pb-6 md:pb-12 px-5 overflow-hidden border-t"
+      className="mt-10 relative w-full bg-background pt-12 md:pt-24 pb-6 md:pb-12 px-5 overflow-hidden border-t max-w-4xl mx-auto"
     >
       {/* Background Watermark */}
       <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03]">
-        <h2 className="text-[40vw] font-black leading-none tracking-tighter">
+        <h2 className="hidden text-[40vw] font-black leading-none tracking-tighter">
           DIVYASHRI.
         </h2>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className=" relative z-10">
         <div className="grid lg:grid-cols-12 gap-8 md:gap-16">
           {/* LEFT: Connect & Info */}
           <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
                 <span className="px-1 text-background bg-primary">
                   Connect.
