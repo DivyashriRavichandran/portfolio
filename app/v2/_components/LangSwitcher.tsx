@@ -14,6 +14,7 @@ const LangSwitcher = ({ className }: { className?: string }) => {
     Cookies.set("locale", newLocale);
     window.location.reload();
   };
+
   return (
     <Button
       variant={"outline"}

@@ -16,18 +16,18 @@ const ProjectSection = () => {
   const projects = useQuery(api.projects.list);
 
   return (
-    <section className="px-5 md:px-0 max-w-4xl mx-auto py-10 md:py-24">
+    <section className="py-10 md:py-16">
       <Heading
         text1={t("selected")}
         text2={t("works")}
         total={projects ? projects.length : 0}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 md:gap-x-4 md:gap-y-6">
         {!projects
           ? Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="space-y-4">
-                <Skeleton className="aspect-4/3 w-full rounded-xl" />
+                <Skeleton className="aspect-4/3 w-full rounded" />
                 <Skeleton className="h-6 w-1/2" />
                 <Skeleton className="h-4 w-full" />
               </div>
@@ -51,12 +51,11 @@ const ProjectCard = ({
   project: Doc<"projects">;
   mockupUrl?: string;
 }) => {
-  const t = useTranslations();
   const locale = useLocale() as "en" | "nl";
 
   return (
     <Link href={`/v2/project/${project._id}`} className="group block">
-      <div className="border border-muted-foreground/20 rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
+      <div className="border rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
         <div className="relative aspect-4/3 overflow-hidden">
           {mockupUrl ? (
@@ -78,8 +77,8 @@ const ProjectCard = ({
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="p-5 md:p-6 space-y-4">
-          <div className="flex justify-between items-start gap-4">
+        <div className="p-4 md:p-4 space-y-4">
+          <div className="flex justify-between items-start gap-2">
             <div className="space-y-1">
               <h3 className="text-xl md:text-2xl font-semibold uppercase">
                 {project.title[locale]}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,8 +15,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
 import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
@@ -30,25 +28,11 @@ const formSchema = z.object({
 
 const Footer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const container = useRef(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { firstName: "", email: "", message: "" },
   });
-
-  useGSAP(
-    () => {
-      gsap.from(".contact-line", {
-        width: 0,
-        stagger: 0.2,
-        duration: 1.5,
-        ease: "power4.out",
-        scrollTrigger: { trigger: container.current, start: "top 70%" },
-      });
-    },
-    { scope: container },
-  );
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
@@ -74,21 +58,11 @@ const Footer = () => {
   };
 
   return (
-    <footer
-      ref={container}
-      className="mt-10 relative w-full bg-background pt-12 md:pt-24 pb-6 md:pb-12 px-5 overflow-hidden border-t max-w-4xl mx-auto"
-    >
-      {/* Background Watermark */}
-      <div className="absolute bottom-[-2%] left-[-2%] pointer-events-none select-none opacity-[0.03]">
-        <h2 className="hidden text-[40vw] font-black leading-none tracking-tighter">
-          DIVYASHRI.
-        </h2>
-      </div>
-
-      <div className=" relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 md:gap-16">
+    <footer className="mt-10 pt-12 md:pt-24 pb-6 md:pb-12 border-t">
+      <div>
+        <div className="grid lg:grid-cols-12 gap-8">
           {/* LEFT: Connect & Info */}
-          <div className="lg:col-span-5 flex flex-col justify-between">
+          <div className="lg:col-span-4 flex flex-col justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
@@ -145,7 +119,7 @@ const Footer = () => {
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-7 bg-foreground/5 p-6 md:p-12 rounded-md border backdrop-blur-sm">
+          <div className="lg:col-span-8 bg-foreground/5 p-6 md:p-8 rounded border backdrop-blur-sm">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -158,13 +132,8 @@ const Footer = () => {
                     render={({ field }) => (
                       <FormItem className="relative">
                         <FormControl>
-                          <Input
-                            placeholder="Name"
-                            className="border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0"
-                            {...field}
-                          />
+                          <Input placeholder="Name" {...field} />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
                         <FormMessage className="text-[10px]" />
                       </FormItem>
                     )}
@@ -175,13 +144,8 @@ const Footer = () => {
                     render={({ field }) => (
                       <FormItem className="relative">
                         <FormControl>
-                          <Input
-                            placeholder="Email"
-                            className="border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0"
-                            {...field}
-                          />
+                          <Input placeholder="Email" {...field} />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
                         <FormMessage className="text-[10px]" />
                       </FormItem>
                     )}
@@ -192,13 +156,8 @@ const Footer = () => {
                     render={({ field }) => (
                       <FormItem className="md:col-span-2 relative">
                         <FormControl>
-                          <Textarea
-                            placeholder="Message"
-                            className="min-h-30 border-none bg-transparent px-0 py-4 md:text-xl focus-visible:ring-0 resize-none"
-                            {...field}
-                          />
+                          <Textarea placeholder="Message" {...field} />
                         </FormControl>
-                        <div className="contact-line absolute bottom-0 left-0 h-px bg-foreground/40 w-full" />
                         <FormMessage className="text-[10px] uppercase" />
                       </FormItem>
                     )}

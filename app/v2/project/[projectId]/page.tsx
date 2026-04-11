@@ -63,6 +63,7 @@ export default function ProjectDetailsPage() {
     { id: "challenge", label: "The Challenge" },
     { id: "solution", label: "The Solution" },
     { id: "design", label: "System Design" },
+    { id: "links", label: "Project Links" },
   ];
 
   if (project == undefined || allProjects === undefined) {
@@ -149,11 +150,11 @@ export default function ProjectDetailsPage() {
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
-    <main className="min-h-screen relative">
+    <main className="relative w-full h-full">
       {/* SIDEBAR TRACKER */}
       <aside className="hidden xl:block fixed left-[calc(50%+30rem)] top-40 w-64">
-        <div className="space-y-4 border-l border-white/10 pl-6">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold mb-6">
+        <div className="space-y-4 border-l pl-6">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-6">
             On this page
           </p>
           {tocItems.map((item) => (
@@ -186,8 +187,8 @@ export default function ProjectDetailsPage() {
       </aside>
 
       {/* NAVBAR */}
-      <nav className="border-b sticky top-0 z-50 backdrop-blur-sm bg-background/80">
-        <div className="max-w-4xl mx-auto px-5 flex items-center justify-between py-4">
+      <nav className="border-b sticky top-0 z-50 backdrop-blur-sm md:max-w-4xl md:mx-auto px-5 md:px-0 ">
+        <div className="flex items-center justify-between py-4">
           <Link
             href="/v2"
             className="group text-xs md:text-sm font-medium flex items-center gap-2"
@@ -240,7 +241,7 @@ export default function ProjectDetailsPage() {
         </div>
       </nav>
 
-      <section className="max-w-4xl mx-auto px-5 py-8 md:py-16">
+      <section className="md:max-w-4xl md:mx-auto px-5 md:px-0 py-8 md:py-16">
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
@@ -248,7 +249,7 @@ export default function ProjectDetailsPage() {
             <span className="h-px w-8 bg-primary/30" />
             <span>{project.categories[locale].join(" • ")}</span>{" "}
           </div>
-          <h1 className="text-3xl md:text-6xl font-semibold tracking-tight uppercase wrap-break-word">
+          <h1 className="text-3xl md:text-5xl font-semibold uppercase wrap-break-word">
             {project.title[locale]}
           </h1>
           <div className="border-l-2 border-primary pl-4 md:pl-4 mt-4 md:mt-8">
@@ -341,7 +342,7 @@ export default function ProjectDetailsPage() {
           </div>
 
           {project.architecture && (
-            <article id="design" className="scroll-mt-32 space-y-8 pb-20">
+            <article id="design" className="scroll-mt-32 space-y-8">
               <div className="text-center">
                 <Heading3 text1={t("system")} text2={t("design")} />
               </div>
@@ -354,6 +355,58 @@ export default function ProjectDetailsPage() {
               />
             </article>
           )}
+
+          <div id="links" className="scroll-mt-32 space-y-8 pb-20">
+            <Heading3 text1="Project" text2="Links" />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {project.github_link && (
+                <a
+                  href={project.github_link}
+                  target="_blank"
+                  className="group relative p-6 border hover:border-primary/50 transition-all duration-300"
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="size-12 rounded-full bg-background flex items-center justify-center border group-hover:scale-110 transition-transform">
+                      <FaGithub size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg uppercase">
+                        Source Code
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        View the implementation and documentation on GitHub
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                </a>
+              )}
+
+              {project.project_link && (
+                <a
+                  href={project.project_link}
+                  target="_blank"
+                  className="group relative p-6 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border border-black/10 group-hover:scale-110 transition-transform">
+                      <FaGlobe size={24} />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-lg uppercase">
+                        Live Demo
+                      </h4>
+                      <p className="text-sm text-black/70">
+                        Experience the project live in your browser
+                      </p>
+                    </div>
+                  </div>
+                  <ChevronRight className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                </a>
+              )}
+            </div>
+          </div>
         </div>
       </section>
     </main>

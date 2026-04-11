@@ -10,14 +10,14 @@ const SideProjectsSection = () => {
   const projects = data["side-projects"];
 
   return (
-    <section className="px-5 md:px-0 max-w-4xl mx-auto pb-10">
+    <section className="pb-10">
       <Heading text1={"Side"} text2={"Projects"} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-4 md:gap-6">
         {projects.map((project) => (
           <div
             key={project.id}
-            className="group flex items-center rounded border border-muted-foreground/20 bg-muted/30 hover:border-primary transition-all duration-300"
+            className="group flex items-center rounded border bg-muted/30 hover:border-primary transition-all duration-300"
           >
             <Image
               src={project.image}
@@ -28,7 +28,7 @@ const SideProjectsSection = () => {
             />
 
             {/* CONTENT */}
-            <div className="flex-1 px-3 py-4 md:px-5 md:py-6">
+            <div className="flex-1 p-3 md:p-4">
               <div className="flex items-center justify-between gap-2">
                 <h3 className="text-sm md:text-base font-semibold">
                   {project.title}

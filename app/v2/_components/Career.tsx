@@ -31,7 +31,7 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="px-5 md:max-w-4xl md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
+    <section className="px-5 md: md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
         <Heading text2={t("education")} />

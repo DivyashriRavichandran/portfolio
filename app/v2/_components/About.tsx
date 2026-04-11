@@ -13,7 +13,7 @@ const About = () => {
   const about = useQuery(api.about.get);
 
   return (
-    <section className="px-5 md:max-w-4xl md:mx-auto py-12 md:py-20">
+    <section className="px-5 md: md:mx-auto py-12 md:py-20">
       <Heading text1="About" text2="Me" />
 
       <div className="flex flex-col gap-8 md:gap-12">
