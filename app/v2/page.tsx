@@ -9,7 +9,8 @@ import CareerSection from "./_components/Career";
 
 const Home = () => {
   return (
-    <>
+    // <div className="max-w-4xl mx-auto">
+    <div>
       <Navbar />
       <Hero />
       <About />
@@ -17,7 +18,7 @@ const Home = () => {
       <ProjectSection />
       <SideProjectsSection />
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -26,39 +26,35 @@ const Hero = () => {
       className="relative h-svh w-full flex flex-col justify-center px-6 md:px-24 bg-background"
     >
       <div className="space-y-12">
-        {/* The "Who"  - good */}
         <div className="space-y-4">
           <p className="reveal text-xs uppercase tracking-[0.2em] text-muted-foreground font-semibold">
-            Frontend Developer / Based in Doha, Qatar
+            Frontend Developer based in Doha, Qatar
           </p>
-          {/* suggest other text here */}
-          <h1 className="reveal text-5xl md:text-8xl font-semibold tracking-tighter uppercase leading-[0.9]">
-            Lorem ipsum dolor sit. <br />
-            <span className="text-foreground/30 font-normal tracking-tight">
-              Lorem, ipsum dolor.
+          <h1 className="reveal text-5xl md:text-9xl font-semibold tracking-tighter uppercase leading-[0.9]">
+            Divyashri <br />
+            <span className="text-foreground/30 font-medium">
+              Ravichandran.
             </span>
           </h1>
         </div>
 
-        {/* The "What" */}
-        <div className="reveal max-w-2xl">
-          <p className="text-base md:text-lg text-foreground/60 leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-            blanditiis cumque iure itaque exercitationem quas numquam neque
-            eveniet, similique eius.
+        <div className="reveal max-w-3xl">
+          <p className="text-base md:text-xl text-muted-foreground leading-relaxed">
+            I build modern, scalable web applications using React, Next.js and
+            TypeScript, focusing on clean UI, smooth interactions and scalable
+            architecture.
           </p>
         </div>
 
-        {/* Minimal Action */}
         <div className="reveal pt-4">
           <Link
-            href="/contact"
+            href="#project"
             className="group flex items-center text-[10px] uppercase tracking-[0.3em] font-black"
           >
             <span className="text-primary transition-transform group-hover:-translate-x-1">
               [
             </span>
-            <span className="px-4">Let&apos;s Talk</span>
+            <span className="px-4">My Projects</span>
             <span className="text-primary transition-transform group-hover:translate-x-1">
               ]
             </span>

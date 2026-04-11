@@ -92,7 +92,7 @@ const Footer = () => {
             <div>
               <h2 className="text-3xl md:text-5xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
-                <span className="px-1 text-background/90 bg-primary">
+                <span className="px-1 text-background bg-primary">
                   Connect.
                 </span>
               </h2>

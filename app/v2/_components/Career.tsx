@@ -9,6 +9,7 @@ import Heading from "./Heading";
 import { Loader2 } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Image from "next/image";
+import { format } from "date-fns";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -30,7 +31,7 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="px-5 md:container md:mx-auto space-y-20">
+    <section className="px-5 md:container md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
       {/* EDUCATION */}
       <div className="flex flex-col lg:flex-row lg:gap-24">
         <div className="lg:w-1/4">
@@ -44,6 +45,7 @@ const CareerSection = () => {
               item={item}
               locale={locale}
               isLast={index === grouped.education.length - 1}
+              logoUrl={item.logoUrl ?? ""}
             />
           ))}
         </div>
@@ -89,13 +91,20 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
     return <div>Item not found</div>;
   }
 
+  function formatMonthYear(value: string) {
+    const [month, year] = value.split("-");
+    const date = new Date(Number(year), Number(month) - 1);
+
+    return format(date, "MMM yyyy");
+  }
+
   return (
     <div className="flex gap-5 md:gap-8 group">
       {/* LOGO */}
       <div className="shrink-0">
         {logoUrl && (
-          <div className="bg-white relative size-12 md:size-14 rounded-md overflow-hidden border flex items-center justify-center">
-            <Image src={logoUrl} alt="" fill className="object-contain" />{" "}
+          <div className="bg-white relative size-12 md:size-14 overflow-hidden border flex items-center justify-center">
+            <Image src={logoUrl} alt="" fill className="object-contain" />
           </div>
         )}
       </div>
@@ -108,8 +117,9 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
             {title}
           </h3>
 
-          <span className="text-[10px] md:text-xs uppercase font-medium">
-            {item.startDate} → {item.endDate || "Present"}
+          <span className="text-[10px] md:text-xs uppercase font-medium tracking-wide">
+            {formatMonthYear(item.startDate)} -{" "}
+            {item.endDate ? formatMonthYear(item.endDate) : "Present"}
           </span>
         </div>
 
@@ -127,8 +137,8 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* GRADE / CATEGORY */}
         <div className="mt-2 md:mt-4 flex gap-2 flex-wrap">
-          {item.grade && <Badge variant={"primary"}>{item.grade}</Badge>}
           {item.category && <Badge variant={"outline"}>{item.category}</Badge>}
+          {item.grade && <Badge variant={"primary"}>{item.grade}</Badge>}
         </div>
 
         {/* ACHIEVEMENTS */}

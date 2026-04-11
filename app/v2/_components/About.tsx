@@ -18,7 +18,7 @@ const About = () => {
 
       <div className="grid lg:grid-cols-12 gap-8 md:gap-12 items-start">
         {/* LEFT SIDE */}
-        <div className="lg:col-span-7 space-y-6 text-lg md:text-2xl leading-snug max-w-2xl">
+        <div className="lg:col-span-7 space-y-6 text-lg md:text-2xl leading-snug">
           <p>
             Hi! I&apos;m Divyashri, a frontend developer based in Qatar who
             enjoys building immersive web experiences where design and
@@ -46,7 +46,7 @@ const About = () => {
           className="flex items-center gap-2 group lg:col-span-12"
         >
           <span className="text-sm md:text-base font-medium group-hover:text-primary transition">
-            A little more about me
+            More about me
           </span>
 
           <ArrowUpRight

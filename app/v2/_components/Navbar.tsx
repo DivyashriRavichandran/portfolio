@@ -1,9 +1,9 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import Image from "next/image";
-import { GithubIcon, LinkedinIcon } from "lucide-react";
 import LangSwitcher from "./LangSwitcher";
 
 if (typeof window !== "undefined") {
@@ -14,28 +14,25 @@ export default function Navbar() {
   const tl = useRef<gsap.core.Timeline | null>(null);
   const isMenuOpen = useRef(false);
   const isAnimating = useRef(false);
+
   const navTogglerRef = useRef<HTMLButtonElement | null>(null);
   const navContentRef = useRef<HTMLDivElement | null>(null);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const linkBlocks = [
-    ".nav-socials .line, .nav-legal .line", // Bottom-left
-    ".nav-primary-links .line", // Center
-    ".nav-secondary-links .line", // Right side
+    ".nav-socials .line, .nav-legal .line",
+    ".nav-primary-links .line",
+    ".nav-secondary-links .line",
   ];
 
   useEffect(() => {
-    // 2. Register Plugin only on the client
     gsap.registerPlugin(SplitText);
 
-    // 3. Initialize SplitText
     const splitLinks = SplitText.create(".nav-items .split", {
       type: "lines",
       mask: "lines",
       linesClass: "line",
     });
 
-    // 4. Build the GSAP Timeline
     const navBgs = document.querySelectorAll(".nav-bg");
 
     tl.current = gsap.timeline({
@@ -45,6 +42,10 @@ export default function Navbar() {
       },
       onReverseComplete: () => {
         gsap.set(linkBlocks.join(", "), { y: "100%" });
+
+        navContentRef.current?.classList.remove("pointer-events-auto");
+        navContentRef.current?.classList.add("pointer-events-none");
+
         isAnimating.current = false;
       },
     });
@@ -56,7 +57,6 @@ export default function Navbar() {
         stagger: 0.1,
         ease: "power3.inOut",
       })
-
       .to(
         ".nav-items",
         {
@@ -67,15 +67,12 @@ export default function Navbar() {
         "-=0.6",
       );
 
-    // Cleanup: Kill timeline and revert SplitText when component unmounts
     return () => {
       tl.current?.kill();
-
       splitLinks.revert();
     };
-  }, [linkBlocks]);
+  }, []);
 
-  // 5. Action functions
   const animateLinksIn = () => {
     linkBlocks.forEach((selector) => {
       gsap.fromTo(
@@ -94,80 +91,72 @@ export default function Navbar() {
 
   const handleToggle = () => {
     if (isAnimating.current || !tl.current) return;
+
     isAnimating.current = true;
     navTogglerRef.current?.classList.toggle("open");
 
     if (!isMenuOpen.current) {
+      navContentRef.current?.classList.remove("pointer-events-none");
       navContentRef.current?.classList.add("pointer-events-auto");
+
       tl.current.play();
       animateLinksIn();
     } else {
       tl.current.reverse();
     }
+
     isMenuOpen.current = !isMenuOpen.current;
   };
 
-  // Update your GSAP timeline in useEffect to handle pointer-events on reverse
-  tl.current = gsap.timeline({
-    paused: true,
-    onComplete: () => {
-      isAnimating.current = false;
-    },
-    onReverseComplete: () => {
-      gsap.set(linkBlocks.join(", "), { y: "100%" });
-
-      // Disable interaction when menu is fully hidden
-      navContentRef.current?.classList.remove("pointer-events-auto");
-      isAnimating.current = false;
-    },
-  });
   const locale = "en";
 
   return (
-    <header className="fixed w-full z-100 backdrop-blur-lg border-b">
-      <nav className="flex items-center gap-20 justify-between pointer-events-auto transition-all duration-500 ease-out origin-top px-5 py-4 md:py-6 md:container mx-auto">
-        <div className="logo">
-          <div className="text-2xl font-black tracking-tighter uppercase text-foreground">
-            DR.
-          </div>
+    <header className="fixed w-full z-[100] backdrop-blur-lg border-b">
+      {/* NAV BAR */}
+      <nav className="flex items-center justify-between px-5 py-4 md:py-6 md:container mx-auto pointer-events-auto">
+        <div className="text-2xl font-black tracking-tighter uppercase">
+          DR.
         </div>
+
         <div className="flex gap-3 items-center">
           <button
             ref={navTogglerRef}
             onClick={handleToggle}
-            className="nav-toggler p-4 cursor-pointer bg-none flex flex-col justify-center items-center gap-1"
+            className="p-4 flex flex-col gap-1 cursor-pointer"
           >
-            <span></span>
-            <span></span>
+            <span className="w-6 h-[2px] bg-black" />
+            <span className="w-6 h-[2px] bg-black" />
           </button>
+
           <LangSwitcher />
         </div>
       </nav>
 
-      <div className="nav-content text-background">
+      {/* MENU */}
+      <div
+        ref={navContentRef}
+        className="nav-content text-background pointer-events-none"
+      >
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
         <div className="nav-bg"></div>
 
         <div className="nav-items flex gap-8 p-32">
+          {/* LEFT */}
           <div className="nav-items-col">
             <div className="nav-socials">
-              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
-                Socials
-              </p>
-              <a href="#" className=" split">
+              <p className="text-xs uppercase opacity-60 mb-4">Socials</p>
+              <a href="#" className="split">
                 Github
               </a>
-
-              <a href="#" className=" split">
+              <a href="#" className="split">
                 Linkedin
               </a>
             </div>
-            <div className="nav-legal font-medium">
-              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
-                Location
-              </p>
+
+            <div className="nav-legal mt-10">
+              <p className="text-xs uppercase opacity-60 mb-4">Location</p>
               <a href="#" className="split">
                 Groningen, NL
               </a>
@@ -176,65 +165,50 @@ export default function Navbar() {
               </a>
             </div>
           </div>
+
+          {/* CENTER */}
           <div className="nav-items-col">
-            <div className="nav-primary-links font-medium">
-              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
-                Menu
-              </p>
-              <a href="#">
-                <span className="split">Projects</span>
+            <div className="nav-primary-links">
+              <p className="text-xs uppercase opacity-60 mb-4">Menu</p>
+              <a href="#" className="split">
+                Projects
               </a>
-              <a href="#">
-                <span className="split">About</span>
+              <a href="#" className="split">
+                About
               </a>
-              <a href="#">
-                <span className="split">Experience</span>
+              <a href="#" className="split">
+                Experience
               </a>
-              <a href="#">
-                <span className="split">Contact</span>
+              <a href="#" className="split">
+                Contact
               </a>
             </div>
           </div>
+
+          {/* RIGHT */}
           <div className="nav-items-col">
             <div className="nav-secondary-links">
-              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
-                Language
-              </p>
-              <div className="flex items-center gap-4 font-medium">
-                {/* EN Button */}
-                <a
-                  href=""
-                  className={` group relative flex items-center gap-2 ${locale === "en" ? "opacity-100" : "opacity-80"}`}
-                >
+              <p className="text-xs uppercase opacity-60 mb-4">Language</p>
+
+              <div className="flex gap-4">
+                <a href="#" className="flex items-center gap-2">
                   <Image src="/uk-flag.png" alt="UK" width={18} height={18} />
-                  <span className="inline-block ">EN</span>
-                  <div
-                    className={`absolute -bottom-1 left-0 h-px bg-background transition-all duration-500 ${locale === "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
-                  />
+                  EN
                 </a>
 
-                <span className="opacity-30">/</span>
+                <span>/</span>
 
-                {/* NL Button */}
-                <a
-                  href=""
-                  className={`flex items-center gap-2 ${locale !== "en" ? "opacity-100" : "opacity-80"}`}
-                >
+                <a href="#" className="flex items-center gap-2">
                   <Image src="/nl-flag.png" alt="NL" width={18} height={18} />
-                  <span className="">NL</span>
-                  <div
-                    className={`absolute -bottom-1 left-0 h-px bg-background transition-all duration-500 ${locale !== "en" ? "w-full" : "w-0 group-hover:w-full origin-right"}`}
-                  />
+                  NL
                 </a>
               </div>
             </div>
-            <div className="nav-secondary-links">
-              <p className="text-xs uppercase tracking-wider mb-4 font-medium opacity-60">
-                Documents
-              </p>
-              <a href="#" className="flex items-baseline split">
-                <span>Resume</span>
-                <span className="text-xs ml-2">(Updated 03/2026)</span>
+
+            <div className="mt-10">
+              <p className="text-xs uppercase opacity-60 mb-4">Documents</p>
+              <a href="#" className="split">
+                Resume <span className="text-xs">(Updated 03/2026)</span>
               </a>
             </div>
           </div>

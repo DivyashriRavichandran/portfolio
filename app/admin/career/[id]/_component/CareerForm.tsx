@@ -106,11 +106,12 @@ export default function CareerForm({
 
       achievements: {
         en: data.achievements_en
-          .split(",")
+          .split("\n")
           .map((s) => s.trim())
           .filter(Boolean),
+
         nl: data.achievements_nl
-          .split(",")
+          .split("\n")
           .map((s) => s.trim())
           .filter(Boolean),
       },
@@ -264,8 +265,15 @@ export default function CareerForm({
             <CustomLabel label="Achievements (EN)" />
             <Textarea
               {...register("achievements_en")}
-              placeholder="comma separated..."
-              rows={5}
+              placeholder={`One achievement per line
+
+Example:
+Developed 10+ e-commerce applications using React, Next.js, TypeScript and Tailwind CSS
+Collaborated with UI/UX designers and backend developers to implement Figma designs and integrate RESTful APIs
+Coordinated with stakeholders on design and execution
+Implemented SSR, SSG and dynamic routing in Next.js to improve SEO
+Integrated internationalization (i18n) for multilingual support`}
+              rows={6}
               variant="admin"
             />
           </div>
@@ -274,8 +282,15 @@ export default function CareerForm({
             <CustomLabel label="Achievements (NL)" />
             <Textarea
               {...register("achievements_nl")}
-              placeholder="gescheiden door komma..."
-              rows={5}
+              placeholder={`Een achievement per line
+
+Example:
+Developed 10+ e-commerce applications using React, Next.js, TypeScript and Tailwind CSS
+Collaborated with UI/UX designers and backend developers to implement Figma designs and integrate RESTful APIs
+Coordinated with stakeholders on design and execution
+Implemented SSR, SSG and dynamic routing in Next.js to improve SEO
+Integrated internationalization (i18n) for multilingual support`}
+              rows={6}
               variant="admin"
             />
           </div>
