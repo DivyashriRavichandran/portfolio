@@ -11,7 +11,7 @@ const SideProjectsSection = () => {
 
   return (
     <section className="pb-10">
-      <Heading text1={"Side"} text2={"Projects"} total={projects.length} />
+      <Heading text1={"Open-Source"} text2={"Works"} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-4 md:gap-6">
         {projects.map((project) => (
@@ -45,11 +45,10 @@ const SideProjectsSection = () => {
                 {project.description}
               </p>
 
-              {/* Minimalist Tech Stack */}
               <div className="mt-3 md:mt-4 flex flex-wrap gap-2">
-                {project.tech_stack.slice(0, 3).map((tech, i) => (
+                {project.tags.map((tag, i) => (
                   <Badge key={i} size={"sm"}>
-                    {tech}
+                    {tag}
                   </Badge>
                 ))}
               </div>

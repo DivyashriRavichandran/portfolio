@@ -29,7 +29,10 @@
         "en": "BSc Computer Science",
         "nl": "BSc Computerwetenschappen"
       },
-      "period": { "en": "Sep 2021 – Jul 2024", "nl": "Sep 2021 – Jul 2024" },
+      "period": {
+        "en": "Sep 2021 – Jul 2024",
+        "nl": "Sep 2021 – Jul 2024"
+      },
       "institution": {
         "en": "University of Leeds, UK",
         "nl": "Universiteit van Leeds, VK"
@@ -88,14 +91,21 @@
       ]
     }
   ],
-
   "projects": [
     {
       "id": 1,
       "title": "DubbelDutch",
       "year": 2026,
-      "tech_stack": ["React", "TypeScript", "WXT", "DOM API"],
-      "categories": ["Frontend", "Browser Extension"],
+      "tech_stack": [
+        "React",
+        "TypeScript",
+        "WXT",
+        "DOM API"
+      ],
+      "categories": [
+        "Frontend",
+        "Browser Extension"
+      ],
       "description": "A Browser extension to facilitate language acquisition by injecting synchronized dual-language subtitles into Dutch streaming services.",
       "motivation": "Mainstream platforms like NPO Start and Kijk.nl lack accessibility features for language learners. I needed a way to intercept closed captions and overlay a secondary translation layer without breaking the native video player's state.",
       "execution": "Built using the WXT framework, the extension leverages MutationObservers to detect subtitle changes in real-time. I implemented a robust synchronization engine that accounts for varying DOM structures across different VOD providers.",
@@ -109,7 +119,10 @@
         "Automated subtitle timing offset correction"
       ],
       "mockup": "/mockup-2.png",
-      "images": ["/dubbeldutch-1.png", "/dubbeldutch-2.png"],
+      "images": [
+        "/dubbeldutch-1.png",
+        "/dubbeldutch-2.png"
+      ],
       "project_link": "https://www.dubbeldutch.com",
       "github_link": "https://github.com/divyashriravichandran/dubbel-dutch"
     },
@@ -117,8 +130,16 @@
       "id": 2,
       "title": "AgriteQ",
       "year": 2026,
-      "tech_stack": ["Next.js", "TypeScript", "Convex", "WorkOS"],
-      "categories": ["Fullstack", "GovTech"],
+      "tech_stack": [
+        "Next.js",
+        "TypeScript",
+        "Convex",
+        "WorkOS"
+      ],
+      "categories": [
+        "Fullstack",
+        "GovTech"
+      ],
       "description": "A large-scale exhibition management ecosystem for Qatar’s International Agricultural Exhibition, featuring high-concurrency exhibitor workflows.",
       "motivation": "The existing manual approval process for hundreds of international exhibitors was inefficient. The goal was to digitize the entire lifecycle from application to floor-space allocation.",
       "execution": "Architected a reactive fullstack system using Convex for real-time data sync and WorkOS for enterprise-grade authentication. I designed the dashboard as a multi-tenant interface to handle various government and exhibitor roles.",
@@ -130,7 +151,10 @@
         "Exhibitor analytics dashboard with real-time reporting"
       ],
       "mockup": "/agriteq-mockup.png",
-      "images": ["/agriteq-1.png", "/agriteq-2.png"],
+      "images": [
+        "/agriteq-1.png",
+        "/agriteq-2.png"
+      ],
       "project_link": "https://agriteq.qa",
       "github_link": ""
     },
@@ -138,8 +162,16 @@
       "id": 3,
       "title": "CineDB",
       "year": 2025,
-      "tech_stack": ["Next.js", "TypeScript", "Tailwind CSS", "Zustand"],
-      "categories": ["Frontend", "API Integration"],
+      "tech_stack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Zustand"
+      ],
+      "categories": [
+        "Frontend",
+        "API Integration"
+      ],
       "description": "A performance-focused movie discovery platform that transforms the massive TMDB database into a fluid, cinematic browsing experience.",
       "motivation": "I wanted to build a media discovery tool that felt native and 'expensive.' The challenge was managing a massive external API while keeping the UI snappy.",
       "execution": "I utilized Next.js Server Components for initial SEO-friendly loads and client-side Zustand for state management. Integrated framer-motion for 60fps layout animations.",
@@ -151,7 +183,10 @@
         "High-fidelity video trailer integration via Modals"
       ],
       "mockup": "/cinedb-mockup.png",
-      "images": ["/cinedb-1.png", "/cinedb-2.png"],
+      "images": [
+        "/cinedb-1.png",
+        "/cinedb-2.png"
+      ],
       "project_link": "https://cinedb-demo.com",
       "github_link": "https://github.com/user/cinedb"
     },
@@ -159,8 +194,16 @@
       "id": 4,
       "title": "Green Code Analyzer",
       "year": 2026,
-      "tech_stack": ["Java", "Spring Boot", "MySQL", "GSF SDK"],
-      "categories": ["Backend", "Sustainability"],
+      "tech_stack": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "GSF SDK"
+      ],
+      "categories": [
+        "Backend",
+        "Sustainability"
+      ],
       "description": "A sustainable software engineering tool that calculates the SCI (Software Carbon Intensity) score for enterprise Java applications.",
       "motivation": "With the rise of 'Green IT' in Europe, there is a lack of tooling for developers to measure the environmental impact of their code at the API level.",
       "execution": "Integrated the Green Software Foundation’s SDK into a Spring Boot backend. The system analyzes resource consumption metrics to estimate the CO2 footprint of specific service calls.",
@@ -172,7 +215,9 @@
         "Extensible hardware profile mapping system"
       ],
       "mockup": "/greencode-mockup.png",
-      "images": ["/green-1.png"],
+      "images": [
+        "/green-1.png"
+      ],
       "project_link": "",
       "github_link": ""
     },
@@ -180,8 +225,16 @@
       "id": 5,
       "title": "4K Video Pipeline",
       "year": 2025,
-      "tech_stack": ["Next.js", "D3.js", "Spring Boot", "FFmpeg"],
-      "categories": ["Fullstack", "Distributed Systems"],
+      "tech_stack": [
+        "Next.js",
+        "D3.js",
+        "Spring Boot",
+        "FFmpeg"
+      ],
+      "categories": [
+        "Fullstack",
+        "Distributed Systems"
+      ],
       "description": "A distributed orchestration engine designed to manage the heavy-compute lifecycle of processing ultra-high-definition video files.",
       "motivation": "Processing 4K video is resource-intensive. I needed a system that could handle file uploads, queue transcoding tasks, and visualize processing health.",
       "execution": "Built a Java-based worker system for FFmpeg orchestration and a Next.js frontend with D3.js to visualize the transcoding progress and system load across nodes.",
@@ -193,7 +246,9 @@
         "Horizontally scalable worker node architecture"
       ],
       "mockup": "/video-mockup.png",
-      "images": ["/video-1.png"],
+      "images": [
+        "/video-1.png"
+      ],
       "project_link": "",
       "github_link": ""
     },
@@ -201,8 +256,16 @@
       "id": 6,
       "title": "Lung Cancer Detection",
       "year": 2024,
-      "tech_stack": ["Python", "TensorFlow", "Keras", "FastAPI"],
-      "categories": ["Deep Learning", "Thesis"],
+      "tech_stack": [
+        "Python",
+        "TensorFlow",
+        "Keras",
+        "FastAPI"
+      ],
+      "categories": [
+        "Deep Learning",
+        "Thesis"
+      ],
       "description": "A Bachelor thesis project utilizing DCGANs for medical image augmentation to improve the accuracy of lung cancer detection in CT scans.",
       "motivation": "Early detection is critical, but medical datasets are often imbalanced or small. I explored generative models to solve the 'data scarcity' problem in oncology.",
       "execution": "Developed a Deep Convolutional Generative Adversarial Network (DCGAN) to generate synthetic CT scans, which were then used to train a classification model.",
@@ -215,36 +278,26 @@
       ],
       "result": "Achived 72% for this project.",
       "mockup": "/report-mockup.png",
-      "images": ["/lung-1.png"],
+      "images": [
+        "/lung-1.png"
+      ],
       "project_link": "",
       "github_link": ""
     }
   ],
-
   "side-projects": [
     {
       "id": 1,
-      "image": "/advent-of-code.png",
-      "title": "Advent of Code Challenge 2025",
-      "description": "A series of coding puzzles from the Advent of Code event, designed to practice algorithmic thinking, problem-solving, and learning new programming techniques in JavaScript.",
-      "tech_stack": ["JavaScript"],
-      "project_link": "https://www.google.com",
-      "github_link": "https://github.com/divyashriravichandran/"
-    },
-    {
-      "id": 2,
       "image": "/Screenshot 2026-03-25 at 1.10.00 pm.png",
       "title": "Flip Card Component - Animate UI",
       "description": "A reusable React component that flips smoothly to reveal content on the back side, adding interactive animations to web interfaces and enhancing user experience with motion and Tailwind CSS.",
-      "tech_stack": ["React", "Tailwind CSS", "Motion"],
-      "github_link": "https://github.com/divyashriravichandran/"
-    },
-    {
-      "id": 3,
-      "image": "/java-challenge.webp",
-      "title": "1 Billion Rows Challenge (Java)",
-      "description": "An experiment in high-performance Java data processing, focused on efficiently parsing and aggregating massive weather datasets using streams, hash maps, and multithreading techniques.",
-      "tech_stack": ["Java"],
+      "tags": [
+        "React",
+        "Tailwind CSS",
+        "Motion",
+        "Animation",
+        "UI Component"
+      ],
       "github_link": "https://github.com/divyashriravichandran/"
     }
   ],
@@ -270,14 +323,26 @@
       "40XiAOitWuV9bJKh4DHHpB"
     ],
     "hardwares": [
-      { "name": "MacBook Pro M5", "icon": "/macbookpro.png" },
-      { "name": "Apple Studio Display", "icon": "/studiadisplay.png" },
-      { "name": "Logitech MX Master 3S", "icon": "/mxmaster3s.png" },
+      {
+        "name": "MacBook Pro M5",
+        "icon": "/macbookpro.png"
+      },
+      {
+        "name": "Apple Studio Display",
+        "icon": "/studiadisplay.png"
+      },
+      {
+        "name": "Logitech MX Master 3S",
+        "icon": "/mxmaster3s.png"
+      },
       {
         "name": "Keychron Q1 Pro (Brown Switches)",
         "icon": "/keychronq1pro.png"
       },
-      { "name": "34 Dell UltraSharp Curved", "icon": "/dellultrasharp.png" }
+      {
+        "name": "34 Dell UltraSharp Curved",
+        "icon": "/dellultrasharp.png"
+      }
     ],
     "beyond_code": [
       {
