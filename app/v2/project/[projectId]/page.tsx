@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AlertCircleIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -17,7 +17,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import Heading3 from "../../_components/Heading3";
 import ProjectNotFound from "../../_components/ProjectNotFound";
-import { FaGlobe, FaGithub } from "react-icons/fa6";
+import { FaGlobe, FaGithub, FaRegLightbulb } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
@@ -258,69 +258,68 @@ export default function ProjectDetailsPage() {
             </div>
           </article>
 
-          <div
-            id="stack"
-            className="scroll-mt-32 grid grid-cols-1 md:grid-cols-2 gap-12"
-          >
-            <div className="space-y-4">
-              <Heading3 text1="Tech" text2="Stack" />
-              <div className="flex flex-wrap gap-2">
-                {project.tech_stack.map((tech) => (
-                  <Badge
-                    key={tech}
-                    variant="secondary"
-                    className="px-3 py-1 text-xs"
-                  >
-                    {tech}
-                  </Badge>
-                ))}
-              </div>
+          <div id="stack" className="space-y-4 scroll-mt-32">
+            <Heading3 text1="Tech" text2="Stack" />
+            <div className="flex flex-wrap gap-2">
+              {project.tech_stack.map((tech) => (
+                <Badge
+                  key={tech}
+                  variant="secondary"
+                  className="px-3 py-1 text-xs"
+                >
+                  {tech}
+                </Badge>
+              ))}
             </div>
-            <div className="space-y-4">
-              <Heading3 text1={t("key")} text2={t("features")} />
-              <ul className="space-y-3">
-                {project.features?.[locale]?.map((feature, i) => (
-                  <li
-                    key={i}
-                    className="text-sm md:text-base flex gap-3 text-muted-foreground"
-                  >
-                    <span className="text-primary font-bold">0{i + 1}.</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          </div>
+          <div id="stack" className="space-y-8 scroll-mt-32">
+            <Heading3 text1={t("key")} text2={t("features")} />
+
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {project.features?.[locale]?.map((feature, i) => (
+                <li
+                  key={i}
+                  className="group relative p-4 rounded border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-primary/20 transition-all duration-300"
+                >
+                  <div className="flex items-start gap-4">
+                    {/* Neon Number Indicator */}
+                    <span className="text-xs font-mono text-primary/50 group-hover:text-primary transition-colors mt-1">
+                      •
+                    </span>
+
+                    <p className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
+                      {feature}
+                    </p>
+                  </div>
+
+                  {/* Subtle Bottom Glow on Hover */}
+                  <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* CHALLENGE & SOLUTION */}
           <section id="challenge" className="scroll-mt-32">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border">
               {/* The Challenge Side */}
-              <div className="p-8 md:p-10 bg-background/50 hover:bg-background/80 transition-colors">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="size-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
-                    <span className="text-red-500 text-xs font-bold">!</span>
-                  </div>
-                  <h3 className="text-lg font-bold uppercase tracking-tighter">
-                    The {t("challenge")}
-                  </h3>
+              <div className="px-4 py-6 bg-background/50 hover:bg-background/80 transition-colors">
+                <div className="flex gap-3">
+                  <AlertCircleIcon className="size-6 text-primary" />
+                  <Heading3 text1={t("the")} text2={t("challenge")} />
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground">
                   {project.challenge?.[locale]}
                 </p>
               </div>
 
               {/* The Solution Side */}
-              <div className="p-8 md:p-10 bg-primary/[0.02] hover:bg-primary/[0.05] transition-colors border-t md:border-t-0 md:border-l border-white/10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
-                    <span className="text-primary text-xs font-bold">✓</span>
-                  </div>
-                  <h3 className="text-lg font-bold uppercase tracking-tighter text-primary">
-                    The {t("solution")}
-                  </h3>
+              <div className="px-4 py-6 bg-primary/[0.02] hover:bg-primary/[0.05] transition-colors border-t md:border-t-0 md:border-l border-white/10">
+                <div className="flex gap-3">
+                  <FaRegLightbulb className="size-5.5 text-primary" />
+                  <Heading3 text1={t("the")} text2={t("solution")} />
                 </div>
-                <p className="text-foreground leading-relaxed font-medium">
+                <p className="text-foreground md:text-base text-sm leading-relaxed">
                   {project.solution?.[locale]}
                 </p>
               </div>
@@ -350,17 +349,17 @@ export default function ProjectDetailsPage() {
                 <a
                   href={project.github_link}
                   target="_blank"
-                  className="group relative p-6 border hover:border-primary/50 transition-all duration-300"
+                  className="group relative p-4 md:p-6 border hover:border-primary/50 transition-all duration-300"
                 >
-                  <div className="flex flex-col gap-4">
+                  <div className="flex md:flex-col items-center md:items-start gap-4">
                     <div className="size-12 rounded-full bg-background flex items-center justify-center border group-hover:scale-110 transition-transform">
                       <FaGithub size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-lg uppercase">
+                      <h4 className="font-semibold md:text-lg uppercase">
                         Source Code
                       </h4>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs md:text-sm text-muted-foreground">
                         View the implementation and documentation on GitHub
                       </p>
                     </div>
@@ -373,17 +372,17 @@ export default function ProjectDetailsPage() {
                 <a
                   href={project.project_link}
                   target="_blank"
-                  className="group relative p-6 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
+                  className="group relative p-4 md:p-6 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
                 >
-                  <div className="flex flex-col gap-4">
+                  <div className="flex md:flex-col items-center md:items-start gap-4">
                     <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border border-black/10 group-hover:scale-110 transition-transform">
                       <FaGlobe size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-lg uppercase">
+                      <h4 className="font-semibold md:text-lg uppercase">
                         Live Demo
                       </h4>
-                      <p className="text-sm text-black/70">
+                      <p className="text-xs md:text-sm text-black/70">
                         Experience the project live in your browser
                       </p>
                     </div>
