@@ -24,6 +24,15 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
+const tocItems = [
+  { id: "story", label: "Build Story" },
+  { id: "stack", label: "Tech & Features" },
+  { id: "challenge", label: "The Challenge" },
+  { id: "solution", label: "The Solution" },
+  { id: "design", label: "System Design" },
+  { id: "links", label: "Project Links" },
+];
+
 export default function ProjectDetailsPage() {
   const t = useTranslations();
   const params = useParams();
@@ -57,89 +66,44 @@ export default function ProjectDetailsPage() {
     return () => observer.disconnect();
   }, []);
 
-  const tocItems = [
-    { id: "story", label: "Build Story" },
-    { id: "stack", label: "Tech & Features" },
-    { id: "challenge", label: "The Challenge" },
-    { id: "solution", label: "The Solution" },
-    { id: "design", label: "System Design" },
-    { id: "links", label: "Project Links" },
-  ];
-
-  if (project == undefined || allProjects === undefined) {
+  if (project === undefined || allProjects === undefined) {
     return (
-      <main className="min-h-screen">
-        {/* NAVBAR */}
-        <nav className="border-b sticky top-0 z-50 backdrop-blur-sm bg-background/80">
-          <div className="md:container md:mx-auto px-5 flex items-center justify-between py-4">
-            <Skeleton className="h-10 w-32" />
-            <div className="flex items-center gap-4">
-              <Skeleton className="h-8 w-8 rounded-full" />
-              <Skeleton className="h-8 w-8 rounded-full" />
-              <Skeleton className="h-10 w-10 rounded-full" />
-            </div>
-          </div>
-        </nav>
-
-        <section className="md:container md:mx-auto px-5 py-8 md:py-16 space-y-10">
-          {/* HERO */}
+      <main className="md:max-w-4xl md:mx-auto px-5 md:px-0">
+        <div className="py-8 md:py-16 space-y-12">
+          {/* HERO SKELETON */}
           <div className="space-y-4">
-            <Skeleton className="h-4 w-48" />
-            <Skeleton className="h-12 md:h-20 w-3/4" />
-            <Skeleton className="h-20 w-full md:w-2/3" />
-          </div>
-
-          {/* CAROUSEL */}
-          <div className="grid md:grid-cols-2 gap-4">
-            <Skeleton className="aspect-video w-full rounded-sm" />
-            <Skeleton className="aspect-video w-full rounded-sm hidden md:block" />
-          </div>
-
-          {/* CONTENT GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-8">
-            {/* LEFT */}
-            <div className="md:col-span-7 space-y-10">
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
-              </div>
-
-              <Skeleton className="aspect-video w-full rounded-sm" />
-            </div>
-
-            {/* RIGHT */}
-            <div className="md:col-span-5 space-y-10">
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-32" />
-                <div className="flex gap-2 flex-wrap">
-                  <Skeleton className="h-6 w-16 rounded-full" />
-                  <Skeleton className="h-6 w-20 rounded-full" />
-                  <Skeleton className="h-6 w-14 rounded-full" />
-                  <Skeleton className="h-6 w-24 rounded-full" />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-40" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
-                <Skeleton className="h-4 w-3/4" />
-              </div>
-
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="h-4 w-full" />
-              </div>
-
-              <div className="space-y-4">
-                <Skeleton className="h-6 w-32" />
-                <Skeleton className="h-4 w-full" />
-              </div>
+            <Skeleton className="h-4 w-48 bg-primary/10" />
+            <Skeleton className="h-12 md:h-16 w-3/4" />
+            <div className="border-l-2 border-primary/20 pl-4">
+              <Skeleton className="h-20 w-full" />
             </div>
           </div>
-        </section>
+
+          {/* CAROUSEL SKELETON */}
+          <Skeleton className="aspect-video w-full rounded-sm" />
+
+          {/* STORY SKELETON */}
+          <div className="space-y-6">
+            <Skeleton className="h-8 w-40" />
+            <div className="space-y-3">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-2/3" />
+            </div>
+          </div>
+
+          {/* NEW MERGED CHALLENGE/SOLUTION SKELETON */}
+          <div className="grid md:grid-cols-2 gap-px bg-border border rounded-xl overflow-hidden">
+            <div className="p-8 bg-background space-y-4">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+            <div className="p-8 bg-background space-y-4">
+              <Skeleton className="h-6 w-32" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+          </div>
+        </div>
       </main>
     );
   }
@@ -290,6 +254,7 @@ export default function ProjectDetailsPage() {
             <div className="space-y-6 text-muted-foreground text-base md:text-xl leading-relaxed">
               <p>{project.motivation?.[locale]}</p>
               <p>{project.execution?.[locale]}</p>
+              <p>{project.result?.[locale]}</p>
             </div>
           </article>
 
@@ -327,19 +292,40 @@ export default function ProjectDetailsPage() {
             </div>
           </div>
 
-          <div id="challenge" className="scroll-mt-32 space-y-4">
-            <Heading3 text1={t("the")} text2={t("challenge")} />
-            <p className="text-base md:text-lg text-muted-foreground">
-              {project.challenge?.[locale]}
-            </p>
-          </div>
+          {/* CHALLENGE & SOLUTION */}
+          <section id="challenge" className="scroll-mt-32">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm">
+              {/* The Challenge Side */}
+              <div className="p-8 md:p-10 bg-background/50 hover:bg-background/80 transition-colors">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-8 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                    <span className="text-red-500 text-xs font-bold">!</span>
+                  </div>
+                  <h3 className="text-lg font-bold uppercase tracking-tighter">
+                    The {t("challenge")}
+                  </h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed">
+                  {project.challenge?.[locale]}
+                </p>
+              </div>
 
-          <div id="solution" className="scroll-mt-32 space-y-4">
-            <Heading3 text1={t("the")} text2={t("solution")} />
-            <p className="text-base md:text-lg text-muted-foreground">
-              {project.solution?.[locale]}
-            </p>
-          </div>
+              {/* The Solution Side */}
+              <div className="p-8 md:p-10 bg-primary/[0.02] hover:bg-primary/[0.05] transition-colors border-t md:border-t-0 md:border-l border-white/10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <span className="text-primary text-xs font-bold">✓</span>
+                  </div>
+                  <h3 className="text-lg font-bold uppercase tracking-tighter text-primary">
+                    The {t("solution")}
+                  </h3>
+                </div>
+                <p className="text-foreground leading-relaxed font-medium">
+                  {project.solution?.[locale]}
+                </p>
+              </div>
+            </div>
+          </section>
 
           {project.architecture && (
             <article id="design" className="scroll-mt-32 space-y-8">

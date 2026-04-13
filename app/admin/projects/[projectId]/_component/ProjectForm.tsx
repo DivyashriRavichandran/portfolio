@@ -160,11 +160,11 @@ export default function ProjectForm({
         .map((s) => s.trim())
         .filter(Boolean),
       features: {
-        en: data.categories_en
+        en: data.features_en
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean),
-        nl: data.categories_nl
+        nl: data.features_nl
           .split(",")
           .map((s) => s.trim())
           .filter(Boolean),
@@ -460,7 +460,7 @@ export default function ProjectForm({
       <section className="space-y-6">
         <Subheading icon={Camera} text="Images" />
 
-        <div className="space-y-10 bg-foreground/[0.02] border border-white/5 p-8 rounded-lg">
+        <div className="space-y-10 bg-foreground/2 border border-white/5 p-8 rounded-lg">
           <div className="grid grid-cols-2 gap-8 pt-4">
             {/* 4a. Hero Mockup */}
             <div className="space-y-4">
