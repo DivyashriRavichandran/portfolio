@@ -1,8 +1,8 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Added Link for navigation
-import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   const container = useRef(null);
@@ -22,7 +22,6 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Menu items array for easy management
   const navItems = [
     { label: "About", href: "#about" },
     { label: "Projects", href: "#projects" },
@@ -82,7 +81,7 @@ const Hero = () => {
           <nav className="reveal flex flex-wrap gap-2 md:gap-3">
             {navItems.map((item) => (
               <Link key={item.label} href={item.href}>
-                <Badge>{item.label}</Badge>
+                <Button>{item.label}</Button>
               </Link>
             ))}
           </nav>

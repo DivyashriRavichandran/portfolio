@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { AlertCircleIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -17,7 +17,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import Heading3 from "../../_components/Heading3";
 import ProjectNotFound from "../../_components/ProjectNotFound";
-import { FaGlobe, FaGithub, FaRegLightbulb } from "react-icons/fa6";
+import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
@@ -163,14 +163,14 @@ export default function ProjectDetailsPage() {
             <span className="hidden md:block">{t("back-to-portfolio")}</span>
           </Link>
 
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center gap-6">
             {project.project_link && (
               <a
                 href={project.project_link}
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <FaGlobe size={20} />
+                <FaGlobe size={24} />
               </a>
             )}
 
@@ -180,12 +180,12 @@ export default function ProjectDetailsPage() {
                 target="_blank"
                 className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
               >
-                <FaGithub size={20} />
+                <FaGithub size={24} />
               </a>
             )}
             <Link
               href={`/v2/project/${nextProject._id}`}
-              className="group flex items-center gap-3 border-l pl-4"
+              className="group flex items-center gap-3 border-l pl-6"
             >
               <div className="hidden sm:block text-right">
                 <p className="text-[10px] uppercase tracking-tight text-muted-foreground font-semibold">
@@ -216,8 +216,8 @@ export default function ProjectDetailsPage() {
           <h1 className="text-3xl md:text-5xl font-semibold uppercase wrap-break-word">
             {project.title[locale]}
           </h1>
-          <div className="border-l-2 border-primary pl-4 md:pl-4 mt-4 md:mt-8">
-            <p className="text-sm md:text-xl text-muted-foreground leading-snug">
+          <div className="mt-4 md:mt-8">
+            <p className="text-sm md:text-xl text-muted-foreground">
               {project.description[locale]}
             </p>
           </div>
@@ -262,13 +262,7 @@ export default function ProjectDetailsPage() {
             <Heading3 text1="Tech" text2="Stack" />
             <div className="flex flex-wrap gap-2">
               {project.tech_stack.map((tech) => (
-                <Badge
-                  key={tech}
-                  variant="secondary"
-                  className="px-3 py-1 text-xs"
-                >
-                  {tech}
-                </Badge>
+                <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
           </div>
@@ -279,21 +273,15 @@ export default function ProjectDetailsPage() {
               {project.features?.[locale]?.map((feature, i) => (
                 <li
                   key={i}
-                  className="group relative p-4 rounded border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-primary/20 transition-all duration-300"
+                  className="group p-3 rounded border border-white/5 bg-muted/50 hover:bg-muted hover:border-primary transition-all duration-300"
                 >
-                  <div className="flex items-start gap-4">
-                    {/* Neon Number Indicator */}
-                    <span className="text-xs font-mono text-primary/50 group-hover:text-primary transition-colors mt-1">
-                      •
-                    </span>
+                  <div className="flex items-center gap-4">
+                    <span className="text-xs text-primary">•</span>
 
                     <p className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
                       {feature}
                     </p>
                   </div>
-
-                  {/* Subtle Bottom Glow on Hover */}
-                  <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </li>
               ))}
             </ul>
@@ -301,25 +289,19 @@ export default function ProjectDetailsPage() {
 
           {/* CHALLENGE & SOLUTION */}
           <section id="challenge" className="scroll-mt-32">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border">
-              {/* The Challenge Side */}
-              <div className="px-4 py-6 bg-background/50 hover:bg-background/80 transition-colors">
-                <div className="flex gap-3">
-                  <AlertCircleIcon className="size-6 text-primary" />
-                  <Heading3 text1={t("the")} text2={t("challenge")} />
-                </div>
-                <p className="text-sm md:text-base text-muted-foreground">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+              {/* The Challenge */}
+              <div>
+                <Heading3 text1={t("the")} text2={t("challenge")} />
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                   {project.challenge?.[locale]}
                 </p>
               </div>
 
-              {/* The Solution Side */}
-              <div className="px-4 py-6 bg-primary/[0.02] hover:bg-primary/[0.05] transition-colors border-t md:border-t-0 md:border-l border-white/10">
-                <div className="flex gap-3">
-                  <FaRegLightbulb className="size-5.5 text-primary" />
-                  <Heading3 text1={t("the")} text2={t("solution")} />
-                </div>
-                <p className="text-foreground md:text-base text-sm leading-relaxed">
+              {/* The Solution */}
+              <div>
+                <Heading3 text1={t("the")} text2={t("solution")} />
+                <p className="text-muted-foreground md:text-base text-sm leading-relaxed">
                   {project.solution?.[locale]}
                 </p>
               </div>
