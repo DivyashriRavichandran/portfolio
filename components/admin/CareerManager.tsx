@@ -10,18 +10,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Trash2,
-  Briefcase,
-  Edit,
-  Plus,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Trash2, Briefcase, Edit, Plus } from "lucide-react";
+import { MdDragIndicator } from "react-icons/md";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
 import Link from "next/link";
+
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { Badge } from "../ui/badge";
 
 export default function CareerManager() {
   const career = useQuery(api.career.list);
@@ -46,45 +48,40 @@ export default function CareerManager() {
     }
   };
 
-  const handleMove = async (currentIndex: number, direction: "up" | "down") => {
-    if (!career) return;
+  const onDragEnd = async (result: DropResult) => {
+    if (!result.destination || !career) return;
 
-    const targetIndex =
-      direction === "up" ? currentIndex - 1 : currentIndex + 1;
+    const sourceIndex = result.source.index;
+    const destIndex = result.destination.index;
 
-    if (targetIndex < 0 || targetIndex >= career.length) return;
+    if (sourceIndex === destIndex) return;
 
-    const currentItem = career[currentIndex];
-    const targetItem = career[targetIndex];
-
-    const currentOrder = currentItem.order ?? currentIndex;
-    const targetOrder = targetItem.order ?? targetIndex;
+    const currentItem = career[sourceIndex];
+    const targetItem = career[destIndex];
 
     try {
-      await reorderCareer({ id: currentItem._id, newOrder: targetOrder });
-      await reorderCareer({ id: targetItem._id, newOrder: currentOrder });
-
-      toast.success("Position shifted");
+      await reorderCareer({
+        id: currentItem._id,
+        newOrder: targetItem.order ?? destIndex,
+      });
+      toast.success("Career order updated");
     } catch (err) {
-      toast.error("Database sync failed");
-      console.log(err);
+      toast.error("Failed to reorder");
+      console.error(err);
     }
   };
 
   return (
     <div className="space-y-8">
-      {/* HEADER */}
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <div className="p-2.5 bg-foreground/10 rounded-full size-10 flex items-center justify-center border border-foreground/10">
             <Briefcase size={20} className="text-primary" />
           </div>
-
           <div>
             <h2 className="text-2xl font-semibold uppercase tracking-wide">
               Career
             </h2>
-
             <p className="text-[10px] uppercase opacity-60 font-semibold tracking-widest">
               Total: {career.length.toString().padStart(2, "0")}
             </p>
@@ -98,92 +95,94 @@ export default function CareerManager() {
         </Link>
       </div>
 
-      {/* TABLE */}
-      <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
-        <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
-          <TableRow className="border-white/5">
-            <TableHead className="w-16 text-center">Pos</TableHead>
-            <TableHead className="pl-8">Role / Degree</TableHead>
-            <TableHead>Organization</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Period</TableHead>
-            <TableHead className="pr-8 text-right">Management</TableHead>
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {career.map((item, index) => (
-            <TableRow key={item._id} className="group">
-              {/* ORDER */}
-              <TableCell>
-                <div className="flex flex-col items-center gap-1">
-                  <button
-                    disabled={index === 0}
-                    onClick={() => handleMove(index, "up")}
-                    className="disabled:opacity-10 hover:text-primary transition-colors"
-                  >
-                    <ChevronUp size={16} />
-                  </button>
-
-                  <span className="text-[10px] font-mono opacity-50">
-                    {index + 1}
-                  </span>
-
-                  <button
-                    disabled={index === career.length - 1}
-                    onClick={() => handleMove(index, "down")}
-                    className="disabled:opacity-10 hover:text-primary transition-colors"
-                  >
-                    <ChevronDown size={16} />
-                  </button>
-                </div>
-              </TableCell>
-
-              {/* TITLE */}
-              <TableCell className="font-medium text-lg pl-8">
-                {item.title.en}
-              </TableCell>
-
-              {/* ORGANIZATION */}
-              <TableCell>{item.organization.en}</TableCell>
-
-              {/* TYPE */}
-              <TableCell className="capitalize opacity-70">
-                {item.type}
-              </TableCell>
-
-              {/* DATE */}
-              <TableCell className="text-xs opacity-70">
-                {item.startDate} — {item.current ? "Present" : item.endDate}
-              </TableCell>
-
-              {/* ACTIONS */}
-              <TableCell className="text-right pr-8">
-                <div className="flex justify-end gap-2">
-                  <Link href={`/admin/career/${item._id}`}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full hover:bg-yellow-500/10 hover:text-yellow-500"
-                    >
-                      <Edit size={18} />
-                    </Button>
-                  </Link>
-
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(item._id)}
-                    className="rounded-full hover:bg-red-500/10 hover:text-red-500"
-                  >
-                    <Trash2 size={18} />
-                  </Button>
-                </div>
-              </TableCell>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
+          <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
+            <TableRow className="border-white/5 hover:bg-transparent">
+              <TableHead className="w-12"></TableHead>
+              <TableHead className="w-16 text-center">No.</TableHead>
+              <TableHead className="pl-8">Role / Degree</TableHead>
+              <TableHead>Organization</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead className="pr-8 text-right">Management</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <Droppable droppableId="career-list">
+            {(provided) => (
+              <TableBody {...provided.droppableProps} ref={provided.innerRef}>
+                {career.map((item, index) => (
+                  <Draggable
+                    key={item._id}
+                    draggableId={item._id}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <TableRow
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        className={`group border-white/5 transition-colors ${
+                          snapshot.isDragging
+                            ? "bg-white/10"
+                            : "hover:bg-white/2"
+                        }`}
+                      >
+                        {/* DRAG HANDLE */}
+                        <TableCell>
+                          <div
+                            {...provided.dragHandleProps}
+                            className="flex justify-center cursor-grab active:cursor-grabbing opacity-20 group-hover:opacity-100 transition-opacity"
+                          >
+                            <MdDragIndicator size={22} />
+                          </div>
+                        </TableCell>
+
+                        {/* ORDER NUMBER */}
+                        <TableCell className="text-center font-mono text-[10px] opacity-50">
+                          {(index + 1).toString().padStart(2, "0")}
+                        </TableCell>
+
+                        {/* CONTENT */}
+                        <TableCell className="font-medium text-lg pl-8">
+                          {item.title.en}
+                        </TableCell>
+                        <TableCell>{item.organization.en}</TableCell>
+                        <TableCell>
+                          <Badge>{item.type}</Badge>
+                        </TableCell>
+
+                        {/* ACTIONS */}
+                        <TableCell className="text-right pr-8">
+                          <div className="flex justify-end gap-2">
+                            <Link href={`/admin/career/${item._id}`}>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="rounded-full hover:bg-yellow-500/10 hover:text-yellow-500"
+                              >
+                                <Edit size={18} />
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDelete(item._id)}
+                              className="rounded-full hover:bg-red-500/10 hover:text-red-500"
+                            >
+                              <Trash2 size={18} />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </TableBody>
+            )}
+          </Droppable>
+        </Table>
+      </DragDropContext>
     </div>
   );
 }

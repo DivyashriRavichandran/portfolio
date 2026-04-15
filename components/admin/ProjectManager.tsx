@@ -10,18 +10,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Trash2,
-  FolderCode,
-  Edit,
-  Plus,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Trash2, FolderCode, Edit, Plus } from "lucide-react";
+import { MdDragIndicator } from "react-icons/md";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
 import Link from "next/link";
+
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { Badge } from "../ui/badge";
 
 export default function ProjectManager() {
   const projects = useQuery(api.projects.list);
@@ -46,26 +48,25 @@ export default function ProjectManager() {
     }
   };
 
-  const handleMove = async (currentIndex: number, direction: "up" | "down") => {
-    if (!projects) return;
+  const onDragEnd = async (result: DropResult) => {
+    if (!result.destination || !projects) return;
 
-    const targetIndex =
-      direction === "up" ? currentIndex - 1 : currentIndex + 1;
-    if (targetIndex < 0 || targetIndex >= projects.length) return;
+    const sourceIndex = result.source.index;
+    const destIndex = result.destination.index;
 
-    const currentProject = projects[currentIndex];
-    const targetProject = projects[targetIndex];
+    if (sourceIndex === destIndex) return;
 
-    // Use optional chaining or a fallback if your DB is currently empty of 'order' values
-    const currentOrder = currentProject.order ?? currentIndex;
-    const targetOrder = targetProject.order ?? targetIndex;
+    const currentProject = projects[sourceIndex];
+    const targetProject = projects[destIndex];
 
     try {
-      await reorderProject({ id: currentProject._id, newOrder: targetOrder });
-      await reorderProject({ id: targetProject._id, newOrder: currentOrder });
-      toast.success("Position shifted");
+      await reorderProject({
+        id: currentProject._id,
+        newOrder: targetProject.order ?? destIndex,
+      });
+      toast.success("Position updated");
     } catch (err) {
-      toast.error("Database sync failed");
+      toast.error("Failed to reorder");
       console.log(err);
     }
   };
@@ -92,69 +93,94 @@ export default function ProjectManager() {
           </Button>
         </Link>
       </div>
-      {/* TABLE AREA */}
-      <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
-        <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
-          <TableRow className="border-white/5">
-            <TableHead className="w-16 text-center">Pos</TableHead>
-            <TableHead className="pl-8">Project Details</TableHead>
-            <TableHead>Year</TableHead>
-            <TableHead className="pr-8 text-right">Management</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {projects.map((project, index) => (
-            <TableRow key={project._id} className="group">
-              <TableCell>
-                <div className="flex flex-col items-center gap-1">
-                  <button
-                    disabled={index === 0}
-                    onClick={() => handleMove(index, "up")}
-                    className="disabled:opacity-10 hover:text-primary transition-colors"
-                  >
-                    <ChevronUp size={16} />
-                  </button>
-                  <span className="text-[10px] font-mono opacity-50">
-                    {index + 1}
-                  </span>
-                  <button
-                    disabled={index === projects.length - 1}
-                    onClick={() => handleMove(index, "down")}
-                    className="disabled:opacity-10 hover:text-primary transition-colors"
-                  >
-                    <ChevronDown size={16} />
-                  </button>
-                </div>
-              </TableCell>
-              <TableCell className="font-medium text-lg pl-8">
-                {project.title.en}
-              </TableCell>
-              <TableCell>{project.year}</TableCell>
-              <TableCell className="text-right pr-8">
-                <div className="flex justify-end gap-2">
-                  <Link href={`/admin/projects/${project._id}`}>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="rounded-full hover:bg-yellow-500/10 hover:text-yellow-500"
-                    >
-                      <Edit size={18} />
-                    </Button>
-                  </Link>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(project._id)}
-                    className="rounded-full hover:bg-red-500/10 hover:text-red-500"
-                  >
-                    <Trash2 size={18} />
-                  </Button>
-                </div>
-              </TableCell>
+
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Table className="border border-white/5 rounded-lg overflow-hidden bg-foreground/5">
+          <TableHeader className="bg-white/5 text-xs uppercase tracking-widest font-bold">
+            <TableRow className="border-white/5 hover:bg-transparent">
+              <TableHead className="w-12 text-center"></TableHead>{" "}
+              {/* Drag Handle Col */}
+              <TableHead className="w-16 text-center">No.</TableHead>
+              <TableHead className="pl-8">Project Details</TableHead>
+              <TableHead>Tags</TableHead>
+              <TableHead>Year</TableHead>
+              <TableHead className="pr-8 text-right">Management</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+
+          <Droppable droppableId="projects-list">
+            {(provided) => (
+              <TableBody {...provided.droppableProps} ref={provided.innerRef}>
+                {projects.map((project, index) => (
+                  <Draggable
+                    key={project._id}
+                    draggableId={project._id}
+                    index={index}
+                  >
+                    {(provided, snapshot) => (
+                      <TableRow
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        className={`group border-white/5 ${
+                          snapshot.isDragging ? "bg-white/10" : ""
+                        }`}
+                      >
+                        {/* DRAG HANDLE */}
+                        <TableCell className="text-center">
+                          <div
+                            {...provided.dragHandleProps}
+                            className="flex justify-center cursor-grab active:cursor-grabbing opacity-30 group-hover:opacity-100 transition-opacity"
+                          >
+                            <MdDragIndicator size={20} />
+                          </div>
+                        </TableCell>
+
+                        {/* POSITION */}
+                        <TableCell className="text-center font-mono text-sm opacity-50">
+                          {(index + 1).toString().padStart(2, "0")}
+                        </TableCell>
+
+                        <TableCell className="font-medium text-lg pl-8">
+                          {project.title.en}
+                        </TableCell>
+                        <TableCell className="flex gap-2">
+                          {project.categories.en.map((tag) => (
+                            <Badge key={tag}>{tag}</Badge>
+                          ))}
+                        </TableCell>
+                        <TableCell>{project.year}</TableCell>
+
+                        <TableCell className="text-right pr-8">
+                          <div className="flex justify-end gap-2">
+                            <Link href={`/admin/projects/${project._id}`}>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="rounded-full hover:bg-yellow-500/10 hover:text-yellow-500"
+                              >
+                                <Edit size={18} />
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDelete(project._id)}
+                              className="rounded-full hover:bg-red-500/10 hover:text-red-500"
+                            >
+                              <Trash2 size={18} />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </TableBody>
+            )}
+          </Droppable>
+        </Table>
+      </DragDropContext>
     </div>
   );
 }
