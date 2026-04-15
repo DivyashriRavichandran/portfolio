@@ -12,6 +12,7 @@ export default defineSchema({
   projects: defineTable({
     order: v.optional(v.number()),
     title: localeString,
+    slug: v.optional(v.string()),
     year: v.number(),
     description: localeString,
     motivation: v.optional(localeString),
@@ -35,7 +36,9 @@ export default defineSchema({
     mockup: v.optional(v.string()), // StorageID
     images: v.array(v.string()), // Array of StorageIDs
     architecture: v.optional(v.string()),
-  }).index("by_order", ["order"]),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_order", ["order"]),
 
   about: defineTable({
     menu_items: v.array(v.object({ label: localeString, href: v.string() })),

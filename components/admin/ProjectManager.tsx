@@ -152,7 +152,7 @@ export default function ProjectManager() {
 
                         <TableCell className="text-right pr-8">
                           <div className="flex justify-end gap-2">
-                            <Link href={`/admin/projects/${project._id}`}>
+                            <Link href={`/admin/projects/${project.slug}`}>
                               <Button
                                 variant="ghost"
                                 size="icon"

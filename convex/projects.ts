@@ -11,6 +11,7 @@ const categoriesSchema = v.object({
 const projectFields = {
   order: v.optional(v.number()),
   title: localeString,
+  slug: v.optional(v.string()),
   description: localeString,
   year: v.number(),
 
@@ -34,6 +35,7 @@ const projectFields = {
 const inputFields = {
   title: localeString,
   description: localeString,
+  slug: v.optional(v.string()),
   year: v.number(),
 
   motivation: v.optional(localeString),
@@ -80,10 +82,13 @@ export const list = query({
   },
 });
 
-export const getById = query({
-  args: { id: v.id("projects") },
+export const getBySlug = query({
+  args: { slug: v.string() },
   handler: async (ctx, args) => {
-    const project = await ctx.db.get(args.id);
+    const project = await ctx.db
+      .query("projects")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .unique();
 
     if (!project) return null;
 
@@ -103,7 +108,6 @@ export const getById = query({
     };
   },
 });
-
 export const create = mutation({
   args: inputFields,
   handler: async (ctx, args) => {

@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/carousel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import Heading3 from "../../_components/Heading3";
 import ProjectNotFound from "../../_components/ProjectNotFound";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
@@ -37,9 +36,9 @@ export default function ProjectDetailsPage() {
   const t = useTranslations();
   const params = useParams();
   const locale = useLocale() as "en" | "nl";
-  const projectId = params.projectId as Id<"projects">;
+  const slug = params.slug as string;
 
-  const project = useQuery(api.projects.getById, { id: projectId });
+  const project = useQuery(api.projects.getBySlug, { slug });
   const allProjects = useQuery(api.projects.list);
 
   const [activeSection, setActiveSection] = useState("");
@@ -110,7 +109,7 @@ export default function ProjectDetailsPage() {
 
   if (!project) return <ProjectNotFound />;
 
-  const currentIndex = allProjects.findIndex((p) => p._id === projectId);
+  const currentIndex = allProjects.findIndex((p) => p._id === slug);
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (

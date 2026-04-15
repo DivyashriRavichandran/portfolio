@@ -4,17 +4,16 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useParams } from "next/navigation";
 import { ChevronLeft, Loader2 } from "lucide-react";
-import { Id } from "@/convex/_generated/dataModel";
 import ProjectForm from "./_component/ProjectForm";
 import Link from "next/link";
 import Heading from "@/app/v2/_components/Heading";
 
 export default function EditProjectPage() {
   const params = useParams();
-  const projectId = params.projectId as Id<"projects">;
+  const slug = params.slug as string;
 
   // 1. Fetch the project data
-  const project = useQuery(api.projects.getById, { id: projectId });
+  const project = useQuery(api.projects.getBySlug, { slug });
 
   if (project === undefined) {
     return (

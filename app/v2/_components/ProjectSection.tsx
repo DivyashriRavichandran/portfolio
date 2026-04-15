@@ -8,8 +8,8 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ArrowUpRight } from "lucide-react";
 
 const ProjectSection = () => {
   const t = useTranslations();
@@ -54,7 +54,7 @@ const ProjectCard = ({
   const locale = useLocale() as "en" | "nl";
 
   return (
-    <Link href={`/v2/project/${project._id}`} className="group block">
+    <Link href={`/v2/project/${project.slug}`} className="group block">
       <div className="border rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
         <div className="relative z-0 aspect-4/3 overflow-hidden">
@@ -71,7 +71,7 @@ const ProjectCard = ({
 
           <div className="absolute inset-0 bg-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
             <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-xl">
-              <ArrowUpRight size={28} strokeWidth={2.5} />
+              <ArrowUpRight size={26} />
             </div>
           </div>
         </div>

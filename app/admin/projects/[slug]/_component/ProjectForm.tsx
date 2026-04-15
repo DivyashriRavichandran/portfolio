@@ -28,6 +28,7 @@ import { Doc } from "@/convex/_generated/dataModel";
 interface ProjectFormValues {
   title_en: string;
   title_nl: string;
+  slug: string;
   description_en: string;
   description_nl: string;
   motivation_en: string;
@@ -71,6 +72,7 @@ export default function ProjectForm({
           ...initialData,
           title_en: initialData.title.en,
           title_nl: initialData.title.nl,
+          slug: initialData.slug,
           description_en: initialData.description.en,
           description_nl: initialData.description.nl,
           motivation_en: initialData.motivation?.en || "",
@@ -98,6 +100,7 @@ export default function ProjectForm({
       : {
           title_en: "",
           title_nl: "",
+          slug: "",
           description_en: "",
           description_nl: "",
           motivation_en: "",
@@ -141,6 +144,7 @@ export default function ProjectForm({
   const onSubmit = async (data: ProjectFormValues) => {
     const payload = {
       title: { en: data.title_en, nl: data.title_nl },
+      slug: data.slug,
       description: { en: data.description_en, nl: data.description_nl },
       year: Number(data.year),
       project_link: data.project_link,
@@ -260,6 +264,7 @@ export default function ProjectForm({
               placeholder="Nederlandse Titel"
               variant="admin"
             />
+            <Input {...register("slug")} placeholder="Slug" variant="admin" />
           </div>
           <div className="space-y-4">
             <CustomLabel label="Year & Tags" />

@@ -2,7 +2,7 @@
 
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import ProjectForm from "../[projectId]/_component/ProjectForm";
+import ProjectForm from "../[slug]/_component/ProjectForm";
 import Heading from "@/app/v2/_components/Heading";
 
 export default function NewProjectPage() {

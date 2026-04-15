@@ -94,6 +94,11 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
     return format(date, "MMM yyyy");
   }
 
+  const getDuration = () => {
+    // For now, using your mock data request: "2 years and 5 months"
+    return locale === "nl" ? "2 jaar en 5 mnd" : "2 yrs 5 mos";
+  };
+
   return (
     <div className="flex gap-5 md:gap-8 group">
       {/* LOGO */}
