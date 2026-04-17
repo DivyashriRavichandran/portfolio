@@ -72,7 +72,7 @@ export default function ProjectForm({
           ...initialData,
           title_en: initialData.title.en,
           title_nl: initialData.title.nl,
-          slug: initialData.slug,
+          slug: initialData.slug || "",
           description_en: initialData.description.en,
           description_nl: initialData.description.nl,
           motivation_en: initialData.motivation?.en || "",
@@ -144,7 +144,7 @@ export default function ProjectForm({
   const onSubmit = async (data: ProjectFormValues) => {
     const payload = {
       title: { en: data.title_en, nl: data.title_nl },
-      slug: data.slug,
+      slug: data.slug || "",
       description: { en: data.description_en, nl: data.description_nl },
       year: Number(data.year),
       project_link: data.project_link,

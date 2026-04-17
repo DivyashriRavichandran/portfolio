@@ -62,19 +62,23 @@ export default About;
 const TechStackSection = () => {
   const tech_stack = {
     languages: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"],
-    frameworks: ["React", "Next.js", "Spring Boot", "Tailwind"],
-    tools: ["Docker", "Git", "Postman", "Figma"],
+    frontend: ["React.js", "Next.js", "Vue.js", "Tailwind CSS"],
+    backend: ["Spring Boot", "Convex", "PostgreSQL", "Payload CMS", "WorkOS"],
+    tools: ["Docker", "Git", "Postman", "Figma", "Jira"],
   };
 
   return (
     <div className="p-6 md:p-8 rounded border">
       <Subheading icon={Terminal} text={"Tech Stack"} />
 
-      <div className="flex flex-col gap-4 md:gap-6">
+      <div className="flex flex-col gap-4">
         {Object.entries(tech_stack).map(([category, items]) => (
-          <div key={category}>
-            <p className="text-[10px] md:text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
-              {category}
+          <div
+            key={category}
+            className="flex flex-col md:flex-row gap-2 md:items-center"
+          >
+            <p className="md:w-24 text-[10px] md:text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              {category}:
             </p>
 
             <div className="flex flex-wrap gap-2">
