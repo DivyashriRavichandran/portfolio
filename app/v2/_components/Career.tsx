@@ -9,7 +9,12 @@ import Heading from "./Heading";
 import { Loader2 } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Image from "next/image";
-import { format } from "date-fns";
+import {
+  format,
+  formatDistance,
+  formatDuration,
+  intervalToDuration,
+} from "date-fns";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -87,15 +92,22 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
     return <div>Item not found</div>;
   }
 
-  function formatMonthYear(value: string) {
-    const [month, year] = value.split("-");
-    const date = new Date(Number(year), Number(month) - 1);
+  const getDuration = (start: string, end?: string) => {
+    if (!start) return "";
 
-    return format(date, "MMM yyyy");
-  }
+    const startDate = new Date(start);
+    const endDate = end ? new Date(end) : new Date();
 
-  const getDuration = () => {
-    return locale === "nl" ? "2 jaar en 5 mnd" : "2 yrs 5 mos";
+    // 1. Calculate the raw duration object
+    const duration = intervalToDuration({
+      start: startDate,
+      end: endDate,
+    });
+
+    // 2. Format it into a string
+    return formatDuration(duration, {
+      format: ["years", "months"],
+    });
   };
 
   return (
@@ -118,8 +130,8 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           </h3>
 
           <span className="text-xs md:text-sm uppercase font-medium tracking-wide">
-            {formatMonthYear(item.startDate)} -{" "}
-            {item.endDate ? formatMonthYear(item.endDate) : "Present"}
+            {format(item.startDate, "MMM yyyy")} -{" "}
+            {item.endDate ? format(item.endDate, "MMM yyyy") : "Present"}
           </span>
         </div>
 
@@ -137,13 +149,18 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* GRADE / CATEGORY */}
         <div className="mt-4 flex gap-2 flex-wrap">
-          {item.category && <Badge variant={"outline"}>{item.category}</Badge>}
-          {item.grade && <Badge variant={"primary"}>{item.grade}</Badge>}
+          {item.category && <Badge variant={"primary"}>{item.category}</Badge>}
+          {item.grade && <Badge variant={"outline"}>{item.grade}</Badge>}
+          {item.type == "experience" && (
+            <Badge variant={"outline"}>
+              {getDuration(item.startDate, item.endDate)}
+            </Badge>
+          )}
         </div>
 
-        {/* ACHIEVEMENTS */}
+        {/* PROJECTS / ACHIEVEMENTS */}
         {item.achievements![locale]?.length > 0 && (
-          <ul className="mt-6 md:mt-8 space-y-1 md:space-y-2">
+          <ul className="mt-2 space-y-1 md:space-y-2">
             {item.achievements![locale].map((a: string, i: number) => (
               <li
                 key={i}

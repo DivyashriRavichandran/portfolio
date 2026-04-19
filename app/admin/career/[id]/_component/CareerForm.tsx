@@ -1,18 +1,31 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2, GraduationCap, Briefcase, ImagePlus, X } from "lucide-react";
+import {
+  Loader2,
+  GraduationCap,
+  Briefcase,
+  ImagePlus,
+  X,
+  CalendarIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import Subheading from "@/app/v2/_components/Subheading";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useState } from "react";
-import Image from "next/image";
+import {
+  PopoverTrigger,
+  PopoverContent,
+  Popover,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
 interface CareerFormValues {
   type: "education" | "experience";
@@ -45,8 +58,8 @@ export default function CareerForm({
   const updateCareer = useMutation(api.career.update);
   const generateUploadUrl = useMutation(api.images.generateUploadUrl);
 
-  const { register, handleSubmit, setValue, watch } = useForm<CareerFormValues>(
-    {
+  const { register, handleSubmit, setValue, watch, control } =
+    useForm<CareerFormValues>({
       defaultValues: initialData
         ? {
             type: initialData.type,
@@ -84,8 +97,7 @@ export default function CareerForm({
             category: "",
             url: "",
           },
-    },
-  );
+    });
 
   const onSubmit = async (data: CareerFormValues) => {
     const payload = {
@@ -231,18 +243,76 @@ export default function CareerForm({
             />
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-2">
             <CustomLabel label="Dates" />
-            <Input
-              {...register("startDate")}
-              placeholder="Start Date"
-              variant="admin"
-            />
-            <Input
-              {...register("endDate")}
-              placeholder="End Date"
-              variant="admin"
-            />
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Start Date */}
+              <Controller
+                control={control}
+                name="startDate"
+                render={({ field }) => (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="flex items-center h-11 bg-white/10 border border-white/10 rounded-md px-4 text-sm placeholder:opacity-60 focus-visible:ring-1 focus-visible:ring-primary/80">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {field.value ? (
+                          format(new Date(field.value), "PPP")
+                        ) : (
+                          <span>Start Date</span>
+                        )}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={
+                          field.value ? new Date(field.value) : undefined
+                        }
+                        onSelect={(date) => field.onChange(date?.toISOString())}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                )}
+              />
+
+              {/* End Date */}
+              <Controller
+                control={control}
+                name="endDate"
+                render={({ field }) => (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="flex items-center h-11 bg-white/10 border border-white/10 rounded-md px-4 text-sm placeholder:opacity-60 focus-visible:ring-1 focus-visible:ring-primary/80">
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {field.value ? (
+                          format(new Date(field.value), "PPP")
+                        ) : (
+                          <span>End Date (Present)</span>
+                        )}
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={
+                          field.value ? new Date(field.value) : undefined
+                        }
+                        onSelect={(date) => field.onChange(date?.toISOString())}
+                        initialFocus
+                      />
+                      <Button
+                        variant="ghost"
+                        className="w-full text-xs"
+                        onClick={() => field.onChange("")}
+                      >
+                        Clear (Present)
+                      </Button>
+                    </PopoverContent>
+                  </Popover>
+                )}
+              />
+            </div>
           </div>
 
           <div className="space-y-4">
