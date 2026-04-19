@@ -160,17 +160,22 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* PROJECTS / ACHIEVEMENTS */}
         {item.achievements![locale]?.length > 0 && (
-          <ul className="mt-2 space-y-1 md:space-y-2">
-            {item.achievements![locale].map((a: string, i: number) => (
-              <li
-                key={i}
-                className="text-sm md:text-base flex gap-2 text-muted-foreground"
-              >
-                <span className="mt-2 size-1 bg-foreground/60 rounded-full" />
-                {a}
-              </li>
-            ))}
-          </ul>
+          <div>
+            <h3 className="mt-6 md:mt-8 font-medium text-xs md:text-sm text-muted-foreground/80 capitalize">
+              {item.type == "education" ? "Notable Projects" : "Contributions"}
+            </h3>
+            <ul className="mt-2 space-y-1 md:space-y-2">
+              {item.achievements![locale].map((a: string, i: number) => (
+                <li
+                  key={i}
+                  className="text-sm md:text-base flex gap-2 text-muted-foreground"
+                >
+                  <span className="mt-2 size-1 bg-foreground/60 rounded-full" />
+                  {a}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {/* TAGS */}

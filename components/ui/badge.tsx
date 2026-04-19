@@ -22,7 +22,7 @@ const badgeVariants = cva(
         success: "border bg-primary/10 hover:bg-primary/20",
       },
       size: {
-        sm: "px-1 py-0.5 text-[10px] md:px-2 md:py-1 capitalize font-normal",
+        sm: "px-1 py-0.5 text-[10px] md:px-2 md:py-1 normal-case font-normal",
         default: "px-2.5 py-1",
         lg: "px-4 py-1.5 text-xs",
       },

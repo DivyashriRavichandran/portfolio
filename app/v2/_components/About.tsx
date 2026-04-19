@@ -68,7 +68,7 @@ const TechStackSection = () => {
   };
 
   return (
-    <div className="p-4 rounded border">
+    <div className="p-4 md:p-6 rounded border">
       <Subheading icon={Terminal} text={"Tech Stack"} />
 
       <div className="space-y-2 md:space-y-3">
