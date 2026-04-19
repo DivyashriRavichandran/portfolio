@@ -15,7 +15,8 @@ const buttonVariants = cva(
         outline:
           "border bg-muted/50 hover:bg-muted hover:text-muted-foreground",
         secondary: "bg-foreground text-background hover:bg-foreground/80",
-        ghost: "backdrop-blur-sm text-foreground hover:bg-muted/40",
+        ghost:
+          "bg-primary text-background md:bg-transparent md:text-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         none: "",
         admin:

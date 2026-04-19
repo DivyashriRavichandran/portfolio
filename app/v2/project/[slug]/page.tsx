@@ -240,8 +240,8 @@ export default function ProjectDetailsPage() {
               ))}
             </CarouselContent>
             <div className="flex justify-end gap-2 mt-4">
-              <CarouselPrevious className="static translate-y-0 h-12 w-12" />
-              <CarouselNext className="static translate-y-0 h-12 w-12" />
+              <CarouselPrevious className="static translate-y-0 size-10 md:size-12" />
+              <CarouselNext className="static translate-y-0 size-10 md:size-12" />
             </div>
           </Carousel>
         </div>
@@ -287,23 +287,19 @@ export default function ProjectDetailsPage() {
           </div>
 
           {/* CHALLENGE & SOLUTION */}
-          <section id="challenge" className="scroll-mt-32">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
-              {/* The Challenge */}
-              <div>
-                <Heading3 text1={t("the")} text2={t("challenge")} />
-                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                  {project.challenge?.[locale]}
-                </p>
-              </div>
+          <section id="challenge" className="scroll-mt-32 space-y-12">
+            <div className="space-y-4">
+              <Heading3 text1={t("the")} text2={t("challenge")} />
+              <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
+                {project.challenge?.[locale]}
+              </p>
+            </div>
 
-              {/* The Solution */}
-              <div>
-                <Heading3 text1={t("the")} text2={t("solution")} />
-                <p className="text-muted-foreground md:text-base text-sm leading-relaxed">
-                  {project.solution?.[locale]}
-                </p>
-              </div>
+            <div className="space-y-4">
+              <Heading3 text1={t("the")} text2={t("solution")} />
+              <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
+                {project.solution?.[locale]}
+              </p>
             </div>
           </section>
 

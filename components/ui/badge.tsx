@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
   // Base styles: Focus on sharp edges and mono typography
-  "inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden border px-2 py-0.5 text-[10px] md:text-xs font-medium uppercase tracking-wide transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:size-3",
+  "font-medium inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden border px-2 py-0.5 text-[10px] md:text-xs uppercase tracking-wide transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:size-3",
   {
     variants: {
       variant: {
@@ -22,8 +22,8 @@ const badgeVariants = cva(
         success: "border bg-primary/10 hover:bg-primary/20",
       },
       size: {
-        sm: "px-1 py-0.5 text-[10px] md:text-[10px] font-normal",
-        default: "px-2.5 py-1 text-[10px]",
+        sm: "px-1 py-0.5 text-[10px] md:px-2 md:py-1 capitalize font-normal",
+        default: "px-2.5 py-1",
         lg: "px-4 py-1.5 text-xs",
       },
     },

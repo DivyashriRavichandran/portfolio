@@ -57,29 +57,29 @@ const ProjectCard = ({
     <Link href={`/v2/project/${project.slug}`} className="group block">
       <div className="border rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
-        <div className="relative z-0 aspect-4/3 overflow-hidden">
+        <div className="relative z-0 aspect-5/3 overflow-hidden">
           {mockupUrl ? (
             <Image
               src={mockupUrl}
               alt={project.title[locale]}
               fill
-              className="object-cover transition-transform duration-500 scale-125 group-hover:scale-130"
+              className="object-cover transition-transform duration-300 scale-115 group-hover:scale-120"
             />
           ) : (
             <div className="w-full h-full" />
           )}
 
           <div className="absolute inset-0 bg-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-xl">
+            <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
               <ArrowUpRight size={26} />
             </div>
           </div>
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="p-4 md:p-4 space-y-4">
+        <div className="p-3 md:p-4 space-y-3 md:space-y-4">
           <div className="flex justify-between items-start gap-2">
-            <div className="space-y-1">
+            <div className="md:space-y-1">
               <h3 className="text-xl md:text-2xl font-semibold uppercase">
                 {project.title[locale]}
               </h3>

@@ -95,7 +95,6 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
   }
 
   const getDuration = () => {
-    // For now, using your mock data request: "2 years and 5 months"
     return locale === "nl" ? "2 jaar en 5 mnd" : "2 yrs 5 mos";
   };
 
@@ -144,7 +143,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* ACHIEVEMENTS */}
         {item.achievements![locale]?.length > 0 && (
-          <ul className="mt-6 md:mt-8 space-y-2">
+          <ul className="mt-6 md:mt-8 space-y-1 md:space-y-2">
             {item.achievements![locale].map((a: string, i: number) => (
               <li
                 key={i}
@@ -161,7 +160,9 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {item.tags!.length > 0 && (
           <div className="mt-4 md:mt-6 flex flex-wrap gap-2">
             {item.tags!.map((tag: string) => (
-              <Badge key={tag}>{tag}</Badge>
+              <Badge key={tag} size={"sm"}>
+                {tag}
+              </Badge>
             ))}
           </div>
         )}

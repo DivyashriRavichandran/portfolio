@@ -24,12 +24,12 @@ const SideProjectsSection = () => {
               alt={project.title}
               width={100}
               height={100}
-              className="w-30 md:w-40 h-full object-cover rounded-l"
+              className="w-30 md:w-40 h-full object-cover rounded-l border-r"
             />
 
             {/* CONTENT */}
             <div className="flex-1 p-3 md:p-4">
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-1">
                 <h3 className="text-sm md:text-base font-semibold">
                   {project.title}
                 </h3>

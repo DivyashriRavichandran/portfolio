@@ -62,28 +62,32 @@ export default About;
 const TechStackSection = () => {
   const tech_stack = {
     languages: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"],
-    frontend: ["React.js", "Next.js", "Vue.js", "Tailwind CSS"],
-    backend: ["Spring Boot", "Convex", "PostgreSQL", "Payload CMS", "WorkOS"],
-    tools: ["Docker", "Git", "Postman", "Figma", "Jira"],
+    frontend: ["React.js", "Next.js", "Vue.js", "Tailwind"],
+    backend: ["Spring Boot", "PostgreSQL", "Convex", "Payload CMS"],
+    tools: ["Docker", "Kubernetes", "Linux", "Git", "WorkOS"],
   };
 
   return (
-    <div className="p-6 md:p-8 rounded border">
+    <div className="p-4 rounded border">
       <Subheading icon={Terminal} text={"Tech Stack"} />
 
-      <div className="flex flex-col gap-4">
+      <div className="space-y-2 md:space-y-3">
         {Object.entries(tech_stack).map(([category, items]) => (
           <div
             key={category}
-            className="flex flex-col md:flex-row gap-2 md:items-center"
+            className="flex items-start md:items-center gap-3 group"
           >
-            <p className="md:w-24 text-[10px] md:text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              {category}:
-            </p>
+            {/* Category: Fixed width for alignment */}
+            <span className="w-16 md:w-24 shrink-0 text-[10px] md:text-xs py-1 font-medium uppercase text-muted-foreground/80 group-hover:text-primary transition-colors">
+              {category}
+            </span>
 
-            <div className="flex flex-wrap gap-2">
+            {/* Dots/Separator: Purely visual flair */}
+            <div className="flex flex-wrap gap-1.5 border-l pl-3 md:pl-6">
               {items.map((tech) => (
-                <Badge key={tech}>{tech}</Badge>
+                <Badge key={tech} size={"sm"}>
+                  {tech}
+                </Badge>
               ))}
             </div>
           </div>

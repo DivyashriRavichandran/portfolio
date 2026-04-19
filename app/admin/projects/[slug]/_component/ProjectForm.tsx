@@ -234,6 +234,7 @@ export default function ProjectForm({
       toast.success("Updated!");
     } catch (err) {
       toast.error("Upload failed");
+      console.error(err);
     } finally {
       setUploading(false);
     }
