@@ -15,10 +15,10 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import { ArrowUpRight, ArrowUp } from "lucide-react";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -58,11 +58,11 @@ const Footer = () => {
   };
 
   return (
-    <footer className="mt-10 pt-12 md:pt-24 pb-6 md:pb-12 border-t">
+    <footer className="mt-10 md:mt-16">
       <div>
-        <div className="grid lg:grid-cols-12 gap-8">
+        <div className="grid lg:grid-cols-12 gap-4 md:gap-10">
           {/* LEFT: Connect & Info */}
-          <div className="lg:col-span-4 flex flex-col justify-between">
+          <div className="lg:col-span-5 flex flex-col justify-between">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
                 <span>Let&apos;s </span> <br />{" "}
@@ -70,44 +70,83 @@ const Footer = () => {
                   Connect.
                 </span>
               </h2>
-              <div className="mt-6 md:mt-12 space-y-6 md:space-y-8 md:flex md:justify-between lg:flex-col">
-                <div>
-                  <span className="text-[10px] uppercase font-semibold opacity-80 tracking-[0.2em] block mb-2">
-                    Socials
-                  </span>
-                  <div className="flex gap-4">
-                    <a
-                      href="#"
-                      className="p-2 md:p-4 rounded-full border hover:bg-primary hover:text-background transition-all"
-                    >
-                      <FaLinkedin size={22} />
-                    </a>
-                    <a
-                      href="#"
-                      className="p-2 md:p-4 rounded-full border hover:bg-primary hover:text-background transition-all"
-                    >
-                      <FaGithub size={22} />
-                    </a>
-                  </div>
-                </div>
 
-                <div>
-                  <span className="text-[10px] uppercase font-semibold opacity-80 tracking-[0.2em] block mb-2">
-                    Email
-                  </span>
+              {/* SOCIALS MAP */}
+              <div className="mt-6 md:mt-12 flex flex-col gap-2 md:gap-4">
+                {[
+                  {
+                    label: "LinkedIn",
+                    desc: "Connect with me professional",
+                    href: "",
+                    icon: <FaLinkedin size={22} />,
+                    variant: "outline",
+                  },
+                  {
+                    label: "Github",
+                    desc: "Source code & side projects",
+                    href: "",
+                    icon: <FaGithub size={22} />,
+                    variant: "outline",
+                  },
+                  {
+                    label: "Email",
+                    desc: "contact@divyashri.nl",
+                    href: "mailto:contact@divyashri.nl",
+                    icon: <MdEmail size={22} />,
+                    variant: "primary",
+                  },
+                ].map((social, index) => (
                   <a
-                    href="mailto:contact@divyashri.nl"
-                    className="md:text-xl hover:text-primary transition-colors inline-flex items-center gap-2"
+                    key={index}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group p-4 border transition-all duration-300 ${
+                      social.variant === "primary"
+                        ? "bg-primary text-background border-primary hover:bg-primary/90"
+                        : "bg-muted/20 hover:border-primary/50"
+                    }`}
                   >
-                    contact@divyashri.nl <ArrowUpRight size={20} />
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`size-10 rounded-full flex items-center justify-center border transition-transform group-hover:scale-110 ${
+                          social.variant === "primary"
+                            ? "border-black/10 bg-black/5"
+                            : "bg-muted/50"
+                        }`}
+                      >
+                        {social.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-sm">{social.label}</h4>
+                        <p
+                          className={`text-xs md:text-sm ${
+                            social.variant === "primary"
+                              ? "text-background/80"
+                              : "text-muted-foreground"
+                          }`}
+                        >
+                          {social.desc}
+                        </p>
+                      </div>
+                    </div>
                   </a>
-                </div>
+                ))}
               </div>
             </div>
 
-            <button
+            {/* THE "OR" MESSAGE */}
+            <div className="relative py-10 flex items-center gap-4 group md:hidden">
+              <div className="h-px grow bg-muted-foreground/20" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.4em] text-muted-foreground/60 group-hover:text-primary transition-colors">
+                OR
+              </span>
+              <div className="h-px grow bg-muted-foreground/20" />
+            </div>
+
+            {/* <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="mt-4 md:mt-10 group hidden md:flex items-center gap-3"
+              className="mt-10 group hidden lg:flex items-center gap-3"
             >
               <div className="size-10 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
                 <ArrowUp size={16} />
@@ -115,72 +154,83 @@ const Footer = () => {
               <span className="text-[10px] uppercase font-semibold tracking-widest opacity-80">
                 Go to the Top
               </span>
-            </button>
+            </button> */}
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-8 bg-foreground/5 p-6 md:p-8 rounded border backdrop-blur-sm">
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6 md:space-y-10"
-              >
-                <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem className="relative">
-                        <FormControl>
-                          <Input placeholder="Name" {...field} />
-                        </FormControl>
-                        <FormMessage className="text-[10px]" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem className="relative">
-                        <FormControl>
-                          <Input placeholder="Email" {...field} />
-                        </FormControl>
-                        <FormMessage className="text-[10px]" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem className="md:col-span-2 relative">
-                        <FormControl>
-                          <Textarea placeholder="Message" {...field} />
-                        </FormControl>
-                        <FormMessage className="text-[10px] uppercase" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full md:w-auto font-semibold"
+          <div className="lg:col-span-7">
+            <div className="space-y-1">
+              <h3 className="text-sm md:text-base font-semibold uppercase tracking-widest">
+                Drop a message
+              </h3>
+              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+                Have a specific inquiry or just want to chat about computers?
+              </p>
+            </div>
+
+            <div className="mt-6 bg-muted/20 p-5 md:p-6 rounded border">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6 md:space-y-10"
                 >
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </Form>
+                  <div className="grid md:grid-cols-2 gap-8 md:gap-10">
+                    <FormField
+                      control={form.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem className="relative">
+                          <FormControl>
+                            <Input placeholder="Name" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-[10px]" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem className="relative">
+                          <FormControl>
+                            <Input placeholder="Email" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-[10px]" />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem className="md:col-span-2 relative">
+                          <FormControl>
+                            <Textarea placeholder="Message" {...field} />
+                          </FormControl>
+                          <FormMessage className="text-[10px] uppercase" />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full md:w-auto"
+                  >
+                    {isSubmitting ? "Sending..." : "Send"}
+                  </Button>
+                </form>
+              </Form>
+            </div>
           </div>
         </div>
 
         {/* Footnote */}
-        <div className="mt-12 md:mt-24 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[10px] uppercase font-semibold tracking-[0.2em] opacity-50">
-            © 2026 DIVYASHRI. ALL RIGHTS RESERVED.
+        <div className="mt-12 md:mt-24 py-5 md:py-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
+            © 2026 DIVYASHRI&apos;S PORTFOLIO. ALL RIGHTS RESERVED.
           </p>
-          <div className="flex gap-6 md:gap-8 text-[10px] uppercase font-semibold tracking-[0.2em] opacity-50">
+          <div className="hidden md:flex gap-6 md:gap-8 text-[10px] uppercase font-semibold tracking-widest opacity-60">
             <a href="#about" className="hover:opacity-100 transition-opacity">
               About
             </a>
@@ -196,17 +246,6 @@ const Footer = () => {
               </Link>
             </SignedIn>
           </div>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="group flex items-center gap-2 md:hidden"
-          >
-            <div className="size-8 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-background transition-all">
-              <ArrowUp size={16} />
-            </div>
-            <span className="text-[10px] uppercase font-semibold tracking-widest opacity-50">
-              Go to the Top
-            </span>
-          </button>
         </div>
       </div>
     </footer>

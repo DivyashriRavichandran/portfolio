@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import data from "@/data/data.json";
-import Heading from "./Heading";
+import H1 from "../../../components/headings/H1";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 
@@ -11,7 +11,7 @@ const SideProjectsSection = () => {
 
   return (
     <section className="pb-10">
-      <Heading text1={"Open-Source"} text2={"Works"} total={projects.length} />
+      <H1 text1={"Open-Source"} text2={"Works"} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-4 md:gap-6">
         {projects.map((project) => (

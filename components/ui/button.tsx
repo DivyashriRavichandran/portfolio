@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "uppercase font-semibold tracking-widest inline-flex items-center justify-center whitespace-nowrap rounded-none text-sm transition-all cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "uppercase font-semibold tracking-wider inline-flex items-center gap-2 justify-center whitespace-nowrap rounded-none text-sm transition-all cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -13,21 +13,21 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
-          "border bg-muted/50 hover:bg-muted hover:text-muted-foreground",
+          "bg-transparent text-foreground border hover:border-primary hover:text-primary font-medium",
         secondary: "bg-foreground text-background hover:bg-foreground/80",
-        ghost:
-          "bg-primary text-background md:bg-transparent md:text-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+        ghost: "bg-none hover:bg-foreground/10 rounded-full",
+        link: "text-primary underline-offset-4 hover:underline lowercase font-medium tracking-normal",
         none: "",
         admin:
           "bg-primary hover:opacity-80 text-primary-foreground uppercase tracking-widest font-bold text-xs gap-2",
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-8 gap-1.5 px-3 text-xs",
+        sm: "h-8 gap-1.5 px-3 text-xs md:text-xs",
         lg: "h-10 px-4 md:h-12 md:px-6 md:text-base",
         icon: "size-8 lg:size-10",
         iconCarousel: "size-6",
+        link: "p-0",
       },
     },
     defaultVariants: {

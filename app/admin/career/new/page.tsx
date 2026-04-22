@@ -3,7 +3,7 @@
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
-import Heading from "@/app/v2/_components/Heading";
+import H1 from "@/components/headings/H1";
 import CareerForm from "../[id]/_component/CareerForm";
 
 export default function NewCareerPage() {
@@ -17,7 +17,7 @@ export default function NewCareerPage() {
           <ChevronLeft size={14} /> Back to Vault
         </Link>
 
-        <Heading text1={"Add New"} text2={"Career Entry"} />
+        <H1 text1={"Add New"} text2={"Career Entry"} />
       </header>
 
       <CareerForm />

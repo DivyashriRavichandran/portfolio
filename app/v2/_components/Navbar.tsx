@@ -2,6 +2,7 @@
 
 import React from "react";
 import LangSwitcher from "./LangSwitcher";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 
 export default function Navbar() {
   return (
@@ -10,8 +11,10 @@ export default function Navbar() {
         <div className="text-2xl font-black tracking-tighter uppercase">
           DR.
         </div>
-
-        <LangSwitcher />
+        <div className="flex items-center gap-6">
+          <LangSwitcher />
+          <AnimatedThemeToggler />
+        </div>
       </div>
     </nav>
   );

@@ -3,249 +3,162 @@ import {
   Cpu,
   Music,
   Gamepad2,
-  BookOpen,
   Star,
   Monitor,
   MousePointer2,
   Keyboard,
   Headphones,
+  Code2,
+  Coffee,
+  Film,
+  Laptop,
+  Speaker,
+  Piano,
+  Book,
+  NotebookPen,
+  Layers,
+  Mic,
+  Hammer,
   LucideIcon,
-  Terminal,
-  Zap,
 } from "lucide-react";
-import Heading from "../_components/Heading";
+import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import Navbar from "../_components/Navbar";
+import H3 from "@/components/headings/H3";
 
 export default function AboutPage() {
   const t = useTranslations();
 
+  const favs = [
+    { label: "Language", value: "TypeScript", icon: Code2 },
+    { label: "Editor", value: "VS Code", icon: Cpu },
+    { label: "Tool", value: "Raycast", icon: Layers },
+    { label: "Productivity", value: "Obsidian", icon: NotebookPen },
+    { label: "Drink", value: "Matcha", icon: Coffee },
+    { label: "Game", value: "TLOU Part II", icon: Gamepad2 },
+    { label: "Film", value: "Gifted", icon: Film },
+    { label: "Podcast", value: "Syntax", icon: Mic },
+  ];
+
   const hardware = [
-    { icon: Monitor, label: "MacBook Pro M5 & LG 27” 4K" },
-    { icon: MousePointer2, label: "MX Master 3S" },
-    { icon: Keyboard, label: "Logitech MX Mechanical Mini" },
-    { icon: Headphones, label: "Sennheiser HD 600" },
+    { label: "Laptop", value: "Macbook Pro M5", icon: Laptop },
+    { label: "Monitor", value: "LG 27” 4K", icon: Monitor },
+    { label: "Mouse", value: "MX Master 3S", icon: MousePointer2 },
+    { label: "Keyboard", value: "MX Mechanical Mini", icon: Keyboard },
+    { label: "Headphones", value: "Sennheiser HD 600", icon: Headphones },
+    { label: "Speaker", value: "Bose Soundlink", icon: Speaker },
   ];
 
-  const books = [
+  const hobbies = [
     {
-      title: "Designing Data-Intensive Applications",
-      author: "Martin Kleppmann",
-      status: "Reading",
+      label: "Language",
+      value: "Learning Dutch (A2 Level)",
+      icon: Book,
     },
-    { title: "Clean Code", author: "Robert C. Martin", status: "Completed" },
     {
-      title: "The Pragmatic Programmer",
-      author: "Andrew Hunt",
-      status: "Completed",
+      label: "Music",
+      value: "Piano/Keyboard (Arrangers)",
+      icon: Piano,
     },
-    { title: "Refactoring UI", author: "Steve Schoger", status: "Completed" },
+    {
+      label: "Building",
+      value: "Side Projects",
+      icon: Hammer,
+    },
   ];
 
-  const software = [
-    { name: "VS Code", category: "Editor", theme: "Tokyo Night" },
-    { name: "Warp", category: "Terminal", theme: "Custom" },
-    { name: "Arc", category: "Browser", theme: "Space Gray" },
-    { name: "Raycast", category: "Productivity", theme: "Default" },
+  const spotifyLinks = [
+    "https://open.spotify.com/track/40XiAOitWuV9bJKh4DHHpB?si=627bf10f217b4aa1",
+    "https://open.spotify.com/track/2u6twH8SHtv37ctUqQ4iEX?si=02b3f1def55f49c0",
+    "https://open.spotify.com/track/2nzfebt7eoKpUNNsDVWJ1Y?si=2d2269fb9a544e94",
+    "https://open.spotify.com/track/1xOqGUkyxGQRdCvGpvWKmL?si=d0323cfc16bf4321",
   ];
 
   return (
-    <main className="md:max-w-4xl md:mx-auto px-5 md:px-0">
+    <main className="md:max-w-4xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
       <Navbar />
 
-      <div className="space-y-6 mb-20 py-10 md:py-40">
-        <Heading text1="More About" text2="Me" />
-        <p className="text-lg text-muted-foreground leading-relaxed">
-          A curated list of things I use, consume, and enjoy.
+      {/* HEADER SECTION */}
+      <div className="pt-32 md:pt-32 space-y-4">
+        <H1 text1="Beyond the" text2="Code" />
+        <p className="text-lg md:text-xl leading-relaxed">
+          When Im not coding... This is a curated list of the tools, media, and
+          habits that shape my daily life.
         </p>
       </div>
 
-      <div className="space-y-12">
-        {/* HARDWARE SECTION */}
-        <section>
-          <SectionHeader icon={Cpu} title="The Toolkit" subtitle="Hardware" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {hardware.map((item, i) => (
-              <div
-                key={i}
-                className="flex gap-2 items-center p-4 bg-muted/80 rounded-md border border-transparent hover:border-primary/20 transition-all"
-              >
-                <item.icon size={18} className="opacity-80 text-primary" />
-                <span className="text-sm font-medium">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* FAVORITES */}
+      <section>
+        <H3 icon={Cpu} text="My Favourites" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {favs.map((fav) => (
+            <FavoriteCard key={fav.label} item={fav} />
+          ))}
+        </div>
+      </section>
 
-        {/* SOFTWARE SECTION */}
-        <section>
-          <SectionHeader
-            icon={Terminal}
-            title="The Stack"
-            subtitle="Software"
-          />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {software.map((app) => (
-              <div
-                key={app.name}
-                className="p-3 bg-muted/80 rounded-md border border-transparent hover:border-primary/20 transition-all"
-              >
-                <p className="text-xs md:text-sm font-semibold">{app.name}</p>
-                <p className="md:mt-1 text-[10px] text-muted-foreground uppercase tracking-wide font-medium">
-                  {app.category}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* SETUP */}
+      <section>
+        <H3 icon={Cpu} text="My Setup" />
+        <div className="grid grid-cols-2 gap-4">
+          {hardware.map((item) => (
+            <FavoriteCard key={item.label} item={item} />
+          ))}
+        </div>
+      </section>
 
-        {/* BOOKS SECTION */}
-        <section>
-          <SectionHeader
-            icon={BookOpen}
-            title="Library"
-            subtitle={`${books.length} Books`}
-          />
-          <div className="space-y-1">
-            {books.map((book, i) => (
-              <div
-                key={i}
-                className="group flex items-center justify-between py-4 border-b border-muted-foreground/20 hover:px-1 transition-all"
-              >
-                <div>
-                  <h3 className="text-sm font-semibold group-hover:text-primary transition-colors">
-                    {book.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {book.author}
-                  </p>
-                </div>
-                <Badge
-                  variant={book.status === "Reading" ? "default" : "success"}
-                >
-                  {book.status}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* HOBBIES */}
+      <section>
+        <H3 icon={Star} text="My Hobbies" />
+        <div className="grid grid-cols-2 gap-4">
+          {hobbies.map((hobby) => (
+            <FavoriteCard key={hobby.label} item={hobby} />
+          ))}
+        </div>
+      </section>
 
-        {/* CURRENTLY LEARNING */}
-        <section>
-          <SectionHeader
-            icon={Zap}
-            title="Currently Learning"
-            subtitle="2026"
-          />
-          <div className="flex flex-wrap gap-2">
-            {["System Design", "Spring Boot", "Docker"].map((skill) => (
-              <Badge key={skill}>{skill}</Badge>
-            ))}
-          </div>
-        </section>
+      {/* MUSIC  */}
+      <section>
+        <H3 icon={Music} text="Currently listening" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {spotifyLinks.map((link) => {
+            const embedLink = link.replace(
+              "spotify.com/",
+              "spotify.com/embed/",
+            );
 
-        {/* MUSIC SECTION */}
-        <section>
-          <SectionHeader
-            icon={Music}
-            title="Spotify"
-            subtitle="Recent Tracks"
-          />
-          <div className="w-full overflow-hidden rounded-md border ">
-            <iframe
-              style={{ borderRadius: "12px" }}
-              src="https://open.spotify.com/embed/track/10v91ZWyBr3hl766vY9pYv?utm_source=generator&theme=0"
-              width="100%"
-              height="152"
-              frameBorder="0"
-              allowFullScreen
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-            />
-          </div>
-        </section>
-
-        {/* MISC INFO (GAME & HOBBIES) */}
-        <section>
-          <SectionHeader icon={Gamepad2} title="Gaming" />
-          <div className="relative aspect-video rounded-md overflow-hidden group border">
-            <div className="absolute inset-0  transition-colors z-10" />
-            <Image
-              src="/advent-of-code.png"
-              className="object-cover w-full h-full"
-              alt="Game"
-              width={500}
-              height={500}
-            />
-            <div className="absolute bottom-4 left-4 z-20">
-              <p className="text-[10px] uppercase font-semibold tracking-widest">
-                Favorite Game
-              </p>
-              <p>The Last of Us Part II</p>
-            </div>
-          </div>
-        </section>
-
-        {/* HOBBIES SECTION */}
-        <section>
-          <SectionHeader icon={Star} title="Hobbies" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              { label: "Learning Dutch", emoji: "🇳🇱", detail: "Level A2" },
-              { label: "Podcasts", emoji: "🎧", detail: "Tech & Comedy" },
-              {
-                label: "Keyboard",
-                emoji: "🎹",
-                detail: "Arrangers",
-              },
-              { label: "Travelling", emoji: "🌍", detail: "15+ Countries" },
-            ].map((hobby) => (
-              <div
-                key={hobby.label}
-                className="group flex items-center gap-4 p-3 rounded border border-muted-foreground/20 hover:border-primary/30 transition-all"
-              >
-                <div className="size-10 flex items-center justify-center rounded-lg bg-muted group-hover:bg-primary/10 group-hover:scale-110 transition-all text-xl">
-                  {hobby.emoji}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold group-hover:text-primary transition-colors">
-                    {hobby.label}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest opacity-80">
-                    {hobby.detail}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      </div>
+            return (
+              <iframe
+                key={link}
+                src={embedLink}
+                width="100%"
+                height="80"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                style={{ borderRadius: "16px" }}
+              />
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
 
-const SectionHeader = ({
-  icon: Icon,
-  title,
-  subtitle,
-}: {
+type Item = {
+  label: string;
   icon: LucideIcon;
-  title: string;
-  subtitle?: string;
-}) => (
-  <div className="flex items-center justify-between mb-8 pb-2 border-b">
-    <div className="flex items-center gap-3">
-      <Icon size={20} className="text-primary" />
-      <h2 className="text-sm uppercase tracking-widest font-semibold">
-        {title}
-      </h2>
+  value: string;
+};
+
+const FavoriteCard = ({ item }: { item: Item }) => (
+  <div className="group border bg-muted/20 border-foreground/10 p-4 rounded transition-all hover:border-primary hover:bg-muted/30">
+    <p className="text-[10px] uppercase font-medium tracking-widest text-muted-foreground/80">
+      {item.label}
+    </p>
+    <div className="mt-1 flex items-center gap-2">
+      <item.icon size={16} className="text-primary" />
+      <span className="text-sm font-medium">{item.value}</span>
     </div>
-    {subtitle && (
-      <span className="text-[10px] uppercase tracking-widest opacity-40 font-semibold hidden sm:block">
-        {subtitle}
-      </span>
-    )}
   </div>
 );

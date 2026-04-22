@@ -19,7 +19,6 @@ const badgeVariants = cva(
           "bg-transparent text-foreground border hover:border-primary hover:text-primary",
         ghost:
           "border-transparent bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted",
-        success: "border bg-primary/10 hover:bg-primary/20",
       },
       size: {
         sm: "px-1 py-0.5 text-[10px] md:px-2 md:py-1 normal-case font-normal",

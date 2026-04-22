@@ -1,6 +1,6 @@
 import React from "react";
 
-const Heading = ({
+const H1 = ({
   text1,
   text2,
   total,
@@ -13,7 +13,9 @@ const Heading = ({
     <div className="flex justify-between items-end mb-6 md:mb-10 border-b pb-2 md:pb-4">
       <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-snug">
         {text1}{" "}
-        <span className="text-background bg-primary px-1">{text2}.</span>
+        <span className="text-primary-foreground bg-primary px-1">
+          {text2}.
+        </span>
       </h2>
       {total && (
         <p className="text-[10px] uppercase font-medium tracking-[0.2em] opacity-40 text-right">
@@ -24,4 +26,4 @@ const Heading = ({
   );
 };
 
-export default Heading;
+export default H1;

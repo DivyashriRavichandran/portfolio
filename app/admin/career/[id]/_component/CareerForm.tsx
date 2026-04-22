@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
@@ -12,11 +12,12 @@ import {
   ImagePlus,
   X,
   CalendarIcon,
+  Trash2,
+  Plus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import Subheading from "@/app/v2/_components/Subheading";
+import H3 from "@/components/headings/H3";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useState } from "react";
 import {
@@ -26,6 +27,10 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+
+interface ListItem {
+  value: string;
+}
 
 interface CareerFormValues {
   type: "education" | "experience";
@@ -38,12 +43,13 @@ interface CareerFormValues {
   location_nl: string;
   startDate: string;
   endDate: string;
-  achievements_en: string;
-  achievements_nl: string;
-  tags: string;
+  achievements_en: ListItem[];
+  achievements_nl: ListItem[];
+  tags: ListItem[];
   grade: string;
   category: string;
   url: string;
+  websites: ListItem[];
 }
 
 export default function CareerForm({
@@ -72,9 +78,12 @@ export default function CareerForm({
             location_nl: initialData.location?.nl || "",
             startDate: initialData.startDate,
             endDate: initialData.endDate || "",
-            achievements_en: initialData.achievements?.en.join(", ") || "",
-            achievements_nl: initialData.achievements?.nl.join(", ") || "",
-            tags: initialData.tags?.join(", ") || "",
+            achievements_en:
+              initialData.achievements?.en.map((v) => ({ value: v })) || [],
+            achievements_nl:
+              initialData.achievements?.nl.map((v) => ({ value: v })) || [],
+            tags: initialData.tags?.map((v) => ({ value: v })) || [],
+            websites: initialData.websites?.map((v) => ({ value: v })) || [],
             grade: initialData.grade || "",
             category: initialData.category || "",
             url: initialData.url || "",
@@ -90,14 +99,21 @@ export default function CareerForm({
             location_nl: "",
             startDate: "",
             endDate: "",
-            achievements_en: "",
-            achievements_nl: "",
-            tags: "",
             grade: "",
             category: "",
             url: "",
+            achievements_en: [{ value: "" }],
+            achievements_nl: [{ value: "" }],
+            tags: [{ value: "" }],
+            websites: [{ value: "" }],
           },
     });
+
+  // FIELD ARRAYS
+  const achEn = useFieldArray({ control, name: "achievements_en" });
+  const achNl = useFieldArray({ control, name: "achievements_nl" });
+  const tagArray = useFieldArray({ control, name: "tags" });
+  const webArray = useFieldArray({ control, name: "websites" });
 
   const onSubmit = async (data: CareerFormValues) => {
     const payload = {
@@ -117,22 +133,11 @@ export default function CareerForm({
       endDate: data.endDate || undefined,
 
       achievements: {
-        en: data.achievements_en
-          .split("\n")
-          .map((s) => s.trim())
-          .filter(Boolean),
-
-        nl: data.achievements_nl
-          .split("\n")
-          .map((s) => s.trim())
-          .filter(Boolean),
+        en: data.achievements_en.map((a) => a.value).filter(Boolean),
+        nl: data.achievements_nl.map((a) => a.value).filter(Boolean),
       },
-
-      tags: data.tags
-        .split(",")
-        .map((s) => s.trim())
-        .filter(Boolean),
-
+      tags: data.tags.map((t) => t.value).filter(Boolean),
+      websites: data.websites.map((w) => w.value).filter(Boolean),
       grade: data.grade || undefined,
       category: data.category || undefined,
       url: data.url || undefined,
@@ -180,6 +185,7 @@ export default function CareerForm({
       toast.success("Logo uploaded");
     } catch (err) {
       toast.error("Upload failed");
+      console.log(err);
     } finally {
       setUploading(false);
     }
@@ -189,7 +195,7 @@ export default function CareerForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-16 pb-24">
       {/* SECTION 1 */}
       <section className="space-y-6">
-        <Subheading icon={Briefcase} text="Basic Information" />
+        <H3 icon={Briefcase} text="Basic Information" />
 
         <div className="grid grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
           <div className="space-y-4">
@@ -314,75 +320,150 @@ export default function CareerForm({
               />
             </div>
           </div>
-
-          <div className="space-y-4">
-            <CustomLabel label="Tags" />
-            <Input
-              {...register("tags")}
-              placeholder="React, Docker..."
-              variant="admin"
-            />
-          </div>
         </div>
       </section>
 
       {/* SECTION 2 */}
       <section className="space-y-6">
-        <Subheading icon={GraduationCap} text="Achievements & Details" />
-
-        <div className="grid grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
+        <H3 icon={GraduationCap} text="Achievements & Contributions" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
+          {/* EN ACHIEVEMENTS */}
           <div className="space-y-4">
-            <CustomLabel label="Achievements (EN)" />
-            <Textarea
-              {...register("achievements_en")}
-              placeholder={`One achievement per line
-
-Example:
-Developed 10+ e-commerce applications using React, Next.js, TypeScript and Tailwind CSS
-Collaborated with UI/UX designers and backend developers to implement Figma designs and integrate RESTful APIs
-Coordinated with stakeholders on design and execution
-Implemented SSR, SSG and dynamic routing in Next.js to improve SEO
-Integrated internationalization (i18n) for multilingual support`}
-              rows={6}
-              variant="admin"
-            />
+            <div className="flex justify-between items-center">
+              <CustomLabel label="Achievements (EN)" />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => achEn.append({ value: "" })}
+              >
+                <Plus size={14} className="mr-1" /> Add
+              </Button>
+            </div>
+            {achEn.fields.map((field, index) => (
+              <div key={field.id} className="flex gap-2">
+                <Input
+                  {...register(`achievements_en.${index}.value`)}
+                  placeholder="Achieved..."
+                  variant="admin"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => achEn.remove(index)}
+                >
+                  <Trash2 size={14} />
+                </Button>
+              </div>
+            ))}
           </div>
 
+          {/* NL ACHIEVEMENTS */}
           <div className="space-y-4">
-            <CustomLabel label="Achievements (NL)" />
-            <Textarea
-              {...register("achievements_nl")}
-              placeholder={`Een achievement per line
-
-Example:
-Developed 10+ e-commerce applications using React, Next.js, TypeScript and Tailwind CSS
-Collaborated with UI/UX designers and backend developers to implement Figma designs and integrate RESTful APIs
-Coordinated with stakeholders on design and execution
-Implemented SSR, SSG and dynamic routing in Next.js to improve SEO
-Integrated internationalization (i18n) for multilingual support`}
-              rows={6}
-              variant="admin"
-            />
-          </div>
-
-          <div className="space-y-4 col-span-2">
-            <CustomLabel label="Extra" />
-            <Input
-              {...register("grade")}
-              placeholder="Grade (education)"
-              variant="admin"
-            />
-            <Input
-              {...register("category")}
-              placeholder="Category"
-              variant="admin"
-            />
-            <Input {...register("url")} placeholder="URL" variant="admin" />
+            <div className="flex justify-between items-center">
+              <CustomLabel label="Achievements (NL)" />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => achNl.append({ value: "" })}
+              >
+                <Plus size={14} className="mr-1" /> Add
+              </Button>
+            </div>
+            {achNl.fields.map((field, index) => (
+              <div key={field.id} className="flex gap-2">
+                <Input
+                  {...register(`achievements_nl.${index}.value`)}
+                  placeholder="Prestatie..."
+                  variant="admin"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => achNl.remove(index)}
+                >
+                  <Trash2 size={14} />
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 3 */}
+      {/* SECTION 3: WEBSITES & TAGS */}
+      <section className="space-y-6">
+        <H3 icon={ImagePlus} text="Links & Stack" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
+          {/* DYNAMIC WEBSITES */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <CustomLabel label="Live Websites" />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => webArray.append({ value: "" })}
+              >
+                <Plus size={14} className="mr-1" /> Add
+              </Button>
+            </div>
+            {webArray.fields.map((field, index) => (
+              <div key={field.id} className="flex gap-2">
+                <Input
+                  {...register(`websites.${index}.value`)}
+                  placeholder="https://..."
+                  variant="admin"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => webArray.remove(index)}
+                >
+                  <Trash2 size={14} />
+                </Button>
+              </div>
+            ))}
+          </div>
+
+          {/* DYNAMIC TAGS */}
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <CustomLabel label="Tech Stack / Tags" />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => tagArray.append({ value: "" })}
+              >
+                <Plus size={14} className="mr-1" /> Add
+              </Button>
+            </div>
+            {tagArray.fields.map((field, index) => (
+              <div key={field.id} className="flex gap-2">
+                <Input
+                  {...register(`tags.${index}.value`)}
+                  placeholder="React"
+                  variant="admin"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => tagArray.remove(index)}
+                >
+                  <Trash2 size={14} />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LOGO & SUBMIT */}
       <div className="space-y-4">
         <CustomLabel label="Logo" />
 

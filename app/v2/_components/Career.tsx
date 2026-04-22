@@ -5,16 +5,12 @@ import { useLocale, useTranslations } from "next-intl";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Badge } from "@/components/ui/badge";
-import Heading from "./Heading";
-import { Loader2 } from "lucide-react";
+import H1 from "../../../components/headings/H1";
+import { ArrowUpRight, Loader2 } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Image from "next/image";
-import {
-  format,
-  formatDistance,
-  formatDuration,
-  intervalToDuration,
-} from "date-fns";
+import { format, formatDuration, intervalToDuration } from "date-fns";
+import H4 from "@/components/headings/H4";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -36,10 +32,10 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="px-5 md: md:mx-auto space-y-20 mt-10 mb-10 md:mb-20">
+    <section className="space-y-16 md:space-y-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
-        <Heading text2={t("education")} />
+        <H1 text2={t("education")} />
 
         <div className="space-y-10">
           {grouped.education.map((item, index) => (
@@ -56,7 +52,7 @@ const CareerSection = () => {
 
       {/* EXPERIENCE */}
       <div className="flex flex-col">
-        <Heading text2={t("experience")} />
+        <H1 text2={t("experience")} />
 
         <div className="space-y-10">
           {grouped.experience.map((item, index) => (
@@ -98,13 +94,13 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
     const startDate = new Date(start);
     const endDate = end ? new Date(end) : new Date();
 
-    // 1. Calculate the raw duration object
+    // Calculate the raw duration object
     const duration = intervalToDuration({
       start: startDate,
       end: endDate,
     });
 
-    // 2. Format it into a string
+    // Format it into a string
     return formatDuration(duration, {
       format: ["years", "months"],
     });
@@ -158,12 +154,26 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           )}
         </div>
 
+        {/* TAGS */}
+        {item.tags!.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {item.tags!.map((tag: string) => (
+              <span
+                key={tag}
+                className="text-[10px] md:text-xs font-mono text-muted-foreground/80 bg-muted/30 px-2 py-0.5 border border-muted-foreground/20"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
         {/* PROJECTS / ACHIEVEMENTS */}
         {item.achievements![locale]?.length > 0 && (
           <div>
-            <h3 className="mt-6 md:mt-8 font-medium text-xs md:text-sm text-muted-foreground/80 capitalize">
+            <H4>
               {item.type == "education" ? "Notable Projects" : "Contributions"}
-            </h3>
+            </H4>
             <ul className="mt-2 space-y-1 md:space-y-2">
               {item.achievements![locale].map((a: string, i: number) => (
                 <li
@@ -178,14 +188,28 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           </div>
         )}
 
-        {/* TAGS */}
-        {item.tags!.length > 0 && (
-          <div className="mt-4 md:mt-6 flex flex-wrap gap-2">
-            {item.tags!.map((tag: string) => (
-              <Badge key={tag} size={"sm"}>
-                {tag}
-              </Badge>
-            ))}
+        {/* WEBSITES */}
+        {item.websites && item.websites.length > 0 && (
+          <div className="mt-6 md:mt-8">
+            <H4>Featured Projects </H4>
+            <div className="mt-3 flex flex-wrap gap-3">
+              {item.websites.map((url: string) => {
+                // Clean up URL for display
+                const displayUrl = url
+                  .replace(/^https?:\/\//, "")
+                  .replace(/^www\./, "")
+                  .replace(/\/$/, "");
+
+                return (
+                  <Badge key={url} variant="outline" size="sm" asChild>
+                    <a href={url} target="_blank" rel="noopener noreferrer">
+                      {displayUrl}
+                      <ArrowUpRight />
+                    </a>
+                  </Badge>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

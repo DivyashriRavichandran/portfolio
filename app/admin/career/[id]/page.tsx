@@ -7,7 +7,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 
 import Link from "next/link";
-import Heading from "@/app/v2/_components/Heading";
+import H1 from "@/components/headings/H1";
 import CareerForm from "./_component/CareerForm";
 
 export default function EditCareerPage() {
@@ -36,7 +36,7 @@ export default function EditCareerPage() {
           <ChevronLeft size={14} /> Back to Vault
         </Link>
 
-        <Heading text1={"Edit Career Entry"} text2={career.title.en} />
+        <H1 text1={"Edit Career Entry"} text2={career.title.en} />
       </header>
 
       <CareerForm initialData={career} />

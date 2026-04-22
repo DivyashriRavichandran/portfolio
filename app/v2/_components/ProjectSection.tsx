@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Heading from "./Heading";
+import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
@@ -17,7 +17,7 @@ const ProjectSection = () => {
 
   return (
     <section className="py-10 md:py-16">
-      <Heading
+      <H1
         text1={t("selected")}
         text2={t("works")}
         total={projects ? projects.length : 0}

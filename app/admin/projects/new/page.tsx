@@ -3,7 +3,7 @@
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import ProjectForm from "../[slug]/_component/ProjectForm";
-import Heading from "@/app/v2/_components/Heading";
+import H1 from "@/components/headings/H1";
 
 export default function NewProjectPage() {
   return (
@@ -15,7 +15,7 @@ export default function NewProjectPage() {
         >
           <ChevronLeft size={14} /> Back to Vault
         </Link>
-        <Heading text1={"Add New"} text2={"Project"} />
+        <H1 text1={"Add New"} text2={"Project"} />
       </header>
 
       <ProjectForm />

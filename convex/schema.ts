@@ -73,6 +73,7 @@ export default defineSchema({
     grade: v.optional(v.string()),
     category: v.optional(v.string()),
     url: v.optional(v.string()),
+    websites: v.optional(v.array(v.string())),
     order: v.optional(v.number()),
   }).index("by_order", ["order"]),
 });

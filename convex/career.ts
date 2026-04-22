@@ -33,11 +33,11 @@ const careerFields = {
 
   logo: v.optional(v.string()),
   url: v.optional(v.string()),
+  websites: v.optional(v.array(v.string())),
 };
 
 const inputFields = {
   type: v.union(v.literal("education"), v.literal("experience")),
-
   title: localeString,
   organization: localeString,
   location: v.optional(localeString),
@@ -47,14 +47,12 @@ const inputFields = {
   current: v.optional(v.boolean()),
 
   achievements: v.optional(localeArrString),
-
   tags: v.optional(v.array(v.string())),
-
   grade: v.optional(v.string()),
   category: v.optional(v.string()),
-
   logo: v.optional(v.string()),
   url: v.optional(v.string()),
+  websites: v.optional(v.array(v.string())),
 };
 
 export const list = query({

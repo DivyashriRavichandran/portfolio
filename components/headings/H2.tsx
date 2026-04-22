@@ -1,6 +1,6 @@
 import React from "react";
 
-const Heading3 = ({ text1, text2 }: { text1?: string; text2: string }) => {
+const H2 = ({ text1, text2 }: { text1?: string; text2: string }) => {
   return (
     <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-3 md:pb-4">
       <h2 className="text-xs md:text-sm font-semibold tracking-[0.2em] uppercase">
@@ -13,4 +13,4 @@ const Heading3 = ({ text1, text2 }: { text1?: string; text2: string }) => {
   );
 };
 
-export default Heading3;
+export default H2;

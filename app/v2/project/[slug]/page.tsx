@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import Heading3 from "../../_components/Heading3";
+import H2 from "../../../../components/headings/H2";
 import ProjectNotFound from "../../_components/ProjectNotFound";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "../../_components/LangSwitcher";
@@ -249,7 +249,7 @@ export default function ProjectDetailsPage() {
         {/* CONTENT  */}
         <div className="mt-10 space-y-12">
           <article id="story" className="scroll-mt-32 space-y-6">
-            <Heading3 text1={t("the-build")} text2={t("story")} />
+            <H2 text1={t("the-build")} text2={t("story")} />
             <div className="space-y-6 text-muted-foreground text-base md:text-xl leading-relaxed">
               <p>{project.motivation?.[locale]}</p>
               <p>{project.execution?.[locale]}</p>
@@ -258,7 +258,7 @@ export default function ProjectDetailsPage() {
           </article>
 
           <div id="stack" className="space-y-4 scroll-mt-32">
-            <Heading3 text1="Tech" text2="Stack" />
+            <H2 text1="Tech" text2="Stack" />
             <div className="flex flex-wrap gap-2">
               {project.tech_stack.map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
@@ -266,7 +266,7 @@ export default function ProjectDetailsPage() {
             </div>
           </div>
           <div id="stack" className="space-y-8 scroll-mt-32">
-            <Heading3 text1={t("key")} text2={t("features")} />
+            <H2 text1={t("key")} text2={t("features")} />
 
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.features?.[locale]?.map((feature, i) => (
@@ -289,14 +289,14 @@ export default function ProjectDetailsPage() {
           {/* CHALLENGE & SOLUTION */}
           <section id="challenge" className="scroll-mt-32 space-y-12">
             <div className="space-y-4">
-              <Heading3 text1={t("the")} text2={t("challenge")} />
+              <H2 text1={t("the")} text2={t("challenge")} />
               <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
                 {project.challenge?.[locale]}
               </p>
             </div>
 
             <div className="space-y-4">
-              <Heading3 text1={t("the")} text2={t("solution")} />
+              <H2 text1={t("the")} text2={t("solution")} />
               <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
                 {project.solution?.[locale]}
               </p>
@@ -306,7 +306,7 @@ export default function ProjectDetailsPage() {
           {project.architecture && (
             <article id="design" className="scroll-mt-32 space-y-8">
               <div className="text-center">
-                <Heading3 text1={t("system")} text2={t("design")} />
+                <H2 text1={t("system")} text2={t("design")} />
               </div>
               <Image
                 src={project.architectureUrl ?? ""}
@@ -319,7 +319,7 @@ export default function ProjectDetailsPage() {
           )}
 
           <div id="links" className="scroll-mt-32 space-y-8 pb-20">
-            <Heading3 text1="Project" text2="Links" />
+            <H2 text1="Project" text2="Links" />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.github_link && (

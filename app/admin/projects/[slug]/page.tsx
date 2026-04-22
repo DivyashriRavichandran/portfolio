@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { ChevronLeft, Loader2 } from "lucide-react";
 import ProjectForm from "./_component/ProjectForm";
 import Link from "next/link";
-import Heading from "@/app/v2/_components/Heading";
+import H1 from "@/components/headings/H1";
 
 export default function EditProjectPage() {
   const params = useParams();
@@ -34,7 +34,7 @@ export default function EditProjectPage() {
         >
           <ChevronLeft size={14} /> Back to Vault
         </Link>
-        <Heading text1={"Edit Project"} text2={project.title.en} />
+        <H1 text1={"Edit Project"} text2={project.title.en} />
       </header>
 
       <ProjectForm initialData={project} />

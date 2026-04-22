@@ -1,6 +1,6 @@
 import React from "react";
 
-const Subheading = ({
+const H3 = ({
   icon: Icon,
   text,
 }: {
@@ -17,4 +17,4 @@ const Subheading = ({
   );
 };
 
-export default Subheading;
+export default H3;

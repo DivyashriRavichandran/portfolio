@@ -22,7 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import Subheading from "@/app/v2/_components/Subheading";
+import H3 from "@/components/headings/H3";
 import { Doc } from "@/convex/_generated/dataModel";
 
 interface ProjectFormValues {
@@ -251,7 +251,7 @@ export default function ProjectForm({
     >
       {/* SECTION 1 */}
       <section className="space-y-6">
-        <Subheading icon={Sparkles} text="Basic Information" />
+        <H3 icon={Sparkles} text="Basic Information" />
         <div className="grid grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
           <div className="space-y-4">
             <CustomLabel label="Name (English / Dutch)" />
@@ -307,7 +307,7 @@ export default function ProjectForm({
 
       {/* SECTION 2 */}
       <section className="space-y-6">
-        <Subheading icon={BookOpen} text="Case Study" />
+        <H3 icon={BookOpen} text="Case Study" />
         <div className="grid grid-cols-2 gap-12">
           {/* ENGLISH */}
           <div className="space-y-6">
@@ -430,7 +430,7 @@ export default function ProjectForm({
 
       {/* SECTION 3 */}
       <section className="space-y-6">
-        <Subheading icon={Layers} text="Technical Architecture" />
+        <H3 icon={Layers} text="Technical Architecture" />
         <div className="grid grid-cols-2 gap-8 bg-foreground/2 border border-white/5 p-8 rounded-lg">
           <div className="space-y-4">
             <CustomLabel label="Tech Stack" />
@@ -464,7 +464,7 @@ export default function ProjectForm({
 
       {/* SECTION 4 */}
       <section className="space-y-6">
-        <Subheading icon={Camera} text="Images" />
+        <H3 icon={Camera} text="Images" />
 
         <div className="space-y-10 bg-foreground/2 border border-white/5 p-8 rounded-lg">
           <div className="grid grid-cols-2 gap-8 pt-4">

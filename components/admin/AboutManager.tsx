@@ -18,7 +18,7 @@ import {
   Trash2,
   Loader2,
 } from "lucide-react";
-import Subheading from "@/app/v2/_components/Subheading";
+import H3 from "@/components/headings/H3";
 import { Badge } from "../ui/badge";
 import { Id } from "@/convex/_generated/dataModel";
 
@@ -148,7 +148,7 @@ export default function AboutManager() {
     <div className="pb-20 grid grid-cols-1 md:grid-cols-2 gap-10">
       {/* HERO & ABOUT */}
       <div className="space-y-4">
-        <Subheading icon={UserCircle} text="About me" />
+        <H3 icon={UserCircle} text="About me" />
 
         {["en", "nl"].map((locale) => (
           <div key={locale} className="space-y-2">
@@ -169,7 +169,7 @@ export default function AboutManager() {
 
       {/* NAVBAR LINKS */}
       <div className="space-y-4">
-        <Subheading icon={Layout} text="Navigation Links" />
+        <H3 icon={Layout} text="Navigation Links" />
         {formData.menu_items.map((link, idx) => (
           <div key={idx} className="flex gap-2">
             {["en", "nl"].map((locale) => (
@@ -225,7 +225,7 @@ export default function AboutManager() {
 
       {/* TECH STACK */}
       <div className="space-y-4">
-        <Subheading icon={Terminal} text="Tech Stack" />
+        <H3 icon={Terminal} text="Tech Stack" />
         <Input
           placeholder="Add tech and press Enter"
           variant="admin"
@@ -262,7 +262,7 @@ export default function AboutManager() {
 
       {/* HARDWARE */}
       <div className="space-y-4">
-        <Subheading icon={Cpu} text="Hardware Setup" />
+        <H3 icon={Cpu} text="Hardware Setup" />
 
         {(["en", "nl"] as const).map((locale) => {
           const currentList = formData.hardware?.[locale] ?? []; // fallback to empty array
@@ -328,7 +328,7 @@ export default function AboutManager() {
 
       {/* SPOTIFY */}
       <div className="space-y-4">
-        <Subheading icon={Music} text="Spotify Playlist" />
+        <H3 icon={Music} text="Spotify Playlist" />
 
         <Input
           placeholder="Add Spotify track ID and press Enter"
@@ -373,7 +373,7 @@ export default function AboutManager() {
 
       {/* SOCIAL LINKS & RESUME */}
       <div className="space-y-4">
-        <Subheading icon={Globe} text="Social Links & Resume" />
+        <H3 icon={Globe} text="Social Links & Resume" />
 
         <Input
           placeholder="LinkedIn URL"

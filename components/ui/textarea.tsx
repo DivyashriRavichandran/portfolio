@@ -8,7 +8,7 @@ const textareaVariants = cva(
     variants: {
       variant: {
         default:
-          "field-sizing-content min-h-20 md:min-h-32 border-b bg-transparent text-sm md:text-lg placeholder:text-muted-foreground dark:placeholder:text-foreground focus-visible:border-ring",
+          "field-sizing-content min-h-20 border-b bg-transparent text-sm md:text-base placeholder:text-muted-foreground dark:placeholder:text-foreground focus-visible:border-ring",
         admin:
           "min-h-[120px] bg-white/10 border border-white/10 rounded-md px-4 py-3 text-sm placeholder:opacity-60 focus-visible:ring-1 focus-visible:ring-primary/80",
       },
