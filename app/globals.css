@@ -96,37 +96,31 @@
   }
 
   .dark {
-    /* Deep "Noir" background */
     --background: #0b0b0c;
     --foreground: #f2f2dc;
 
-    /* Darker muted tones for depth */
-    --muted: #18181b;
-    --muted-foreground: #a1a1aa;
+    --muted: rgb(50, 50, 46);
+    --muted-foreground: #d4d2c7;
 
-    /* Neon Primary - Glow effect */
     --primary: #eff28d;
     --primary-foreground: #0b0b0c;
     --primary-light: oklch(95% 0.1 140);
     --primary-dark: oklch(40% 0.1 140);
 
-    /* Neon Secondary - Sunset Orange */
     --secondary: #ffa447;
     --secondary-foreground: #0b0b0c;
     --secondary-light: #ffbd7a;
     --secondary-dark: #8a4d12;
 
-    /* Neon Tertiary - Cyber Purple */
     --tertiary: #a977ff;
 
-    /* UI Components */
     --card: #18181b;
     --card-foreground: #f2f2dc;
 
     --popover: #0b0b0c;
     --popover-foreground: #f2f2dc;
 
-    --accent: #1e1e21; /* Darker accent for buttons/hover states */
+    --accent: #1e1e21;
     --accent-foreground: #eff28d;
 
     --destructive: oklch(55% 0.22 25.7);

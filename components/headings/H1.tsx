@@ -13,7 +13,7 @@ const H1 = ({
     <div className="flex justify-between items-end mb-6 md:mb-10 border-b pb-2 md:pb-4">
       <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-snug">
         {text1}{" "}
-        <span className="text-primary-foreground bg-primary px-1">
+        <span className="text-primary dark:text-primary-foreground bg-foreground dark:bg-primary px-1 ">
           {text2}.
         </span>
       </h2>

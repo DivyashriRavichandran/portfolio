@@ -23,7 +23,8 @@ const About = () => {
             Science Master’s student at the University of Groningen (RUG). I
             love building websites and tools that solve real-world problems.
             With over 2 years of professional frontend experience, I’ve also
-            expanded into full-stack development and system design.
+            expanded into full-stack development, cloud computing and system
+            design.
           </p>
           <p>
             At RUG, I’m specializing in Software Engineering and Distributed
@@ -64,10 +65,10 @@ export default About;
 
 const TechStackSection = () => {
   const tech_stack = {
-    languages: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"],
-    frontend: ["React.js", "Next.js", "Vue.js", "Tailwind"],
-    backend: ["Spring Boot", "PostgreSQL", "Convex", "Payload CMS"],
-    tools: ["Docker", "Kubernetes", "Linux", "Git", "WorkOS"],
+    languages: ["TypeScript", "JavaScript", "Java", "SQL"],
+    frontend: ["Next.js", "React.js", "Vue.js", "Tailwind CSS", "HTML5/CSS3"],
+    backend: ["Spring Boot", "PostgreSQL", "Convex", "Payload CMS", "WorkOS"],
+    devops: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Linux", "Git"],
   };
 
   return (
@@ -80,12 +81,10 @@ const TechStackSection = () => {
             key={category}
             className="flex items-start md:items-center gap-3 group"
           >
-            {/* Category: Fixed width for alignment */}
             <span className="w-16 md:w-24 shrink-0 text-[10px] md:text-xs py-1 font-medium uppercase text-muted-foreground/80 group-hover:text-primary transition-colors">
               {category}
             </span>
 
-            {/* Dots/Separator: Purely visual flair */}
             <div className="flex flex-wrap gap-1.5 border-l pl-3 md:pl-6">
               {items.map((tech) => (
                 <Badge key={tech} size={"sm"}>

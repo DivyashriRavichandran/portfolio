@@ -156,7 +156,10 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* TAGS */}
         {item.tags!.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 md:mt-5 flex flex-wrap gap-2 items-center">
+            <p className="text-muted-foreground font-semibold uppercase tracking-widest text-xs">
+              {item.type == "education" ? "Modules" : "Tech Stack"}:
+            </p>
             {item.tags!.map((tag: string) => (
               <span
                 key={tag}
