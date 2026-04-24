@@ -1,61 +1,61 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-
-const localeString = v.object({ en: v.string(), nl: v.string() });
+import { metricCard, localeString } from "./schema";
 
 const categoriesSchema = v.object({
   en: v.array(v.string()),
   nl: v.array(v.string()),
 });
 
+const impactSchema = v.object({
+  en: v.array(metricCard),
+  nl: v.array(metricCard),
+});
+
+// 2. Define the core fields once
+const coreProjectFields = {
+  title: localeString,
+  slug: v.optional(v.string()),
+  description: localeString,
+  year: v.number(),
+
+  // Case study fields
+  motivation: v.optional(localeString),
+  execution: v.optional(localeString),
+  impact: v.optional(impactSchema),
+  challenge: v.optional(localeString),
+  learning: v.optional(localeString),
+  future: v.optional(localeString),
+
+  // Fields marked for deletion/legacy
+  solution: v.optional(localeString),
+  result: v.optional(localeString),
+  features: v.optional(categoriesSchema),
+
+  // Technical info
+  categories: categoriesSchema,
+  tech_stack: v.array(v.string()),
+  project_link: v.string(),
+  github_link: v.optional(v.string()),
+
+  // Assets
+  mockup: v.optional(v.string()),
+  architecture: v.optional(v.string()),
+  images: v.array(v.string()),
+};
+
+// mutation args for 'update' (includes ID and order)
 const projectFields = {
+  ...coreProjectFields,
   order: v.optional(v.number()),
-  title: localeString,
-  slug: v.optional(v.string()),
-  description: localeString,
-  year: v.number(),
-
-  motivation: v.optional(localeString),
-  execution: v.optional(localeString),
-  result: v.optional(localeString),
-  challenge: v.optional(localeString),
-  solution: v.optional(localeString),
-
-  categories: categoriesSchema,
-  tech_stack: v.array(v.string()),
-  features: categoriesSchema,
-
-  project_link: v.string(),
-  github_link: v.optional(v.string()),
-
-  mockup: v.optional(v.string()),
-  architecture: v.optional(v.string()),
-  images: v.array(v.string()),
 };
+
+// mutation args for 'create'
 const inputFields = {
-  title: localeString,
-  description: localeString,
-  slug: v.optional(v.string()),
-  year: v.number(),
-
-  motivation: v.optional(localeString),
-  execution: v.optional(localeString),
-  result: v.optional(localeString),
-  challenge: v.optional(localeString),
-  solution: v.optional(localeString),
-
-  categories: categoriesSchema,
-  tech_stack: v.array(v.string()),
-  features: categoriesSchema,
-
-  project_link: v.string(),
-  github_link: v.optional(v.string()),
-
-  mockup: v.optional(v.string()),
-  architecture: v.optional(v.string()),
-  images: v.array(v.string()),
+  ...coreProjectFields,
 };
 
+// --- Queries ---
 export const list = query({
   handler: async (ctx) => {
     const projects = await ctx.db
@@ -69,11 +69,9 @@ export const list = query({
         mockupUrl: project.mockup
           ? await ctx.storage.getUrl(project.mockup)
           : null,
-
         architectureUrl: project.architecture
           ? await ctx.storage.getUrl(project.architecture)
           : null,
-
         imageUrls: await Promise.all(
           project.images.map((img) => ctx.storage.getUrl(img)),
         ),
@@ -97,24 +95,28 @@ export const getBySlug = query({
       mockupUrl: project.mockup
         ? await ctx.storage.getUrl(project.mockup)
         : null,
-
       architectureUrl: project.architecture
         ? await ctx.storage.getUrl(project.architecture)
         : null,
-
       imageUrls: await Promise.all(
         project.images.map((img) => ctx.storage.getUrl(img)),
       ),
     };
   },
 });
+
+// --- Mutations ---
 export const create = mutation({
   args: inputFields,
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) throw new Error("Unauthorized");
 
-    const firstProject = await ctx.db.query("projects").order("asc").first();
+    // Auto-increment order logic (placing new projects at the start)
+    const firstProject = await ctx.db
+      .query("projects")
+      .withIndex("by_order")
+      .first();
     const currentFirstOrder = firstProject?.order ?? 0;
     const newOrder = currentFirstOrder - 1;
 

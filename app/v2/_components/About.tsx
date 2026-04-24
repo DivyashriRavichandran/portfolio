@@ -65,7 +65,7 @@ export default About;
 
 const TechStackSection = () => {
   const tech_stack = {
-    languages: ["TypeScript", "JavaScript", "Java", "SQL"],
+    languages: ["TypeScript", "JavaScript", "Java", "Python", "SQL"],
     frontend: ["Next.js", "React.js", "Vue.js", "Tailwind CSS", "HTML5/CSS3"],
     backend: ["Spring Boot", "PostgreSQL", "Convex", "Payload CMS", "WorkOS"],
     devops: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Linux", "Git"],

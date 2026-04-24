@@ -1,23 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "convex/react";
+import { useForm, Path } from "react-hook-form";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import Image from "next/image";
 import {
   Loader2,
   X,
   ImagePlus,
-  Globe,
-  Github,
   Sparkles,
   BookOpen,
   Layers,
   Camera,
   Terminal,
+  Brain,
+  FastForward,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,33 +24,39 @@ import { Textarea } from "@/components/ui/textarea";
 import H3 from "@/components/headings/H3";
 import { Doc } from "@/convex/_generated/dataModel";
 
+interface Metric {
+  title: string;
+  sub: string;
+  desc: string;
+}
+
 interface ProjectFormValues {
   title_en: string;
   title_nl: string;
   slug: string;
+  year: string;
   description_en: string;
   description_nl: string;
   motivation_en: string;
   motivation_nl: string;
   execution_en: string;
   execution_nl: string;
-  result_en: string;
-  result_nl: string;
   challenge_en: string;
   challenge_nl: string;
-  solution_en: string;
-  solution_nl: string;
-  year: string | number;
+  learning_en: string;
+  learning_nl: string;
+  future_en: string;
+  future_nl: string;
+  tech_stack: string;
+  categories_en: string;
+  categories_nl: string;
   project_link: string;
   github_link: string;
   mockup: string;
+  architecture: string;
   images: string[];
-  architecture?: string;
-  tech_stack: string; // From a comma-separated string input
-  features_en: string;
-  features_nl: string;
-  categories_en: string;
-  categories_nl: string;
+  impact_en: Metric[];
+  impact_nl: Metric[];
 }
 
 export default function ProjectForm({
@@ -61,548 +66,338 @@ export default function ProjectForm({
 }) {
   const router = useRouter();
   const [uploading, setUploading] = useState(false);
-
   const createProject = useMutation(api.projects.create);
   const updateProject = useMutation(api.projects.update);
   const generateUploadUrl = useMutation(api.images.generateUploadUrl);
 
-  const { register, handleSubmit, setValue, watch } = useForm({
-    defaultValues: initialData
-      ? {
-          ...initialData,
-          title_en: initialData.title.en,
-          title_nl: initialData.title.nl,
-          slug: initialData.slug || "",
-          description_en: initialData.description.en,
-          description_nl: initialData.description.nl,
-          motivation_en: initialData.motivation?.en || "",
-          motivation_nl: initialData.motivation?.nl || "",
-          execution_en: initialData.execution?.en || "",
-          execution_nl: initialData.execution?.nl || "",
-          result_en: initialData.result?.en || "",
-          result_nl: initialData.result?.nl || "",
-          challenge_en: initialData.challenge?.en || "",
-          challenge_nl: initialData.challenge?.nl || "",
-          solution_en: initialData.solution?.en || "",
-          solution_nl: initialData.solution?.nl || "",
-          year: initialData.year.toString(),
-          project_link: initialData.project_link,
-          github_link: initialData.github_link || "",
-          mockup: initialData.mockup || "",
-          images: initialData.images || [],
-          architecture: initialData.architecture || "",
-          tech_stack: initialData.tech_stack.join(", "),
-          features_en: initialData.features?.en.join(", ") || "",
-          features_nl: initialData.features?.nl.join(", ") || "",
-          categories_en: initialData.categories.en.join(", "),
-          categories_nl: initialData.categories.nl.join(", "),
-        }
-      : {
-          title_en: "",
-          title_nl: "",
-          slug: "",
-          description_en: "",
-          description_nl: "",
-          motivation_en: "",
-          motivation_nl: "",
-          execution_en: "",
-          execution_nl: "",
-          result_en: "",
-          result_nl: "",
-          challenge_en: "",
-          challenge_nl: "",
-          solution_en: "",
-          solution_nl: "",
-          project_link: "",
-          github_link: "",
-          tech_stack: "",
-          features_en: "",
-          features_nl: "",
-          categories_en: "",
-          categories_nl: "",
-          images: [],
-          mockup: "",
-          architecture: "",
-          year: "2026",
-        },
-  });
-
-  const mockupId = watch("mockup");
-  const architectureId = watch("architecture");
-  const images = watch("images");
-
-  const mockupUrl = useQuery(
-    api.images.getUrl,
-    mockupId ? { storageId: mockupId } : "skip",
-  );
-
-  const architectureUrl = useQuery(
-    api.images.getUrl,
-    architectureId ? { storageId: architectureId } : "skip",
-  );
+  const { register, handleSubmit, setValue, watch } =
+    useForm<ProjectFormValues>({
+      defaultValues: initialData
+        ? {
+            title_en: initialData.title.en,
+            title_nl: initialData.title.nl,
+            slug: initialData.slug || "",
+            year: initialData.year.toString(),
+            description_en: initialData.description.en,
+            description_nl: initialData.description.nl,
+            motivation_en: initialData.motivation?.en || "",
+            motivation_nl: initialData.motivation?.nl || "",
+            execution_en: initialData.execution?.en || "",
+            execution_nl: initialData.execution?.nl || "",
+            challenge_en: initialData.challenge?.en || "",
+            challenge_nl: initialData.challenge?.nl || "",
+            learning_en: initialData.learning?.en || "",
+            learning_nl: initialData.learning?.nl || "",
+            future_en: initialData.future?.en || "",
+            future_nl: initialData.future?.nl || "",
+            tech_stack: initialData.tech_stack.join(", "),
+            categories_en: initialData.categories.en.join(", "),
+            categories_nl: initialData.categories.nl.join(", "),
+            project_link: initialData.project_link,
+            github_link: initialData.github_link || "",
+            mockup: initialData.mockup || "",
+            architecture: initialData.architecture || "",
+            images: initialData.images || [],
+            impact_en: initialData.impact?.en || [
+              { title: "", sub: "", desc: "" },
+            ],
+            impact_nl: initialData.impact?.nl || [
+              { title: "", sub: "", desc: "" },
+            ],
+          }
+        : {
+            year: "2026",
+            impact_en: [{ title: "", sub: "", desc: "" }],
+            impact_nl: [{ title: "", sub: "", desc: "" }],
+            images: [],
+          },
+    });
 
   const onSubmit = async (data: ProjectFormValues) => {
-    const payload = {
-      title: { en: data.title_en, nl: data.title_nl },
-      slug: data.slug || "",
-      description: { en: data.description_en, nl: data.description_nl },
-      year: Number(data.year),
-      project_link: data.project_link,
-      github_link: data.github_link || "",
-      mockup: data.mockup,
-      images: data.images || [],
-      architecture: data.architecture || "",
-
-      motivation: { en: data.motivation_en, nl: data.motivation_nl },
-      execution: { en: data.execution_en, nl: data.execution_nl },
-      result: { en: data.result_en, nl: data.result_nl },
-      challenge: { en: data.challenge_en, nl: data.challenge_nl },
-      solution: { en: data.solution_en, nl: data.solution_nl },
-
-      tech_stack: data.tech_stack
+    const splitCSV = (str: string) =>
+      str
         .split(",")
         .map((s) => s.trim())
-        .filter(Boolean),
-      features: {
-        en: data.features_en
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        nl: data.features_nl
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-      },
+        .filter(Boolean);
+
+    const payload = {
+      title: { en: data.title_en, nl: data.title_nl },
+      slug: data.slug,
+      year: Number(data.year),
+      description: { en: data.description_en, nl: data.description_nl },
+      motivation: { en: data.motivation_en, nl: data.motivation_nl },
+      execution: { en: data.execution_en, nl: data.execution_nl },
+      challenge: { en: data.challenge_en, nl: data.challenge_nl },
+      learning: { en: data.learning_en, nl: data.learning_nl },
+      future: { en: data.future_en, nl: data.future_nl },
+      tech_stack: splitCSV(data.tech_stack),
       categories: {
-        en: data.categories_en
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
-        nl: data.categories_nl
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean),
+        en: splitCSV(data.categories_en),
+        nl: splitCSV(data.categories_nl),
       },
+      impact: { en: data.impact_en, nl: data.impact_nl },
+      project_link: data.project_link,
+      github_link: data.github_link,
+      mockup: data.mockup,
+      architecture: data.architecture,
+      images: data.images || [],
     };
 
     try {
       if (initialData?._id) {
-        // Pass the existing order back if updating
-        await updateProject({
-          id: initialData._id,
-          order: initialData.order ?? 0,
-          ...payload,
-        });
+        await updateProject({ id: initialData._id, ...payload });
       } else {
         await createProject(payload);
       }
-      toast.success("Database updated successfully");
+      toast.success("Project saved successfully!");
       router.push("/admin");
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to save project");
+    } catch (e) {
+      console.error(e);
+      toast.error("Save failed");
     }
   };
 
-  const handleVisualUpload = async (
+  const handleUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    fieldType: "mockup" | "architecture" | "gallery",
+    field: keyof ProjectFormValues,
   ) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
-
     try {
       for (const file of files) {
-        const postUrl = await generateUploadUrl();
-        const result = await fetch(postUrl, {
-          method: "POST",
-          headers: { "Content-Type": file.type },
-          body: file,
-        });
-        const { storageId } = await result.json();
+        const url = await generateUploadUrl();
+        const res = await fetch(url, { method: "POST", body: file });
+        const { storageId } = await res.json();
 
-        // NEW LOGIC SPLIT:
-        if (fieldType === "mockup") {
-          setValue("mockup", storageId);
-        } else if (fieldType === "architecture") {
-          setValue("architecture", storageId);
-        } else if (fieldType === "gallery") {
-          setValue("images", [...(images || []), storageId]);
+        if (field === "images") {
+          setValue("images", [...watch("images"), storageId]);
+        } else {
+          setValue(field as Path<ProjectFormValues>, storageId);
         }
       }
-      toast.success("Updated!");
-    } catch (err) {
-      toast.error("Upload failed");
-      console.error(err);
     } finally {
       setUploading(false);
     }
   };
 
-  const imageUrls = useQuery(
-    api.images.getUrls,
-    images?.length ? { storageIds: images } : "skip",
-  );
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-16 mx-auto pb-24"
-    >
-      {/* SECTION 1 */}
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-12 pb-24">
+      {/* Basic Info Section */}
       <section className="space-y-6">
         <H3 icon={Sparkles} text="Basic Information" />
-        <div className="grid grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
-          <div className="space-y-4">
-            <CustomLabel label="Name (English / Dutch)" />
-            <Input
-              {...register("title_en")}
-              placeholder="English Title"
-              variant="admin"
-            />
-            <Input
-              {...register("title_nl")}
-              placeholder="Nederlandse Titel"
-              variant="admin"
-            />
-            <Input {...register("slug")} placeholder="Slug" variant="admin" />
-          </div>
-          <div className="space-y-4">
-            <CustomLabel label="Year & Tags" />
-            <Input
-              {...register("year")}
-              placeholder="Release Year"
-              variant="admin"
-            />
-            <div className="grid grid-cols-2 gap-2">
-              <Input
-                {...register("categories_en")}
-                placeholder="Categories EN"
-                variant="admin"
-              />
-              <Input
-                {...register("categories_nl")}
-                placeholder="Categories NL"
-                variant="admin"
-              />
-            </div>
-          </div>
-          <div className="col-span-2 space-y-4 pt-4 border-t border-white/5">
-            <CustomLabel label="Description" />
+        <div className="grid grid-cols-2 gap-4 bg-white/5 p-6 rounded-xl border border-white/10">
+          <Input
+            {...register("title_en")}
+            placeholder="English Title"
+            variant="admin"
+          />
+          <Input
+            {...register("title_nl")}
+            placeholder="Nederlandse Titel"
+            variant="admin"
+          />
+          <Input {...register("slug")} placeholder="URL Slug" variant="admin" />
+          <Input
+            {...register("year")}
+            placeholder="Release Year"
+            variant="admin"
+          />
+          <div className="col-span-2 space-y-2">
             <Textarea
               {...register("description_en")}
-              placeholder="Brief English intro..."
+              placeholder="Intro (EN)"
               variant="admin"
-              rows={2}
             />
             <Textarea
               {...register("description_nl")}
-              placeholder="Korte Nederlandse intro..."
-              variant="admin"
-              rows={2}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2 */}
-      <section className="space-y-6">
-        <H3 icon={BookOpen} text="Case Study" />
-        <div className="grid grid-cols-2 gap-12">
-          {/* ENGLISH */}
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <CustomLabel label="The Motivation" />
-              <Textarea
-                {...register("motivation_en")}
-                placeholder="The 'Why'..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="The Execution" />
-              <Textarea
-                {...register("execution_en")}
-                placeholder="The 'How'..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="The Result" />
-              <Textarea
-                {...register("result_en")}
-                placeholder="Final Outcome..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="The Challenge" />
-              <Textarea
-                {...register("challenge_en")}
-                placeholder="Main hurdle..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="The Solution" />
-              <Textarea
-                {...register("solution_en")}
-                placeholder="Technical fix..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="Key Features" />
-              <Textarea
-                {...register("features_en")}
-                placeholder="e.g. Real-time DOM injection, Multi-platform support..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-          </div>
-
-          {/* DUTCH */}
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <CustomLabel label="De Motivatie" />
-              <Textarea
-                {...register("motivation_nl")}
-                placeholder="De 'Waarom'..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="De Uitvoering" />
-              <Textarea
-                {...register("execution_nl")}
-                placeholder="De 'Hoe'..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="Het Resultaat" />
-              <Textarea
-                {...register("result_nl")}
-                placeholder="Eindresultaat..."
-                variant="admin"
-                rows={3}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="De Uitdaging" />
-              <Textarea
-                {...register("challenge_nl")}
-                placeholder="Belangrijkste drempel..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-            <div className="space-y-2">
-              <CustomLabel label="De Oplossing" />
-              <Textarea
-                {...register("solution_nl")}
-                placeholder="Technische oplossing..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <CustomLabel label="Belangrijkste Functies" />
-              <Textarea
-                {...register("features_nl")}
-                placeholder="bijv. Real-time DOM-injectie, Multi-platform ondersteuning..."
-                variant="admin"
-                rows={2}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3 */}
-      <section className="space-y-6">
-        <H3 icon={Layers} text="Technical Architecture" />
-        <div className="grid grid-cols-2 gap-8 bg-foreground/2 border border-white/5 p-8 rounded-lg">
-          <div className="space-y-4">
-            <CustomLabel label="Tech Stack" />
-            <Input
-              {...register("tech_stack")}
-              placeholder="Next.js, TypeScript, Convex..."
+              placeholder="Intro (NL)"
               variant="admin"
             />
           </div>
-          <div className="space-y-4">
-            <CustomLabel label="Project Links" />
-            <div className="mt-5 flex gap-4 items-center">
-              <Globe className="text-primary" size={18} />
-              <Input
-                {...register("project_link")}
-                placeholder="Live URL"
-                variant="admin"
-              />
-            </div>
-            <div className="flex gap-4 items-center">
-              <Github className="text-primary" size={18} />
-              <Input
-                {...register("github_link")}
-                placeholder="Source URL"
-                variant="admin"
-              />
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* SECTION 4 */}
+      {/* Case Study Section with Learning and Future */}
       <section className="space-y-6">
-        <H3 icon={Camera} text="Images" />
-
-        <div className="space-y-10 bg-foreground/2 border border-white/5 p-8 rounded-lg">
-          <div className="grid grid-cols-2 gap-8 pt-4">
-            {/* 4a. Hero Mockup */}
-            <div className="space-y-4">
-              <CustomLabel label="Hero Mockup" />
-
-              {mockupUrl ? (
-                <div className="relative aspect-video rounded-sm border border-white/10 overflow-hidden group">
-                  <Image
-                    src={mockupUrl}
-                    alt="Hero Mockup"
-                    fill
-                    className="object-cover"
-                  />
-
-                  <button
-                    type="button"
-                    onClick={() => setValue("mockup", "")}
-                    className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition-all z-20"
-                  >
-                    <X size={24} className="text-white" />
-                  </button>
-                </div>
-              ) : (
-                <label className="aspect-video border-2 border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition-all group">
-                  <ImagePlus
-                    size={32}
-                    className="opacity-20 group-hover:opacity-50 transition-all"
-                  />
-                  <span className="text-[10px] uppercase mt-2 opacity-50 group-hover:opacity-100 font-medium">
-                    Add Hero image
-                  </span>
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => handleVisualUpload(e, "mockup")} // Pass "mockup" type
-                  />
-                </label>
-              )}
+        <H3 icon={BookOpen} text="Case Study Details" />
+        <div className="grid grid-cols-1 gap-8">
+          {[
+            { id: "motivation", label: "Motivation", icon: Sparkles },
+            { id: "execution", label: "Execution", icon: Layers },
+            { id: "challenge", label: "Challenge", icon: Terminal },
+            { id: "learning", label: "Learning", icon: Brain },
+            { id: "future", label: "Future", icon: FastForward },
+          ].map((field) => (
+            <div
+              key={field.id}
+              className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5"
+            >
+              <div className="flex items-center gap-2 mb-2 col-span-2 text-primary font-bold uppercase tracking-widest text-[10px]">
+                <field.icon size={14} /> {field.label}
+              </div>
+              <Textarea
+                {...register(`${field.id}_en` as Path<ProjectFormValues>)}
+                placeholder="English content..."
+                variant="admin"
+                rows={3}
+              />
+              <Textarea
+                {...register(`${field.id}_nl` as Path<ProjectFormValues>)}
+                placeholder="Nederlandse inhoud..."
+                variant="admin"
+                rows={3}
+              />
             </div>
+          ))}
+        </div>
+      </section>
 
-            {/* 4b. Architecture Diagram - NEW FIELD */}
-            <div className="space-y-4">
-              <CustomLabel label="System Design / Architecture (Optional)" />
-              {architectureId ? (
-                <div className="relative aspect-video rounded-sm border border-white/10 overflow-hidden group bg-foreground/30">
-                  <Image
-                    src={architectureUrl ?? ""}
-                    alt="Architecture Diagram"
-                    fill
-                    className="object-contain"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setValue("architecture", "")}
-                    className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition-all z-20"
-                  >
-                    <X size={24} className="text-white" />
-                  </button>
-                </div>
-              ) : (
-                <label className="aspect-video border-2 border-dashed border-white/10 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition-all group">
-                  <Terminal
-                    size={32}
-                    className="opacity-20 group-hover:opacity-50 transition-all"
-                  />
-                  <span className="text-[10px] uppercase mt-2 opacity-50 group-hover:opacity-100 font-medium">
-                    Add Architecture Diagram
-                  </span>
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => handleVisualUpload(e, "architecture")} // Pass "architecture" type
-                  />
-                </label>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-4 pt-8 border-t border-white/5">
-            <CustomLabel label="Gallery" />
-            <div className="flex flex-wrap gap-4">
-              {imageUrls?.map((url, idx) => (
+      {/* Impact Section */}
+      <section className="space-y-6">
+        <H3 icon={Sparkles} text="Impact & Metrics" />
+        <div className="grid grid-cols-2 gap-8">
+          {(["en", "nl"] as const).map((lang) => (
+            <div key={lang} className="space-y-4">
+              <p className="text-[10px] uppercase font-bold text-primary/60">
+                {lang.toUpperCase()} Stats
+              </p>
+              {watch(`impact_${lang}`).map((_, i) => (
                 <div
-                  key={url}
-                  className="relative w-40 h-24 rounded-lg border border-white/10 overflow-hidden group"
+                  key={i}
+                  className="p-4 bg-white/5 rounded-lg border border-white/10 space-y-2 relative"
                 >
-                  <Image
-                    src={url ?? ""}
-                    alt="Gallery Image"
-                    fill
-                    className="object-cover"
+                  <Input
+                    {...register(
+                      `impact_${lang}.${i}.title` as Path<ProjectFormValues>,
+                    )}
+                    placeholder="Metric (e.g. 100%)"
+                    variant="admin"
                   />
-
+                  <Input
+                    {...register(
+                      `impact_${lang}.${i}.sub` as Path<ProjectFormValues>,
+                    )}
+                    placeholder="Subtitle"
+                    variant="admin"
+                  />
+                  <Textarea
+                    {...register(
+                      `impact_${lang}.${i}.desc` as Path<ProjectFormValues>,
+                    )}
+                    placeholder="Short Description"
+                    variant="admin"
+                    rows={2}
+                  />
                   <button
                     type="button"
-                    onClick={() => {
-                      const newImages = [...images];
-                      newImages.splice(idx, 1);
-                      setValue("images", newImages);
-                    }}
-                    className="absolute top-1 right-1 bg-red-500 p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity z-20"
+                    onClick={() =>
+                      setValue(
+                        `impact_${lang}`,
+                        watch(`impact_${lang}`).filter((_, idx) => idx !== i),
+                      )
+                    }
+                    className="absolute top-2 right-2 text-red-500"
                   >
-                    <X size={12} />
+                    <X size={14} />
                   </button>
                 </div>
               ))}
-              <label className="w-40 h-24 border-2 border-dashed border-white/10 rounded-lg flex items-center justify-center cursor-pointer hover:border-primary/50 transition-all group">
-                <ImagePlus
-                  size={20}
-                  className="opacity-20 group-hover:opacity-50 transition-all"
-                />
-                <input
-                  type="file"
-                  multiple
-                  className="hidden"
-                  onChange={(e) => handleVisualUpload(e, "gallery")}
-                />
-              </label>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() =>
+                  setValue(`impact_${lang}`, [
+                    ...watch(`impact_${lang}`),
+                    { title: "", sub: "", desc: "" },
+                  ])
+                }
+              >
+                + Add {lang.toUpperCase()} Metric
+              </Button>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
-      <div className="pt-10 border-t border-white/5">
-        <Button disabled={uploading} className="w-full font-bold">
-          {uploading ? <Loader2 className="animate-spin" /> : "Update / Save"}
-        </Button>
-      </div>
-    </form>
-  );
-}
+      {/* Tech & Assets */}
+      <section className="space-y-6">
+        <H3 icon={Layers} text="Technical Assets" />
+        <div className="grid grid-cols-2 gap-4 bg-white/5 p-6 rounded-xl border border-white/10">
+          <Input
+            {...register("tech_stack")}
+            placeholder="Tech Stack (comma-separated)"
+            variant="admin"
+          />
+          <div className="grid grid-cols-2 gap-2">
+            <Input
+              {...register("categories_en")}
+              placeholder="Categories (EN)"
+              variant="admin"
+            />
+            <Input
+              {...register("categories_nl")}
+              placeholder="Categories (NL)"
+              variant="admin"
+            />
+          </div>
+          <Input
+            {...register("project_link")}
+            placeholder="Live Project URL"
+            variant="admin"
+          />
+          <Input
+            {...register("github_link")}
+            placeholder="GitHub Repository URL"
+            variant="admin"
+          />
+        </div>
+      </section>
 
-function CustomLabel({ label }: { label: string }) {
-  return (
-    <p className="text-xs uppercase font-semibold tracking-widest text-primary mb-2">
-      {label}
-    </p>
+      <section className="space-y-6">
+        <H3 icon={Camera} text="Visuals" />
+        <div className="grid grid-cols-3 gap-4">
+          {(["mockup", "architecture"] as const).map((type) => (
+            <label
+              key={type}
+              className="aspect-video border-2 border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-all"
+            >
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => handleUpload(e, type)}
+              />
+              <ImagePlus className="opacity-20 mb-1" />
+              <span className="text-[10px] uppercase font-bold text-white/40">
+                {watch(type) ? "Uploaded" : `Upload ${type}`}
+              </span>
+            </label>
+          ))}
+          <label className="aspect-video border-2 border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-all">
+            <input
+              type="file"
+              multiple
+              className="hidden"
+              onChange={(e) => handleUpload(e, "images")}
+            />
+            <ImagePlus className="opacity-20 mb-1" />
+            <span className="text-[10px] uppercase font-bold text-white/40">
+              {watch("images")?.length || 0} Gallery Images
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <Button disabled={uploading} className="w-full h-14 text-lg font-bold">
+        {uploading ? (
+          <Loader2 className="animate-spin" />
+        ) : initialData ? (
+          "Update Project"
+        ) : (
+          "Create Project"
+        )}
+      </Button>
+    </form>
   );
 }

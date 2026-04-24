@@ -325,7 +325,7 @@ export default function CareerForm({
 
       {/* SECTION 2 */}
       <section className="space-y-6">
-        <H3 icon={GraduationCap} text="Achievements & Contributions" />
+        <H3 icon={GraduationCap} text="Contributions" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
           {/* EN ACHIEVEMENTS */}
           <div className="space-y-4">

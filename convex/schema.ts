@@ -7,32 +7,54 @@ export const localeArrString = v.object({
   en: v.array(v.string()),
   nl: v.array(v.string()),
 });
+export const metricCard = v.object({
+  title: v.string(),
+  sub: v.string(),
+  desc: v.string(),
+});
 
 export default defineSchema({
   projects: defineTable({
+    // Basic info
     order: v.optional(v.number()),
     title: localeString,
     slug: v.optional(v.string()),
     year: v.number(),
     description: localeString,
-    motivation: v.optional(localeString),
-    execution: v.optional(localeString),
-    result: v.optional(localeString),
-    challenge: v.optional(localeString),
-    solution: v.optional(localeString),
+    tech_stack: v.array(v.string()),
     categories: v.object({
       en: v.array(v.string()),
       nl: v.array(v.string()),
     }),
-    tech_stack: v.array(v.string()),
+
+    // Case study
+    motivation: v.optional(localeString), // why
+    execution: v.optional(localeString), // how
+    impact: v.optional(
+      v.object({
+        en: v.array(metricCard),
+        nl: v.array(metricCard),
+      }),
+    ), // impact/metrics
+    challenge: v.optional(localeString), // challenge + solution
+    learning: v.optional(localeString), // key learnings
+    future: v.optional(localeString), // future
+
+    solution: v.optional(localeString), // delete later
+
+    result: v.optional(localeString), // delete later
     features: v.optional(
       v.object({
         en: v.array(v.string()),
         nl: v.array(v.string()),
       }),
-    ),
+    ), // delete later
+
+    // Links
     project_link: v.string(),
     github_link: v.optional(v.string()),
+
+    // Images
     mockup: v.optional(v.string()), // StorageID
     images: v.array(v.string()), // Array of StorageIDs
     architecture: v.optional(v.string()),

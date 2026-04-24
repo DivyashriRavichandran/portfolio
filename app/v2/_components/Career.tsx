@@ -155,7 +155,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         </div>
 
         {/* TAGS */}
-        {item.tags!.length > 0 && (
+        {/* {item.tags!.length > 0 && (
           <div className="mt-3 md:mt-5 flex flex-wrap gap-2 items-center">
             <p className="text-muted-foreground font-semibold uppercase tracking-widest text-xs">
               {item.type == "education" ? "Modules" : "Tech Stack"}:
@@ -169,21 +169,19 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
               </span>
             ))}
           </div>
-        )}
+        )} */}
 
-        {/* PROJECTS / ACHIEVEMENTS */}
+        {/* CONTRIBUTIONS */}
         {item.achievements![locale]?.length > 0 && (
           <div>
-            <H4>
-              {item.type == "education" ? "Notable Projects" : "Contributions"}
-            </H4>
+            <H4>Contributions</H4>
             <ul className="mt-2 space-y-1 md:space-y-2">
               {item.achievements![locale].map((a: string, i: number) => (
                 <li
                   key={i}
                   className="text-sm md:text-base flex gap-2 text-muted-foreground"
                 >
-                  <span className="mt-2 size-1 bg-foreground/60 rounded-full" />
+                  <span className="mt-2.5 size-1 bg-foreground/60 rounded-full" />
                   {a}
                 </li>
               ))}

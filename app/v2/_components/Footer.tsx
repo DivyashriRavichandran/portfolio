@@ -79,21 +79,18 @@ const Footer = () => {
                     desc: "Connect with me professional",
                     href: "",
                     icon: <FaLinkedin size={22} />,
-                    variant: "outline",
                   },
                   {
                     label: "Github",
                     desc: "Source code & side projects",
                     href: "",
                     icon: <FaGithub size={22} />,
-                    variant: "outline",
                   },
                   {
                     label: "Email",
                     desc: "contact@divyashri.nl",
                     href: "mailto:contact@divyashri.nl",
                     icon: <MdEmail size={22} />,
-                    variant: "primary",
                   },
                 ].map((social, index) => (
                   <a
@@ -101,31 +98,15 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group p-4 border transition-all duration-300 ${
-                      social.variant === "primary"
-                        ? "bg-primary text-background border-primary hover:bg-primary/90"
-                        : "bg-muted/20 hover:border-primary/50"
-                    }`}
+                    className="group p-4 border border-foreground/10 transition-all duration-300 bg-muted/20 hover:border-primary/50"
                   >
                     <div className="flex items-center gap-4">
-                      <div
-                        className={`size-10 rounded-full flex items-center justify-center border transition-transform group-hover:scale-110 ${
-                          social.variant === "primary"
-                            ? "border-black/10 bg-black/5"
-                            : "bg-muted/50"
-                        }`}
-                      >
+                      <div className="size-10 rounded-full flex items-center justify-center border transition-transform group-hover:scale-110 bg-muted/50">
                         {social.icon}
                       </div>
                       <div>
                         <h4 className="font-medium text-sm">{social.label}</h4>
-                        <p
-                          className={`text-xs md:text-sm ${
-                            social.variant === "primary"
-                              ? "text-background/80"
-                              : "text-muted-foreground"
-                          }`}
-                        >
+                        <p className="text-xs md:text-sm text-muted-foreground">
                           {social.desc}
                         </p>
                       </div>
@@ -158,7 +139,7 @@ const Footer = () => {
           </div>
 
           {/* RIGHT: The Form */}
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 flex flex-col justify-between">
             <div className="space-y-1">
               <h3 className="text-sm md:text-base font-semibold uppercase tracking-widest">
                 Drop a message
@@ -168,7 +149,7 @@ const Footer = () => {
               </p>
             </div>
 
-            <div className="mt-6 bg-muted/20 p-5 md:p-6 rounded border">
+            <div className="mt-6 bg-muted/20 p-5 md:px-6 md:py-4 border">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -215,7 +196,7 @@ const Footer = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto"
+                    className="w-full md:w-auto mb-4"
                   >
                     {isSubmitting ? "Sending..." : "Send"}
                   </Button>

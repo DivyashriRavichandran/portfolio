@@ -1,9 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -17,19 +16,20 @@ import { api } from "@/convex/_generated/api";
 import H2 from "../../../../components/headings/H2";
 import ProjectNotFound from "../../_components/ProjectNotFound";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
-import LangSwitcher from "../../_components/LangSwitcher";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import ProjectNavbar from "../../_components/ProjectNavbar";
+import FloatingNavbar from "../../_components/FloatingNavbar";
 
-const tocItems = [
-  { id: "story", label: "Build Story" },
-  { id: "stack", label: "Tech & Features" },
-  { id: "challenge", label: "The Challenge" },
-  { id: "solution", label: "The Solution" },
-  { id: "design", label: "System Design" },
-  { id: "links", label: "Project Links" },
+const pillItems = [
+  { id: "motivation", label: "Intro" },
+  { id: "execution", label: "Build" },
+  { id: "impact", label: "Impact" },
+  { id: "stack", label: "Stack" },
+  { id: "challenge", label: "Challenge" },
+  { id: "future", label: "Future" },
+  { id: "links", label: "Links" },
 ];
 
 export default function ProjectDetailsPage() {
@@ -42,175 +42,56 @@ export default function ProjectDetailsPage() {
   const allProjects = useQuery(api.projects.list);
 
   const [activeSection, setActiveSection] = useState("");
+  const [showPill, setShowPill] = useState(false);
 
-  // Track scroll position to update active heading
   useEffect(() => {
+    const handleScroll = () => setShowPill(window.scrollY > 400);
+    window.addEventListener("scroll", handleScroll);
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { threshold: 0.5, rootMargin: "-10% 0% -40% 0%" },
+      { threshold: 0.2, rootMargin: "-90% 0% -10% 0%" },
     );
 
-    const sections = ["story", "stack", "challenge", "solution", "design"];
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
+    pillItems.forEach((item) => {
+      const el = document.getElementById(item.id);
       if (el) observer.observe(el);
     });
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, [project]);
 
   if (project === undefined || allProjects === undefined) {
-    return (
-      <main className="md:max-w-4xl md:mx-auto px-5 md:px-0">
-        <div className="py-8 md:py-16 space-y-12">
-          {/* HERO SKELETON */}
-          <div className="space-y-4">
-            <Skeleton className="h-4 w-48 bg-primary/10" />
-            <Skeleton className="h-12 md:h-16 w-3/4" />
-            <div className="border-l-2 border-primary/20 pl-4">
-              <Skeleton className="h-20 w-full" />
-            </div>
-          </div>
-
-          {/* CAROUSEL SKELETON */}
-          <Skeleton className="aspect-video w-full rounded-sm" />
-
-          {/* STORY SKELETON */}
-          <div className="space-y-6">
-            <Skeleton className="h-8 w-40" />
-            <div className="space-y-3">
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
-            </div>
-          </div>
-
-          {/* NEW MERGED CHALLENGE/SOLUTION SKELETON */}
-          <div className="grid md:grid-cols-2 gap-px bg-border border rounded-xl overflow-hidden">
-            <div className="p-8 bg-background space-y-4">
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-20 w-full" />
-            </div>
-            <div className="p-8 bg-background space-y-4">
-              <Skeleton className="h-6 w-32" />
-              <Skeleton className="h-20 w-full" />
-            </div>
-          </div>
-        </div>
-      </main>
-    );
+    return <ProjectLoadingSkeleton />;
   }
 
   if (!project) return <ProjectNotFound />;
 
-  const currentIndex = allProjects.findIndex((p) => p._id === slug);
+  const currentIndex = allProjects.findIndex((p) => p.slug === slug);
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
     <main className="relative w-full h-full">
-      {/* SIDEBAR TRACKER */}
-      <aside className="hidden xl:block fixed left-[calc(50%+30rem)] top-40 w-64">
-        <div className="space-y-4 border-l pl-6">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-6">
-            On this page
-          </p>
-          {tocItems.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`block text-sm transition-all duration-300 relative ${
-                activeSection === item.id
-                  ? "text-primary font-medium"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById(item.id)
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute -left-6.5 top-1/2 -translate-y-1/2 w-1 h-4 bg-primary"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </aside>
+      {showPill && (
+        <FloatingNavbar items={pillItems} activeId={activeSection} />
+      )}
 
-      {/* NAVBAR */}
-      <nav className="border-b sticky top-0 z-50 backdrop-blur-sm md:max-w-4xl md:mx-auto px-5 md:px-0 ">
-        <div className="flex items-center justify-between py-4">
-          <Link
-            href="/v2"
-            className="group text-xs md:text-sm font-medium flex items-center gap-2"
-          >
-            <div className="size-10 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
-              <ChevronLeft size={16} />
-            </div>
-            <span className="hidden md:block">{t("back-to-portfolio")}</span>
-          </Link>
+      <ProjectNavbar project={project} nextProject={nextProject} />
 
-          <div className="flex items-center gap-6">
-            {project.project_link && (
-              <a
-                href={project.project_link}
-                target="_blank"
-                className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
-              >
-                <FaGlobe size={24} />
-              </a>
-            )}
-
-            {project.github_link && (
-              <a
-                href={project.github_link}
-                target="_blank"
-                className="text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 hover:text-primary transition-colors"
-              >
-                <FaGithub size={24} />
-              </a>
-            )}
-            <Link
-              href={`/v2/project/${nextProject._id}`}
-              className="group flex items-center gap-3 border-l pl-6"
-            >
-              <div className="hidden sm:block text-right">
-                <p className="text-[10px] uppercase tracking-tight text-muted-foreground font-semibold">
-                  {t("next-project")}
-                </p>
-
-                <p className="text-xs font-semibold group-hover:text-primary transition-colors">
-                  {nextProject.title[locale]}
-                </p>
-              </div>
-              <div className="size-10 rounded-full border flex items-center justify-center group-hover:bg-primary group-hover:text-black transition-all">
-                <ChevronRight size={16} />
-              </div>
-            </Link>
-            <LangSwitcher />
-          </div>
-        </div>
-      </nav>
-
-      <section className="md:max-w-4xl md:mx-auto px-5 md:px-0 py-8 md:py-16">
+      <section className="md:max-w-4xl md:mx-auto px-5 lg:px-0 py-8 md:py-12">
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
             <span>{project.year}</span>
             <span className="h-px w-8 bg-primary/30" />
-            <span>{project.categories[locale].join(" • ")}</span>{" "}
+            <span>{project.categories[locale].join(" • ")}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-semibold uppercase wrap-break-word">
             {project.title[locale]}
@@ -224,11 +105,11 @@ export default function ProjectDetailsPage() {
 
         {/* CAROUSEL */}
         <div className="mt-8 md:mt-12">
-          <Carousel opts={{ align: "start", loop: true }} className="w-full ">
+          <Carousel opts={{ align: "start", loop: true }} className="w-full">
             <CarouselContent>
               {(project.imageUrls ?? []).map((url, i) => (
-                <CarouselItem key={url ?? i} className="md:basis-1/1">
-                  <div className="relative aspect-video rounded-sm overflow-hidden border border-white/10">
+                <CarouselItem key={url || i} className="md:basis-1/2">
+                  <div className="relative aspect-video rounded overflow-hidden border">
                     <Image
                       src={url ?? ""}
                       alt={`Project Image ${i + 1}`}
@@ -246,81 +127,111 @@ export default function ProjectDetailsPage() {
           </Carousel>
         </div>
 
-        {/* CONTENT  */}
         <div className="mt-10 space-y-12">
-          <article id="story" className="scroll-mt-32 space-y-6">
-            <H2 text1={t("the-build")} text2={t("story")} />
-            <div className="space-y-6 text-muted-foreground text-base md:text-xl leading-relaxed">
-              <p>{project.motivation?.[locale]}</p>
-              <p>{project.execution?.[locale]}</p>
-              <p>{project.result?.[locale]}</p>
-            </div>
-          </article>
+          {project.motivation && (
+            <ProjectSection
+              id="motivation"
+              title1="Why I"
+              title2="Built it"
+              symbol="?"
+            >
+              <div className="whitespace-pre-line">
+                {project.motivation[locale]}
+              </div>
+            </ProjectSection>
+          )}
 
+          {project.execution && (
+            <ProjectSection
+              id="execution"
+              title1="How I"
+              title2="Build it"
+              symbol="?"
+            >
+              <div className="whitespace-pre-line">
+                {project.execution[locale]}
+              </div>
+            </ProjectSection>
+          )}
+
+          {/* IMPACT METRICS */}
+          {project.impact?.[locale] && project.impact[locale].length > 0 && (
+            <section id="impact" className="scroll-mt-32 space-y-12">
+              <H2 text1="Impact &" text2="Metrics" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {project.impact[locale].map((metric, i) => (
+                  <MetricCard
+                    key={i}
+                    title={metric.title}
+                    sub={metric.sub}
+                    desc={metric.desc}
+                  />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* TECH STACK */}
           <div id="stack" className="space-y-4 scroll-mt-32">
-            <H2 text1="Tech" text2="Stack" />
+            <H2 text1="Technologies" text2="Used" />
             <div className="flex flex-wrap gap-2">
               {project.tech_stack.map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
               ))}
             </div>
           </div>
-          <div id="stack" className="space-y-8 scroll-mt-32">
-            <H2 text1={t("key")} text2={t("features")} />
 
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {project.features?.[locale]?.map((feature, i) => (
-                <li
-                  key={i}
-                  className="group p-3 rounded border border-white/5 bg-muted/50 hover:bg-muted hover:border-primary transition-all duration-300"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="text-xs text-primary">•</span>
+          {project.challenge && (
+            <ProjectSection id="challenge" title1="The" title2="Challenges">
+              <div className="whitespace-pre-line">
+                {project.challenge[locale]}
+              </div>
+            </ProjectSection>
+          )}
 
-                    <p className="text-sm md:text-base text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
-                      {feature}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {project.learning && (
+            <ProjectSection id="learning" title1={t("Key")} title2="Learnings">
+              <div className="whitespace-pre-line">
+                {project.learning[locale]}
+              </div>
+            </ProjectSection>
+          )}
 
-          {/* CHALLENGE & SOLUTION */}
-          <section id="challenge" className="scroll-mt-32 space-y-12">
-            <div className="space-y-4">
-              <H2 text1={t("the")} text2={t("challenge")} />
-              <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
-                {project.challenge?.[locale]}
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <H2 text1={t("the")} text2={t("solution")} />
-              <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
-                {project.solution?.[locale]}
-              </p>
-            </div>
-          </section>
-
-          {project.architecture && (
-            <article id="design" className="scroll-mt-32 space-y-8">
+          {/* SYSTEM DESIGN IMAGE */}
+          {project.architectureUrl && (
+            <article
+              id="design"
+              className="scroll-mt-32 space-y-6 w-full relative"
+            >
               <div className="text-center">
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
-              <Image
-                src={project.architectureUrl ?? ""}
-                alt="Architecture"
-                className="rounded w-full h-auto"
-                width={1200}
-                height={800}
-              />
+              <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
+                <Image
+                  src={project.architectureUrl}
+                  alt="Architecture Diagram"
+                  className="object-contain p-4"
+                  fill
+                />
+              </div>
             </article>
           )}
 
+          {project.future && (
+            <ProjectSection
+              id="future"
+              title1={t("Future")}
+              title2="Improvements"
+            >
+              <div className="whitespace-pre-line">
+                {project.future[locale]}
+              </div>
+            </ProjectSection>
+          )}
+
+          {/* PROJECT LINKS */}
           <div id="links" className="scroll-mt-32 space-y-8 pb-20">
             <H2 text1="Project" text2="Links" />
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.github_link && (
                 <a
@@ -371,6 +282,68 @@ export default function ProjectDetailsPage() {
           </div>
         </div>
       </section>
+    </main>
+  );
+}
+
+// --- Sub-components ---
+function ProjectSection({
+  id,
+  title1,
+  title2,
+  symbol,
+  children,
+}: {
+  id: string;
+  title1: string;
+  title2: string;
+  symbol?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <article id={id} className="scroll-mt-32 space-y-4 md:space-y-6">
+      <H2 text1={title1} text2={title2} symbol={symbol} />
+      <div className="space-y-4 md:space-y-6 md:text-lg">{children}</div>
+    </article>
+  );
+}
+
+function MetricCard({
+  title,
+  sub,
+  desc,
+}: {
+  title: string;
+  sub: string;
+  desc: string;
+}) {
+  return (
+    <div className="p-5 border border-foreground/5 bg-primary/5 rounded space-y-2 hover:bg-primary/10 transition-colors">
+      <p className="text-primary text-2xl font-semibold">{title}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-widest">
+        {sub}
+      </p>
+      <p className="text-xs text-muted-foreground">{desc}</p>
+    </div>
+  );
+}
+
+function ProjectLoadingSkeleton() {
+  return (
+    <main className="md:max-w-4xl md:mx-auto px-5 md:px-0">
+      <div className="py-8 md:py-16 space-y-12">
+        <div className="space-y-4">
+          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-12 md:h-16 w-3/4" />
+          <Skeleton className="h-20 w-full" />
+        </div>
+        <Skeleton className="aspect-video w-full rounded-sm" />
+        <div className="space-y-6 pt-12">
+          <Skeleton className="h-8 w-40" />
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-5/6" />
+        </div>
+      </div>
     </main>
   );
 }
