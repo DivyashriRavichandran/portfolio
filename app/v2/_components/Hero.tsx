@@ -66,13 +66,13 @@ const Hero = () => {
           <div className="space-y-2 md:space-y-4">
             <h1 className=" text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight uppercase leading-[0.85]">
               Divyashri <br />
-              <span className="text-muted-foreground/60">Ravichandran.</span>
+              <span className="text-muted-foreground/80">Ravichandran.</span>
             </h1>
 
-            {/* Professional Tagline - Mobile */}
-            <div className="md:hidden  flex items-center gap-2">
+            {/* Tagline - Mobile */}
+            <div className="md:hidden flex items-center gap-2">
               <div className="h-px w-6 bg-primary" />
-              <p className="text-[9px] uppercase tracking-widest font-semibold text-muted-foreground/80">
+              <p className="text-[9px] uppercase tracking-widest font-semibold text-muted-foreground">
                 Master Student / Software Engineer
               </p>
             </div>
@@ -80,9 +80,9 @@ const Hero = () => {
         </div>
 
         {/* BOTTOM ROW: NAV & STATUS */}
-        <div className="md:col-span-8 flex flex-col gap-6">
+        <div className="md:col-span-12 flex flex-col gap-6">
           {/* Desktop Tagline */}
-          <div className="hidden md:flex  items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
             <div className="h-px w-12 bg-primary" />
             <p className="text-[10px] md:text-xs uppercase tracking-widest font-semibold text-muted-foreground">
               Master Student / Software Engineer
@@ -90,20 +90,12 @@ const Hero = () => {
           </div>
 
           {/* MENU ITEMS / BUTTONS */}
-          <nav className="flex flex-wrap items-center gap-3 md:gap-4 mt-2">
-            {navItems.map((item) => (
-              <Link key={item.label} href={item.href}>
-                <Button size={"sm"}>{item.label}</Button>
-              </Link>
-            ))}
-
-            <Link href="/resume.pdf" target="_blank">
-              <Button variant="outline" size={"sm"}>
-                Resume
-                <DownloadIcon />
-              </Button>
-            </Link>
-          </nav>
+          <Link href="/resume.pdf" target="_blank" className="ml-auto">
+            <Button size={"sm"}>
+              Resume / PDF
+              <DownloadIcon />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

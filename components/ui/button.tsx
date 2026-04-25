@@ -16,7 +16,7 @@ const buttonVariants = cva(
           "bg-transparent text-foreground border hover:border-primary hover:text-primary font-medium",
         secondary: "bg-foreground text-background hover:bg-foreground/80",
         ghost: "bg-none hover:bg-foreground/10 rounded-full",
-        link: "text-primary underline-offset-4 hover:underline lowercase font-medium tracking-normal",
+        link: "underline-offset-4 hover:underline font-medium",
         none: "",
         admin:
           "bg-primary hover:opacity-80 text-primary-foreground uppercase tracking-widest font-bold text-xs gap-2",

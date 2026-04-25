@@ -285,20 +285,34 @@
       "github_link": ""
     }
   ],
-  "side-projects": [
+  "mini-projects": [
     {
       "id": 1,
-      "image": "/Screenshot 2026-03-25 at 1.10.00 pm.png",
+      "image": "/mini-projects/animate-ui.png",
       "title": "Flip Card Component - Animate UI",
-      "description": "A reusable React component that flips smoothly to reveal content on the back side, adding interactive animations to web interfaces and enhancing user experience with motion and Tailwind CSS.",
+      "description": "An open-source React component for the Animate UI library, featuring 3D flip transitions on hover.",
       "tags": [
+        "Open-Source",
         "React",
+        "TypeScript",
         "Tailwind CSS",
-        "Motion",
-        "Animation",
-        "UI Component"
+        "Motion"
       ],
-      "github_link": "https://github.com/divyashriravichandran/"
+      "link": "https://animate-ui.com/docs/components/community/flip-card"
+    },
+    {
+      "id": 2,
+      "image": "/mini-projects/tweakers.jpeg",
+      "title": "Dutch Tech News - Web Scraper",
+      "description": "A Python-based scraper automated with GitHub Actions that extracts daily tech news and delivers updates via email.",
+      "tags": [
+        "Python",
+        "BeautifulSoup",
+        "GitHub Actions",
+        "CI/CD",
+        "SMTP"
+      ],
+      "link": "https://github.com/divyashriravichandran/dutch-tech-news-scraper"
     }
   ],
   "about": {

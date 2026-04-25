@@ -25,6 +25,8 @@ import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
 import Navbar from "../_components/Navbar";
 import H3 from "@/components/headings/H3";
+import H4 from "@/components/headings/H4";
+import H2 from "@/components/headings/H2";
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -45,8 +47,8 @@ export default function AboutPage() {
     { label: "Monitor", value: "LG 27” 4K", icon: Monitor },
     { label: "Mouse", value: "MX Master 3S", icon: MousePointer2 },
     { label: "Keyboard", value: "MX Mechanical Mini", icon: Keyboard },
-    { label: "Headphones", value: "Sennheiser HD 600", icon: Headphones },
-    { label: "Speaker", value: "Bose Soundlink", icon: Speaker },
+    { label: "Headphones", value: "Sennheiser HD 348BT", icon: Headphones },
+    { label: "Speaker", value: "Bose Soundlink Flex 2", icon: Speaker },
   ];
 
   const hobbies = [
@@ -89,7 +91,7 @@ export default function AboutPage() {
 
       {/* FAVORITES */}
       <section>
-        <H3 icon={Cpu} text="My Favourites" />
+        <H2 text1="My" text2="Favourites" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {favs.map((fav) => (
             <FavoriteCard key={fav.label} item={fav} />
@@ -97,29 +99,43 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* SETUP */}
-      <section>
-        <H3 icon={Cpu} text="My Setup" />
-        <div className="grid grid-cols-2 gap-4">
-          {hardware.map((item) => (
-            <FavoriteCard key={item.label} item={item} />
-          ))}
-        </div>
-      </section>
+      {/* ROW 2 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+        {/* SETUP */}
+        <section>
+          <H2 text1="Desk" text2="Setup" />
+          <div className="flex flex-col gap-4">
+            {hardware.map((item) => (
+              <div
+                key={item.value}
+                className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
+              >
+                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                  <item.icon size={16} className="shrink-0" />
+                  <span className="text-xs uppercase tracking-widest">
+                    {item.label}
+                  </span>
+                </div>
 
-      {/* HOBBIES */}
-      <section>
-        <H3 icon={Star} text="My Hobbies" />
-        <div className="grid grid-cols-2 gap-4">
-          {hobbies.map((hobby) => (
-            <FavoriteCard key={hobby.label} item={hobby} />
-          ))}
-        </div>
-      </section>
+                <span className="text-sm font-medium">{item.value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+        {/* HOBBIES */}
+        <section>
+          <H2 text1="My" text2="Hobbies" />
+          <div className="flex flex-col gap-4">
+            {hobbies.map((hobby) => (
+              <FavoriteCard key={hobby.label} item={hobby} />
+            ))}
+          </div>
+        </section>
+      </div>
 
       {/* MUSIC  */}
       <section>
-        <H3 icon={Music} text="Currently listening" />
+        <H2 text1="Currently" text2="Listening" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {spotifyLinks.map((link) => {
             const embedLink = link.replace(

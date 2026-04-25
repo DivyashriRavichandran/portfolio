@@ -3,61 +3,65 @@ import React from "react";
 import Image from "next/image";
 import data from "@/data/data.json";
 import H1 from "../../../components/headings/H1";
-import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 
-const SideProjectsSection = () => {
-  const projects = data["side-projects"];
+const MiniProjectsSection = () => {
+  const projects = data["mini-projects"];
 
   return (
     <section className="pb-10">
-      <H1 text1={"Open-Source"} text2={"Works"} total={projects.length} />
+      <H1 text1={"Mini"} text2={"Projects"} total={projects.length} />
 
-      <div className="grid grid-cols-1 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 gap-3 md:gap-4">
         {projects.map((project) => (
-          <div
+          <a
             key={project.id}
-            className="group flex items-center rounded border bg-muted/30 hover:border-primary transition-all duration-300"
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex md:items-center overflow-hidden rounded border bg-muted/10 p-3 md:p-4 hover:border-primary transition-all duration-300"
           >
-            <Image
-              src={project.image}
-              alt={project.title}
-              width={100}
-              height={100}
-              className="w-30 md:w-40 h-full object-cover rounded-l border-r"
-            />
+            {/* LOGO CONTAINER */}
+            <div className="flex size-16 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
+              <Image
+                src={project.image}
+                alt={project.title}
+                width={80}
+                height={80}
+                className="object-contain"
+              />
+            </div>
 
-            {/* CONTENT */}
-            <div className="flex-1 p-3 md:p-4">
-              <div className="flex items-center justify-between gap-1">
-                <h3 className="text-sm md:text-base font-semibold">
+            {/* CONTENT SECTION */}
+            <div className="ml-4 md:ml-5 flex flex-1 flex-col overflow-hidden">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="truncate text-sm md:text-base font-semibold">
                   {project.title}
                 </h3>
-                <div className="flex gap-3 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ExternalLink
-                    size={14}
-                    className="text-muted-foreground hover:text-primary cursor-pointer md:size-5"
-                  />
-                </div>
+                <ExternalLink className="size-4 md:size-5 group-hover:text-primary" />
               </div>
 
-              <p className="mt-1 md:mt-2 text-[10px] md:text-sm text-muted-foreground line-clamp-4 leading-relaxed">
+              <p className="mt-0.5 md:mt-1 text-xs md:text-sm text-muted-foreground">
                 {project.description}
               </p>
 
-              <div className="mt-3 md:mt-4 flex flex-wrap gap-2">
+              {/* TAGS */}
+              <div className="mt-2 md:mt-4 flex flex-wrap gap-x-2 gap-y-1">
                 {project.tags.map((tag, i) => (
-                  <Badge key={i} size={"sm"}>
-                    {tag}
-                  </Badge>
+                  <span
+                    key={i}
+                    className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80"
+                  >
+                    #{tag}
+                  </span>
                 ))}
               </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </section>
   );
 };
 
-export default SideProjectsSection;
+export default MiniProjectsSection;

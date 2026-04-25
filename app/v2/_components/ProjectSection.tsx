@@ -68,10 +68,19 @@ const ProjectCard = ({
           ) : (
             <div className="w-full h-full" />
           )}
+          {/* MOBILE ONLY */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/80 to-transparent md:hidden" />
+          <div className="absolute bottom-3 right-3 flex items-center gap-1 md:hidden">
+            <span className="text-[10px] font-semibold uppercase tracking-widest">
+              View Project
+            </span>
+            <ArrowUpRight size={14} />
+          </div>
 
-          <div className="absolute inset-0 bg-background/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
-            <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
-              <ArrowUpRight size={26} />
+          {/* DESKTOP ONLY */}
+          <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
+            <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.5)]">
+              <ArrowUpRight size={24} />
             </div>
           </div>
         </div>
@@ -80,7 +89,7 @@ const ProjectCard = ({
         <div className="p-3 md:p-4 space-y-3 md:space-y-4">
           <div className="flex justify-between items-start gap-2">
             <div className="md:space-y-1">
-              <h3 className="text-xl md:text-2xl font-semibold uppercase">
+              <h3 className="text-lg md:text-xl font-semibold uppercase">
                 {project.title[locale]}
               </h3>
               <p className="text-muted-foreground text-[10px] md:text-xs font-medium uppercase tracking-wider">
