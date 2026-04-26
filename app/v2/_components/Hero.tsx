@@ -90,7 +90,7 @@ const Hero = () => {
           </div>
 
           {/* MENU ITEMS / BUTTONS */}
-          <Link href="/resume.pdf" target="_blank" className="ml-auto">
+          <Link href="" target="_blank" className="ml-auto">
             <Button size={"sm"}>
               Resume / PDF
               <DownloadIcon />
