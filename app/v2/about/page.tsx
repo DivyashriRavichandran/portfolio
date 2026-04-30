@@ -22,6 +22,8 @@ import {
   LucideIcon,
   Dices,
   Bike,
+  BookOpen,
+  DicesIcon,
 } from "lucide-react";
 import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
@@ -39,10 +41,10 @@ export default function AboutPage() {
     { label: "Tool", value: "Raycast", icon: Layers },
     { label: "Productivity", value: "Obsidian", icon: NotebookPen },
     { label: "Drink", value: "Matcha", icon: Coffee },
-    { label: "Video Game", value: "TLOU Part II", icon: Gamepad2 },
+    { label: "Video Game", value: "TLOU II", icon: Gamepad2 },
     { label: "Film", value: "Gifted", icon: Film },
     { label: "Podcast", value: "Syntax", icon: Mic },
-    { label: "Board Game", value: "Werewolf", icon: Mic },
+    { label: "Board Game", value: "Werewolf", icon: DicesIcon },
   ];
 
   const hardware = [
@@ -82,7 +84,7 @@ export default function AboutPage() {
       {/* HEADER SECTION */}
       <div className="pt-32 md:pt-32 space-y-4">
         <H1 text1="Beyond the" text2="Code" />
-        <p className="text-lg md:text-xl leading-relaxed">
+        <p className="md:text-xl md:leading-relaxed">
           {/* When I’m not coding, you’ll probably find me practicing my Dutch or
           wandering around the city in my bike. I like to keep things minimal,
           from the hardware on my desk to the habits I’m building. This is just
