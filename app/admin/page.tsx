@@ -2,8 +2,10 @@
 
 import AboutManager from "@/components/admin/AboutManager";
 import CareerManager from "@/components/admin/CareerManager";
+import MiniProjectManager from "@/components/admin/MiniProjectManager";
 
 import ProjectManager from "@/components/admin/ProjectManager";
+import H1 from "@/components/headings/H1";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Briefcase, FolderCode, UserCircle } from "lucide-react";
 
@@ -11,11 +13,8 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-background px-5 md:container md:mx-auto py-10">
       {/* HEADER */}
-      <div className="flex flex-col gap-4 border-b border-foreground/30 pb-4">
-        <h1 className="text-6xl font-bold uppercase tracking-tighter">
-          Admin{" "}
-          <span className="text-background px-1 bg-primary">Dashboard</span>
-        </h1>
+      <div>
+        <H1 text1={"Admin"} text2={"Dashboard"} />
         <p className="font-medium opacity-60">
           Management of all Portfolio content & settings
         </p>
@@ -27,10 +26,12 @@ export default function AdminPage() {
           <TabsTrigger value="projects">
             <FolderCode size={16} /> Projects
           </TabsTrigger>
+          <TabsTrigger value="mini-projects">
+            <FolderCode size={16} /> Mini Projects
+          </TabsTrigger>
           <TabsTrigger value="career">
             <Briefcase size={16} /> Career
           </TabsTrigger>
-
           <TabsTrigger value="about">
             <UserCircle size={16} /> About
           </TabsTrigger>
@@ -41,7 +42,12 @@ export default function AdminPage() {
           <ProjectManager />
         </TabsContent>
 
-        {/* PROJECTS SECTION */}
+        {/* MINI-PROJECTS SECTION */}
+        <TabsContent value="mini-projects">
+          <MiniProjectManager />
+        </TabsContent>
+
+        {/* CAREER SECTION */}
         <TabsContent value="career">
           <CareerManager />
         </TabsContent>

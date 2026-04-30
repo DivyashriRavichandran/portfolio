@@ -98,4 +98,12 @@ export default defineSchema({
     websites: v.optional(v.array(v.string())),
     order: v.optional(v.number()),
   }).index("by_order", ["order"]),
+
+  mini_projects: defineTable({
+    image: v.optional(v.string()),
+    title: localeString,
+    description: localeString,
+    tags: v.optional(v.array(v.string())),
+    url: v.optional(v.string()),
+  }),
 });

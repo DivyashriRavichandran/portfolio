@@ -11,6 +11,7 @@
 import type * as about from "../about.js";
 import type * as career from "../career.js";
 import type * as images from "../images.js";
+import type * as mini_projects from "../mini_projects.js";
 import type * as projects from "../projects.js";
 
 import type {
@@ -23,6 +24,7 @@ declare const fullApi: ApiFromModules<{
   about: typeof about;
   career: typeof career;
   images: typeof images;
+  mini_projects: typeof mini_projects;
   projects: typeof projects;
 }>;
 

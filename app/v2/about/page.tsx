@@ -20,6 +20,8 @@ import {
   Mic,
   Hammer,
   LucideIcon,
+  Dices,
+  Bike,
 } from "lucide-react";
 import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
@@ -37,9 +39,10 @@ export default function AboutPage() {
     { label: "Tool", value: "Raycast", icon: Layers },
     { label: "Productivity", value: "Obsidian", icon: NotebookPen },
     { label: "Drink", value: "Matcha", icon: Coffee },
-    { label: "Game", value: "TLOU Part II", icon: Gamepad2 },
+    { label: "Video Game", value: "TLOU Part II", icon: Gamepad2 },
     { label: "Film", value: "Gifted", icon: Film },
     { label: "Podcast", value: "Syntax", icon: Mic },
+    { label: "Board Game", value: "Werewolf", icon: Mic },
   ];
 
   const hardware = [
@@ -53,22 +56,18 @@ export default function AboutPage() {
 
   const hobbies = [
     {
-      label: "Language",
-      value: "Learning Dutch (A2 Level)",
+      value: "Tabletop and board games",
+      icon: Dices,
+    },
+    {
+      value: "Cycling around the city",
+      icon: Bike,
+    },
+    {
+      value: "Learning Dutch (A2+)",
       icon: Book,
     },
-    {
-      label: "Music",
-      value: "Piano/Keyboard (Arrangers)",
-      icon: Piano,
-    },
-    {
-      label: "Building",
-      value: "Side Projects",
-      icon: Hammer,
-    },
   ];
-
   const spotifyLinks = [
     "https://open.spotify.com/track/40XiAOitWuV9bJKh4DHHpB?si=627bf10f217b4aa1",
     "https://open.spotify.com/track/2u6twH8SHtv37ctUqQ4iEX?si=02b3f1def55f49c0",
@@ -84,8 +83,15 @@ export default function AboutPage() {
       <div className="pt-32 md:pt-32 space-y-4">
         <H1 text1="Beyond the" text2="Code" />
         <p className="text-lg md:text-xl leading-relaxed">
-          When Im not coding... This is a curated list of the tools, media, and
-          habits that shape my daily life.
+          {/* When I’m not coding, you’ll probably find me practicing my Dutch or
+          wandering around the city in my bike. I like to keep things minimal,
+          from the hardware on my desk to the habits I’m building. This is just
+          a glimpse into the tools I use and the stuff I'm into right now. */}
+          Als ik niet aan het coderen ben, zul je mij waarschijnlijk mijn
+          Nederlands zien oefenen of op de fiets door de stad dwalen. Ik hou
+          ervan om dingen minimaal te houden, van de hardware op mijn bureau tot
+          de gewoonten die ik aan het opbouwen ben. Dit is slechts een glimp van
+          de tools die ik gebruik en de dingen waar ik nu mee bezig ben.
         </p>
       </div>
 
@@ -127,7 +133,7 @@ export default function AboutPage() {
           <H2 text1="My" text2="Hobbies" />
           <div className="flex flex-col gap-4">
             {hobbies.map((hobby) => (
-              <FavoriteCard key={hobby.label} item={hobby} />
+              <FavoriteCard key={hobby.value} item={hobby} />
             ))}
           </div>
         </section>
@@ -162,16 +168,18 @@ export default function AboutPage() {
 }
 
 type Item = {
-  label: string;
+  label?: string;
   icon: LucideIcon;
   value: string;
 };
 
 const FavoriteCard = ({ item }: { item: Item }) => (
   <div className="group border bg-muted/20 border-foreground/10 p-4 rounded transition-all hover:border-primary hover:bg-muted/30">
-    <p className="text-[10px] uppercase font-medium tracking-widest text-muted-foreground/80">
-      {item.label}
-    </p>
+    {item.label && (
+      <p className="text-[10px] uppercase font-medium tracking-widest text-muted-foreground/80">
+        {item.label}
+      </p>
+    )}
     <div className="mt-1 flex items-center gap-2">
       <item.icon size={16} className="text-primary" />
       <span className="text-sm font-medium">{item.value}</span>
