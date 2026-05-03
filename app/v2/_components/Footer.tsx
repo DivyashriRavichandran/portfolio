@@ -72,25 +72,18 @@ const Footer = () => {
               </h2>
 
               {/* SOCIALS MAP */}
-              <div className="mt-6 md:mt-12 flex flex-col gap-2 md:gap-4">
+              <div className="mt-8 flex lg:flex-col justify-center gap-3">
                 {[
                   {
                     label: "LinkedIn",
-                    desc: "Connect with me professional",
-                    href: "",
-                    icon: <FaLinkedin size={22} />,
+                    href: "#",
+                    icon: <FaLinkedin size={20} />,
                   },
-                  {
-                    label: "Github",
-                    desc: "Source code & side projects",
-                    href: "",
-                    icon: <FaGithub size={22} />,
-                  },
+                  { label: "Github", href: "#", icon: <FaGithub size={20} /> },
                   {
                     label: "Email",
-                    desc: "contact@divyashri.nl",
                     href: "mailto:contact@divyashri.nl",
-                    icon: <MdEmail size={22} />,
+                    icon: <MdEmail size={20} />,
                   },
                 ].map((social, index) => (
                   <a
@@ -98,19 +91,14 @@ const Footer = () => {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group p-4 border border-foreground/10 transition-all duration-300 bg-muted/20 hover:border-primary/50"
+                    className="group flex items-center gap-4 p-3 rounded-xl transition-all hover:bg-primary/5 active:scale-[0.98]"
                   >
-                    <div className="flex items-center gap-4">
-                      <div className="size-10 rounded-full flex items-center justify-center border transition-transform group-hover:scale-110 bg-muted/50">
-                        {social.icon}
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-sm">{social.label}</h4>
-                        <p className="text-xs md:text-sm text-muted-foreground">
-                          {social.desc}
-                        </p>
-                      </div>
+                    <div className="flex size-10 items-center justify-center rounded-full bg-muted/50 text-muted-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                      {social.icon}
                     </div>
+                    <span className="font-medium text-sm tracking-tight text-foreground/80 transition-colors group-hover:text-primary">
+                      {social.label}
+                    </span>
                   </a>
                 ))}
               </div>
@@ -145,7 +133,7 @@ const Footer = () => {
                 Drop a message
               </h3>
               <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
-                Have a specific inquiry or just want to chat about computers?
+                Have a specific inquiry or just want to chat about software?
               </p>
             </div>
 

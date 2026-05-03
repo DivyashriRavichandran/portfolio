@@ -87,7 +87,7 @@ const TechStackSection = () => {
 
             <div className="flex flex-wrap gap-1.5 border-l pl-3 md:pl-6">
               {items.map((tech) => (
-                <Badge key={tech} size={"sm"}>
+                <Badge key={tech} className="normal-case font-normal">
                   {tech}
                 </Badge>
               ))}

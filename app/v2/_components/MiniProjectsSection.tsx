@@ -34,7 +34,7 @@ const MiniProjectsSection = () => {
                 alt={project.title.en}
                 width={80}
                 height={80}
-                className="object-contain"
+                className="object-contain rounded"
               />
             </div>
 

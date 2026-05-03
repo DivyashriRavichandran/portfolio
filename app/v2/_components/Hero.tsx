@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
+import { FaLinkedin, FaGithub } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 
 const Hero = () => {
   const container = useRef(null);
@@ -23,12 +25,6 @@ const Hero = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const navItems = [
-    { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Contact", href: "#contact" },
-  ];
-
   return (
     <section
       ref={container}
@@ -41,9 +37,9 @@ const Hero = () => {
       </div>
 
       {/* CONTENT */}
-      <div className="mt-8 md:mt-12 grid grid-cols-1 md:grid-cols-12 gap-y-6 md:items-end">
+      <div className="mt-8 md:mt-12 flex flex-col gap-y-8 md:gap-y-12">
         {/* AVATAR & NAME */}
-        <div className="md:col-span-12 flex flex-row items-center gap-4 md:gap-8">
+        <div className="flex flex-row items-center gap-4 md:gap-8">
           <div className="relative inline-block w-fit">
             <Image
               src="/emoji.png"
@@ -64,35 +60,44 @@ const Hero = () => {
           </div>
 
           <div className="space-y-2 md:space-y-4">
-            <h1 className=" text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight uppercase leading-[0.85]">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-[0.85]">
               Divyashri <br />
               <span className="text-muted-foreground/80">Ravichandran.</span>
             </h1>
 
-            {/* Tagline - Mobile */}
-            <div className="md:hidden flex items-center gap-2">
-              <div className="h-px w-6 bg-primary" />
-              <p className="text-[9px] uppercase tracking-widest font-semibold text-muted-foreground">
-                Master Student / Software Engineer
+            {/* Tagline */}
+            <div className="flex items-center gap-2">
+              <p className="text-sm md:text-lg font-medium text-muted-foreground">
+                Masters Student @ RUG / Software Engineer
               </p>
             </div>
           </div>
         </div>
 
-        {/* BOTTOM ROW: NAV & STATUS */}
-        <div className="md:col-span-12 flex flex-col gap-6">
-          {/* Desktop Tagline */}
-          <div className="hidden md:flex items-center gap-3">
-            <div className="h-px w-12 bg-primary" />
-            <p className="text-[10px] md:text-xs uppercase tracking-widest font-semibold text-muted-foreground">
-              Master Student / Software Engineer
-            </p>
-          </div>
+        {/* SOCIALS & RESUME */}
+        <div className="w-full flex flex-wrap items-center gap-x-5 px-2">
+          {[
+            { label: "LinkedIn", href: "#", icon: FaLinkedin },
+            { label: "Github", href: "#", icon: FaGithub },
+            {
+              label: "Email",
+              href: "mailto:contact@divyashri.nl",
+              icon: MdEmail,
+            },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="flex items-center gap-2"
+            >
+              <link.icon className="size-5 md:size-6" />
+              <span className="text-sm hidden md:block">{link.label}</span>
+            </Link>
+          ))}
 
-          {/* MENU ITEMS / BUTTONS */}
           <Link href="" target="_blank" className="ml-auto">
             <Button size={"sm"}>
-              Resume / PDF
+              Resume
               <DownloadIcon />
             </Button>
           </Link>

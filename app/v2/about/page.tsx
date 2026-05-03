@@ -1,9 +1,7 @@
 "use client";
 import {
   Cpu,
-  Music,
   Gamepad2,
-  Star,
   Monitor,
   MousePointer2,
   Keyboard,
@@ -13,23 +11,18 @@ import {
   Film,
   Laptop,
   Speaker,
-  Piano,
-  Book,
   NotebookPen,
   Layers,
   Mic,
-  Hammer,
   LucideIcon,
-  Dices,
   Bike,
-  BookOpen,
   DicesIcon,
+  Globe,
+  Piano,
 } from "lucide-react";
 import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
 import Navbar from "../_components/Navbar";
-import H3 from "@/components/headings/H3";
-import H4 from "@/components/headings/H4";
 import H2 from "@/components/headings/H2";
 
 export default function AboutPage() {
@@ -37,6 +30,7 @@ export default function AboutPage() {
 
   const favs = [
     { label: "Language", value: "TypeScript", icon: Code2 },
+    { label: "Framework", value: "Next.js", icon: Globe },
     { label: "Editor", value: "VS Code", icon: Cpu },
     { label: "Tool", value: "Raycast", icon: Layers },
     { label: "Productivity", value: "Obsidian", icon: NotebookPen },
@@ -45,6 +39,8 @@ export default function AboutPage() {
     { label: "Film", value: "Gifted", icon: Film },
     { label: "Podcast", value: "Syntax", icon: Mic },
     { label: "Board Game", value: "Werewolf", icon: DicesIcon },
+    { label: "Sports", value: "Cycling", icon: Bike },
+    { label: "Intrument", value: "Piano", icon: Piano },
   ];
 
   const hardware = [
@@ -56,24 +52,9 @@ export default function AboutPage() {
     { label: "Speaker", value: "Bose Soundlink Flex 2", icon: Speaker },
   ];
 
-  const hobbies = [
-    {
-      value: "Tabletop and board games",
-      icon: Dices,
-    },
-    {
-      value: "Cycling around the city",
-      icon: Bike,
-    },
-    {
-      value: "Learning Dutch (A2+)",
-      icon: Book,
-    },
-  ];
   const spotifyLinks = [
     "https://open.spotify.com/track/40XiAOitWuV9bJKh4DHHpB?si=627bf10f217b4aa1",
     "https://open.spotify.com/track/2u6twH8SHtv37ctUqQ4iEX?si=02b3f1def55f49c0",
-    "https://open.spotify.com/track/2nzfebt7eoKpUNNsDVWJ1Y?si=2d2269fb9a544e94",
     "https://open.spotify.com/track/1xOqGUkyxGQRdCvGpvWKmL?si=d0323cfc16bf4321",
   ];
 
@@ -84,23 +65,13 @@ export default function AboutPage() {
       {/* HEADER SECTION */}
       <div className="pt-32 md:pt-32 space-y-4">
         <H1 text1="Beyond the" text2="Code" />
-        <p className="md:text-xl md:leading-relaxed">
-          {/* When I’m not coding, you’ll probably find me practicing my Dutch or
-          wandering around the city in my bike. I like to keep things minimal,
-          from the hardware on my desk to the habits I’m building. This is just
-          a glimpse into the tools I use and the stuff I'm into right now. */}
-          Als ik niet aan het coderen ben, zul je mij waarschijnlijk mijn
-          Nederlands zien oefenen of op de fiets door de stad dwalen. Ik hou
-          ervan om dingen minimaal te houden, van de hardware op mijn bureau tot
-          de gewoonten die ik aan het opbouwen ben. Dit is slechts een glimp van
-          de tools die ik gebruik en de dingen waar ik nu mee bezig ben.
-        </p>
+        <p className="md:text-xl md:leading-relaxed">{t("about-me-text")}</p>
       </div>
 
       {/* FAVORITES */}
       <section>
         <H2 text1="My" text2="Favourites" />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
           {favs.map((fav) => (
             <FavoriteCard key={fav.label} item={fav} />
           ))}
@@ -130,41 +101,31 @@ export default function AboutPage() {
             ))}
           </div>
         </section>
-        {/* HOBBIES */}
+        {/* MUSIC  */}
         <section>
-          <H2 text1="My" text2="Hobbies" />
-          <div className="flex flex-col gap-4">
-            {hobbies.map((hobby) => (
-              <FavoriteCard key={hobby.value} item={hobby} />
-            ))}
+          <H2 text1="Currently" text2="Listening" />
+          <div className="grid gap-4">
+            {spotifyLinks.map((link) => {
+              const embedLink = link.replace(
+                "spotify.com/",
+                "spotify.com/embed/",
+              );
+
+              return (
+                <iframe
+                  key={link}
+                  src={embedLink}
+                  width="100%"
+                  height="80"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  style={{ borderRadius: "16px" }}
+                />
+              );
+            })}
           </div>
         </section>
       </div>
-
-      {/* MUSIC  */}
-      <section>
-        <H2 text1="Currently" text2="Listening" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {spotifyLinks.map((link) => {
-            const embedLink = link.replace(
-              "spotify.com/",
-              "spotify.com/embed/",
-            );
-
-            return (
-              <iframe
-                key={link}
-                src={embedLink}
-                width="100%"
-                height="80"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                style={{ borderRadius: "16px" }}
-              />
-            );
-          })}
-        </div>
-      </section>
     </main>
   );
 }

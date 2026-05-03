@@ -189,7 +189,12 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
                       .replace(/\/$/, "");
 
                     return (
-                      <Badge key={url} variant="outline" size="sm" asChild>
+                      <Badge
+                        key={url}
+                        variant="outline"
+                        className="normal-case font-normal"
+                        asChild
+                      >
                         <a href={url} target="_blank" rel="noopener noreferrer">
                           {displayUrl}
                           <ArrowUpRight />
@@ -237,7 +242,12 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
                   .replace(/\/$/, "");
 
                 return (
-                  <Badge key={url} variant="outline" size="sm" asChild>
+                  <Badge
+                    key={url}
+                    variant="outline"
+                    className="normal-case font-normal"
+                    asChild
+                  >
                     <a href={url} target="_blank" rel="noopener noreferrer">
                       {displayUrl}
                       <ArrowUpRight />
