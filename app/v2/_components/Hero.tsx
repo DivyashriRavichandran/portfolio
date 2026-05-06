@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
+import { Badge } from "@/components/ui/badge";
 
 const Hero = () => {
   const container = useRef(null);
@@ -28,10 +29,10 @@ const Hero = () => {
   return (
     <section
       ref={container}
-      className="w-full flex flex-col justify-end pt-28 md:pt-32"
+      className="w-full flex flex-col justify-end pt-20 md:pt-24"
     >
       {/* HEADER */}
-      <div className=" flex justify-between items-center text-muted-foreground/80 font-medium text-[10px] md:text-xs uppercase tracking-widest">
+      <div className="flex justify-between items-center text-muted-foreground font-medium text-[10px] md:text-xs uppercase tracking-wider">
         <p>Groningen, NL</p>
         <p>{time} AST</p>
       </div>
@@ -40,7 +41,7 @@ const Hero = () => {
       <div className="mt-8 md:mt-12 flex flex-col gap-y-8 md:gap-y-12">
         {/* AVATAR & NAME */}
         <div className="flex flex-row items-center gap-4 md:gap-8">
-          <div className="relative inline-block w-fit">
+          <div className="relative inline-block w-fit group">
             <Image
               src="/emoji.png"
               className="shrink-0 rounded-full size-24 md:size-36 border"
@@ -67,7 +68,7 @@ const Hero = () => {
 
             {/* Tagline */}
             <div className="flex items-center gap-2">
-              <p className="text-sm md:text-lg font-medium text-muted-foreground">
+              <p className="text-sm md:text-lg font-medium">
                 Masters Student @ RUG / Software Engineer
               </p>
             </div>
@@ -75,7 +76,7 @@ const Hero = () => {
         </div>
 
         {/* SOCIALS & RESUME */}
-        <div className="w-full flex flex-wrap items-center gap-x-5 px-2">
+        <div className="w-full flex flex-wrap items-center gap-x-3 px-2">
           {[
             { label: "LinkedIn", href: "#", icon: FaLinkedin },
             { label: "Github", href: "#", icon: FaGithub },
@@ -85,13 +86,11 @@ const Hero = () => {
               icon: MdEmail,
             },
           ].map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="flex items-center gap-2"
-            >
-              <link.icon className="size-5 md:size-6" />
-              <span className="text-sm hidden md:block">{link.label}</span>
+            <Link key={link.label} href={link.href}>
+              <Badge className="font-normal normal-case">
+                <link.icon className="size-5" />
+                <span className="text-xs md:text-sm">{link.label}</span>
+              </Badge>
             </Link>
           ))}
 

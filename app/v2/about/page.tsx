@@ -53,9 +53,9 @@ export default function AboutPage() {
   ];
 
   const spotifyLinks = [
-    "https://open.spotify.com/track/40XiAOitWuV9bJKh4DHHpB?si=627bf10f217b4aa1",
+    "https://open.spotify.com/track/7J1uxwnxfQLu4APicE5Rnj?si=efa13bb2fdfd4188",
+    "https://open.spotify.com/track/3SfgUB5bltOecirPxcevPM?si=273b90184766435e",
     "https://open.spotify.com/track/2u6twH8SHtv37ctUqQ4iEX?si=02b3f1def55f49c0",
-    "https://open.spotify.com/track/1xOqGUkyxGQRdCvGpvWKmL?si=d0323cfc16bf4321",
   ];
 
   return (
@@ -63,9 +63,9 @@ export default function AboutPage() {
       <Navbar />
 
       {/* HEADER SECTION */}
-      <div className="pt-32 md:pt-32 space-y-4">
+      <div className="pt-20 md:pt-24 space-y-4">
         <H1 text1="Beyond the" text2="Code" />
-        <p className="md:text-xl md:leading-relaxed">{t("about-me-text")}</p>
+        <p className="md:text-xl">{t("about-me-text")}</p>
       </div>
 
       {/* FAVORITES */}
@@ -101,6 +101,7 @@ export default function AboutPage() {
             ))}
           </div>
         </section>
+
         {/* MUSIC  */}
         <section>
           <H2 text1="Currently" text2="Listening" />

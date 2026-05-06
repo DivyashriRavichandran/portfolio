@@ -13,7 +13,7 @@ const H2 = ({
     <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-3 md:pb-4">
       <h2 className="text-xs md:text-base font-semibold tracking-[0.15em] uppercase">
         {text1}{" "}
-        <span className="text-background bg-primary px-1 tracking-widest">
+        <span className="text-primary-foreground bg-primary px-1 tracking-widest">
           {text2}
           {symbol ? symbol : "."}
         </span>

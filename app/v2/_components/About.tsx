@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import H2 from "@/components/headings/H2";
+import StackIcon from "tech-stack-icons";
 
 const About = () => {
   const about = useQuery(api.about.get);
@@ -65,10 +66,33 @@ export default About;
 
 const TechStackSection = () => {
   const tech_stack = {
-    languages: ["TypeScript", "JavaScript", "Java", "Python", "SQL"],
-    frontend: ["Next.js", "React.js", "Vue.js", "Tailwind CSS", "HTML5/CSS3"],
-    backend: ["Spring Boot", "PostgreSQL", "Convex", "Payload CMS", "WorkOS"],
-    devops: ["AWS", "Docker", "Kubernetes", "GitHub Actions", "Linux", "Git"],
+    languages: [
+      { key: "typescript", label: "TypeScript" },
+      { key: "js", label: "JavaScript" },
+      { key: "java", label: "Java" },
+      { key: "python", label: "Python" },
+      { key: "html5", label: "HTML5" },
+      { key: "css3", label: "CSS3" },
+    ],
+    frameworks: [
+      { key: "nextjs", label: "Next.js" },
+      { key: "reactjs", label: "React.js" },
+      { key: "vuejs", label: "Vue.js" },
+      { key: "spring", label: "Spring Boot" },
+      { key: "tailwindcss", label: "Tailwind" },
+    ],
+    database: [
+      { key: "postgresql", label: "PostgreSQL" },
+      { key: "convex", label: "Convex" },
+      { key: "payload", label: "Payload" },
+    ],
+    devops: [
+      { key: "docker", label: "Docker" },
+      { key: "kubernetes", label: "Kubernetes" },
+      { key: "aws", label: "AWS" },
+      { key: "github", label: "Github Actions" },
+      { key: "linux", label: "Linux" },
+    ],
   };
 
   return (
@@ -87,8 +111,13 @@ const TechStackSection = () => {
 
             <div className="flex flex-wrap gap-1.5 border-l pl-3 md:pl-6">
               {items.map((tech) => (
-                <Badge key={tech} className="normal-case font-normal">
-                  {tech}
+                <Badge key={tech.key} className="normal-case font-normal">
+                  <StackIcon
+                    name={tech.key}
+                    className="size-4"
+                    variant="dark"
+                  />
+                  {tech.label}
                 </Badge>
               ))}
             </div>

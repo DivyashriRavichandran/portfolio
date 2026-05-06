@@ -85,30 +85,31 @@ export default function ProjectDetailsPage() {
 
       <ProjectNavbar project={project} nextProject={nextProject} />
 
-      <section className="md:max-w-4xl md:mx-auto px-5 lg:px-0 py-8 md:py-12">
+      <section className="md:max-w-4xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-24 pb-10">
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
             <span>{project.year}</span>
-            <span className="h-px w-8 bg-primary/30" />
+            <span className="h-px w-6 bg-muted-foreground" />
             <span>{project.categories[locale].join(" • ")}</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-semibold uppercase wrap-break-word">
             {project.title[locale]}
           </h1>
           <div className="mt-4 md:mt-8">
-            <p className="text-sm md:text-xl text-muted-foreground">
-              {project.description[locale]}
-            </p>
+            <p className="text-sm md:text-xl">{project.description[locale]}</p>
           </div>
         </header>
 
         {/* CAROUSEL */}
         <div className="mt-8 md:mt-12">
-          <Carousel opts={{ align: "start", loop: true }} className="w-full">
+          <Carousel
+            opts={{ align: "start", loop: true }}
+            className="w-full rounded"
+          >
             <CarouselContent>
               {(project.imageUrls ?? []).map((url, i) => (
-                <CarouselItem key={url || i} className="md:basis-1/2">
+                <CarouselItem key={url || i} className="md:basis-1/2 rounded">
                   <div className="relative aspect-video rounded overflow-hidden border">
                     <Image
                       src={url ?? ""}
@@ -131,8 +132,8 @@ export default function ProjectDetailsPage() {
           {project.motivation && (
             <ProjectSection
               id="motivation"
-              title1="Why I"
-              title2="Built it"
+              title1={t("why-i")}
+              title2={t("built-it")}
               symbol="?"
             >
               <div className="whitespace-pre-line">
@@ -144,8 +145,8 @@ export default function ProjectDetailsPage() {
           {project.execution && (
             <ProjectSection
               id="execution"
-              title1="How I"
-              title2="Build it"
+              title1={t("how-i")}
+              title2={t("build-it")}
               symbol="?"
             >
               <div className="whitespace-pre-line">
@@ -157,7 +158,7 @@ export default function ProjectDetailsPage() {
           {/* IMPACT METRICS */}
           {project.impact?.[locale] && project.impact[locale].length > 0 && (
             <section id="impact" className="scroll-mt-32 space-y-12">
-              <H2 text1="Impact &" text2="Metrics" />
+              <H2 text1="Impact &" text2={t("metrics")} />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {project.impact[locale].map((metric, i) => (
                   <MetricCard
@@ -173,7 +174,7 @@ export default function ProjectDetailsPage() {
 
           {/* TECH STACK */}
           <div id="stack" className="space-y-4 scroll-mt-32">
-            <H2 text1="Technologies" text2="Used" />
+            <H2 text1={t("technologies")} text2={t("used")} />
             <div className="flex flex-wrap gap-2">
               {project.tech_stack.map((tech) => (
                 <Badge key={tech}>{tech}</Badge>
@@ -182,7 +183,11 @@ export default function ProjectDetailsPage() {
           </div>
 
           {project.challenge && (
-            <ProjectSection id="challenge" title1="The" title2="Challenges">
+            <ProjectSection
+              id="challenge"
+              title1={t("the-0")}
+              title2={t("challenges")}
+            >
               <div className="whitespace-pre-line">
                 {project.challenge[locale]}
               </div>
@@ -190,7 +195,11 @@ export default function ProjectDetailsPage() {
           )}
 
           {project.learning && (
-            <ProjectSection id="learning" title1={t("Key")} title2="Learnings">
+            <ProjectSection
+              id="learning"
+              title1={t("Key")}
+              title2={t("learnings")}
+            >
               <div className="whitespace-pre-line">
                 {project.learning[locale]}
               </div>
@@ -206,7 +215,7 @@ export default function ProjectDetailsPage() {
               <div className="text-center">
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
-              <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
+              <div className="relative w-full aspect-video md:aspect-21/9 bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
                 <Image
                   src={project.architectureUrl}
                   alt="Architecture Diagram"
@@ -221,7 +230,7 @@ export default function ProjectDetailsPage() {
             <ProjectSection
               id="future"
               title1={t("Future")}
-              title2="Improvements"
+              title2={t("improvements")}
             >
               <div className="whitespace-pre-line">
                 {project.future[locale]}
@@ -252,7 +261,7 @@ export default function ProjectDetailsPage() {
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                  <ChevronRight className="text-primary-foreground absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
                 </a>
               )}
 
@@ -263,19 +272,19 @@ export default function ProjectDetailsPage() {
                   className="group relative p-4 md:p-6 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
                 >
                   <div className="flex md:flex-col items-center md:items-start gap-4">
-                    <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border border-black/10 group-hover:scale-110 transition-transform">
+                    <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border group-hover:scale-110 transition-transform">
                       <FaGlobe size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold md:text-lg uppercase">
+                      <h4 className="font-semibold md:text-lg uppercase text-primary-foreground">
                         Live Demo
                       </h4>
-                      <p className="text-xs md:text-sm text-black/70">
+                      <p className="text-xs md:text-sm text-black/60">
                         Experience the project live in your browser
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
+                  <ChevronRight className="text-primary-foreground absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
                 </a>
               )}
             </div>

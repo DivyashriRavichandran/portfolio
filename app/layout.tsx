@@ -8,8 +8,8 @@ import ConvexClientProvider from "@/components/ConvexClientProvider";
 import localFont from "next/font/local";
 
 export const metadata: Metadata = {
-  title: "Divyashri's Portfolio",
-  description: "A creative portfolio showcasing my work and experience",
+  title: "Divyashri | Frontend Developer",
+  description: "My portfolio showcasing my projects and experience",
 };
 
 const generalSans = localFont({

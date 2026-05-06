@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
 import LangSwitcher from "./LangSwitcher";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -19,30 +20,28 @@ const ProjectNavbar = ({
   const t = useTranslations();
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
-      <div className="md:max-w-4xl mx-auto px-5 lg:px-0 flex items-center justify-between h-16 md:h-20">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md dark:bg-background">
+      <div className="md:mx-auto flex md:max-w-4xl items-center justify-between lg:px-0 px-6 py-4">
         {/* BACK TO PORTFOLIO */}
         <Link
           href="/v2"
-          className="group flex items-center gap-3 transition-colors"
+          className="group flex items-center gap-2 transition-opacity hover:opacity-90"
         >
-          <div className="size-8 md:size-10 flex items-center justify-center border border-muted-foreground/20  group-hover:border-primary group-hover:bg-primary/5 transition-all">
-            <ChevronLeft size={16} />
-          </div>
-          <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground leading-none">
+          <ChevronLeft size={20} className="text-muted-foreground" />
+          <span className="text-[10px] uppercase tracking-tight font-semibold text-foreground">
             {t("back")}
           </span>
         </Link>
 
-        {/* ACTIONS & NEXT PROJECT */}
-        <div className="flex items-center gap-4 md:gap-8 ">
+        {/* ACTIONS & NAV */}
+        <div className="flex items-center gap-4 md:gap-5">
           {/* EXTERNAL LINKS */}
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center">
             {project.project_link && (
               <a
                 href={project.project_link}
                 target="_blank"
-                className="p-2.5  hover:bg-primary/5 text-muted-foreground hover:text-primary transition-all"
+                className="p-2 text-muted-foreground hover:text-primary transition-colors"
                 title="Live Demo"
               >
                 <FaGlobe size={20} />
@@ -52,31 +51,34 @@ const ProjectNavbar = ({
               <a
                 href={project.github_link}
                 target="_blank"
-                className="p-2.5  hover:bg-primary/5 text-muted-foreground hover:text-primary transition-all"
+                className="p-2 text-muted-foreground hover:text-primary transition-colors"
                 title="Source Code"
               >
                 <FaGithub size={20} />
               </a>
             )}
-          </div>
-          <LangSwitcher />
+          </div> */}
 
-          {/* NEXT PROJECT NAV */}
+          {/* CONTROLS */}
+          <div className="flex items-center gap-3">
+            <LangSwitcher />
+            <AnimatedThemeToggler />
+          </div>
+
+          {/* NEXT PROJECT */}
           <Link
             href={`/v2/project/${nextProject.slug}`}
-            className="group flex items-center gap-3 pl-4 border-l border-muted-foreground/20"
+            className="group flex items-center gap-2 transition-opacity hover:opacity-90"
           >
-            <div className="hidden sm:flex flex-col items-end text-right">
-              <span className="text-[9px] uppercase tracking-widest text-muted-foreground font-semibold leading-none">
+            <div className="flex flex-col items-end text-right">
+              <span className="text-[9px] uppercase tracking-tight text-muted-foreground font-semibold leading-none">
                 {t("next")}
               </span>
-              <span className="text-[11px] font-semibold mt-1 group-hover:text-primary transition-colors max-w-[120px] truncate">
+              <span className="text-[11px] font-semibold uppercase tracking-tight mt-0.5 max-w-25 truncate">
                 {nextProject.title[locale]}
               </span>
             </div>
-            <div className="size-8 md:size-10 flex items-center justify-center border border-muted-foreground/20  group-hover:border-primary group-hover:bg-primary/5 transition-all">
-              <ChevronRight size={16} />
-            </div>
+            <ChevronRight size={20} className="text-muted-foreground" />
           </Link>
         </div>
       </div>
