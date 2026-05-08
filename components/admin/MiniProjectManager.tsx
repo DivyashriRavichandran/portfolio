@@ -94,7 +94,7 @@ export default function MiniProjectManager() {
               <TableCell>
                 <div className="flex gap-2">
                   {project.tags?.map((tag) => (
-                    <Badge key={tag} variant="secondary" size="sm">
+                    <Badge key={tag} variant="secondary">
                       {tag}
                     </Badge>
                   ))}

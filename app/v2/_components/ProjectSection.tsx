@@ -104,9 +104,7 @@ const ProjectCard = ({
           {/* Subtly show the core tech used */}
           <div className="flex gap-2 overflow-hidden">
             {project.tech_stack.slice(0, 3).map((tech) => (
-              <Badge size={"sm"} key={tech}>
-                {tech}
-              </Badge>
+              <Badge key={tech}>{tech}</Badge>
             ))}
           </div>
         </div>
