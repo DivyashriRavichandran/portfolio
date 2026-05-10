@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { DownloadIcon } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import { Badge } from "@/components/ui/badge";
 
 const Hero = () => {
   const container = useRef(null);
@@ -76,7 +75,7 @@ const Hero = () => {
         </div>
 
         {/* SOCIALS & RESUME */}
-        <div className="w-full flex flex-wrap items-center gap-x-3 px-2">
+        <div className="w-full flex flex-wrap items-center gap-x-2 md:gap-x-6">
           {[
             { label: "LinkedIn", href: "#", icon: FaLinkedin },
             { label: "Github", href: "#", icon: FaGithub },
@@ -86,11 +85,17 @@ const Hero = () => {
               icon: MdEmail,
             },
           ].map((link) => (
-            <Link key={link.label} href={link.href}>
-              <Badge className="font-normal normal-case">
-                <link.icon className="size-5" />
-                <span className="text-xs md:text-sm">{link.label}</span>
-              </Badge>
+            <Link
+              key={link.label}
+              href={link.href}
+              className="group relative flex items-center"
+            >
+              <div className="flex items-center gap-0 group-hover:gap-3 px-3 py-2 rounded-full bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
+                <link.icon className="size-6" />
+                <span className="overflow-hidden whitespace-nowrap text-xs md:text-sm font-medium opacity-0 max-w-0 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:max-w-[120px] group-hover:opacity-100">
+                  {link.label}
+                </span>
+              </div>
             </Link>
           ))}
 

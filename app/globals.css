@@ -55,44 +55,41 @@
 }
 @layer base {
   :root {
-    /* Clean, paper-like background with deep zinc text */
-    --background: #f2f2dc;
+    --background: #fdfdf5;
     --foreground: #0b0b0c;
 
-    /* Muted states for subtle containers and borders */
-    --muted: #e4e4d0;
-    --muted-foreground: #52525b;
+    --muted: #f1f1e6;
+    --muted-foreground: #252523;
 
-    /* Neon Primary (Lime/Yellow) */
-    --primary: #ecf252;
+    --primary: #eff28d;
     --primary-foreground: #0b0b0c;
-    --primary-light: #f7f9c2;
-    --primary-dark: #c1c44d;
+    --primary-light: oklch(98% 0.05 140);
+    --primary-dark: oklch(85% 0.15 140);
 
-    /* Neon Secondary (Orange) */
-    --secondary: #ffa447;
+    /* Secondary stays vibrant but slightly deeper to pass contrast on light bg */
+    --secondary: #ff9429;
     --secondary-foreground: #0b0b0c;
-    --secondary-light: #ffc991;
-    --secondary-dark: #cc7a24;
+    --secondary-light: #ffbd7a;
+    --secondary-dark: #8a4d12;
 
-    /* Neon Tertiary (Purple) */
-    --tertiary: #a977ff;
+    --tertiary: #8a5cf5; /* Slightly deeper purple for light mode contrast */
 
-    /* UI Components */
-    --card: #e9e9d3;
-    --card-foreground: #18181b;
-    --popover: #f2f2dc;
+    /* Cards are slightly darker than the background to create depth */
+    --card: #f7f7ee;
+    --card-foreground: #0b0b0c;
+
+    --popover: #fdfdf5;
     --popover-foreground: #0b0b0c;
 
-    --accent: #eff28d; /* Match primary for consistent neon pops */
-    --accent-foreground: #0b0b0c;
+    /* Accents become subtle highlights */
+    --accent: #f2f2dc;
+    --accent-foreground: #4a4d00;
 
-    --destructive: oklch(62.8% 0.25 25.7); /* Vibrant Red-Orange */
-    --destructive-foreground: #ffffff;
+    --destructive: oklch(60% 0.22 25.7);
+    --destructive-foreground: #fdfdf5;
 
-    --input: #e4e4d0;
+    --input: #e2e2d5;
     --ring: #eff28d;
-    --radius: 0.5rem;
   }
 
   .dark {

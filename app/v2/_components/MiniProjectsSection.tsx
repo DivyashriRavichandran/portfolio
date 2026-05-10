@@ -25,7 +25,7 @@ const MiniProjectsSection = () => {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex md:items-center overflow-hidden rounded border bg-muted/10 p-3 md:p-4 hover:border-primary transition-all duration-300"
+            className="group flex md:items-center overflow-hidden rounded border bg-muted/10 p-3 md:p-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* LOGO CONTAINER */}
             <div className="flex size-16 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
@@ -44,7 +44,7 @@ const MiniProjectsSection = () => {
                 <h3 className="truncate text-sm md:text-base font-semibold">
                   {project.title[locale]}
                 </h3>
-                <ExternalLink className="size-4 md:size-5 group-hover:text-primary" />
+                <ExternalLink className="size-4 md:size-5 group-hover:text-foreground dark:group-hover:text-primary" />
               </div>
 
               <p className="mt-0.5 md:mt-1 text-xs md:text-sm text-muted-foreground md:max-w-2xl">
