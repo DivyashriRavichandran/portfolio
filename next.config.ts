@@ -7,11 +7,8 @@ const nextConfig: NextConfig = {
     defaultLocale: "en",
   },
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.pexels.com",
-      },
       {
         protocol: "https",
         hostname: "trustworthy-husky-54.eu-west-1.convex.cloud",
@@ -19,7 +16,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "excalidraw.nyc3.cdn.digitaloceanspaces.com",
+        hostname: "ghchart.rshah.org",
         pathname: "/**",
       },
     ],

@@ -370,7 +370,7 @@ export default function ProjectForm({
               />
               <ImagePlus className="opacity-20 mb-1" />
               <span className="text-[10px] uppercase font-bold text-white/40">
-                {watch(type) ? "Uploaded" : `Upload ${type}`}
+                {watch(type) ? `Uploaded ${type}` : `Upload ${type}`}
               </span>
             </label>
           ))}

@@ -59,7 +59,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="md:max-w-4xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
+    <main className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
       <Navbar />
 
       {/* HEADER SECTION */}

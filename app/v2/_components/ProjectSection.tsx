@@ -55,7 +55,7 @@ const ProjectCard = ({
 
   return (
     <Link href={`/v2/project/${project.slug}`} className="group block">
-      <div className="border rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
+      <div className="border flex flex-col h-full rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
         <div className="relative z-0 aspect-5/3 overflow-hidden">
           {mockupUrl ? (
@@ -63,7 +63,7 @@ const ProjectCard = ({
               src={mockupUrl}
               alt={project.title[locale]}
               fill
-              className="object-cover transition-transform duration-300 scale-115 group-hover:scale-120"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
           ) : (
             <div className="w-full h-full" />
@@ -86,13 +86,13 @@ const ProjectCard = ({
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="p-3 md:p-4 space-y-3 md:space-y-4">
-          <div className="flex justify-between items-start gap-2">
+        <div className="p-3 md:p-4 flex flex-col flex-1 justify-between space-y-3 md:space-y-4">
+          <div className="flex-1 flex justify-between items-start gap-2">
             <div className="md:space-y-1">
-              <h3 className="text-lg md:text-xl font-semibold uppercase">
+              <h3 className="text-lg md:text-xl font-semibold">
                 {project.title[locale]}
               </h3>
-              <p className="text-muted-foreground text-[10px] md:text-xs font-medium uppercase tracking-wider">
+              <p className="text-muted-foreground text-[10px] md:text-xs uppercase font-medium tracking-wider">
                 {project.categories[locale].join(" • ")}
               </p>
             </div>
@@ -100,9 +100,8 @@ const ProjectCard = ({
               {project.year}
             </span>
           </div>
-
-          {/* Subtly show the core tech used */}
-          <div className="flex gap-2 overflow-hidden">
+          {/* Tech Stack */}
+          <div className="flex gap-2 overflow-hidden pt-1">
             {project.tech_stack.slice(0, 3).map((tech) => (
               <Badge key={tech}>{tech}</Badge>
             ))}

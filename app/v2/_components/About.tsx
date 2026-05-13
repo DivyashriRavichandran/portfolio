@@ -8,8 +8,16 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import H2 from "@/components/headings/H2";
 import StackIcon from "tech-stack-icons";
+import GithubContributions from "@/components/custom/GithubContributions";
 
-const About = () => {
+interface AboutProps {
+  githubData: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    contributions: any[];
+    total: number;
+  };
+}
+const About = ({ githubData }: AboutProps) => {
   const about = useQuery(api.about.get);
 
   return (
@@ -21,18 +29,18 @@ const About = () => {
         <div className="flex flex-col space-y-4 md:space-y-6 md:text-xl">
           <p>
             Hi! I’m Divyashri, a 22-year-old Software Engineer and Computing
-            Science Master’s student at the University of Groningen (RUG). I
-            love building websites and tools that solve real-world problems.
+            Science Master’s student at the University of Groningen (RUG).
+          </p>
+          <p>
+            I love building websites and tools that solve real-world problems.
             With over 2 years of professional frontend experience, I’ve also
             expanded into full-stack development, cloud computing and system
             design.
           </p>
           <p>
-            At RUG, I’m specializing in Software Engineering and Distributed
-            Systems. I’m fascinated by how we build large-scale systems that
-            stay fast and reliable globally. This transition has allowed me to
-            move beyond the UI and dive deep into networking, data consistency,
-            and cloud architecture.
+            At RUG, I specialize in Software Engineering and Distributed Systems
+            (SEDS), exploring how to architect high-quality, software-intensive
+            systems that remain reliable at scale.
           </p>
           <p>
             I thrive on problems that force me to learn and adapt in real-time.
@@ -55,8 +63,16 @@ const About = () => {
           </Link>
         </div>
 
-        {/* RIGHT SIDE */}
-        <TechStackSection />
+        <div className="border space-y-8 rounded px-6 py-8 bg-muted/5">
+          <div className="w-full flex flex-col">
+            <H2 text1={"Github"} text2="Contributions" />
+
+            <div className="mx-auto">
+              <GithubContributions githubData={githubData.contributions} />
+            </div>
+          </div>
+          <TechStackSection />
+        </div>
       </div>
     </section>
   );
@@ -96,7 +112,7 @@ const TechStackSection = () => {
   };
 
   return (
-    <div className="p-5 md:p-6 rounded border">
+    <div>
       <H2 text1={"Tech"} text2="Stack" />
 
       <div className="space-y-2 md:space-y-3">

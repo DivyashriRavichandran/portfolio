@@ -35,7 +35,7 @@ const CareerSection = () => {
     <section className="space-y-16 md:space-y-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
-        <H1 text2={t("education")} />
+        <H1 text1={t("academic")} text2={t("education")} />
 
         <div className="space-y-10">
           {grouped.education.map((item, index) => (
@@ -52,7 +52,7 @@ const CareerSection = () => {
 
       {/* EXPERIENCE */}
       <div className="flex flex-col">
-        <H1 text2={t("experience")} />
+        <H1 text1={t("professional")} text2={t("experience")} />
 
         <div className="space-y-10">
           {grouped.experience.map((item, index) => (
@@ -147,11 +147,17 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           {/* GRADE / CATEGORY */}
           <div className="mt-4 flex gap-2 flex-wrap">
             {item.category && (
-              <Badge variant={"primary"}>{item.category}</Badge>
+              <Badge variant={"primary"} size="lg">
+                {item.category}
+              </Badge>
             )}
-            {item.grade && <Badge variant={"outline"}>{item.grade}</Badge>}
+            {item.grade && (
+              <Badge variant={"outline"} size="lg">
+                {item.grade}
+              </Badge>
+            )}
             {item.type == "experience" && (
-              <Badge variant={"outline"}>
+              <Badge variant={"outline"} size="lg">
                 {getDuration(item.startDate, item.endDate)}
               </Badge>
             )}

@@ -85,24 +85,24 @@ export default function ProjectDetailsPage() {
 
       <ProjectNavbar project={project} nextProject={nextProject} />
 
-      <section className="md:max-w-4xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-24 pb-10">
+      <section className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-24 pb-10">
         {/* HERO */}
         <header className="space-y-4">
-          <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium md:font-semibold">
+          <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-medium">
             <span>{project.year}</span>
             <span className="h-px w-6 bg-muted-foreground" />
             <span>{project.categories[locale].join(" • ")}</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-semibold uppercase wrap-break-word">
+          <h1 className="text-3xl md:text-5xl font-semibold wrap-break-word">
             {project.title[locale]}
           </h1>
-          <div className="mt-4 md:mt-8">
-            <p className="text-sm md:text-xl">{project.description[locale]}</p>
+          <div className="mt-4 md:mt-6 text-sm md:text-lg">
+            {project.description[locale]}
           </div>
         </header>
 
         {/* CAROUSEL */}
-        <div className="mt-8 md:mt-12">
+        <div className="mt-8">
           <Carousel
             opts={{ align: "start", loop: true }}
             className="w-full rounded"
@@ -128,7 +128,7 @@ export default function ProjectDetailsPage() {
           </Carousel>
         </div>
 
-        <div className="mt-10 space-y-12">
+        <div className="mt-8 space-y-10">
           {project.motivation && (
             <ProjectSection
               id="motivation"

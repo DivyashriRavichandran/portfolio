@@ -1,12 +1,11 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { Slot } from "@radix-ui/react-slot"; // Ensure this is the correct radix import
+import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "@/lib/utils";
 
 const badgeVariants = cva(
-  // Base styles: Focus on sharp edges and mono typography
-  "font-medium inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden border px-2 py-0.5 text-[10px] md:text-xs uppercase tracking-wide transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:size-3",
+  "font-medium inline-flex w-fit shrink-0 items-center justify-center gap-2 overflow-hidden border text-[10px] md:text-xs transition-all focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&>svg]:size-3",
   {
     variants: {
       variant: {
@@ -22,8 +21,8 @@ const badgeVariants = cva(
           "border-transparent bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted",
       },
       size: {
-        default: "px-2.5 py-1",
-        lg: "px-4 py-1.5 text-xs",
+        default: "px-2 py-0.5 font-normal",
+        lg: "px-2 py-1 uppercase tracking-wide",
       },
     },
     defaultVariants: {

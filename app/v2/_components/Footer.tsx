@@ -17,7 +17,8 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
-import { FaArrowUpRightFromSquare, FaLinkedin } from "react-icons/fa6";
+import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
+import { ArrowUpRight } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -58,11 +59,11 @@ const Footer = () => {
 
   return (
     <footer className="mt-10 md:mt-16">
-      <div className="grid lg:grid-cols-12 gap-12 md:gap-20">
+      <div className="grid lg:grid-cols-12 gap-12">
         {/* LEFT: Connect & Socials */}
-        <div className="lg:col-span-5 space-y-12">
+        <div className="lg:col-span-5 space-y-8">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight uppercase leading-tight">
+            <h2 className="text-2xl md:text-3xl font-semibold leading-tight">
               <span>Let&apos;s </span> <br />{" "}
               <span className="px-1 text-primary-foreground bg-primary">
                 Connect.
@@ -70,7 +71,7 @@ const Footer = () => {
             </h2>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Socials
             </h3>
@@ -79,9 +80,18 @@ const Footer = () => {
                 {
                   label: "LinkedIn",
                   href: "https://linkedin.com/in/yourprofile",
+                  icon: FaLinkedin,
                 },
-                { label: "Github", href: "https://github.com/yourusername" },
-                { label: "Email", href: "mailto:contact@divyashri.nl" },
+                {
+                  label: "Github",
+                  href: "https://github.com/yourusername",
+                  icon: FaGithub,
+                },
+                {
+                  label: "Email",
+                  href: "mailto:contact@divyashri.nl",
+                  icon: FaEnvelope,
+                },
               ].map((social, index) => (
                 <a
                   key={index}
@@ -90,12 +100,12 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="group flex items-center justify-between border-b border-muted/50 py-2 transition-colors hover:border-primary"
                 >
-                  <span className="flex items-center gap-2 text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
-                    <FaLinkedin size={20} className="text-primary" />
+                  <span className="group-hover:text-primary flex items-center gap-2 text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
+                    <social.icon size={20} />
                     {social.label}
                   </span>
-                  <FaArrowUpRightFromSquare
-                    size={14}
+                  <ArrowUpRight
+                    size={20}
                     className="opacity-0 group-hover:opacity-100 -translate-y-1 translate-x-1 transition-all duration-300"
                   />
                 </a>
@@ -106,7 +116,7 @@ const Footer = () => {
 
         {/* RIGHT: The Form */}
         <div className="lg:col-span-7">
-          <div className="mb-10">
+          <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Inquiry
             </h3>
@@ -116,7 +126,10 @@ const Footer = () => {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="mt-6 space-y-8"
+            >
               <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
                 <FormField
                   control={form.control}
@@ -130,7 +143,7 @@ const Footer = () => {
                           className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] uppercase tracking-widest pt-1" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -146,7 +159,7 @@ const Footer = () => {
                           className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] uppercase tracking-widest pt-1" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -157,12 +170,12 @@ const Footer = () => {
                     <FormItem className="md:col-span-2">
                       <FormControl>
                         <Textarea
-                          placeholder="What's on your mind?"
+                          placeholder="How can I help you?"
                           {...field}
-                          className="min-h-[120px] border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent text-lg resize-none"
+                          className="min-h-30 border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent text-lg resize-none"
                         />
                       </FormControl>
-                      <FormMessage className="text-[10px] uppercase tracking-widest pt-1" />
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
