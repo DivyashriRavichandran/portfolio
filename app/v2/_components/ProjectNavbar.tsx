@@ -19,7 +19,7 @@ const ProjectNavbar = ({
   const t = useTranslations();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md dark:bg-background/30">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background">
       <div className="md:mx-auto flex md:max-w-3xl items-center justify-between lg:px-0 px-5 py-4">
         {/* BACK TO PORTFOLIO */}
         <Link

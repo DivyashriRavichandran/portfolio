@@ -67,7 +67,7 @@ const About = ({ githubData }: AboutProps) => {
           <div className="w-full flex flex-col">
             <H2 text1={"Github"} text2="Contributions" />
 
-            <div className="mx-auto">
+            <div className="mx-auto scroll-auto w-full max-w-3xl">
               <GithubContributions githubData={githubData.contributions} />
             </div>
           </div>

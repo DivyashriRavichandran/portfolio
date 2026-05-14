@@ -10,13 +10,13 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <section className="w-full flex flex-col pt-20 md:pt-32 gap-y-8 md:gap-y-8">
+    <section className="w-full flex flex-col pt-20 md:pt-32 gap-y-4 md:gap-y-8">
       {/* AVATAR & NAME */}
       <div className="flex flex-row gap-4 md:gap-8">
         <div className="relative group">
           <Image
             src="/emoji.png"
-            className="shrink-0 rounded-full size-24 md:size-40 border"
+            className="shrink-0 rounded-full w-24 h-fit md:size-40 border"
             alt="avatar"
             width={144}
             height={144}
@@ -24,7 +24,7 @@ const Hero = () => {
           />
 
           <span
-            className="absolute bottom-6 -right-1 md:-right-2 text-3xl md:text-5xl"
+            className="absolute bottom-10 md:bottom-6 -right-1 md:-right-2 text-xl md:text-5xl"
             role="img"
             aria-label="waving hand"
           >
@@ -67,8 +67,8 @@ const Hero = () => {
             href={link.href}
             className="group relative flex items-center"
           >
-            <div className="flex items-center gap-0 group-hover:gap-3 px-3 py-2 rounded-full bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-              <link.icon className="size-6" />
+            <div className="flex items-center gap-0 group-hover:gap-3 px-2 md:px-3 py-2 rounded-full bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
+              <link.icon className="size-5 md:size-6" />
               <span className="overflow-hidden whitespace-nowrap text-xs md:text-sm font-medium opacity-0 max-w-0 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:max-w-30 group-hover:opacity-100">
                 {link.label}
               </span>

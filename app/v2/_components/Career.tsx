@@ -9,7 +9,7 @@ import H1 from "../../../components/headings/H1";
 import { ArrowUpRight, Loader2 } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Image from "next/image";
-import { format, formatDuration, intervalToDuration } from "date-fns";
+import { format, formatDuration, intervalToDuration, isValid } from "date-fns";
 import H4 from "@/components/headings/H4";
 
 const CareerSection = () => {
@@ -80,30 +80,40 @@ type CareerItemProps = {
 };
 
 const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
-  const title = item.title?.[locale];
-  const org = item.organization?.[locale];
-  const location = item.location?.[locale];
-
   if (!item) {
     return <div>Item not found</div>;
   }
 
-  const getDuration = (start: string, end?: string) => {
-    if (!start) return "";
+  const title = item.title?.[locale];
+  const org = item.organization?.[locale];
+  const location = item.location?.[locale];
 
+  // Helper to safely format dates for display
+  const displayDate = (
+    dateString: string | null | undefined,
+    fallback: string,
+  ) => {
+    if (!dateString) return fallback;
+    const d = new Date(dateString);
+    return isValid(d) ? format(d, "MMM yyyy") : fallback;
+  };
+
+  const getDuration = (
+    start: string | null | undefined,
+    end?: string | null,
+  ) => {
+    if (!start) return "";
     const startDate = new Date(start);
     const endDate = end ? new Date(end) : new Date();
 
-    // Calculate the raw duration object
-    const duration = intervalToDuration({
-      start: startDate,
-      end: endDate,
-    });
+    if (!isValid(startDate) || !isValid(endDate)) return "";
 
-    // Format it into a string
-    return formatDuration(duration, {
-      format: ["years", "months"],
-    });
+    try {
+      const duration = intervalToDuration({ start: startDate, end: endDate });
+      return formatDuration(duration, { format: ["years", "months"] });
+    } catch (error) {
+      return "";
+    }
   };
 
   return (
@@ -127,8 +137,8 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
             </h3>
 
             <span className="text-xs md:text-sm uppercase font-medium tracking-wide">
-              {format(item.startDate, "MMM yyyy")} -{" "}
-              {item.endDate ? format(item.endDate, "MMM yyyy") : "Present"}
+              {displayDate(item.startDate, "N/A")} —{" "}
+              {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
             </span>
           </div>
 
