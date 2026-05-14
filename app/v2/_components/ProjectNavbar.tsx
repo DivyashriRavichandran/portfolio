@@ -3,8 +3,8 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import LangSwitcher from "./LangSwitcher";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import LangSwitcher from "../../../components/custom/LangSwitcher";
+import { AnimatedThemeToggler } from "@/components/custom/animated-theme-toggler";
 import { Doc } from "@/convex/_generated/dataModel";
 import { useLocale, useTranslations } from "next-intl";
 

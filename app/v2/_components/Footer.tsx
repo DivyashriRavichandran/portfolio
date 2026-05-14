@@ -61,7 +61,7 @@ const Footer = () => {
     <footer className="mt-10 md:mt-16">
       <div className="grid lg:grid-cols-12 gap-12">
         {/* LEFT: Connect & Socials */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-4 space-y-8">
           <div>
             <h2 className="text-2xl md:text-3xl font-semibold leading-tight">
               <span>Let&apos;s </span> <br />{" "}
@@ -115,7 +115,7 @@ const Footer = () => {
         </div>
 
         {/* RIGHT: The Form */}
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-8">
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Inquiry
@@ -184,7 +184,7 @@ const Footer = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto"
+                  className="w-full md:w-auto uppercase"
                 >
                   {isSubmitting ? "Sending..." : "Send"}
                 </Button>

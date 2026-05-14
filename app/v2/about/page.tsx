@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   Cpu,
   Gamepad2,
@@ -19,11 +20,41 @@ import {
   DicesIcon,
   Globe,
   Piano,
+  Loader2,
 } from "lucide-react";
 import H1 from "../../../components/headings/H1";
 import { useTranslations } from "next-intl";
 import Navbar from "../_components/Navbar";
 import H2 from "@/components/headings/H2";
+
+const SpotifyPlayer = ({ link }: { link: string }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const embedLink = link.replace("spotify.com/", "spotify.com/embed/");
+
+  return (
+    <div className="relative w-full h-20">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted/50 animate-pulse rounded-2xl border border-white/5">
+          <Loader2 className="w-5 h-5 animate-spin text-primary/80" />
+        </div>
+      )}
+      <iframe
+        src={embedLink}
+        width="100%"
+        height="80"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        onLoad={() => setIsLoading(false)}
+        style={{ borderRadius: "16px", border: "none" }}
+        className={
+          isLoading
+            ? "opacity-0"
+            : "opacity-100 transition-opacity duration-500"
+        }
+      />
+    </div>
+  );
+};
 
 export default function AboutPage() {
   const t = useTranslations();
@@ -62,13 +93,11 @@ export default function AboutPage() {
     <main className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
       <Navbar />
 
-      {/* HEADER SECTION */}
       <div className="pt-20 md:pt-24 space-y-4">
         <H1 text1="Beyond the" text2="Code" />
         <p className="md:text-xl">{t("about-me-text")}</p>
       </div>
 
-      {/* FAVORITES */}
       <section>
         <H2 text1="My" text2="Favourites" />
         <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
@@ -78,9 +107,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ROW 2 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
-        {/* SETUP */}
         <section>
           <H2 text1="Desk" text2="Setup" />
           <div className="flex flex-col gap-4">
@@ -95,35 +122,18 @@ export default function AboutPage() {
                     {item.label}
                   </span>
                 </div>
-
                 <span className="text-sm font-medium">{item.value}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* MUSIC  */}
         <section>
           <H2 text1="Currently" text2="Listening" />
           <div className="grid gap-4">
-            {spotifyLinks.map((link) => {
-              const embedLink = link.replace(
-                "spotify.com/",
-                "spotify.com/embed/",
-              );
-
-              return (
-                <iframe
-                  key={link}
-                  src={embedLink}
-                  width="100%"
-                  height="80"
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  loading="lazy"
-                  style={{ borderRadius: "16px" }}
-                />
-              );
-            })}
+            {spotifyLinks.map((link) => (
+              <SpotifyPlayer key={link} link={link} />
+            ))}
           </div>
         </section>
       </div>

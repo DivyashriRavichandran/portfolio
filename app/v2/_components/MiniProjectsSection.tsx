@@ -41,7 +41,7 @@ const MiniProjectsSection = () => {
             {/* CONTENT SECTION */}
             <div className="ml-4 md:ml-5 flex flex-1 flex-col overflow-hidden">
               <div className="flex items-center justify-between gap-2">
-                <h3 className="truncate text-sm md:text-base font-semibold">
+                <h3 className="truncate text-sm md:text-base font-medium">
                   {project.title[locale]}
                 </h3>
                 <ExternalLink className="size-4 md:size-5 group-hover:text-foreground dark:group-hover:text-primary" />

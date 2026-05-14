@@ -24,7 +24,7 @@ const Hero = () => {
           />
 
           <span
-            className="absolute bottom-8 -right-1 md:-right-2 text-3xl md:text-5xl"
+            className="absolute bottom-6 -right-1 md:-right-2 text-3xl md:text-5xl"
             role="img"
             aria-label="waving hand"
           >
@@ -32,19 +32,19 @@ const Hero = () => {
           </span>
         </div>
 
-        <div className="space-y-2 md:space-y-4">
+        <div className="space-y-2 md:space-y-3">
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-[0.85]">
             Divyashri <br />
             <span className="text-muted-foreground/80">Ravichandran.</span>
           </h1>
 
           {/* Tagline */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-0.5">
             <p className="text-sm md:text-lg font-medium">
               Masters Student @ RUG / Software Engineer
             </p>
             <p className="text-xs md:text-sm flex items-center gap-1 text-muted-foreground">
-              <FaMapMarkerAlt size={16} className="size-3 md:size-4" />
+              <FaMapMarkerAlt size={16} className="size-3 md:size-3" />
               Groningen, NL
             </p>
           </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import LangSwitcher from "./LangSwitcher";
-import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
+import LangSwitcher from "../../../components/custom/LangSwitcher";
+import { AnimatedThemeToggler } from "@/components/custom/animated-theme-toggler";
 import Link from "next/link";
 
 export default function Navbar() {

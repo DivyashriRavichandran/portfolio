@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
 import localFont from "next/font/local";
+import { LoadingProvider } from "@/components/custom/LoadingProvider";
 
 export const metadata: Metadata = {
   title: "Divyashri | Frontend Developer",
@@ -80,7 +81,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <LoadingProvider>{children}</LoadingProvider>
             </ThemeProvider>
           </ConvexClientProvider>
         </NextIntlClientProvider>
