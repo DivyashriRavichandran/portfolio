@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Globe } from "lucide-react";
 
 const ProjectSection = () => {
   const t = useTranslations();
@@ -86,22 +86,17 @@ const ProjectCard = ({
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="p-3 md:p-4 flex flex-col flex-1 justify-between space-y-3 md:space-y-4">
-          <div className="flex-1 flex justify-between items-start gap-2">
-            <div className="md:space-y-1">
-              <h3 className="text-lg md:text-xl font-semibold">
-                {project.title[locale]}
-              </h3>
-              <p className="text-muted-foreground text-[10px] md:text-xs uppercase font-medium tracking-wider">
-                {project.categories[locale].join(" • ")}
-              </p>
-            </div>
-            <span className="mt-1 text-xs md:text-sm text-muted-foreground">
-              {project.year}
-            </span>
+        <div className="p-4 flex flex-col flex-1 justify-between space-y-3">
+          <div className="flex-1 md:space-y-1">
+            <h3 className="text-lg md:text-xl font-semibold">
+              {project.title[locale]}
+            </h3>
+            <p className="text-muted-foreground text-[10px] md:text-xs uppercase font-medium tracking-wider">
+              {project.categories[locale].join(" • ")}
+            </p>
           </div>
           {/* Tech Stack */}
-          <div className="flex gap-2 overflow-hidden pt-1">
+          <div className="flex gap-2 overflow-hidden">
             {project.tech_stack.slice(0, 3).map((tech) => (
               <Badge key={tech}>{tech}</Badge>
             ))}
