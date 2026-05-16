@@ -32,7 +32,7 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="space-y-16 md:space-y-20">
+    <section className="py-10 md:py-20 space-y-16 md:space-y-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
         <H1 text1={t("academic")} text2={t("education")} />

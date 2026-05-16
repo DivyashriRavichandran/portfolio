@@ -18,6 +18,7 @@ import {
   addDays,
   subMonths,
 } from "date-fns";
+import BlogsSection from "./_components/Blogs";
 
 const getCachedContributions = unstable_cache(
   async () => {
@@ -62,9 +63,10 @@ const Home = async () => {
       <Navbar />
       <Hero />
       <About githubData={githubData} />
-      <CareerSection />
       <ProjectSection />
       <MiniProjectsSection />
+      <CareerSection />
+      <BlogsSection />
       <Footer />
     </div>
   );

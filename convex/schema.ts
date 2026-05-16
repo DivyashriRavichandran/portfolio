@@ -106,4 +106,18 @@ export default defineSchema({
     tags: v.optional(v.array(v.string())),
     url: v.optional(v.string()),
   }),
+
+  blog_posts: defineTable({
+    slug: v.string(),
+    coverImage: v.optional(v.string()),
+
+    title: localeString,
+    description: localeString,
+    content: localeString, // The main body text (Markdown)
+
+    tags: v.optional(v.array(v.string())),
+    category: v.optional(v.string()),
+
+    publishedAt: v.optional(v.number()), // Unix timestamp for publication date
+  }).index("by_slug", ["slug"]),
 });
