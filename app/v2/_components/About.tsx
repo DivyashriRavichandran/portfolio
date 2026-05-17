@@ -135,7 +135,7 @@ const TechStackSection = () => {
                   <StackIcon
                     name={tech.key}
                     className="size-4 md:size-5"
-                    variant={theme.theme ?? "light"}
+                    variant="dark"
                   />
                   {tech.label}
                 </Badge>
