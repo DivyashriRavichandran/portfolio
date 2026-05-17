@@ -21,7 +21,7 @@ const badgeVariants = cva(
           "border-transparent bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted",
       },
       size: {
-        default: "px-2 py-0.5 font-normal",
+        default: "px-2 py-1 font-normal",
         lg: "px-2 py-1 uppercase tracking-wide",
       },
     },

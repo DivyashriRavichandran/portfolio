@@ -77,7 +77,7 @@ const Hero = () => {
         ))}
 
         <Link href="" target="_blank" className="ml-auto">
-          <Button variant={"outline"}>
+          <Button variant={"ghost"}>
             Resume
             <DownloadIcon />
           </Button>

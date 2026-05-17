@@ -16,7 +16,7 @@ const ProjectSection = () => {
   const projects = useQuery(api.projects.list);
 
   return (
-    <section className="py-10 md:py-16">
+    <section className="py-10 md:py-10">
       <H1
         text1={t("selected")}
         text2={t("works")}

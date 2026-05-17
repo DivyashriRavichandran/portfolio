@@ -9,6 +9,7 @@ import Link from "next/link";
 import H2 from "@/components/headings/H2";
 import StackIcon from "tech-stack-icons";
 import GithubContributions from "@/components/custom/GithubContributions";
+import { useTheme } from "next-themes";
 
 interface AboutProps {
   githubData: {
@@ -21,7 +22,7 @@ const About = ({ githubData }: AboutProps) => {
   const about = useQuery(api.about.get);
 
   return (
-    <section className="py-12 md:py-20">
+    <section className="mt-8 py-10">
       <H1 text1="About" text2="Me" />
 
       <div className="flex flex-col gap-10 md:gap-12">
@@ -92,7 +93,7 @@ const TechStackSection = () => {
     ],
     frameworks: [
       { key: "nextjs", label: "Next.js" },
-      { key: "reactjs", label: "React.js" },
+      { key: "react", label: "React.js" },
       { key: "vuejs", label: "Vue.js" },
       { key: "spring", label: "Spring Boot" },
       { key: "tailwindcss", label: "Tailwind" },
@@ -110,6 +111,9 @@ const TechStackSection = () => {
       { key: "linux", label: "Linux" },
     ],
   };
+
+  const theme = useTheme();
+  console.log(theme);
 
   return (
     <div>
@@ -130,8 +134,8 @@ const TechStackSection = () => {
                 <Badge key={tech.key} className="normal-case font-normal">
                   <StackIcon
                     name={tech.key}
-                    className="size-4"
-                    variant="dark"
+                    className="size-4 md:size-5"
+                    variant={theme.theme ?? "light"}
                   />
                   {tech.label}
                 </Badge>

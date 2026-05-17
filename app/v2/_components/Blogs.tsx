@@ -5,6 +5,7 @@ import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useLocale } from "next-intl";
+import { ArrowUpRight } from "lucide-react";
 
 const BlogsSection = () => {
   const locale = useLocale() as "en" | "nl";
@@ -15,7 +16,7 @@ const BlogsSection = () => {
   }
 
   return (
-    <section className="pb-10">
+    <section className="py-10">
       <H1 text1={"My"} text2={"Blogs"} total={blogs.length} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
@@ -23,10 +24,10 @@ const BlogsSection = () => {
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
-            className="group flex flex-col items-center rounded border bg-muted p-4 gap-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
+            className="group flex flex-col items-center rounded border bg-muted/30 p-4 gap-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* IMAGE */}
-            <div className="flex w-full h-40 md:h-48 rounded">
+            <div className="flex w-full h-40 md:h-48 rounded relative">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
@@ -34,6 +35,12 @@ const BlogsSection = () => {
                 height={500}
                 className="object-cover rounded"
               />
+              {/* DESKTOP ONLY */}
+              <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
+                <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.5)]">
+                  <ArrowUpRight size={24} />
+                </div>
+              </div>
             </div>
 
             {/* CONTENT */}

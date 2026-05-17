@@ -18,7 +18,7 @@ import emailjs from "@emailjs/browser";
 import { SignedIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpIcon, ArrowUpRight } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -58,7 +58,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="mt-10 md:mt-16">
+    <footer className="mt-10">
       <div className="grid lg:grid-cols-12 gap-12">
         {/* LEFT: Connect & Socials */}
         <div className="lg:col-span-4 space-y-8">
@@ -98,7 +98,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between border-b border-muted/50 py-2 transition-colors hover:border-primary"
+                  className="group flex items-center justify-between border-b border-muted py-2 transition-colors hover:border-primary"
                 >
                   <span className="group-hover:text-primary flex items-center gap-2 text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
                     <social.icon size={20} />
@@ -196,25 +196,12 @@ const Footer = () => {
       </div>
 
       {/* Footnote */}
-      <div className="mt-12 md:mt-24 py-5 md:py-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="mt-12 md:mt-20 py-5 md:py-8 border-t flex justify-between items-center gap-4">
         <p className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
           © 2026 DIVYASHRI&apos;S PORTFOLIO. ALL RIGHTS RESERVED.
         </p>
-        <div className="hidden md:flex gap-6 md:gap-8 text-[10px] uppercase font-semibold tracking-widest opacity-60">
-          <a href="#about" className="hover:opacity-100 transition-opacity">
-            About
-          </a>
-          <a href="#works" className="hover:opacity-100 transition-opacity">
-            Works
-          </a>
-          <SignedIn>
-            <Link
-              href="/admin"
-              className="hover:opacity-100 transition-opacity"
-            >
-              Admin
-            </Link>
-          </SignedIn>
+        <div className="opacity-60">
+          <ArrowUpIcon />
         </div>
       </div>
     </footer>

@@ -21,6 +21,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ProjectNavbar from "../../_components/ProjectNavbar";
 import FloatingNavbar from "../../_components/FloatingNavbar";
+import Navbar from "../../_components/Navbar";
 
 const pillItems = [
   { id: "motivation", label: "Intro" },
@@ -83,7 +84,8 @@ export default function ProjectDetailsPage() {
         <FloatingNavbar items={pillItems} activeId={activeSection} />
       )}
 
-      <ProjectNavbar project={project} nextProject={nextProject} />
+      <Navbar />
+      {/* <ProjectNavbar project={project} nextProject={nextProject} /> */}
 
       <section className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-24 pb-10">
         {/* HERO */}
@@ -246,22 +248,19 @@ export default function ProjectDetailsPage() {
                 <a
                   href={project.github_link}
                   target="_blank"
-                  className="group relative p-4 md:p-6 border hover:border-primary/50 transition-all duration-300"
+                  className="group relative p-4 border hover:border-primary/50 transition-all duration-300"
                 >
-                  <div className="flex md:flex-col items-center md:items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div className="size-12 rounded-full bg-background flex items-center justify-center border group-hover:scale-110 transition-transform">
                       <FaGithub size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold md:text-lg uppercase">
-                        Source Code
-                      </h4>
+                      <h4 className="font-medium md:text-lg">Source Code</h4>
                       <p className="text-xs md:text-sm text-muted-foreground">
-                        View the implementation and documentation on GitHub
+                        View the implementation on GitHub
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="text-primary-foreground absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
                 </a>
               )}
 
@@ -269,22 +268,21 @@ export default function ProjectDetailsPage() {
                 <a
                   href={project.project_link}
                   target="_blank"
-                  className="group relative p-4 md:p-6 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
+                  className="group relative p-4 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
                 >
-                  <div className="flex md:flex-col items-center md:items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border group-hover:scale-110 transition-transform">
                       <FaGlobe size={24} />
                     </div>
                     <div>
-                      <h4 className="font-semibold md:text-lg uppercase text-primary-foreground">
+                      <h4 className="font-medium md:text-lg text-primary-foreground">
                         Live Demo
                       </h4>
-                      <p className="text-xs md:text-sm text-black/60">
+                      <p className="text-xs md:text-sm text-black/70">
                         Experience the project live in your browser
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="text-primary-foreground absolute right-6 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
                 </a>
               )}
             </div>

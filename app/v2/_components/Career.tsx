@@ -32,7 +32,7 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-20 space-y-16 md:space-y-20">
+    <section className="py-10 md:py-10 space-y-16 md:space-y-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
         <H1 text1={t("academic")} text2={t("education")} />
@@ -88,7 +88,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
   const org = item.organization?.[locale];
   const location = item.location?.[locale];
 
-  // Helper to safely format dates for display
+  // Helper to format dates
   const displayDate = (
     dateString: string | null | undefined,
     fallback: string,
@@ -119,7 +119,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
   return (
     <div className="group">
-      <div className="flex gap-5 md:gap-8 ">
+      <div className="flex gap-5">
         {/* LOGO */}
         <div className="shrink-0">
           {logoUrl && (
