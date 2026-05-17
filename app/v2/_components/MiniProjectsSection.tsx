@@ -15,7 +15,7 @@ const MiniProjectsSection = () => {
   }
 
   return (
-    <section className="pb-10">
+    <section className="">
       <H1 text1={"Open-Source"} text2={"Works"} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-3 md:gap-4">

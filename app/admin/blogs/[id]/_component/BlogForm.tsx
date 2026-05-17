@@ -8,6 +8,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import TableRow from "@tiptap/extension-table-row";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import Gapcursor from "@tiptap/extension-gapcursor"; // Imported Gapcursor to resolve cell selection states
 import { format } from "date-fns";
 import {
   Loader2,
@@ -19,9 +23,13 @@ import {
   Bold,
   Italic,
   Heading2,
+  Heading3,
+  Table as TableIcon,
   List,
   ListOrdered,
   Calendar as CalendarIcon,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,8 +40,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import H3 from "@/components/headings/H3";
+import H3Component from "@/components/headings/H3";
 import { Doc } from "@/convex/_generated/dataModel";
+import { Table } from "@tiptap/extension-table";
 
 interface BlogFormValues {
   slug: string;
@@ -46,14 +55,18 @@ interface BlogFormValues {
   tags: string;
   image: string;
   timeToRead: number;
-  publishedAt: string; // ISO string storage format
+  publishedAt: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EditorToolbar = ({ editor }: { editor: any }) => {
   if (!editor) return null;
 
+  // Checks if the cursor is anywhere inside a table structure
+  const isTableActive = editor.isActive("table");
+
   return (
-    <div className="flex flex-wrap gap-2 p-2 bg-white/5 border-b border-white/10 rounded-t-xl">
+    <div className="flex flex-wrap gap-2 p-2 bg-white/5 border-b border-white/10 rounded-t-xl items-center">
       <Button
         type="button"
         size="sm"
@@ -81,6 +94,15 @@ const EditorToolbar = ({ editor }: { editor: any }) => {
       <Button
         type="button"
         size="sm"
+        variant={editor.isActive("heading", { level: 3 }) ? "default" : "ghost"}
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+      >
+        <Heading3 className="h-4 w-4" />
+      </Button>
+
+      <Button
+        type="button"
+        size="sm"
         variant={editor.isActive("bulletList") ? "default" : "ghost"}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
@@ -94,6 +116,83 @@ const EditorToolbar = ({ editor }: { editor: any }) => {
       >
         <ListOrdered className="h-4 w-4" />
       </Button>
+
+      <div className="h-4 w-px bg-white/10 mx-1" />
+
+      {/* Insert Table Button */}
+      {!isTableActive && (
+        <Button
+          type="button"
+          size="sm"
+          variant="ghost"
+          onClick={() =>
+            editor
+              .chain()
+              .focus()
+              .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+              .run()
+          }
+        >
+          <TableIcon className="h-4 w-4 mr-1" />
+          <span className="text-xs">Table</span>
+        </Button>
+      )}
+
+      {/*  Table Editing Controls  */}
+      {isTableActive && (
+        <div className="flex flex-wrap gap-1.5 bg-black/30 p-1 rounded-md border border-white/5 data-[state=open]:animate-in data-[state=closed]:animate-out fade-in duration-200">
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="text-xs px-2 h-7"
+            onMouseDown={(e) => e.preventDefault()} // 💡 Prevents focus loss
+            onClick={() => editor.chain().focus().addColumnAfter().run()}
+          >
+            <Plus className="h-3 w-3 mr-1 text-emerald-400" /> +Col
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="text-xs px-2 h-7"
+            onMouseDown={(e) => e.preventDefault()} // 💡 Prevents focus loss
+            onClick={() => editor.chain().focus().addRowAfter().run()}
+          >
+            <Plus className="h-3 w-3 mr-1 text-emerald-400" /> +Row
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="text-xs px-2 h-7 text-rose-400 hover:text-rose-300"
+            onMouseDown={(e) => e.preventDefault()} // 💡 Prevents focus loss
+            onClick={() => editor.chain().focus().deleteColumn().run()}
+          >
+            <Trash2 className="h-3 w-3 mr-1" /> -Col
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            className="text-xs px-2 h-7 text-rose-400 hover:text-rose-300"
+            onMouseDown={(e) => e.preventDefault()} // 💡 Prevents focus loss
+            onClick={() => editor.chain().focus().deleteRow().run()}
+          >
+            <Trash2 className="h-3 w-3 mr-1" /> -Row
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="destructive"
+            className="text-xs px-2 h-7 bg-red-950 text-red-200 hover:bg-red-900 border border-red-800"
+            onMouseDown={(e) => e.preventDefault()} // 💡 Prevents focus loss
+            onClick={() => editor.chain().focus().deleteTable().run()}
+          >
+            <Trash2 className="h-3 w-3 mr-1" /> Delete Table
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -142,30 +241,46 @@ export default function BlogForm({
           },
     });
 
+  const editorExtensions = [
+    StarterKit,
+    Table.configure({
+      resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
+    Gapcursor,
+  ];
+
+  // Global styles
+  const editorClassStyles =
+    "prose prose-invert max-w-none min-h-[200px] focus:outline-none p-4 text-sm bg-black/20 rounded-b-xl border border-white/10 border-t-0 " +
+    "[&_table]:border-collapse [&_table]:w-full [&_table]:my-4 " +
+    "[&_th]:border [&_th]:border-white/20 [&_th]:p-2 [&_th]:bg-white/5 [&_th]:text-left [&_th]:font-semibold " +
+    "[&_td]:border [&_td]:border-white/10 [&_td]:p-2";
+
   const editorEn = useEditor({
-    extensions: [StarterKit],
+    extensions: editorExtensions,
     content: initialData?.content.en || "",
     onUpdate: ({ editor }) => {
       setValue("content_en", editor.getHTML());
     },
     editorProps: {
       attributes: {
-        class:
-          "prose prose-invert max-w-none min-h-[200px] focus:outline-none p-4 text-sm bg-black/20 rounded-b-xl border border-white/10 border-t-0",
+        class: editorClassStyles,
       },
     },
   });
 
   const editorNl = useEditor({
-    extensions: [StarterKit],
+    extensions: editorExtensions,
     content: initialData?.content.nl || "",
     onUpdate: ({ editor }) => {
       setValue("content_nl", editor.getHTML());
     },
     editorProps: {
       attributes: {
-        class:
-          "prose prose-invert max-w-none min-h-[200px] focus:outline-none p-4 text-sm bg-black/20 rounded-b-xl border border-white/10 border-t-0",
+        class: editorClassStyles,
       },
     },
   });
@@ -252,7 +367,7 @@ export default function BlogForm({
     >
       {/* Content Identifiers */}
       <section className="space-y-6">
-        <H3 icon={Terminal} text="Blog Metadata" />
+        <H3Component icon={Terminal} text="Blog Metadata" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white/5 p-6 rounded-xl border border-white/10">
           <Input
             {...register("title_en", { required: true })}
@@ -280,7 +395,7 @@ export default function BlogForm({
 
       {/* Excerpts / Descriptions */}
       <section className="space-y-6">
-        <H3 icon={Code2} text="Summaries & Tags" />
+        <H3Component icon={Code2} text="Summaries & Tags" />
         <div className="space-y-4 bg-white/5 p-6 rounded-xl border border-white/10">
           <Textarea
             {...register("description_en")}
@@ -357,9 +472,9 @@ export default function BlogForm({
         </div>
       </section>
 
-      {/* Deep Body Articles (Rich Text Editor inputs) */}
+      {/* Deep Body Articles */}
       <section className="space-y-6">
-        <H3 icon={BookOpen} text="Rich Text Content" />
+        <H3Component icon={BookOpen} text="Rich Text Content" />
         <div className="space-y-6 bg-white/5 p-6 rounded-xl border border-white/10">
           <div>
             <label className="block text-xs font-bold uppercase tracking-wider mb-2 text-white/50">
@@ -385,7 +500,7 @@ export default function BlogForm({
 
       {/* Simple Cover Image Canvas */}
       <section className="space-y-6">
-        <H3 icon={Sparkles} text="Visual Presentation" />
+        <H3Component icon={Sparkles} text="Visual Presentation" />
         <label className="group relative aspect-video w-64 border-2 border-dashed border-white/10 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-all overflow-hidden">
           {watch("image") ? (
             <div className="text-center">

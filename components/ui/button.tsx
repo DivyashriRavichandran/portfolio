@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "font-semibold tracking-wider inline-flex items-center gap-1 justify-center whitespace-nowrap rounded-none text-sm transition-all cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "font-semibold tracking-wider inline-flex items-center gap-1 justify-center whitespace-nowrap rounded-none text-xs md:text-sm transition-all cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-3.5 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
@@ -24,7 +24,7 @@ const buttonVariants = cva(
       size: {
         default: "h-8 px-3 py-2",
         sm: "h-8 gap-1.5 px-3 text-xs md:text-xs",
-        lg: "h-10 px-4 md:h-12 md:px-6 md:text-base",
+        lg: "h-10 px-4 md:h-12 md:px-6 text-sm md:text-base",
         icon: "size-8 lg:size-10",
         iconCarousel: "size-6",
         link: "p-0",

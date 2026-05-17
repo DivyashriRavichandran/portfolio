@@ -26,7 +26,6 @@ const BlogDetailsPage = () => {
     );
   }
 
-  // Fallback cleanly to whichever content language is available
   const activeContent = blog.content[locale] || blog.content.en || "";
 
   return (
@@ -79,9 +78,13 @@ const BlogDetailsPage = () => {
         <div
           className="mt-10 md:mt-16 max-w-none prose
           prose-headings:text-foreground prose-headings:font-medium prose-headings:text-lg md:prose-headings:text-xl
-          prose-p:text-muted-foreground prose-p:text-base md:prose-p:text-base prose-p:leading-relaxed
-          prose-a:text-primary hover:prose-a:underline
-          "
+          prose-p:text-muted-foreground prose-p:text-sm md:prose-p:text-base prose-p:leading-relaxed
+          prose-strong:text-muted-foreground prose-strong:font-medium
+          prose-table:border
+          prose-tr:text-center
+          prose-tr:border-b-foreground/30
+          prose-td:text-muted-foreground prose-td:border-b
+          prose-td:first:font-medium prose-td:first:text-foreground prose-td:first:border-r"
           dangerouslySetInnerHTML={{ __html: activeContent }}
         />
       </article>
