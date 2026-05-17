@@ -1,0 +1,27 @@
+{
+    "blogs": [
+        {
+            "_id": "1",
+            "slug": "how-does-collaborative-editing-work-without-conflict",
+            "title": {
+                "en": "How does collaborative editing work without conflict?",
+                "nl": "Hoe werkt collaboratief bewerken zonder conflicten?"
+            },
+            "description": {
+                "en": "Collaborative tools like Google Docs, Figma, and digital whiteboards allow thousands of people to edit the same thing at the same time. Have you wondered how that do that?",
+                "nl": "Collaboratieve tools zoals Google Docs, Figma en digitale whiteboards stellen duizenden mensen in staat om hetzelfde ding tegelijk te bewerken. Heb je je afgevraagd hoe dat werkt?"
+            },
+            "coverImage": "/blog1.jpg",
+            "content": {
+                "en": "/blog1"
+            },
+            "tags": [
+                "Collaboration",
+                "Concurrent_Editing",
+                "System_Design"
+            ],
+            "timeToRead": 5,
+            "publishedAt": "2026-03-11T00:00:00.000Z"
+        }
+    ]
+}

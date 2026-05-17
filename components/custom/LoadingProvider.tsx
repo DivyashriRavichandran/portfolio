@@ -60,16 +60,19 @@ export const LoadingProvider = ({
               opacity: 0,
               transition: { duration: 0.6, ease: [0.76, 0, 0.24, 1] },
             }}
-            className="fixed inset-0 z-[9999] flex flex-col gap-4 items-center justify-center bg-background"
+            className="fixed inset-0 z-9999 flex flex-col gap-2 items-center justify-center bg-background"
           >
-            <p className="text-lg font-medium">Loading Portfolio...</p>
-            <div className="w-48 h-[2px] bg-muted/20 overflow-hidden relative">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                className="absolute inset-y-0 left-0 bg-primary"
-                transition={{ ease: "linear" }}
-              />
+            <div className="flex flex-col gap-2 items-start w-48">
+              <p>{progress}%</p>
+
+              <div className="w-full h-0.5 bg-muted/20 overflow-hidden relative">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  className="absolute inset-y-0 left-0 bg-primary"
+                  transition={{ ease: "linear" }}
+                />
+              </div>
             </div>
           </motion.div>
         ) : (

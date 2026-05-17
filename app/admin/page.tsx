@@ -1,6 +1,7 @@
 "use client";
 
 import AboutManager from "@/components/admin/AboutManager";
+import BlogsManager from "@/components/admin/BlogsManager";
 import CareerManager from "@/components/admin/CareerManager";
 import MiniProjectManager from "@/components/admin/MiniProjectManager";
 
@@ -27,7 +28,10 @@ export default function AdminPage() {
             <FolderCode size={16} /> Projects
           </TabsTrigger>
           <TabsTrigger value="mini-projects">
-            <FolderCode size={16} /> Mini Projects
+            <FolderCode size={16} /> Open Source Projects
+          </TabsTrigger>
+          <TabsTrigger value="blogs">
+            <UserCircle size={16} /> Blogs
           </TabsTrigger>
           <TabsTrigger value="career">
             <Briefcase size={16} /> Career
@@ -45,6 +49,11 @@ export default function AdminPage() {
         {/* MINI-PROJECTS SECTION */}
         <TabsContent value="mini-projects">
           <MiniProjectManager />
+        </TabsContent>
+
+        {/* BLOGS SECTION */}
+        <TabsContent value="blogs">
+          <BlogsManager />
         </TabsContent>
 
         {/* CAREER SECTION */}

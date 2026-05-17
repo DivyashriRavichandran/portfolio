@@ -183,6 +183,7 @@ const Footer = () => {
               <div className="flex justify-end pt-4">
                 <Button
                   type="submit"
+                  size="lg"
                   disabled={isSubmitting}
                   className="w-full md:w-auto uppercase"
                 >

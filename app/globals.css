@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 @tailwind utilities;
 
@@ -93,23 +94,14 @@
   }
 
   .dark {
-    --background: #0b0b0c;
-    --foreground: #f2f2dc;
+    --background: oklch(15.3% 0.006 107.1); /* olive-950 */
+    --foreground: oklch(98.7% 0.026 102.212); /* yellow-50 */
 
-    --muted: rgb(50, 50, 46);
-    --muted-foreground: #d4d2c7;
+    --muted: oklch(24% 0.012 107.1);
+    --muted-foreground: oklch(85.063% 0.023 104.198);
 
-    --primary: #eff28d;
-    --primary-foreground: #0b0b0c;
-    --primary-light: oklch(95% 0.1 140);
-    --primary-dark: oklch(40% 0.1 140);
-
-    --secondary: #ffa447;
-    --secondary-foreground: #0b0b0c;
-    --secondary-light: #ffbd7a;
-    --secondary-dark: #8a4d12;
-
-    --tertiary: #a977ff;
+    --primary: oklch(94.5% 0.129 101.54); /* yellow-200 */
+    --primary-foreground: oklch(15.3% 0.006 107.1); /* olive-950 */
 
     --card: #18181b;
     --card-foreground: #f2f2dc;
@@ -120,9 +112,8 @@
     --accent: #1e1e21;
     --accent-foreground: #eff28d;
 
-    --destructive: #ef5e6e;
-    --destructive-foreground: #f2f2dc;
-
+    --destructive: oklch(71.2% 0.194 13.428);
+    --destructive-foreground: oklch(71.2% 0.194 13.428);
     --input: #18181b;
     --ring: #eff28d;
   }

@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, Globe } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const ProjectSection = () => {
   const t = useTranslations();
@@ -63,7 +63,7 @@ const ProjectCard = ({
               src={mockupUrl}
               alt={project.title[locale]}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover"
             />
           ) : (
             <div className="w-full h-full" />
