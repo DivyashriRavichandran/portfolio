@@ -112,6 +112,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
       const duration = intervalToDuration({ start: startDate, end: endDate });
       return formatDuration(duration, { format: ["years", "months"] });
     } catch (error) {
+      console.log(error);
       return "";
     }
   };

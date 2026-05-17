@@ -11,7 +11,7 @@ import StarterKit from "@tiptap/starter-kit";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
-import Gapcursor from "@tiptap/extension-gapcursor"; // Imported Gapcursor to resolve cell selection states
+import Gapcursor from "@tiptap/extension-gapcursor";
 import { format } from "date-fns";
 import {
   Loader2,
@@ -255,9 +255,9 @@ export default function BlogForm({
   // Global styles
   const editorClassStyles =
     "prose prose-invert max-w-none min-h-[200px] focus:outline-none p-4 text-sm bg-black/20 rounded-b-xl border border-white/10 border-t-0 " +
-    "[&_table]:border-collapse [&_table]:w-full [&_table]:my-4 " +
-    "[&_th]:border [&_th]:border-white/20 [&_th]:p-2 [&_th]:bg-white/5 [&_th]:text-left [&_th]:font-semibold " +
-    "[&_td]:border [&_td]:border-white/10 [&_td]:p-2";
+    "[&_table]:border-collapse [&_table]:w-full [&_table]:my-4 [&_table]:border [&_table]:border-white/20 " +
+    "[&_th]:border [&_th]:border-white/20 [&_th]:p-2 [&_th]:bg-white/10 [&_th]:text-left [&_th]:font-semibold " +
+    "[&_td]:border [&_td]:border-white/20 [&_td]:p-2 [&_td]:min-w-[50px]";
 
   const editorEn = useEditor({
     extensions: editorExtensions,
