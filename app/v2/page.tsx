@@ -59,16 +59,18 @@ const Home = async () => {
   const githubData = await getCachedContributions();
 
   return (
-    <div className="px-5 lg:px-0 md:max-w-3xl md:mx-auto">
+    <>
       <Navbar />
-      <Hero />
-      <About githubData={githubData} />
-      <ProjectSection />
-      <MiniProjectsSection />
-      <CareerSection />
-      <BlogsSection />
-      <Footer />
-    </div>
+      <div className="px-5 lg:px-0 md:max-w-3xl md:mx-auto">
+        <Hero />
+        <About githubData={githubData} />
+        <ProjectSection />
+        <MiniProjectsSection />
+        <CareerSection />
+        <BlogsSection />
+        <Footer />
+      </div>
+    </>
   );
 };
 

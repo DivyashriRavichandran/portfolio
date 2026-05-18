@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
 import { ArrowUpRight } from "lucide-react";
 
 const ProjectSection = () => {
@@ -54,20 +53,21 @@ const ProjectCard = ({
   const locale = useLocale() as "en" | "nl";
 
   return (
-    <Link href={`/v2/project/${project.slug}`} className="group block">
+    <Link href={`/v2/project/${project.slug}`} className="group block h-full">
       <div className="border flex flex-col h-full rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
-        <div className="relative z-0 aspect-5/3 overflow-hidden">
+        <div className="relative z-0 aspect-5/3 overflow-hidden bg-muted/10">
           {mockupUrl ? (
             <Image
               src={mockupUrl}
               alt={project.title[locale]}
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-102"
             />
           ) : (
             <div className="w-full h-full" />
           )}
+
           {/* MOBILE ONLY */}
           <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/80 to-transparent md:hidden" />
           <div className="absolute bottom-3 right-3 flex items-center gap-1 md:hidden">
@@ -79,8 +79,8 @@ const ProjectCard = ({
 
           {/* DESKTOP ONLY */}
           <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
-            <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.5)]">
-              <ArrowUpRight size={24} />
+            <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.3)]">
+              <ArrowUpRight size={20} />
             </div>
           </div>
         </div>
@@ -91,14 +91,20 @@ const ProjectCard = ({
             <h3 className="text-lg md:text-xl font-semibold">
               {project.title[locale]}
             </h3>
-            <p className="text-muted-foreground text-[10px] md:text-xs uppercase font-medium tracking-wider">
+            <p className="text-muted-foreground text-[10px] md:text-xs uppercase tracking-wider font-medium line-clamp-1">
               {project.categories[locale].join(" • ")}
             </p>
           </div>
+
           {/* Tech Stack */}
-          <div className="flex gap-2 overflow-hidden">
-            {project.tech_stack.slice(0, 3).map((tech) => (
-              <Badge key={tech}>{tech}</Badge>
+          <div className="flex flex-wrap gap-x-2 gap-y-1 mt-auto">
+            {project.tech_stack.slice(0, 4).map((tech, i) => (
+              <span
+                key={i}
+                className="text-[10px] md:text-xs font-medium lowercase text-muted-foreground/70"
+              >
+                #{tech}
+              </span>
             ))}
           </div>
         </div>

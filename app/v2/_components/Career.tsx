@@ -123,7 +123,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* LOGO */}
         <div className="shrink-0">
           {logoUrl && (
-            <div className="relative size-12 md:size-14 overflow-hidden border flex items-center justify-center">
+            <div className="relative size-10 md:size-14 overflow-hidden border flex items-center justify-center">
               <Image src={logoUrl} alt="" fill className="object-contain" />
             </div>
           )}
@@ -132,12 +132,12 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTENT */}
         <div className="flex-1">
           {/* TITLE */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between md:gap-1">
-            <h3 className="text-lg md:text-xl lg:text-2xl font-medium tracking-tight">
+          <div className="flex flex-col md:flex-row md:items-baseline-last md:justify-between md:gap-1">
+            <h3 className="text-lg md:text-xl lg:text-2xl font-medium">
               {title}
             </h3>
 
-            <span className="text-xs md:text-sm uppercase font-medium tracking-wide">
+            <span className="text-xs md:text-base">
               {displayDate(item.startDate, "N/A")} —{" "}
               {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
             </span>

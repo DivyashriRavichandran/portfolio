@@ -90,54 +90,55 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
+    <>
       <Navbar />
-
-      <div className="pt-20 md:pt-24 space-y-4">
-        <H1 text1="Beyond the" text2="Code" />
-        <p className="md:text-xl">{t("about-me-text")}</p>
-      </div>
-
-      <section>
-        <H2 text1="My" text2="Favourites" />
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-          {favs.map((fav) => (
-            <FavoriteCard key={fav.label} item={fav} />
-          ))}
+      <main className="mt-10 md:max-w-3xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
+        <div className="space-y-4">
+          <H1 text1="Beyond the" text2="Code" />
+          <p className="md:text-xl">{t("about-me-text")}</p>
         </div>
-      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
         <section>
-          <H2 text1="Desk" text2="Setup" />
-          <div className="flex flex-col gap-4">
-            {hardware.map((item) => (
-              <div
-                key={item.value}
-                className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
-              >
-                <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                  <item.icon size={16} className="shrink-0" />
-                  <span className="text-xs uppercase tracking-widest">
-                    {item.label}
-                  </span>
+          <H2 text1="My" text2="Favourites" />
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+            {favs.map((fav) => (
+              <FavoriteCard key={fav.label} item={fav} />
+            ))}
+          </div>
+        </section>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+          <section>
+            <H2 text1="Desk" text2="Setup" />
+            <div className="flex flex-col gap-4">
+              {hardware.map((item) => (
+                <div
+                  key={item.value}
+                  className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
+                >
+                  <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                    <item.icon size={16} className="shrink-0" />
+                    <span className="text-xs uppercase tracking-widest">
+                      {item.label}
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium">{item.value}</span>
                 </div>
-                <span className="text-sm font-medium">{item.value}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
 
-        <section>
-          <H2 text1="Currently" text2="Listening" />
-          <div className="grid gap-4">
-            {spotifyLinks.map((link) => (
-              <SpotifyPlayer key={link} link={link} />
-            ))}
-          </div>
-        </section>
-      </div>
-    </main>
+          <section>
+            <H2 text1="Currently" text2="Listening" />
+            <div className="grid gap-4">
+              {spotifyLinks.map((link) => (
+                <SpotifyPlayer key={link} link={link} />
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+    </>
   );
 }
 

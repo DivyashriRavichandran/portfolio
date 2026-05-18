@@ -10,7 +10,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <section className="w-full flex flex-col pt-20 md:pt-32 gap-y-4 md:gap-y-8">
+    <section className="w-full flex flex-col pt-10 md:pt-10 gap-y-4 md:gap-y-8">
       {/* AVATAR & NAME */}
       <div className="flex flex-row gap-4 md:gap-8">
         <div className="relative group">
@@ -45,7 +45,7 @@ const Hero = () => {
             </p>
             <p className="text-xs md:text-sm flex items-center gap-1 text-muted-foreground">
               <FaMapMarkerAlt size={16} className="size-3 md:size-3" />
-              Groningen, NL
+              Groningen, Netherlands
             </p>
           </div>
         </div>

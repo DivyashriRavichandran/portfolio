@@ -31,7 +31,7 @@ const BlogDetailsPage = () => {
   return (
     <>
       <Navbar />
-      <article className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-28 pb-10">
+      <article className="md:max-w-3xl md:mx-auto px-5 lg:px-0 py-10">
         {/* Header Section */}
         <header>
           {/* Tags */}

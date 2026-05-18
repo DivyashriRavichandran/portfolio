@@ -17,48 +17,48 @@ const BlogsSection = () => {
 
   return (
     <section className="py-10">
-      <H1 text1={"My"} text2={"Blogs"} total={blogs.length} />
+      <H1 text1={"My"} text2={"Blogs"} total={blogs.length} text3={"Blogs"} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+      <div className="grid grid-cols-1 gap-3">
         {blogs.map((project) => (
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
-            className="group flex flex-col items-center rounded border bg-muted/30 p-4 gap-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
+            className="group flex items-start rounded border bg-muted/30 p-3 md:p-4 gap-3 md:gap-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
-            {/* IMAGE */}
-            <div className="flex w-full h-40 md:h-48 rounded relative">
+            <div className="flex w-full sm:w-28 h-32 sm:h-24 shrink-0 rounded relative overflow-hidden">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
-                width={500}
-                height={500}
-                className="object-cover rounded"
+                width={200}
+                height={200}
+                className="object-cover w-full h-full"
               />
-              {/* DESKTOP ONLY */}
-              <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
-                <div className="size-14 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.5)]">
-                  <ArrowUpRight size={24} />
+              {/* DESKTOP HOVER OVERLAY */}
+              <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
+                <div className="size-8 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
+                  <ArrowUpRight size={16} />
                 </div>
               </div>
             </div>
 
             {/* CONTENT */}
-            <div className="flex flex-col gap-2">
-              <h3 className="text-sm md:text-lg leading-tight font-medium">
-                {project.title[locale]}
-              </h3>
-
-              <p className="text-xs md:text-sm text-muted-foreground whitespace-pre-line">
-                {project.description[locale]?.split("\n")[0]}
-              </p>
+            <div className="flex flex-col justify-between h-full min-w-0">
+              <div>
+                <h3 className="text-sm md:text-base font-medium leading-snug line-clamp-1 group-hover:text-primary transition-colors">
+                  {project.title[locale]}
+                </h3>
+                <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mt-1">
+                  {project.description[locale]?.split("\n")[0]}
+                </p>
+              </div>
 
               {/* TAGS */}
-              <div className="mt-1 flex flex-wrap gap-x-2">
+              <div className="mt-2 flex flex-wrap gap-x-1.5 gap-y-0.5">
                 {project.tags?.map((tag, i) => (
                   <span
                     key={i}
-                    className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80"
+                    className="text-[10px] md:text-xs font-medium text-muted-foreground/70"
                   >
                     #{tag}
                   </span>

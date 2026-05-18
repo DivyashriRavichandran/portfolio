@@ -87,7 +87,7 @@ export default function ProjectDetailsPage() {
       <Navbar />
       {/* <ProjectNavbar project={project} nextProject={nextProject} /> */}
 
-      <section className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-20 md:pt-24 pb-10">
+      <section className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-8 md:pt-10 pb-10">
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-medium">

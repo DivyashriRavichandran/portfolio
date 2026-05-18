@@ -25,7 +25,7 @@ const MiniProjectsSection = () => {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex md:items-center overflow-hidden rounded border bg-muted/10 p-3 md:p-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
+            className="group flex md:items-center overflow-hidden rounded border bg-muted/30 p-3 md:p-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* LOGO CONTAINER */}
             <div className="flex size-16 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
@@ -39,7 +39,7 @@ const MiniProjectsSection = () => {
             </div>
 
             {/* CONTENT SECTION */}
-            <div className="ml-4 md:ml-5 flex flex-1 flex-col overflow-hidden">
+            <div className="ml-3 md:ml-4 flex flex-1 flex-col overflow-hidden">
               <div className="flex items-center justify-between gap-2">
                 <h3 className="truncate text-sm md:text-base font-medium">
                   {project.title[locale]}
@@ -56,7 +56,7 @@ const MiniProjectsSection = () => {
                 {project.tags?.map((tag, i) => (
                   <span
                     key={i}
-                    className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/80"
+                    className="text-[10px] md:text-xs lowercase font-medium text-muted-foreground/80"
                   >
                     #{tag}
                   </span>

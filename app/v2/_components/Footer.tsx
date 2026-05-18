@@ -15,8 +15,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import { SignedIn } from "@clerk/nextjs";
-import Link from "next/link";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { ArrowUpIcon, ArrowUpRight } from "lucide-react";
 
@@ -55,6 +53,13 @@ const Footer = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -200,9 +205,13 @@ const Footer = () => {
         <p className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
           © 2026 DIVYASHRI&apos;S PORTFOLIO. ALL RIGHTS RESERVED.
         </p>
-        <div className="opacity-60">
-          <ArrowUpIcon />
-        </div>
+        <button
+          onClick={scrollToTop}
+          className="cursor-pointer bg-primary rounded-full p-2"
+          aria-label="Scroll to top"
+        >
+          <ArrowUpIcon className="size-5 text-background" />
+        </button>
       </div>
     </footer>
   );
