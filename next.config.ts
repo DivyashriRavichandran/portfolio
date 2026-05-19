@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   i18n: {
     locales: ["en", "nl"],
     defaultLocale: "en",
+    localeDetection: false,
   },
   images: {
     dangerouslyAllowSVG: true,

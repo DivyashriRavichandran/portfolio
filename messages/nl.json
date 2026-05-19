@@ -1,7 +1,7 @@
 {
   "menu": "Menu",
   "work": "Werk",
-  "about": "Over Mij",
+  "about": "Over",
   "skills": "Vaardigheden",
   "projects": "Projecten",
   "contact": "Contact",
@@ -41,5 +41,12 @@
   "academic": "Academisch",
   "professional": "Professioneel",
   "next": "volgende",
-  "project": "Project"
+  "project": "Project",
+  "me": "Mij",
+  "contributions": "Bijdragen",
+  "my": "Mijn",
+  "blogs": "Blogs",
+  "inquiry": "Aanvraag",
+  "lets": "Laten we",
+  "connect": "Connecten."
 }

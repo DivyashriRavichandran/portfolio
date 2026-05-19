@@ -1,10 +1,16 @@
-// middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import createIntlMiddleware from "next-intl/middleware";
 
+const intlMiddleware = createIntlMiddleware({
+  locales: ["en", "nl"],
+  defaultLocale: "en",
+  localePrefix: "never",
+});
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isAdminRoute(req)) await auth.protect();
+  return intlMiddleware(req);
 });
 
 export const config = {

@@ -10,6 +10,7 @@ import H2 from "@/components/headings/H2";
 import StackIcon from "tech-stack-icons";
 import GithubContributions from "@/components/custom/GithubContributions";
 import { useTheme } from "next-themes";
+import { useTranslations } from "next-intl";
 
 interface AboutProps {
   githubData: {
@@ -19,11 +20,12 @@ interface AboutProps {
   };
 }
 const About = ({ githubData }: AboutProps) => {
+  const t = useTranslations();
   const about = useQuery(api.about.get);
 
   return (
     <section className="mt-8 py-10">
-      <H1 text1="About" text2="Me" />
+      <H1 text1={t("about")} text2={t("me")} />
 
       <div className="flex flex-col gap-10 md:gap-12">
         {/* LEFT SIDE */}
@@ -66,7 +68,7 @@ const About = ({ githubData }: AboutProps) => {
 
         <div className="border space-y-8 rounded px-6 py-8 bg-muted/5">
           <div className="w-full flex flex-col">
-            <H2 text1={"Github"} text2="Contributions" />
+            <H2 text1={"Github"} text2={t("contributions")} />
 
             <div className="mx-auto scroll-auto w-full max-w-3xl">
               <GithubContributions githubData={githubData.contributions} />

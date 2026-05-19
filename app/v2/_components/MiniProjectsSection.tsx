@@ -5,18 +5,20 @@ import H1 from "../../../components/headings/H1";
 import { ExternalLink } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 const MiniProjectsSection = () => {
-  const projects = useQuery(api.mini_projects.get);
+  const t = useTranslations();
   const locale = useLocale() as "en" | "nl";
+  const projects = useQuery(api.mini_projects.get);
+
   if (!projects) {
     return null;
   }
 
   return (
     <section className="py-10">
-      <H1 text1={"Open-Source"} text2={"Works"} total={projects.length} />
+      <H1 text1={"Open-Source"} text2={t("works")} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-3 md:gap-4">
         {projects.map((project) => (

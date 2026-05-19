@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { ArrowUpIcon, ArrowUpRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -25,6 +26,7 @@ const formSchema = z.object({
 });
 
 const Footer = () => {
+  const t = useTranslations();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -69,9 +71,9 @@ const Footer = () => {
         <div className="lg:col-span-4 space-y-8">
           <div>
             <h2 className="text-2xl md:text-3xl font-semibold leading-tight">
-              <span>Let&apos;s </span> <br />{" "}
+              <span>{t("lets")} </span> <br />
               <span className="px-1 text-primary-foreground bg-primary">
-                Connect.
+                {t("connect")}
               </span>
             </h2>
           </div>
@@ -123,7 +125,7 @@ const Footer = () => {
         <div className="lg:col-span-8">
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Inquiry
+              {t("inquiry")}
             </h3>
             <p className="mt-2 md:text-lg">
               Have a specific inquiry or just want to chat about software?

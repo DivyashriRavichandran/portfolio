@@ -4,10 +4,11 @@ import Image from "next/image";
 import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 
 const BlogsSection = () => {
+  const t = useTranslations();
   const locale = useLocale() as "en" | "nl";
   const blogs = useQuery(api.blogs.get);
 
@@ -17,7 +18,12 @@ const BlogsSection = () => {
 
   return (
     <section className="py-10">
-      <H1 text1={"My"} text2={"Blogs"} total={blogs.length} text3={"Blogs"} />
+      <H1
+        text1={t("my")}
+        text2={t("blogs")}
+        total={blogs.length}
+        text3={"Blogs"}
+      />
 
       <div className="grid grid-cols-1 gap-3">
         {blogs.map((project) => (

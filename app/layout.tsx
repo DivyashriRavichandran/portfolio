@@ -2,11 +2,11 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Toaster } from "sonner";
-import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
 import localFont from "next/font/local";
 import { LoadingProvider } from "@/components/custom/LoadingProvider";
+import { getLocale } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Divyashri | Frontend Developer",
@@ -54,8 +54,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const store = await cookies();
-  const locale = store.get("locale")?.value || "nl";
+  const locale = await getLocale();
 
   return (
     <html

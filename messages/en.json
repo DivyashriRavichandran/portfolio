@@ -1,7 +1,7 @@
 {
   "menu": "Menu",
   "work": "Work",
-  "about": "About Me",
+  "about": "About",
   "skills": "Skills",
   "projects": "Projects",
   "contact": "Contact",
@@ -41,5 +41,12 @@
   "academic": "Academic",
   "professional": "Professional",
   "next": "next",
-  "project": "Project"
+  "project": "Project",
+  "me": "Me",
+  "contributions": "Contributions",
+  "my": "My",
+  "blogs": "Blogs",
+  "inquiry": "Inquiry",
+  "lets": "Let's",
+  "connect": "Connect."
 }
