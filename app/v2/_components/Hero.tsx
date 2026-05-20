@@ -11,11 +11,11 @@ const Hero = () => {
   return (
     <section className="w-full flex flex-col pt-8 md:pt-10 gap-y-4 md:gap-y-8">
       {/* AVATAR & NAME */}
-      <div className="flex flex-row gap-4 md:gap-8">
+      <div className="flex flex-row gap-3 md:gap-8">
         <div className="relative group">
           <Image
             src="/emoji.png"
-            className="shrink-0 rounded-full w-24 h-fit md:size-40 border"
+            className="shrink-0 rounded-full w-20 h-fit md:size-40 border"
             alt="avatar"
             width={144}
             height={144}
@@ -77,10 +77,16 @@ const Hero = () => {
 
         <Link
           href="#"
-          target="_blank"
-          className="ml-auto font-mono text-xs text-foreground/90 hover:text-foreground hover:underline underline-offset-4 decoration-1 flex items-center gap-1"
+          className="ml-auto flex items-center gap-1 md:gap-2 group text-muted-foreground"
         >
-          Resume <ArrowUpRight size={14} className="text-muted-foreground" />
+          <span className="text-xs md:text-sm transition-all duration-300 decoration-[0.5px] hover:decoration-primary hover:text-primary underline underline-offset-4">
+            Resume
+          </span>
+
+          <ArrowUpRight
+            size={16}
+            className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary transition"
+          />
         </Link>
       </div>
     </section>

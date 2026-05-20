@@ -61,7 +61,7 @@ const BlogDetailsPage = () => {
 
           <div
             className="mt-4 md:mt-8 prose-custom 
-          prose-strong:bg-primary prose-strong:text-primary-foreground prose-strong:px-1 prose-strong:font-semibold"
+            prose-strong:text-primary"
           >
             <ReactMarkdown>{descriptionContent}</ReactMarkdown>
           </div>

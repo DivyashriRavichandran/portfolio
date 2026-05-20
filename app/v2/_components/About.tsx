@@ -24,7 +24,7 @@ const About = ({ githubData }: AboutProps) => {
   const about = useQuery(api.about.get);
 
   return (
-    <section className="mt-8 py-10">
+    <section className="mt-8 py-6 md:py-10">
       <H1 text1={t("about")} text2={t("me")} />
 
       <div className="flex flex-col gap-10 md:gap-12">
@@ -53,9 +53,9 @@ const About = ({ githubData }: AboutProps) => {
 
           <Link
             href="/v2/about"
-            className="flex items-center gap-2 group ml-auto text-muted-foreground"
+            className="flex items-center gap-1 md:gap-2 group ml-auto text-muted-foreground"
           >
-            <span className="text-sm md:text-base transition-all duration-300 decoration-[0.5px] hover:decoration-primary hover:text-primary underline underline-offset-8">
+            <span className="text-sm md:text-base transition-all duration-300 decoration-[0.5px] hover:decoration-primary hover:text-primary underline underline-offset-4">
               Outside of coding
             </span>
 

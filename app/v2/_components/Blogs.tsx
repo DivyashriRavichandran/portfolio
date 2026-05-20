@@ -18,7 +18,7 @@ const BlogsSection = () => {
   }
 
   return (
-    <section className="py-10">
+    <section className="py-6 md:py-10">
       <H1
         text1={t("my")}
         text2={t("blogs")}
@@ -31,7 +31,7 @@ const BlogsSection = () => {
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
-            className="group grid grid-cols-[80px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted/10 p-3 md:p-4 hover:bg-muted/30 hover:border-primary transition-all duration-200 ease-out"
+            className="group grid grid-cols-[60px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted/10 p-3 md:p-4 hover:bg-muted/30 hover:border-primary transition-all duration-200 ease-out"
           >
             {/* COMPACT IMAGE CONTAINER */}
             <div className="relative aspect-square w-full shrink-0 rounded">

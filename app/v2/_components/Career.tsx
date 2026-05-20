@@ -38,7 +38,7 @@ const CareerSection = () => {
   };
 
   return (
-    <section className="py-10 md:py-10 space-y-16 md:space-y-20">
+    <section className="py-6 md:py-10 space-y-12 md:space-y-20">
       {/* EDUCATION */}
       <div className="flex flex-col">
         <H1 text1={t("academic")} text2={t("education")} />
@@ -141,7 +141,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         <div className="flex-1">
           {/* TITLE */}
           <div className="flex flex-col md:items-baseline-last md:justify-between md:flex-row-reverse">
-            <span className="text-[10px] md:text-sm text-muted-foreground md:pb-1">
+            <span className="text-xs md:text-sm text-muted-foreground pb-1">
               {displayDate(item.startDate, "N/A")} —{" "}
               {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
             </span>

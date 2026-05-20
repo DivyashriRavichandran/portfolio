@@ -522,7 +522,7 @@ html {
   @apply prose-strong:text-muted-foreground prose-strong:font-medium;
   @apply prose-ul:text-muted-foreground prose-ul:font-normal prose-ul:text-sm md:prose-ul:text-base;
   @apply prose-ol:text-foreground prose-ol:font-medium prose-ol:text-sm md:prose-ol:text-base;
-  @apply prose-code:text-primary-foreground prose-code:bg-primary;
+  @apply prose-code:bg-muted prose-code:text-foreground prose-code:rounded prose-code:font-normal;
   @apply prose-code:before:content-none prose-code:after:content-none;
 
   /* CSS Variables and custom subselectors */

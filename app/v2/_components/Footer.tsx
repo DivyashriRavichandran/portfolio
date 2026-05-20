@@ -65,7 +65,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="mt-10">
+    <footer className="mt-6 md:mt-10">
       <div className="grid lg:grid-cols-12 gap-12">
         {/* LEFT: Connect & Socials */}
         <div className="lg:col-span-4 space-y-8">
@@ -203,17 +203,19 @@ const Footer = () => {
       </div>
 
       {/* Footnote */}
-      <div className="mt-12 md:mt-20 py-5 md:py-8 border-t flex justify-between items-center gap-4">
-        <p className="text-[10px] uppercase font-semibold tracking-widest opacity-60">
-          © 2026 DIVYASHRI&apos;S PORTFOLIO. ALL RIGHTS RESERVED.
+      <div className="mt-12 md:mt-20 pt-2 md:pt-6 pb-6 md:pb-10 border-t flex justify-between items-center gap-4">
+        <p className="text-[10px] text-muted-foreground">
+          © 2026 Divyashri&apos;s Portfolio. All Rights Reserved.
         </p>
-        <button
+        <Button
           onClick={scrollToTop}
-          className="cursor-pointer bg-primary rounded-full p-2"
           aria-label="Scroll to top"
+          size={"icon"}
+          variant={"outline"}
+          className="rounded-full"
         >
-          <ArrowUpIcon className="size-5 text-background" />
-        </button>
+          <ArrowUpIcon />
+        </Button>
       </div>
     </footer>
   );

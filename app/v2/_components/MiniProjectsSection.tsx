@@ -5,6 +5,7 @@ import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useLocale, useTranslations } from "next-intl";
+import { ArrowUpRight } from "lucide-react";
 
 const MiniProjectsSection = () => {
   const t = useTranslations();
@@ -16,7 +17,7 @@ const MiniProjectsSection = () => {
   }
 
   return (
-    <section className="py-10">
+    <section className="py-6 md:py-10">
       <H1 text1={"Open-Source"} text2={t("works")} total={projects.length} />
 
       <div className="grid grid-cols-1 gap-3 md:gap-4">
@@ -45,6 +46,7 @@ const MiniProjectsSection = () => {
                 <h3 className="truncate text-sm md:text-base font-medium">
                   {project.title[locale]}
                 </h3>
+                <ArrowUpRight className="text-muted-foreground size-4" />
               </div>
 
               <p className="mt-0.5 md:mt-1 text-xs md:text-sm text-muted-foreground md:max-w-2xl">
