@@ -2,15 +2,14 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { DownloadIcon } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <section className="w-full flex flex-col pt-10 md:pt-10 gap-y-4 md:gap-y-8">
+    <section className="w-full flex flex-col pt-8 md:pt-10 gap-y-4 md:gap-y-8">
       {/* AVATAR & NAME */}
       <div className="flex flex-row gap-4 md:gap-8">
         <div className="relative group">
@@ -24,7 +23,7 @@ const Hero = () => {
           />
 
           <span
-            className="absolute bottom-10 md:bottom-6 -right-1 md:-right-2 text-xl md:text-5xl"
+            className="absolute bottom-3 md:bottom-6 -right-1 md:-right-2 text-2xl md:text-5xl"
             role="img"
             aria-label="waving hand"
           >
@@ -33,14 +32,14 @@ const Hero = () => {
         </div>
 
         <div className="space-y-2 md:space-y-3">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase leading-[0.85]">
+          <h1 className="text-3xl md:text-6xl font-bold uppercase leading-[0.9]">
             Divyashri <br />
             <span className="text-muted-foreground/80">Ravichandran.</span>
           </h1>
 
           {/* Tagline */}
           <div className="flex flex-col gap-0.5">
-            <p className="text-sm md:text-lg font-medium">
+            <p className="text-sm md:text-lg">
               Masters Student @ RUG / Software Engineer
             </p>
             <p className="text-xs md:text-sm flex items-center gap-1 text-muted-foreground">
@@ -76,11 +75,12 @@ const Hero = () => {
           </Link>
         ))}
 
-        <Link href="" target="_blank" className="ml-auto">
-          <Button variant={"ghost"}>
-            Resume
-            <DownloadIcon />
-          </Button>
+        <Link
+          href="#"
+          target="_blank"
+          className="ml-auto font-mono text-xs text-foreground/90 hover:text-foreground hover:underline underline-offset-4 decoration-1 flex items-center gap-1"
+        >
+          Resume <ArrowUpRight size={14} className="text-muted-foreground" />
         </Link>
       </div>
     </section>

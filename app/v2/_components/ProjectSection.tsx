@@ -69,13 +69,12 @@ const ProjectCard = ({
           )}
 
           {/* MOBILE ONLY */}
-          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/80 to-transparent md:hidden" />
-          <div className="absolute bottom-3 right-3 flex items-center gap-1 md:hidden">
+          {/* <div className="absolute top-2 right-2 flex items-center gap-1 md:hidden backdrop-blur-sm px-1 rounded">
             <span className="text-[10px] font-semibold uppercase tracking-widest">
-              View Project
+              View
             </span>
             <ArrowUpRight size={14} />
-          </div>
+          </div> */}
 
           {/* DESKTOP ONLY */}
           <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
@@ -88,9 +87,19 @@ const ProjectCard = ({
         {/* TEXT CONTENT */}
         <div className="p-4 flex flex-col flex-1 justify-between space-y-3">
           <div className="flex-1 md:space-y-1">
-            <h3 className="text-lg md:text-xl font-semibold">
-              {project.title[locale]}
-            </h3>
+            {/* TITLE ROW  */}
+            <div className="flex items-start justify-between gap-x-2">
+              <h3 className="text-lg md:text-xl font-semibold group-hover:underline underline-offset-2 transition-all leading-tight">
+                {project.title[locale]}
+              </h3>
+
+              {/* MOBILE ONLY ICON */}
+              <ArrowUpRight
+                size={20}
+                className="md:hidden text-muted-foreground shrink-0 mt-0.5"
+              />
+            </div>
+
             <p className="text-muted-foreground text-[10px] md:text-xs uppercase tracking-wider font-medium line-clamp-1">
               {project.categories[locale].join(" • ")}
             </p>

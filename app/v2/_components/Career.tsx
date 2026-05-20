@@ -9,7 +9,13 @@ import H1 from "../../../components/headings/H1";
 import { ArrowUpRight, Loader2 } from "lucide-react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Image from "next/image";
-import { format, formatDuration, intervalToDuration, isValid } from "date-fns";
+import {
+  addDays,
+  format,
+  formatDuration,
+  intervalToDuration,
+  isValid,
+} from "date-fns";
 import H4 from "@/components/headings/H4";
 
 const CareerSection = () => {
@@ -104,12 +110,14 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
   ) => {
     if (!start) return "";
     const startDate = new Date(start);
-    const endDate = end ? new Date(end) : new Date();
+
+    const endDate = end ? addDays(new Date(end), 1) : new Date();
 
     if (!isValid(startDate) || !isValid(endDate)) return "";
 
     try {
       const duration = intervalToDuration({ start: startDate, end: endDate });
+
       return formatDuration(duration, { format: ["years", "months"] });
     } catch (error) {
       console.log(error);
@@ -119,11 +127,11 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
   return (
     <div className="group">
-      <div className="flex gap-5">
+      <div className="flex gap-3 md:gap-5">
         {/* LOGO */}
-        <div className="shrink-0">
+        <div className="mt-1 shrink-0">
           {logoUrl && (
-            <div className="relative size-10 md:size-14 overflow-hidden border flex items-center justify-center">
+            <div className="relative size-12 md:size-16 overflow-hidden border flex items-center justify-center">
               <Image src={logoUrl} alt="" fill className="object-contain" />
             </div>
           )}
@@ -132,19 +140,16 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTENT */}
         <div className="flex-1">
           {/* TITLE */}
-          <div className="flex flex-col md:flex-row md:items-baseline-last md:justify-between md:gap-1">
-            <h3 className="text-lg md:text-xl lg:text-2xl font-medium">
-              {title}
-            </h3>
-
-            <span className="text-xs md:text-base">
+          <div className="flex flex-col md:items-baseline-last md:justify-between md:flex-row-reverse">
+            <span className="text-[10px] md:text-sm text-muted-foreground md:pb-1">
               {displayDate(item.startDate, "N/A")} —{" "}
               {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
             </span>
+            <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
           </div>
 
           {/* ORG */}
-          <div className="mt-1 md:mt-0 flex items-center justify-between gap-1 text-muted-foreground text-sm md:text-base">
+          <div className="flex items-center justify-between gap-1 text-muted-foreground text-xs md:text-sm">
             <a
               href={item.url}
               target="_blank"
@@ -156,7 +161,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           </div>
 
           {/* GRADE / CATEGORY */}
-          <div className="mt-4 flex gap-2 flex-wrap">
+          <div className="mt-3 md:mt-4 flex gap-2 flex-wrap">
             {item.category && (
               <Badge variant={"primary"} size="lg">
                 {item.category}

@@ -2,7 +2,6 @@
 import React from "react";
 import Image from "next/image";
 import H1 from "../../../components/headings/H1";
-import { ExternalLink } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useLocale, useTranslations } from "next-intl";
@@ -30,7 +29,7 @@ const MiniProjectsSection = () => {
             className="group flex md:items-center overflow-hidden rounded border bg-muted/30 p-3 md:p-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* LOGO CONTAINER */}
-            <div className="flex size-16 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
+            <div className="flex size-14 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
@@ -46,7 +45,6 @@ const MiniProjectsSection = () => {
                 <h3 className="truncate text-sm md:text-base font-medium">
                   {project.title[locale]}
                 </h3>
-                <ExternalLink className="size-4 md:size-5 group-hover:text-foreground dark:group-hover:text-primary" />
               </div>
 
               <p className="mt-0.5 md:mt-1 text-xs md:text-sm text-muted-foreground md:max-w-2xl">
@@ -54,11 +52,11 @@ const MiniProjectsSection = () => {
               </p>
 
               {/* TAGS */}
-              <div className="mt-2 md:mt-4 flex flex-wrap gap-x-2 gap-y-1">
+              <div className="mt-2 md:mt-4 flex flex-wrap gap-x-2 gap-y-0.5">
                 {project.tags?.map((tag, i) => (
                   <span
                     key={i}
-                    className="text-[10px] md:text-xs lowercase font-medium text-muted-foreground/80"
+                    className="text-[10px] md:text-xs lowercase text-muted-foreground/80"
                   >
                     #{tag}
                   </span>

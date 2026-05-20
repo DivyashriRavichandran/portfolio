@@ -514,3 +514,26 @@ html {
   animation: none;
   mix-blend-mode: normal;
 }
+
+@utility prose-custom {
+  @apply prose max-w-none;
+  @apply prose-headings:text-foreground prose-headings:font-medium prose-headings:text-lg md:prose-headings:text-xl;
+  @apply prose-p:text-muted-foreground prose-p:text-sm md:prose-p:text-base prose-p:leading-relaxed;
+  @apply prose-strong:text-muted-foreground prose-strong:font-medium;
+  @apply prose-ul:text-muted-foreground prose-ul:font-normal prose-ul:text-sm md:prose-ul:text-base;
+  @apply prose-ol:text-foreground prose-ol:font-medium prose-ol:text-sm md:prose-ol:text-base;
+  @apply prose-code:text-primary-foreground prose-code:bg-primary;
+  @apply prose-code:before:content-none prose-code:after:content-none;
+
+  /* CSS Variables and custom subselectors */
+  --tw-prose-bullets: var(--foreground);
+  --tw-prose-counters: var(--foreground);
+
+  & li strong {
+    @apply text-foreground;
+  }
+
+  & code {
+    @apply mx-1 px-1;
+  }
+}

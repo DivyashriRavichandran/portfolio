@@ -8,6 +8,7 @@ import { useLocale } from "next-intl";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { format } from "date-fns";
+import ReactMarkdown from "react-markdown";
 
 const BlogDetailsPage = () => {
   const locale = useLocale() as "en" | "nl";
@@ -27,11 +28,12 @@ const BlogDetailsPage = () => {
   }
 
   const activeContent = blog.content[locale] || blog.content.en || "";
+  const descriptionContent = blog.description[locale];
 
   return (
     <>
       <Navbar />
-      <article className="md:max-w-3xl md:mx-auto px-5 lg:px-0 py-10">
+      <article className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-8 md:pt-10 pb-16">
         {/* Header Section */}
         <header>
           {/* Tags */}
@@ -57,9 +59,12 @@ const BlogDetailsPage = () => {
             • <span>{blog.timeToRead} min read</span>
           </div>
 
-          <p className="mt-4 md:mt-8 text-sm md:text-lg text-muted-foreground whitespace-pre-line">
-            {blog.description[locale]}
-          </p>
+          <div
+            className="mt-4 md:mt-8 prose-custom 
+          prose-strong:bg-primary prose-strong:text-primary-foreground prose-strong:px-1 prose-strong:font-semibold"
+          >
+            <ReactMarkdown>{descriptionContent}</ReactMarkdown>
+          </div>
         </header>
 
         {/* Cover Image */}
@@ -75,18 +80,9 @@ const BlogDetailsPage = () => {
         )}
 
         {/* Main Content Body */}
-        <div
-          className="mt-10 md:mt-16 max-w-none prose
-          prose-headings:text-foreground prose-headings:font-medium prose-headings:text-lg md:prose-headings:text-xl
-          prose-p:text-muted-foreground prose-p:text-sm md:prose-p:text-base prose-p:leading-relaxed
-          prose-strong:text-muted-foreground prose-strong:font-medium
-          prose-table:border
-          prose-tr:text-center
-          prose-tr:border-b-foreground/30
-          prose-td:text-muted-foreground prose-td:border-b
-          prose-td:first:font-medium prose-td:first:text-foreground prose-td:first:border-r"
-          dangerouslySetInnerHTML={{ __html: activeContent }}
-        />
+        <div className="mt-10 md:mt-16 max-w-none prose-custom">
+          <ReactMarkdown>{activeContent}</ReactMarkdown>
+        </div>
       </article>
     </>
   );

@@ -8,7 +8,7 @@ import MiniProjectManager from "@/components/admin/MiniProjectManager";
 import ProjectManager from "@/components/admin/ProjectManager";
 import H1 from "@/components/headings/H1";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Briefcase, FolderCode, UserCircle } from "lucide-react";
+import { Briefcase, FolderCode, StickyNote, UserCircle } from "lucide-react";
 
 export default function AdminPage() {
   return (
@@ -31,7 +31,7 @@ export default function AdminPage() {
             <FolderCode size={16} /> Open Source Projects
           </TabsTrigger>
           <TabsTrigger value="blogs">
-            <UserCircle size={16} /> Blogs
+            <StickyNote size={16} /> Blogs
           </TabsTrigger>
           <TabsTrigger value="career">
             <Briefcase size={16} /> Career
