@@ -14,7 +14,7 @@ const H1 = ({
 }) => {
   const t = useTranslations();
   return (
-    <div className="flex justify-between items-end mb-6 md:mb-10 border-b pb-2 md:pb-3">
+    <div className="flex justify-between items-end mb-6 md:mb-8 border-b pb-2 md:pb-3">
       <h2 className="text-2xl md:text-3xl font-semibold">
         {text1}{" "}
         <span className="text-primary-foreground bg-primary px-1">

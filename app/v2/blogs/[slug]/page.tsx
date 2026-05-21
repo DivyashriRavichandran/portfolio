@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../_components/Navbar";
 import Image from "next/image";
 import { useLocale } from "next-intl";
@@ -9,14 +9,30 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
+import { useLoading } from "@/components/custom/LoadingProvider";
 
 const BlogDetailsPage = () => {
   const locale = useLocale() as "en" | "nl";
   const params = useParams();
   const slug = params.slug as string;
+
+  const { startLoading, stopLoading } = useLoading();
   const blog = useQuery(api.blogs.getBySlug, { slug: slug });
 
-  if (!blog) {
+  // Connect Convex status to your global loader
+  useEffect(() => {
+    if (blog === undefined) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
+
+    // Cleanup function if user navigates away mid-stream
+    return () => stopLoading();
+  }, [blog, startLoading, stopLoading]);
+
+  // If the query finished execution and returned null, it truly doesn't exist
+  if (blog === null) {
     return (
       <>
         <Navbar />
@@ -27,6 +43,10 @@ const BlogDetailsPage = () => {
     );
   }
 
+  // If blog is undefined, return null because the LoadingProvider overlay is handling visual UI
+  if (blog === undefined) {
+    return null;
+  }
   const activeContent = blog.content[locale] || blog.content.en || "";
   const descriptionContent = blog.description[locale];
 

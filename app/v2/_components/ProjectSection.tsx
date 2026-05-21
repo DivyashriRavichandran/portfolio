@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
@@ -9,10 +9,22 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+import { useLoading } from "@/components/custom/LoadingProvider";
 
 const ProjectSection = () => {
   const t = useTranslations();
+  const { startLoading, stopLoading } = useLoading();
   const projects = useQuery(api.projects.list);
+
+  useEffect(() => {
+    if (projects === undefined) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
+
+    return () => stopLoading();
+  }, [projects, startLoading, stopLoading]);
 
   return (
     <section className="py-10 md:py-10">
@@ -85,17 +97,17 @@ const ProjectCard = ({
         </div>
 
         {/* TEXT CONTENT */}
-        <div className="p-4 flex flex-col flex-1 justify-between space-y-3">
+        <div className="p-3 md:p-4 flex flex-col flex-1 justify-between space-y-2 md:space-y-3">
           <div className="flex-1 md:space-y-1">
             {/* TITLE ROW  */}
             <div className="flex items-start justify-between gap-x-2">
-              <h3 className="text-lg md:text-xl font-semibold group-hover:underline underline-offset-2 transition-all leading-tight">
+              <h3 className="text-lg md:text-xl font-medium group-hover:underline underline-offset-2 transition-all">
                 {project.title[locale]}
               </h3>
 
               {/* MOBILE ONLY ICON */}
               <ArrowUpRight
-                size={20}
+                size={16}
                 className="md:hidden text-muted-foreground shrink-0 mt-0.5"
               />
             </div>
@@ -110,7 +122,7 @@ const ProjectCard = ({
             {project.tech_stack.slice(0, 4).map((tech, i) => (
               <span
                 key={i}
-                className="text-[10px] md:text-xs font-medium lowercase text-muted-foreground/70"
+                className="text-[10px] md:text-xs lowercase text-muted-foreground/80"
               >
                 #{tech}
               </span>

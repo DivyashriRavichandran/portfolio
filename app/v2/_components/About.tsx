@@ -66,7 +66,7 @@ const About = ({ githubData }: AboutProps) => {
           </Link>
         </div>
 
-        <div className="border space-y-8 rounded px-6 py-8 bg-muted/5">
+        <div className="border space-y-8 rounded px-4 md:px-6 py-6 md:py-8 bg-muted/5">
           <div className="w-full flex flex-col">
             <H2 text1={"Github"} text2={t("contributions")} />
 
@@ -118,34 +118,22 @@ const TechStackSection = () => {
   console.log(theme);
 
   return (
-    <div>
+    <>
       <H2 text1={"Tech"} text2="Stack" />
 
-      <div className="space-y-2 md:space-y-3">
-        {Object.entries(tech_stack).map(([category, items]) => (
-          <div
-            key={category}
-            className="flex items-start md:items-center gap-3 group"
-          >
-            <span className="w-16 md:w-24 shrink-0 text-[10px] md:text-xs py-1 font-medium uppercase text-muted-foreground/80 group-hover:text-primary transition-colors">
-              {category}
-            </span>
-
-            <div className="flex flex-wrap gap-1.5 border-l pl-3 md:pl-6">
-              {items.map((tech) => (
-                <Badge key={tech.key} className="normal-case font-normal">
-                  <StackIcon
-                    name={tech.key}
-                    className="size-4 md:size-5"
-                    variant="dark"
-                  />
-                  {tech.label}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-2 md:gap-y-3">
+        {Object.values(tech_stack)
+          .flat()
+          .map((tech) => (
+            <Badge
+              key={tech.key}
+              className="normal-case font-normal flex items-center gap-1"
+            >
+              <StackIcon name={tech.key} className="size-4" variant="dark" />
+              <span>{tech.label}</span>
+            </Badge>
+          ))}
       </div>
-    </div>
+    </>
   );
 };

@@ -34,16 +34,16 @@ const BlogsSection = () => {
             className="group grid grid-cols-[60px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted/10 p-3 md:p-4 hover:bg-muted/30 hover:border-primary transition-all duration-200 ease-out"
           >
             {/* COMPACT IMAGE CONTAINER */}
-            <div className="relative aspect-square w-full shrink-0 rounded">
+            <div className="relative aspect-square w-full shrink-0">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
                 width={150}
                 height={150}
-                className="object-cover w-full h-full rounded"
+                className="object-cover w-full h-full"
               />
               {/* DESKTOP ONLY */}
-              <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
+              <div className="hidden md:flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
                 <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.3)]">
                   <ArrowUpRight size={20} />
                 </div>
@@ -53,11 +53,18 @@ const BlogsSection = () => {
             {/* METADATA & CONTENT */}
             <div className="flex flex-col min-w-0 justify-center">
               {/* DATE */}
-              {project.publishedAt && (
-                <span className="text-[10px] md:text-xs text-muted-foreground">
-                  {format(project.publishedAt, "MMM dd, yyyy")}
-                </span>
-              )}
+              <div className="flex justify-between items-center">
+                {project.publishedAt && (
+                  <span className="text-[10px] md:text-xs text-muted-foreground">
+                    {format(project.publishedAt, "MMM dd, yyyy")}
+                  </span>
+                )}
+                {/* MOBILE ONLY ICON */}
+                <ArrowUpRight
+                  size={16}
+                  className="md:hidden text-muted-foreground shrink-0"
+                />
+              </div>
 
               {/* TITLE */}
               <h3 className="text-sm md:text-base font-medium leading-snug group-hover:underline underline-offset-2 mt-0.5">

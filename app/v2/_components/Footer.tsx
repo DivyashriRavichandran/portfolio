@@ -78,8 +78,8 @@ const Footer = () => {
             </h2>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+          <div className="space-y-2">
+            <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               Socials
             </h3>
             <div className="flex flex-col gap-4">
@@ -105,7 +105,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between border-b border-muted py-2 transition-colors hover:border-primary"
+                  className="group flex items-center justify-between border-b border-muted-foreground/20 py-2 transition-colors hover:border-primary"
                 >
                   <span className="group-hover:text-primary flex items-center gap-2 text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
                     <social.icon size={20} />
@@ -124,7 +124,7 @@ const Footer = () => {
         {/* RIGHT: The Form */}
         <div className="lg:col-span-8">
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
               {t("inquiry")}
             </h3>
             <p className="mt-2 md:text-lg">
@@ -203,19 +203,24 @@ const Footer = () => {
       </div>
 
       {/* Footnote */}
-      <div className="mt-12 md:mt-20 pt-2 md:pt-6 pb-6 md:pb-10 border-t flex justify-between items-center gap-4">
-        <p className="text-[10px] text-muted-foreground">
+      <div className="mt-12 md:mt-20 pt-2 md:pt-4 pb-6 md:pb-10 border-t flex justify-between items-baseline gap-4">
+        <p className="text-[10px] md:text-xs text-muted-foreground">
           © 2026 Divyashri&apos;s Portfolio. All Rights Reserved.
         </p>
-        <Button
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          size={"icon"}
-          variant={"outline"}
-          className="rounded-full"
-        >
-          <ArrowUpIcon />
-        </Button>
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10px] md:text-xs text-muted-foreground/80">
+            Go to top
+          </span>
+          <Button
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            size={"icon"}
+            variant={"outline"}
+            className="rounded-full"
+          >
+            <ArrowUpIcon />
+          </Button>
+        </div>
       </div>
     </footer>
   );
