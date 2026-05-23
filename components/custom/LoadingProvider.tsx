@@ -85,10 +85,10 @@ export const LoadingProvider = ({
             className="fixed inset-0 mountaineer z-9999 flex flex-col gap-2 items-center justify-center bg-background"
           >
             <div className="flex flex-col gap-2 items-start w-48">
-              <p className="font-mono text-sm text-muted-foreground">
+              <p className="font-medium text-sm text-muted-foreground">
                 {progress}%
               </p>
-              <div className="w-full h-0.5 bg-muted/20 overflow-hidden relative">
+              <div className="w-full h-0.5 bg-muted overflow-hidden relative">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${progress}%` }}

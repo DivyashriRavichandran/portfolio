@@ -62,12 +62,11 @@
     --muted: #f1f1e6;
     --muted-foreground: #252523;
 
-    --primary: #eff28d;
-    --primary-foreground: #0b0b0c;
+    --primary: oklch(94.5% 0.129 101.54); /* yellow-200 */
+    --primary-foreground: oklch(15.3% 0.006 107.1); /* olive-950 */
     --primary-light: oklch(98% 0.05 140);
     --primary-dark: oklch(85% 0.15 140);
 
-    /* Secondary stays vibrant but slightly deeper to pass contrast on light bg */
     --secondary: #ff9429;
     --secondary-foreground: #0b0b0c;
     --secondary-light: #ffbd7a;
