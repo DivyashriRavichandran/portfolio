@@ -1,183 +1,89 @@
 "use client";
-import React from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { FaLinkedin, FaGithub } from "react-icons/fa6";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { FaMapMarkerAlt } from "react-icons/fa";
 
-const Hero = () => {
+export default function Hero() {
   return (
-    <>
-      {/* MOBILE */}
-      <section className="md:hidden w-full flex flex-col gap-2">
-        {/* AVATAR & NAME */}
-        <div className="flex flex-col items-center mx-auto gap-3">
-          <div className="relative group">
-            <Image
-              src="/emoji.png"
-              className="shrink-0 rounded-full w-20 h-fit border"
-              alt="avatar"
-              width={144}
-              height={144}
-              priority
-            />
+    <section className="w-full pt-5 md:pt-10 flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
+      {/* LEFT SIDE: INTRO & CONTENT */}
+      <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-3 md:gap-5">
+        <div className="space-y-1.5 md:space-y-2">
+          <h1 className="text-3xl md:text-4xl font-semibold">
+            Divyashri Ravichandran
+          </h1>
 
-            <span
-              className="absolute bottom-0 -right-1 text-2xl"
-              role="img"
-              aria-label="waving hand"
+          <p className="text-sm md:text-base font-medium text-foreground antialiased leading-relaxed">
+            Master’s Student at RUG{" "}
+            <span className="text-muted-foreground px-1 font-normal">|</span>{" "}
+            Software Engineer
+          </p>
+        </div>
+
+        {/* LOCATION & CURRENT STATE */}
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm text-muted-foreground">
+          <span>Groningen, Netherlands</span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-1.5 md:size-2 rounded-full bg-primary" />
+            Available for Fall Internships
+          </span>
+        </div>
+
+        {/* ACTION ROW */}
+        <div className="mt-2 md:mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs md:text-sm text-muted-foreground">
+          {[
+            { label: "LinkedIn", href: "#", icon: FaLinkedin },
+            { label: "GitHub", href: "#", icon: FaGithub },
+            {
+              label: "Email",
+              href: "mailto:contact@divyashri.nl",
+              icon: MdEmail,
+            },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="flex items-center gap-1.5 hover:text-foreground transition-colors duration-200 group"
             >
-              👋
-            </span>
-          </div>
+              <link.icon className="size-3.5 md:size-4" />
+              <span className="underline-offset-4 group-hover:underline">
+                {link.label}
+              </span>
+            </Link>
+          ))}
 
-          <h1 className="text-3xl font-semibold">Divyashri Ravichandran</h1>
-        </div>
-
-        {/* Tagline */}
-        <div className="flex flex-col gap-1 justify-center mx-auto text-center">
-          <p className="text-sm font-medium antialiased">
-            Masters Student @ RUG | Software Engineer
-          </p>
-          <p className="text-xs flex items-center gap-1.5 text-muted-foreground mx-auto">
-            <FaMapMarkerAlt className="size-3.5" />
-            <span>Groningen, Netherlands</span>
-          </p>
-        </div>
-
-        {/* SOCIALS & RESUME */}
-        <div className="mx-auto justify-center flex flex-col gap-2 mt-2">
-          <div className="flex items-center gap-0.5 bg-muted/40 p-1 rounded-full border border-border/60 backdrop-blur-sm">
-            {[
-              { label: "LinkedIn", href: "#", icon: FaLinkedin },
-              { label: "Github", href: "#", icon: FaGithub },
-              {
-                label: "Email",
-                href: "mailto:contact@divyashri.nl",
-                icon: MdEmail,
-              },
-            ].map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="group relative flex items-center"
-              >
-                <div className="flex items-center gap-0 group-hover:gap-2 px-2.5 py-1 rounded-full bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-                  <link.icon className="size-4" />
-                  <span className="overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 max-w-0 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:max-w-24 group-hover:opacity-100">
-                    {link.label}
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-
+          {/* Resume */}
           <Link
             href="#"
-            className="mx-auto flex items-center gap-1 md:gap-2 group text-muted-foreground"
+            className="md:ml-2 flex items-center gap-1 group font-medium text-foreground hover:text-foreground transition-colors duration-200"
           >
-            <span className="text-xs md:text-sm transition-all duration-300 decoration-[0.5px] group-hover:decoration-primary group-hover:text-primary underline underline-offset-4">
+            <span className="underline underline-offset-4 decoration-muted-foreground/40 group-hover:decoration-foreground">
               resume.pdf
             </span>
-
             <ArrowUpRight
-              size={16}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary transition"
+              size={14}
+              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-muted-foreground group-hover:text-foreground"
             />
           </Link>
         </div>
-      </section>
+      </div>
 
-      {/* DESKTOP */}
-      <section className="hidden md:flex w-full pt-10 items-center">
-        {/* HEADER CONTAINER */}
-        <div className="flex gap-6 items-center">
-          {/* AVATAR */}
-          <div className="relative group shrink-0">
-            <Image
-              src="/emoji.png"
-              className="relative shrink-0 rounded-full size-40 border bg-background object-cover"
-              alt="avatar"
-              width={144}
-              height={144}
-              priority
-            />
-            <span
-              className="absolute bottom-1 right-1 text-3xl"
-              role="img"
-              aria-label="waving hand"
-            >
-              👋
-            </span>
-          </div>
-
-          {/* PROFILE INFO & ACTIONS */}
-          <div className="flex flex-col gap-2">
-            <h1 className="text-4xl font-semibold">Divyashri Ravichandran</h1>
-
-            {/* Tagline & Location */}
-            <div className="flex flex-col gap-0.5">
-              <p className="text-base font-medium antialiased">
-                Masters Student @ RUG | Software Engineer
-              </p>
-              <p className="text-sm flex items-center gap-1.5 text-muted-foreground">
-                <FaMapMarkerAlt className="size-4" />
-                <span>Groningen, Netherlands</span>
-              </p>
-            </div>
-
-            {/* CONNECT ACTIONS ROW */}
-            <div className="mt-2 flex items-center gap-5">
-              {/* Social Pill Links */}
-              <div className="flex items-center gap-0.5 bg-muted/40 p-1 rounded-full border border-border/60 backdrop-blur-sm">
-                {[
-                  { label: "LinkedIn", href: "#", icon: FaLinkedin },
-                  { label: "Github", href: "#", icon: FaGithub },
-                  {
-                    label: "Email",
-                    href: "mailto:contact@divyashri.nl",
-                    icon: MdEmail,
-                  },
-                ].map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="group relative flex items-center"
-                  >
-                    <div className="flex items-center gap-0 group-hover:gap-2 px-2.5 py-1 rounded-full bg-transparent hover:bg-primary hover:text-primary-foreground transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-                      <link.icon className="size-5" />
-                      <span className="overflow-hidden whitespace-nowrap text-xs font-medium opacity-0 max-w-0 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:max-w-24 group-hover:opacity-100">
-                        {link.label}
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Vertical Divider */}
-              <div className="h-6 w-px bg-border" />
-
-              {/* Resume */}
-              <Link
-                href="#"
-                className="flex items-center gap-1.5 group text-muted-foreground hover:text-primary transition-colors duration-300"
-              >
-                <span className="text-sm transition-all duration-300 decoration-[0.5px] underline underline-offset-4 group-hover:decoration-primary">
-                  resume.pdf
-                </span>
-                <ArrowUpRight
-                  size={15}
-                  className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300"
-                />
-              </Link>
-            </div>
-          </div>
+      {/* RIGHT SIDE: AVATAR */}
+      <div className="relative shrink-0 self-start md:self-auto md:ml-8">
+        <div className="relative size-24 md:size-32 overflow-hidden border">
+          <Image
+            src="/emoji.png"
+            className="object-cover"
+            alt="Divyashri Ravichandran"
+            fill
+            sizes="(max-width: 768px) 96px, 128px"
+            priority
+          />
         </div>
-      </section>
-    </>
+        <div className="absolute inset-0 border border-muted-foreground/20 translate-x-1.5 translate-y-1.5 -z-10" />
+      </div>
+    </section>
   );
-};
-
-export default Hero;
+}

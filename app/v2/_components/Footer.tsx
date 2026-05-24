@@ -128,7 +128,7 @@ const Footer = () => {
               {t("inquiry")}
             </h3>
             <p className="mt-2 md:text-lg">
-              Have a specific inquiry or just want to chat about software?
+              Have a specific inquiry or just want to chat about tech?
             </p>
           </div>
 

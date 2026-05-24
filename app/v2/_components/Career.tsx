@@ -17,8 +17,6 @@ import {
   isValid,
 } from "date-fns";
 import H4 from "@/components/headings/H4";
-import { FaMapMarkerAlt } from "react-icons/fa";
-import { FaRegBuilding } from "react-icons/fa";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -140,36 +138,29 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTENT */}
         <div className="flex-1">
           {/* TITLE */}
-          <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+            <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
+
+            {/* DATE */}
+            <span className="text-muted-foreground text-xs md:text-sm">
+              {displayDate(item.startDate, "N/A")} —{" "}
+              {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
+            </span>
+          </div>
 
           {/* DETAILS */}
-          <div className="md:mt-1 flex justify-between gap-1 text-muted-foreground text-xs md:text-sm">
-            <div className="flex flex-col gap-0.5">
+          <div className="mt-1 text-muted-foreground text-xs md:text-sm">
+            <div className="flex gap-1">
               <a
                 href={item.url}
                 target="_blank"
                 className=" hover:underline underline-offset-2"
               >
-                {item.organization && (
-                  <span className="flex gap-1 items-center">
-                    <FaRegBuilding size={16} className="size-2.5 md:size-3" />
-                    {item.organization[locale]}
-                  </span>
-                )}
+                {item.organization && item.organization[locale]}
               </a>
-              {item.location && (
-                <span className="flex gap-1 items-center">
-                  <FaMapMarkerAlt size={16} className="size-2.5 md:size-3" />
-                  {item.location[locale]}
-                </span>
-              )}
+              <span className="">•</span>
+              {item.location && item.location[locale]}
             </div>
-
-            {/* DATE */}
-            <span className="text-right">
-              {displayDate(item.startDate, "N/A")} —{" "}
-              {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
-            </span>
           </div>
 
           {/* GRADE / CATEGORY */}
