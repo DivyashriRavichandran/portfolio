@@ -2,7 +2,6 @@
 
 import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Carousel,
@@ -19,9 +18,8 @@ import { FaGlobe, FaGithub } from "react-icons/fa6";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import ProjectNavbar from "../../_components/ProjectNavbar";
 import FloatingNavbar from "../../_components/FloatingNavbar";
-import Navbar from "../../_components/Navbar";
+import PageNavbar from "../../_components/PageNavbar";
 
 const pillItems = [
   { id: "motivation", label: "Intro" },
@@ -83,11 +81,12 @@ export default function ProjectDetailsPage() {
       {showPill && (
         <FloatingNavbar items={pillItems} activeId={activeSection} />
       )}
+      <PageNavbar
+        nextHref={`v2/projects/${nextProject.slug}`}
+        nextLabel={nextProject.title[locale]}
+      />
 
-      <Navbar />
-      {/* <ProjectNavbar project={project} nextProject={nextProject} /> */}
-
-      <section className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-8 md:pt-10 pb-10">
+      <section>
         {/* HERO */}
         <header className="space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-medium">

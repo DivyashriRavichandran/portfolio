@@ -10,6 +10,7 @@ import { api } from "@/convex/_generated/api";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import { useLoading } from "@/components/custom/LoadingProvider";
+import PageNavbar from "../../_components/PageNavbar";
 
 const BlogDetailsPage = () => {
   const locale = useLocale() as "en" | "nl";
@@ -17,9 +18,9 @@ const BlogDetailsPage = () => {
   const slug = params.slug as string;
 
   const { startLoading, stopLoading } = useLoading();
+  const blogs = useQuery(api.blogs.get);
   const blog = useQuery(api.blogs.getBySlug, { slug: slug });
 
-  // Connect Convex status to your global loader
   useEffect(() => {
     if (blog === undefined) {
       startLoading();
@@ -27,11 +28,9 @@ const BlogDetailsPage = () => {
       stopLoading();
     }
 
-    // Cleanup function if user navigates away mid-stream
     return () => stopLoading();
   }, [blog, startLoading, stopLoading]);
 
-  // If the query finished execution and returned null, it truly doesn't exist
   if (blog === null) {
     return (
       <>
@@ -43,17 +42,23 @@ const BlogDetailsPage = () => {
     );
   }
 
-  // If blog is undefined, return null because the LoadingProvider overlay is handling visual UI
-  if (blog === undefined) {
+  if (blog === undefined || blogs === undefined) {
     return null;
   }
+
   const activeContent = blog.content[locale] || blog.content.en || "";
   const descriptionContent = blog.description[locale];
 
+  const currentIndex = blogs.findIndex((p) => p.slug === slug);
+  const nextProject = blogs[(currentIndex + 1) % blogs.length];
+
   return (
     <>
-      <Navbar />
-      <article className="md:max-w-3xl md:mx-auto px-5 lg:px-0 pt-8 md:pt-10 pb-16">
+      <PageNavbar
+        nextHref={`/v2/blogs/${nextProject.slug}`}
+        nextLabel={nextProject.title[locale]}
+      />
+      <article>
         {/* Header Section */}
         <header>
           {/* Tags */}

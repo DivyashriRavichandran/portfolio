@@ -1,31 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import {
-  Cpu,
-  Gamepad2,
-  Monitor,
-  MousePointer2,
-  Keyboard,
-  Headphones,
-  Code2,
-  Coffee,
-  Film,
-  Laptop,
-  Speaker,
-  NotebookPen,
-  Layers,
-  Mic,
-  LucideIcon,
-  Bike,
-  DicesIcon,
-  Globe,
-  Piano,
-  Loader2,
-} from "lucide-react";
+import { Loader2, HelpCircleIcon } from "lucide-react";
 import H1 from "../../../components/headings/H1";
-import { useTranslations } from "next-intl";
-import Navbar from "../_components/Navbar";
+import { useLocale, useTranslations } from "next-intl";
 import H2 from "@/components/headings/H2";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { icons } from "lucide-react";
 
 const SpotifyPlayer = ({ link }: { link: string }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,109 +39,105 @@ const SpotifyPlayer = ({ link }: { link: string }) => {
 
 export default function AboutPage() {
   const t = useTranslations();
+  const locale = useLocale() as "en" | "nl";
+  const about = useQuery(api.about.get);
 
-  const favs = [
-    { label: "Language", value: "TypeScript", icon: Code2 },
-    { label: "Framework", value: "Next.js", icon: Globe },
-    { label: "Editor", value: "VS Code", icon: Cpu },
-    { label: "Tool", value: "Raycast", icon: Layers },
-    { label: "Productivity", value: "Obsidian", icon: NotebookPen },
-    { label: "Drink", value: "Matcha", icon: Coffee },
-    { label: "Video Game", value: "TLOU II", icon: Gamepad2 },
-    { label: "Film", value: "Gifted", icon: Film },
-    { label: "Podcast", value: "Syntax", icon: Mic },
-    { label: "Board Game", value: "Werewolf", icon: DicesIcon },
-    { label: "Sports", value: "Cycling", icon: Bike },
-    { label: "Intrument", value: "Piano", icon: Piano },
-  ];
+  // Loading state handling
+  if (about === undefined || about === null) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
-  const hardware = [
-    { label: "Laptop", value: "Macbook Pro M5", icon: Laptop },
-    { label: "Monitor", value: "LG 27” 4K", icon: Monitor },
-    { label: "Mouse", value: "MX Master 3S", icon: MousePointer2 },
-    { label: "Keyboard", value: "MX Mechanical Mini", icon: Keyboard },
-    { label: "Headphones", value: "Sennheiser HD 348BT", icon: Headphones },
-    { label: "Speaker", value: "Bose Soundlink Flex 2", icon: Speaker },
-  ];
-
-  const spotifyLinks = [
-    "https://open.spotify.com/track/7J1uxwnxfQLu4APicE5Rnj?si=efa13bb2fdfd4188",
-    "https://open.spotify.com/track/3SfgUB5bltOecirPxcevPM?si=273b90184766435e",
-    "https://open.spotify.com/track/2u6twH8SHtv37ctUqQ4iEX?si=02b3f1def55f49c0",
-  ];
+  // Safe fallbacks
+  const favourites = about.favourites || [];
+  const hardware = about.hardware || [];
+  const playlists = about.spotify_playlist || [];
 
   return (
-    <>
-      <Navbar />
-      <main className="mt-10 md:max-w-3xl md:mx-auto px-5 lg:px-0 pb-20 space-y-10 md:space-y-16">
-        <div className="space-y-4">
-          <H1 text1="Beyond the" text2="Code" />
-          <p className="md:text-xl">{t("about-me-text")}</p>
-        </div>
+    <main className="space-y-8 md:space-y-14">
+      <div className="space-y-4">
+        <H1 text1={t("more-about")} text2={t("me")} />
+        <p className="md:text-xl">{about.more_bio?.[locale]}</p>
+      </div>
 
+      {favourites.length > 0 && (
         <section>
-          <H2 text1="My" text2="Favourites" />
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-            {favs.map((fav) => (
-              <FavoriteCard key={fav.label} item={fav} />
+          <H2 text1={t("my")} text2={t("favourites")} />
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
+            {favourites.map((fav, index) => (
+              <FavoriteCard key={fav.title + index} item={fav} />
             ))}
           </div>
         </section>
+      )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {hardware.length > 0 && (
           <section>
-            <H2 text1="Desk" text2="Setup" />
+            <H2 text1={t("desk")} text2="Setup" />
             <div className="flex flex-col gap-4">
-              {hardware.map((item) => (
-                <div
-                  key={item.value}
-                  className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
-                >
-                  <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
-                    <item.icon size={16} className="shrink-0" />
-                    <span className="text-xs uppercase tracking-widest">
-                      {item.label}
-                    </span>
+              {hardware.map((item, index) => {
+                const IconComponent =
+                  icons[item.icon as keyof typeof icons] || HelpCircleIcon;
+                return (
+                  <div
+                    key={item.product + index}
+                    className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
+                  >
+                    <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
+                      <IconComponent size={16} className="shrink-0" />
+                      <span className="text-xs uppercase tracking-widest">
+                        {item.title[locale]}
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium">{item.product}</span>
                   </div>
-                  <span className="text-sm font-medium">{item.value}</span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </section>
+        )}
 
+        {playlists.length > 0 && (
           <section>
-            <H2 text1="Currently" text2="Listening" />
+            <H2 text1={t("currently")} text2={t("listening")} />
             <div className="grid gap-4">
-              {spotifyLinks.map((link) => (
+              {playlists.map((link) => (
                 <SpotifyPlayer key={link} link={link} />
               ))}
             </div>
           </section>
-        </div>
-      </main>
-    </>
+        )}
+      </div>
+    </main>
   );
 }
 
-type Item = {
-  label?: string;
-  icon: LucideIcon;
-  value: string;
+type FavItem = {
+  icon: string;
+  title: string;
+  desc: string;
 };
 
-const FavoriteCard = ({ item }: { item: Item }) => (
-  <div className="group border bg-muted/20 border-foreground/10 p-4 rounded transition-all hover:border-primary hover:bg-muted/30">
-    {item.label && (
+const FavoriteCard = ({ item }: { item: FavItem }) => {
+  const IconComponent =
+    icons[item.icon as keyof typeof icons] || HelpCircleIcon;
+
+  return (
+    <div className="group bg-muted p-3 md:p-4 rounded transition-all hover:border-primary">
       <p className="text-[10px] uppercase font-medium tracking-widest text-muted-foreground/80">
-        {item.label}
+        {item.title}
       </p>
-    )}
-    <div className="mt-1 flex items-center gap-2">
-      <item.icon
-        size={16}
-        className="text-primary-foreground dark:text-primary"
-      />
-      <span className="text-sm font-medium">{item.value}</span>
+      <div className="mt-1 flex items-center gap-2">
+        <IconComponent
+          size={16}
+          className="size-3.5 md:size-4 text-primary-foreground dark:text-primary"
+        />
+        <span className="text-sm font-medium">{item.desc}</span>
+      </div>
     </div>
-  </div>
-);
+  );
+};

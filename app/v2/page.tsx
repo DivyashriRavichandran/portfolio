@@ -3,7 +3,6 @@ import About from "./_components/About";
 import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
 import ProjectSection from "./_components/ProjectSection";
-import Navbar from "./_components/Navbar";
 import CareerSection from "./_components/Career";
 import MiniProjectsSection from "./_components/MiniProjectsSection";
 import { unstable_cache } from "next/cache";
@@ -60,16 +59,13 @@ const Home = async () => {
 
   return (
     <>
-      <Navbar />
-      <div className="px-5 lg:px-0 md:max-w-3xl md:mx-auto">
-        <Hero />
-        <About githubData={githubData} />
-        <ProjectSection />
-        <MiniProjectsSection />
-        <CareerSection />
-        <BlogsSection />
-        <Footer />
-      </div>
+      <Hero />
+      <About githubData={githubData} />
+      <ProjectSection />
+      <MiniProjectsSection />
+      <CareerSection />
+      <BlogsSection />
+      <Footer />
     </>
   );
 };

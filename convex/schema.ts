@@ -7,6 +7,19 @@ export const localeArrString = v.object({
   en: v.array(v.string()),
   nl: v.array(v.string()),
 });
+
+export const hardware = v.object({
+  icon: v.string(),
+  title: localeString,
+  product: v.string(),
+});
+
+export const favCard = v.object({
+  icon: v.string(),
+  title: v.string(),
+  desc: v.string(),
+});
+
 export const metricCard = v.object({
   title: v.string(),
   sub: v.string(),
@@ -63,22 +76,15 @@ export default defineSchema({
     .index("by_order", ["order"]),
 
   about: defineTable({
-    menu_items: v.array(v.object({ label: localeString, href: v.string() })),
-    about: localeString,
-    tech_stack: v.array(v.string()),
+    bio: localeString,
+    more_bio: localeString,
+    favourites: v.optional(v.array(favCard)),
+    hardware: v.optional(v.array(hardware)),
     spotify_playlist: v.optional(v.array(v.string())),
-    hardware: v.optional(localeArrString),
-    interests: v.optional(
-      v.array(
-        v.object({
-          title: localeString,
-          description: localeString,
-        }),
-      ),
-    ),
-    resume: v.optional(v.string()), // storageId
     linkedin: v.string(),
     github: v.string(),
+    email: v.string(),
+    resume: v.optional(v.string()), // storageId
   }),
 
   career: defineTable({
@@ -90,7 +96,8 @@ export default defineSchema({
     startDate: v.string(),
     endDate: v.optional(v.string()),
     current: v.optional(v.boolean()),
-    achievements: v.optional(localeArrString),
+    achievements: v.optional(localeArrString), //delete
+    contributions: v.optional(localeString),
     tags: v.optional(v.array(v.string())),
     grade: v.optional(v.string()),
     category: v.optional(v.string()),

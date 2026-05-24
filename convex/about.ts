@@ -1,6 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-import { localeArrString, localeString } from "./schema";
+import { favCard, hardware, localeString } from "./schema";
 
 export const get = query({
   handler: async (ctx) => {
@@ -11,22 +11,15 @@ export const get = query({
 export const update = mutation({
   args: {
     id: v.id("about"),
-    about: localeString,
-    menu_items: v.array(v.object({ label: localeString, href: v.string() })),
-    tech_stack: v.array(v.string()),
+    bio: localeString,
+    more_bio: localeString,
+    favourites: v.optional(v.array(favCard)),
+    hardware: v.optional(v.array(hardware)),
     spotify_playlist: v.optional(v.array(v.string())),
-    hardware: v.optional(localeArrString),
-    interests: v.optional(
-      v.array(
-        v.object({
-          title: localeString,
-          description: localeString,
-        }),
-      ),
-    ),
-    resume: v.optional(v.string()), // storageId
     linkedin: v.string(),
     github: v.string(),
+    email: v.string(),
+    resume: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const { id, ...data } = args;

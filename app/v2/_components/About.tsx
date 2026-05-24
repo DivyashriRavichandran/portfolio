@@ -4,13 +4,13 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import H1 from "../../../components/headings/H1";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Loader2 } from "lucide-react";
 import Link from "next/link";
 import H2 from "@/components/headings/H2";
 import StackIcon from "tech-stack-icons";
 import GithubContributions from "@/components/custom/GithubContributions";
 import { useTheme } from "next-themes";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface AboutProps {
   githubData: {
@@ -20,8 +20,19 @@ interface AboutProps {
   };
 }
 const About = ({ githubData }: AboutProps) => {
+  const locale = useLocale();
   const t = useTranslations();
   const about = useQuery(api.about.get);
+
+  if (about === undefined || about === null) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  const bio = about.bio?.[locale as "en" | "nl"] ?? "";
 
   return (
     <section className="mt-8 py-6 md:py-10">
@@ -30,27 +41,7 @@ const About = ({ githubData }: AboutProps) => {
       <div className="flex flex-col gap-10 md:gap-12">
         {/* LEFT SIDE */}
         <div className="flex flex-col space-y-4 md:space-y-6 md:text-xl">
-          <p>
-            Hi! I’m Divyashri, a 22-year-old Software Engineer and Computing
-            Science Master’s student at the University of Groningen (RUG).
-          </p>
-          <p>
-            I love building websites and tools that solve real-world problems.
-            With over 2 years of professional frontend experience, I’ve also
-            expanded into full-stack development, cloud computing and system
-            design.
-          </p>
-          <p>
-            At RUG, I specialize in Software Engineering and Distributed Systems
-            (SEDS), exploring how to architect high-quality, software-intensive
-            systems that remain reliable at scale.
-          </p>
-          <p>
-            I thrive on problems that force me to learn and adapt in real-time.
-            For me, the best way to master a new technology is to dive in and
-            build something challenging with it.
-          </p>
-
+          <div className="whitespace-pre-line">{bio}</div>
           <Link
             href="/v2/about"
             className="flex items-center gap-1 md:gap-2 group ml-auto text-muted-foreground"

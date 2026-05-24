@@ -2,13 +2,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { FaLinkedin, FaGithub, FaMapMarkerAlt } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PiMapPinSimpleFill } from "react-icons/pi";
 
 export default function Hero() {
   return (
-    <section className="w-full pt-5 md:pt-10 flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
+    <section className="w-full flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
       {/* LEFT SIDE: INTRO & CONTENT */}
       <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-3 md:gap-5">
         <div className="space-y-1.5 md:space-y-2">
@@ -18,7 +18,7 @@ export default function Hero() {
 
           <p className="text-sm md:text-base font-medium text-foreground antialiased leading-relaxed">
             Master’s Student at RUG{" "}
-            <span className="text-muted-foreground px-1 font-normal">•</span>{" "}
+            <span className="text-muted-foreground px-1 font-normal">|</span>{" "}
             Software Engineer
           </p>
         </div>
