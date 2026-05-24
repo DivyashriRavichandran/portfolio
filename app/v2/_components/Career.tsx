@@ -149,7 +149,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
           </div>
 
           {/* DETAILS */}
-          <div className="mt-1 text-muted-foreground text-xs md:text-sm">
+          <div className="mt-1 text-xs md:text-sm">
             <div className="flex gap-1">
               <a
                 href={item.url}

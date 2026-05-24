@@ -2,8 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaMapMarkerAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
+import { PiMapPinSimpleFill } from "react-icons/pi";
 
 export default function Hero() {
   return (
@@ -17,15 +18,18 @@ export default function Hero() {
 
           <p className="text-sm md:text-base font-medium text-foreground antialiased leading-relaxed">
             Master’s Student at RUG{" "}
-            <span className="text-muted-foreground px-1 font-normal">|</span>{" "}
+            <span className="text-muted-foreground px-1 font-normal">•</span>{" "}
             Software Engineer
           </p>
         </div>
 
         {/* LOCATION & CURRENT STATE */}
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs md:text-sm text-muted-foreground">
-          <span>Groningen, Netherlands</span>
-          <span className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-x-2 md:gap-x-4 text-xs md:text-sm text-muted-foreground">
+          <span className="flex items-center gap-0.5 md:gap-1">
+            <PiMapPinSimpleFill size={14} className="text-primary" />
+            Groningen, Netherlands
+          </span>
+          <span className="flex items-center gap-1 md:gap-1.5">
             <span className="size-1.5 md:size-2 rounded-full bg-primary" />
             Available for Fall Internships
           </span>
@@ -72,17 +76,16 @@ export default function Hero() {
 
       {/* RIGHT SIDE: AVATAR */}
       <div className="relative shrink-0 self-start md:self-auto md:ml-8">
-        <div className="relative size-24 md:size-32 overflow-hidden border">
+        <div className="relative size-32 md:size-40 overflow-hidden border">
           <Image
-            src="/emoji.png"
-            className="object-cover"
+            src="/new_image.jpeg"
+            className="object-cover scale-160"
             alt="Divyashri Ravichandran"
             fill
             sizes="(max-width: 768px) 96px, 128px"
             priority
           />
         </div>
-        <div className="absolute inset-0 border border-muted-foreground/20 translate-x-1.5 translate-y-1.5 -z-10" />
       </div>
     </section>
   );
