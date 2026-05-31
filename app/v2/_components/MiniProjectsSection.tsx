@@ -27,10 +27,10 @@ const MiniProjectsSection = () => {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex md:items-center overflow-hidden rounded border bg-muted/30 p-3 md:p-4 hover:border-foreground dark:hover:border-primary transition-all duration-300"
+            className="group flex md:items-center overflow-hidden rounded border p-3 md:p-4 bg-muted hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* LOGO CONTAINER */}
-            <div className="flex size-14 md:size-20 shrink-0 items-center justify-center rounded border bg-black">
+            <div className="flex size-14 md:size-20 bg-black shrink-0 items-center justify-center rounded border">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
@@ -58,7 +58,7 @@ const MiniProjectsSection = () => {
                 {project.tags?.map((tag, i) => (
                   <span
                     key={i}
-                    className="text-[10px] md:text-xs lowercase text-muted-foreground/80"
+                    className="text-[10px] md:text-xs lowercase text-muted-foreground"
                   >
                     #{tag}
                   </span>

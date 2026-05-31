@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import React, { useEffect } from "react";
 import Navbar from "../../_components/Navbar";
 import Image from "next/image";
-import { useLocale } from "next-intl";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { format } from "date-fns";
@@ -13,7 +12,6 @@ import { useLoading } from "@/components/custom/LoadingProvider";
 import PageNavbar from "../../_components/PageNavbar";
 
 const BlogDetailsPage = () => {
-  const locale = useLocale() as "en" | "nl";
   const params = useParams();
   const slug = params.slug as string;
 
@@ -46,8 +44,8 @@ const BlogDetailsPage = () => {
     return null;
   }
 
-  const activeContent = blog.content[locale] || blog.content.en || "";
-  const descriptionContent = blog.description[locale];
+  const activeContent = blog.content.en || "";
+  const descriptionContent = blog.description.en;
 
   const currentIndex = blogs.findIndex((p) => p.slug === slug);
   const nextProject = blogs[(currentIndex + 1) % blogs.length];
@@ -56,7 +54,7 @@ const BlogDetailsPage = () => {
     <>
       <PageNavbar
         nextHref={`/v2/blogs/${nextProject.slug}`}
-        nextLabel={nextProject.title[locale]}
+        nextLabel={nextProject.title.en}
       />
       <article>
         {/* Header Section */}
@@ -76,7 +74,7 @@ const BlogDetailsPage = () => {
           )}
 
           <h1 className="mt-4 md:mt-6 text-xl md:text-3xl font-semibold">
-            {blog.title[locale]}
+            {blog.title.en}
           </h1>
 
           <div className="mt-1 flex items-center gap-2 text-xs md:text-sm text-muted-foreground">

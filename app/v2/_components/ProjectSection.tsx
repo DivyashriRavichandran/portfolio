@@ -66,7 +66,7 @@ const ProjectCard = ({
 
   return (
     <Link href={`/v2/project/${project.slug}`} className="group block h-full">
-      <div className="border flex flex-col h-full rounded bg-muted/30 overflow-hidden transition-all duration-300 group-hover:border-primary">
+      <div className="border flex flex-col h-full rounded bg-muted overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
         <div className="relative z-0 aspect-5/3 overflow-hidden bg-muted/10">
           {mockupUrl ? (

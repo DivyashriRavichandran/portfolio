@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
@@ -10,33 +11,36 @@ export default function Hero() {
   return (
     <section className="w-full flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
       {/* LEFT SIDE: INTRO & CONTENT */}
-      <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-3 md:gap-5">
-        <div className="space-y-1.5 md:space-y-2">
-          <h1 className="text-3xl md:text-4xl font-semibold">
+      <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-4 md:gap-5">
+        <div className="space-y-1 md:space-y-2">
+          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
             Divyashri Ravichandran
           </h1>
 
-          <p className="text-sm md:text-base font-medium text-foreground antialiased leading-relaxed">
-            Master’s Student at RUG{" "}
-            <span className="text-muted-foreground px-1 font-normal">|</span>{" "}
-            Software Engineer
+          <p className="text-sm md:text-base text-foreground antialiased leading-relaxed font-medium">
+            <span>Master’s Student at RUG</span>{" "}
+            <span className="mx-1.5">|</span> Software Engineer
           </p>
         </div>
 
         {/* LOCATION & CURRENT STATE */}
-        <div className="flex flex-wrap items-center gap-x-2 md:gap-x-4 text-xs md:text-sm text-muted-foreground">
-          <span className="flex items-center gap-0.5 md:gap-1">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-muted-foreground">
+          <span className="flex items-center gap-1">
             <PiMapPinSimpleFill size={14} className="text-primary" />
             Groningen, Netherlands
           </span>
-          <span className="flex items-center gap-1 md:gap-1.5">
-            <span className="size-1.5 md:size-2 rounded-full bg-primary" />
-            Available for Fall Internships
+
+          <span className="flex items-center gap-2 border bg-muted px-2 py-0.5 rounded-sm">
+            <span className="relative flex size-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full size-1.5 bg-primary"></span>
+            </span>
+            Available for Internships / Thesis
           </span>
         </div>
 
         {/* ACTION ROW */}
-        <div className="mt-2 md:mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs md:text-sm text-muted-foreground">
+        <div className="mt-2 md:mt-4 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs md:text-sm text-muted-foreground">
           {[
             { label: "LinkedIn", href: "#", icon: FaLinkedin },
             { label: "GitHub", href: "#", icon: FaGithub },
@@ -61,9 +65,9 @@ export default function Hero() {
           {/* Resume */}
           <Link
             href="#"
-            className="md:ml-2 flex items-center gap-1 group font-medium text-foreground hover:text-foreground transition-colors duration-200"
+            className="md:ml-2 flex items-center gap-1 group font-medium text-foreground transition-colors duration-200"
           >
-            <span className="underline underline-offset-4 decoration-muted-foreground/40 group-hover:decoration-foreground">
+            <span className="underline underline-offset-4 decoration-border group-hover:decoration-foreground">
               resume.pdf
             </span>
             <ArrowUpRight
@@ -75,14 +79,14 @@ export default function Hero() {
       </div>
 
       {/* RIGHT SIDE: AVATAR */}
-      <div className="relative shrink-0 self-start md:self-auto md:ml-8">
-        <div className="relative size-32 md:size-40 overflow-hidden border">
+      <div className="shrink-0 self-start md:self-auto">
+        <div className="relative size-28 md:size-36 overflow-hidden border border-border bg-muted">
           <Image
             src="/new_image.jpeg"
-            className="object-cover scale-160"
+            className="object-cover object-center transition-transform duration-500 hover:scale-105"
             alt="Divyashri Ravichandran"
             fill
-            sizes="(max-width: 768px) 96px, 128px"
+            sizes="(max-width: 768px) 112px, 144px"
             priority
           />
         </div>

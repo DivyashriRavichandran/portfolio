@@ -1,6 +1,5 @@
 import React from "react";
 import About from "./_components/About";
-import Footer from "./_components/Footer";
 import Hero from "./_components/Hero";
 import ProjectSection from "./_components/ProjectSection";
 import CareerSection from "./_components/Career";
@@ -18,6 +17,7 @@ import {
   subMonths,
 } from "date-fns";
 import BlogsSection from "./_components/Blogs";
+import ContactSection from "./_components/Contact";
 
 const getCachedContributions = unstable_cache(
   async () => {
@@ -65,7 +65,7 @@ const Home = async () => {
       <MiniProjectsSection />
       <CareerSection />
       <BlogsSection />
-      <Footer />
+      <ContactSection />
     </>
   );
 };

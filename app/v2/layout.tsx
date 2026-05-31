@@ -8,6 +8,7 @@ import localFont from "next/font/local";
 import { LoadingProvider } from "@/components/custom/LoadingProvider";
 import { getLocale } from "next-intl/server";
 import Navbar from "./_components/Navbar";
+import Footer from "./_components/Footer";
 
 export const metadata: Metadata = {
   title: "Divyashri | Frontend Developer",
@@ -87,6 +88,7 @@ export default async function RootLayout({
                   <div className="mt-3 md:mt-8 px-5 md:max-w-3xl lg:px-0 md:mx-auto mb-10">
                     {children}
                   </div>
+                  <Footer />
                 </>
               </LoadingProvider>
             </ThemeProvider>

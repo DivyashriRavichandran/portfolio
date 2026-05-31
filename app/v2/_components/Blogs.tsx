@@ -4,13 +4,12 @@ import Image from "next/image";
 import H1 from "../../../components/headings/H1";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { format } from "date-fns";
 import { ArrowUpRight } from "lucide-react";
 
 const BlogsSection = () => {
   const t = useTranslations();
-  const locale = useLocale() as "en" | "nl";
   const blogs = useQuery(api.blogs.get);
 
   if (!blogs) {
@@ -31,7 +30,7 @@ const BlogsSection = () => {
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
-            className="group grid grid-cols-[60px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted/10 p-3 md:p-4 hover:bg-muted/30 hover:border-primary transition-all duration-200 ease-out"
+            className="group grid grid-cols-[60px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
           >
             {/* COMPACT IMAGE CONTAINER */}
             <div className="relative aspect-square w-full shrink-0">
@@ -68,17 +67,17 @@ const BlogsSection = () => {
 
               {/* TITLE */}
               <h3 className="text-sm md:text-base font-medium leading-snug group-hover:underline underline-offset-2 mt-0.5">
-                {project.title[locale]}
+                {project.title.en}
               </h3>
 
               {/* DESCRIPTION */}
               <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mt-1">
-                {project.description[locale]?.split("\n")[0]}
+                {project.description.en?.split("\n")[0]}
               </p>
 
               {/* COMPACT INLINE TAGS */}
               {project.tags && project.tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground/80">
+                <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground">
                   {project.tags.map((tag, i) => (
                     <span key={i} className="flex items-center gap-x-2">
                       <span>#{tag}</span>

@@ -56,25 +56,20 @@
 }
 @layer base {
   :root {
-    --background: #fdfdf5;
-    --foreground: #0b0b0c;
+    --background: oklch(98.5% 0.008 106.5); /* olive-50 */
+    --foreground: oklch(22.8% 0.013 107.4); /* olive-900 */
 
-    --muted: #f1f1e6;
-    --muted-foreground: #252523;
+    --muted: oklch(94.5% 0.012 106.8); /* olive-100 */
+    --muted-foreground: oklch(48.2% 0.022 107.2); /* olive-500 */
 
-    --primary: oklch(94.5% 0.129 101.54); /* yellow-200 */
-    --primary-foreground: oklch(15.3% 0.006 107.1); /* olive-950 */
-    --primary-light: oklch(98% 0.05 140);
-    --primary-dark: oklch(85% 0.15 140);
+    --primary: oklch(28.4% 0.023 107.4); /*  olive-800 */
+    --primary-foreground: oklch(98.5% 0.008 106.5); /* olive-50 */
 
-    --secondary: #ff9429;
-    --secondary-foreground: #0b0b0c;
-    --secondary-light: #ffbd7a;
-    --secondary-dark: #8a4d12;
+    --border: oklch(86.5% 0.018 106.9); /*  olive-200 */
 
-    --tertiary: #8a5cf5; /* Slightly deeper purple for light mode contrast */
+    --secondary: oklch(91.2% 0.015 106.7); /* Slightly darker than muted */
+    --secondary-foreground: oklch(21.3% 0.018 107.2); /* Deep olive text */
 
-    /* Cards are slightly darker than the background to create depth */
     --card: #f7f7ee;
     --card-foreground: #0b0b0c;
 
@@ -96,13 +91,17 @@
     --background: oklch(15.3% 0.006 107.1); /* olive-950 */
     --foreground: oklch(98.7% 0.026 102.212); /* yellow-50 */
 
-    --muted: oklch(24% 0.012 107.1);
-    --muted-foreground: oklch(85.063% 0.023 104.198);
+    --muted: oklch(22.8% 0.013 107.4); /* olive-900 */
+    --muted-foreground: oklch(73.7% 0.021 106.9); /* olive-400 */
 
     --primary: oklch(94.5% 0.129 101.54); /* yellow-200 */
     --primary-foreground: oklch(15.3% 0.006 107.1); /* olive-950 */
 
-    --border: oklch(98.73% 0.02613 102.266 / 0.3);
+    --border: oklch(39.4% 0.023 107.4); /* olive-700 */
+
+    --secondary: oklch(25% 0.015 107.4); /* Slightly lighter than --muted */
+    --secondary-foreground: oklch(93% 0.015 106.5); /* Soft light-olive text */
+
     --card: #18181b;
     --card-foreground: #f2f2dc;
 
@@ -128,7 +127,7 @@
       "calt" 1;
   }
   * {
-    @apply border-foreground/30;
+    @apply border-border;
   }
 }
 
