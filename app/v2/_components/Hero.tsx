@@ -6,8 +6,10 @@ import { ArrowUpRight } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PiMapPinSimpleFill } from "react-icons/pi";
+import { useTranslations } from "next-intl";
 
 export default function Hero() {
+  const t = useTranslations();
   return (
     <section className="w-full flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-6 md:gap-8">
       {/* LEFT SIDE: INTRO & CONTENT */}
@@ -18,16 +20,16 @@ export default function Hero() {
           </h1>
 
           <p className="text-sm md:text-base text-foreground antialiased leading-relaxed font-medium">
-            <span>Master’s Student at RUG</span>{" "}
-            <span className="mx-1.5">|</span> Software Engineer
+            <span>{t("masters-student-at-rug")}</span>{" "}
+            <span className="mx-1.5">|</span> {t("software-engineer")}
           </p>
         </div>
 
         {/* LOCATION & CURRENT STATE */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm">
           <span className="flex items-center gap-1">
             <PiMapPinSimpleFill size={14} className="text-primary" />
-            Groningen, Netherlands
+            {t("groningen-netherlands")}
           </span>
 
           <span className="flex items-center gap-2 border bg-muted px-2 py-0.5 rounded-sm">

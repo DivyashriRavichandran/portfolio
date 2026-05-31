@@ -120,7 +120,7 @@ const ContactSection = () => {
             {t("inquiry")}
           </h3>
           <p className="mt-2 md:text-lg">
-            Have a specific inquiry or just want to chat about tech?
+            {t("have-a-specific-inquiry-or-just-want-to-chat-about-web-dev")}
           </p>
         </div>
 
@@ -137,7 +137,7 @@ const ContactSection = () => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Your Name"
+                        placeholder={t("your-name")}
                         {...field}
                         className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
                       />
@@ -153,7 +153,7 @@ const ContactSection = () => {
                   <FormItem>
                     <FormControl>
                       <Input
-                        placeholder="Email Address"
+                        placeholder={t("email-address")}
                         {...field}
                         className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
                       />
@@ -169,7 +169,7 @@ const ContactSection = () => {
                   <FormItem className="md:col-span-2">
                     <FormControl>
                       <Textarea
-                        placeholder="How can I help you?"
+                        placeholder={t("how-can-i-help-you")}
                         {...field}
                         className="min-h-30 border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent text-lg resize-none"
                       />
@@ -186,7 +186,7 @@ const ContactSection = () => {
                 disabled={isSubmitting}
                 className="w-full md:w-auto uppercase"
               >
-                {isSubmitting ? "Sending..." : "Send"}
+                {isSubmitting ? t("sending") : t("send")}
               </Button>
             </div>
           </form>

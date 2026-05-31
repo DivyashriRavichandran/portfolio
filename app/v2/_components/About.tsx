@@ -47,7 +47,7 @@ const About = ({ githubData }: AboutProps) => {
             className="flex items-center gap-1 md:gap-2 group ml-auto text-muted-foreground"
           >
             <span className="text-sm md:text-base transition-all duration-300 decoration-[0.5px] hover:decoration-primary hover:text-primary underline underline-offset-4">
-              Outside of coding
+              {t("more-about-me")}
             </span>
 
             <ArrowUpRight

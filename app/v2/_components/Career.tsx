@@ -86,6 +86,7 @@ type CareerItemProps = {
 };
 
 const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
+  const t = useTranslations();
   if (!item) {
     return <div>Item not found</div>;
   }
@@ -137,29 +138,29 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* CONTENT */}
         <div className="flex-1">
-          {/* TITLE */}
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-            <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
+          <div className="flex flex-col md:flex-row md:justify-between">
+            <div className="flex flex-col md:gap-1">
+              {/* TITLE */}
+              <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
+
+              {/* DETAILS */}
+              <div className="flex gap-1 text-xs md:text-sm">
+                <a
+                  href={item.url}
+                  target="_blank"
+                  className=" hover:underline underline-offset-2"
+                >
+                  {item.organization && item.organization[locale]}
+                </a>
+                <span className="">•</span>
+                {item.location && item.location[locale]}
+              </div>
+            </div>
 
             {/* DATE */}
-            <span className="text-muted-foreground text-xs md:text-sm">
+            <div className="mt-1 md:mt-0 text-xs md:text-sm text-muted-foreground">
               {displayDate(item.startDate, "N/A")} —{" "}
               {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
-            </span>
-          </div>
-
-          {/* DETAILS */}
-          <div className="mt-1 text-xs md:text-sm">
-            <div className="flex gap-1">
-              <a
-                href={item.url}
-                target="_blank"
-                className=" hover:underline underline-offset-2"
-              >
-                {item.organization && item.organization[locale]}
-              </a>
-              <span className="">•</span>
-              {item.location && item.location[locale]}
             </div>
           </div>
 
@@ -186,7 +187,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
             {/* CONTRIBUTIONS */}
             {item.achievements![locale]?.length > 0 && (
               <div>
-                <H4>Contributions</H4>
+                <H4>{t("contributions")}</H4>
                 <ul className="mt-2 space-y-1 md:space-y-2">
                   {item.achievements![locale].map((a: string, i: number) => (
                     <li
@@ -204,7 +205,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
             {/* WEBSITES */}
             {item.websites && item.websites.length > 0 && (
               <div className="mt-6 md:mt-8">
-                <H4>Featured Projects </H4>
+                <H4>{t("featured-projects")}</H4>
                 <div className="mt-3 flex flex-wrap gap-3">
                   {item.websites.map((url: string) => {
                     // Clean up URL for display
@@ -239,7 +240,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTRIBUTIONS */}
         {item.achievements![locale]?.length > 0 && (
           <div>
-            <H4>Contributions</H4>
+            <H4>{t("contributions")}</H4>
             <ul className="mt-2 space-y-1 md:space-y-2">
               {item.achievements![locale].map((a: string, i: number) => (
                 <li
@@ -257,7 +258,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* WEBSITES */}
         {item.websites && item.websites.length > 0 && (
           <div className="mt-6 md:mt-8">
-            <H4>Featured Projects </H4>
+            <H4>{t("featured-projects")}</H4>
             <div className="mt-3 flex flex-wrap gap-3">
               {item.websites.map((url: string) => {
                 // Clean up URL for display

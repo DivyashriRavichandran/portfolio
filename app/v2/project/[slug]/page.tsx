@@ -78,9 +78,9 @@ export default function ProjectDetailsPage() {
 
   return (
     <main className="relative w-full h-full">
-      {showPill && (
+      {/* {showPill && (
         <FloatingNavbar items={pillItems} activeId={activeSection} />
-      )}
+      )} */}
       <PageNavbar
         nextHref={`v2/projects/${nextProject.slug}`}
         nextLabel={nextProject.title[locale]}
@@ -240,7 +240,7 @@ export default function ProjectDetailsPage() {
           )}
 
           {/* PROJECT LINKS */}
-          <div id="links" className="scroll-mt-32 space-y-8 pb-20">
+          <div id="links" className="scroll-mt-32 space-y-8">
             <H2 text1="Project" text2="Links" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.github_link && (
@@ -278,7 +278,7 @@ export default function ProjectDetailsPage() {
                         Live Demo
                       </h4>
                       <p className="text-xs md:text-sm text-black/70">
-                        Experience the project live in your browser
+                        View the project live in your browser
                       </p>
                     </div>
                   </div>

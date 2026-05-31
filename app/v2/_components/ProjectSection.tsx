@@ -80,14 +80,6 @@ const ProjectCard = ({
             <div className="w-full h-full" />
           )}
 
-          {/* MOBILE ONLY */}
-          {/* <div className="absolute top-2 right-2 flex items-center gap-1 md:hidden backdrop-blur-sm px-1 rounded">
-            <span className="text-[10px] font-semibold uppercase tracking-widest">
-              View
-            </span>
-            <ArrowUpRight size={14} />
-          </div> */}
-
           {/* DESKTOP ONLY */}
           <div className="flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
             <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.3)]">
@@ -122,7 +114,7 @@ const ProjectCard = ({
             {project.tech_stack.slice(0, 4).map((tech, i) => (
               <span
                 key={i}
-                className="text-[10px] md:text-xs lowercase text-muted-foreground/80"
+                className="text-[10px] md:text-xs lowercase text-muted-foreground"
               >
                 #{tech}
               </span>

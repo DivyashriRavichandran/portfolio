@@ -53,5 +53,18 @@
   "favourites": "Favourites",
   "listening": "Listening",
   "currently": "Currently",
-  "desk": "Desk"
+  "desk": "Desk",
+  "have-a-specific-inquiry-or-just-want-to-chat-about-web-dev": "Have a specific inquiry or just want to chat about web dev?",
+  "your-name": "Your Name",
+  "email-address": "Email Address",
+  "how-can-i-help-you": "How can I help you?",
+  "sending": "Sending..",
+  "send": "Send",
+  "featured-projects": "Featured Projects",
+  "go-to-top": "Go to top",
+  "all-rights-reserved": "All Rights Reserved.",
+  "more-about-me": "More about me",
+  "groningen-netherlands": "Groningen, Netherlands",
+  "software-engineer": "Software Engineer",
+  "masters-student-at-rug": "Master’s Student at RUG"
 }
