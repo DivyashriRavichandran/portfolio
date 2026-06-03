@@ -65,16 +65,16 @@ const ProjectCard = ({
   const locale = useLocale() as "en" | "nl";
 
   return (
-    <Link href={`/v2/project/${project.slug}`} className="group block h-full">
+    <Link href={`/v2/projects/${project.slug}`} className="group block h-full">
       <div className="border flex flex-col h-full rounded bg-muted overflow-hidden transition-all duration-300 group-hover:border-primary">
         {/* IMAGE CONTAINER */}
-        <div className="relative z-0 aspect-5/3 overflow-hidden bg-muted/10">
+        <div className="relative z-0 aspect-5/3 overflow-hidden">
           {mockupUrl ? (
             <Image
               src={mockupUrl}
               alt={project.title[locale]}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-102"
+              className="object-cover"
             />
           ) : (
             <div className="w-full h-full" />

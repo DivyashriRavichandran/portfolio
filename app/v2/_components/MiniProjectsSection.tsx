@@ -30,13 +30,13 @@ const MiniProjectsSection = () => {
             className="group flex md:items-center overflow-hidden rounded border p-3 md:p-4 bg-muted hover:border-foreground dark:hover:border-primary transition-all duration-300"
           >
             {/* LOGO CONTAINER */}
-            <div className="flex size-14 md:size-20 bg-black shrink-0 items-center justify-center rounded border">
+            <div className="flex size-14 md:size-20 bg-black shrink-0 items-center justify-center border">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
                 width={80}
                 height={80}
-                className="object-contain rounded"
+                className="object-contain"
               />
             </div>
 

@@ -139,7 +139,7 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTENT */}
         <div className="flex-1">
           <div className="flex flex-col md:flex-row md:justify-between">
-            <div className="flex flex-col md:gap-1">
+            <div className="flex flex-col gap-1">
               {/* TITLE */}
               <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
 

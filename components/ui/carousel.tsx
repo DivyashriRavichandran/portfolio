@@ -179,28 +179,39 @@ function CarouselPrevious({
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
-    <Button
-      data-slot="carousel-previous"
-      variant={variant}
-      size={size}
+    <div
       className={cn(
-        "absolute rounded-none hover:bg-primary hover:text-background",
+        "group relative",
         orientation === "horizontal"
-          ? "top-1/2 -left-8 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "absolute top-1/2 -left-8 -translate-y-1/2"
+          : "absolute -top-12 left-1/2 -translate-x-1/2 rotate-90",
         !canScrollPrev && "hidden md:hidden",
         className,
       )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
     >
-      <ChevronLeft className="size-5" />
-      <span className="sr-only">Previous slide</span>
-    </Button>
+      {/* 2. THE SHADOW BOX */}
+      <span
+        className="absolute inset-0 bg-primary opacity-0 transition-all duration-150 ease-out pointer-events-none
+                   group-hover:opacity-100 group-hover:translate-x-1 group-hover:translate-y-1"
+      />
+
+      {/* 3. THE BUTTON */}
+      <Button
+        data-slot="carousel-previous"
+        variant={variant}
+        size={size}
+        className="relative size-10 md:size-12 z-10 rounded-none border bg-background 
+                   hover:bg-background hover:text-primary transition-colors duration-150"
+        disabled={!canScrollPrev}
+        onClick={scrollPrev}
+        {...props}
+      >
+        <ChevronLeft className="size-5 md:size-6" />
+        <span className="sr-only">Previous slide</span>
+      </Button>
+    </div>
   );
 }
-
 function CarouselNext({
   className,
   variant = "ghost",
@@ -210,25 +221,37 @@ function CarouselNext({
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
-    <Button
-      data-slot="carousel-next"
-      variant={variant}
-      size={size}
+    <div
       className={cn(
-        "absolute  rounded-none hover:bg-primary hover:text-background",
+        "group relative",
         orientation === "horizontal"
-          ? "top-1/2 -right-8 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "absolute top-1/2 -left-8 -translate-y-1/2"
+          : "absolute -top-12 left-1/2 -translate-x-1/2 rotate-90",
         !canScrollNext && "hidden md:hidden",
         className,
       )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
     >
-      <ChevronRight className="size-5" />
-      <span className="sr-only">Next slide</span>
-    </Button>
+      {/* 2. THE SHADOW BOX */}
+      <span
+        className="absolute inset-0 bg-primary opacity-0 transition-all duration-150 ease-out pointer-events-none
+                   group-hover:opacity-100 group-hover:translate-x-1 group-hover:translate-y-1"
+      />
+
+      {/* 3. THE BUTTON */}
+      <Button
+        data-slot="carousel-next"
+        variant={variant}
+        size={size}
+        className="relative size-10 md:size-12 rounded-none border bg-background
+                   hover:bg-background hover:text-primary transition-colors duration-150"
+        disabled={!canScrollNext}
+        onClick={scrollNext}
+        {...props}
+      >
+        <ChevronRight className="size-5 md:size-6" />
+        <span className="sr-only">Next slide</span>
+      </Button>
+    </div>
   );
 }
 

@@ -80,7 +80,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <LoadingProvider>{children}</LoadingProvider>
+              {children}
             </ThemeProvider>
           </ConvexClientProvider>
         </NextIntlClientProvider>

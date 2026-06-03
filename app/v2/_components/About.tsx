@@ -4,13 +4,15 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import H1 from "../../../components/headings/H1";
 import { Badge } from "@/components/ui/badge";
-import { ArrowUpRight, Loader2 } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import H2 from "@/components/headings/H2";
 import StackIcon from "tech-stack-icons";
 import GithubContributions from "@/components/custom/GithubContributions";
 import { useTheme } from "next-themes";
 import { useLocale, useTranslations } from "next-intl";
+import { useLoading } from "@/components/custom/LoadingProvider";
+import { useEffect } from "react";
 
 interface AboutProps {
   githubData: {
@@ -22,37 +24,58 @@ interface AboutProps {
 const About = ({ githubData }: AboutProps) => {
   const locale = useLocale();
   const t = useTranslations();
+  const { startLoading, stopLoading } = useLoading();
   const about = useQuery(api.about.get);
 
-  if (about === undefined || about === null) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (about === undefined) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
 
-  const bio = about.bio?.[locale as "en" | "nl"] ?? "";
+    return () => stopLoading();
+  }, [about, startLoading, stopLoading]);
+
+  const bio = about?.bio?.[locale as "en" | "nl"] ?? "";
 
   return (
     <section className="mt-8 py-6 md:py-10">
       <H1 text1={t("about")} text2={t("me")} />
 
       <div className="flex flex-col gap-10 md:gap-12">
-        {/* LEFT SIDE */}
         <div className="flex flex-col space-y-4 md:space-y-6 md:text-xl">
           <div className="whitespace-pre-line">{bio}</div>
+
+          {/* Languages */}
+          <div>
+            {t("i-speak-english")}
+            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
+              (C2)
+            </span>
+            , {t("dutch")}
+            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
+              (A2+)
+            </span>
+            , {t("and-tamil")}
+            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
+              {t("native")}
+            </span>
+            .
+          </div>
+
+          {/* About me link */}
           <Link
             href="/v2/about"
-            className="flex items-center gap-1 md:gap-2 group ml-auto text-muted-foreground"
+            className="flex items-center gap-1 md:gap-1.5 group ml-auto"
           >
-            <span className="text-sm md:text-base transition-all duration-300 decoration-[0.5px] hover:decoration-primary hover:text-primary underline underline-offset-4">
+            <span className="text-sm md:text-base transition-all duration-300 decoration-1 decoration-border hover:decoration-primary hover:text-primary underline underline-offset-4">
               {t("more-about-me")}
             </span>
 
             <ArrowUpRight
               size={16}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary transition"
+              className="text-muted-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary transition"
             />
           </Link>
         </div>

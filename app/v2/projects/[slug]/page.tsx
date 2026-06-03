@@ -15,75 +15,54 @@ import { api } from "@/convex/_generated/api";
 import H2 from "../../../../components/headings/H2";
 import ProjectNotFound from "../../_components/ProjectNotFound";
 import { FaGlobe, FaGithub } from "react-icons/fa6";
-import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import FloatingNavbar from "../../_components/FloatingNavbar";
 import PageNavbar from "../../_components/PageNavbar";
-
-const pillItems = [
-  { id: "motivation", label: "Intro" },
-  { id: "execution", label: "Build" },
-  { id: "impact", label: "Impact" },
-  { id: "stack", label: "Stack" },
-  { id: "challenge", label: "Challenge" },
-  { id: "future", label: "Future" },
-  { id: "links", label: "Links" },
-];
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import { useLoading } from "@/components/custom/LoadingProvider";
 
 export default function ProjectDetailsPage() {
   const t = useTranslations();
   const params = useParams();
   const locale = useLocale() as "en" | "nl";
   const slug = params.slug as string;
+  const { startLoading, stopLoading } = useLoading();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState<number>(-1);
 
   const project = useQuery(api.projects.getBySlug, { slug });
   const allProjects = useQuery(api.projects.list);
 
-  const [activeSection, setActiveSection] = useState("");
-  const [showPill, setShowPill] = useState(false);
+  const isLoading = project === undefined || allProjects === undefined;
 
   useEffect(() => {
-    const handleScroll = () => setShowPill(window.scrollY > 400);
-    window.addEventListener("scroll", handleScroll);
+    if (isLoading) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { threshold: 0.2, rootMargin: "-90% 0% -10% 0%" },
-    );
+    return () => stopLoading();
+  }, [isLoading, startLoading, stopLoading]);
 
-    pillItems.forEach((item) => {
-      const el = document.getElementById(item.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, [project]);
-
-  if (project === undefined || allProjects === undefined) {
-    return <ProjectLoadingSkeleton />;
+  if (isLoading) {
+    return null;
   }
 
-  if (!project) return <ProjectNotFound />;
+  if (project === null) {
+    return <ProjectNotFound />;
+  }
 
-  const currentIndex = allProjects.findIndex((p) => p.slug === slug);
-  const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+  const currentIndex = allProjects?.findIndex((p) => p.slug === slug) ?? 0;
+  const nextProject = allProjects?.[(currentIndex + 1) % allProjects.length];
 
   return (
     <main className="relative w-full h-full">
-      {/* {showPill && (
-        <FloatingNavbar items={pillItems} activeId={activeSection} />
-      )} */}
       <PageNavbar
-        nextHref={`v2/projects/${nextProject.slug}`}
-        nextLabel={nextProject.title[locale]}
+        nextHref={`/v2/projects/${nextProject?.slug}`}
+        nextLabel={nextProject?.title[locale]}
       />
 
       <section>
@@ -104,14 +83,14 @@ export default function ProjectDetailsPage() {
 
         {/* CAROUSEL */}
         <div className="mt-8">
-          <Carousel
-            opts={{ align: "start", loop: true }}
-            className="w-full rounded"
-          >
+          <Carousel opts={{ align: "start", loop: true }} className="w-full">
             <CarouselContent>
               {(project.imageUrls ?? []).map((url, i) => (
-                <CarouselItem key={url || i} className="md:basis-1/2 rounded">
-                  <div className="relative aspect-video rounded overflow-hidden border">
+                <CarouselItem key={url || i} className="md:basis-1/1 rounded">
+                  <div
+                    className="relative aspect-video overflow-hidden border cursor-zoom-in"
+                    onClick={() => setPhotoIndex(i)}
+                  >
                     <Image
                       src={url ?? ""}
                       alt={`Project Image ${i + 1}`}
@@ -127,6 +106,16 @@ export default function ProjectDetailsPage() {
               <CarouselNext className="static translate-y-0 size-10 md:size-12" />
             </div>
           </Carousel>
+
+          {/* Lightbox for Carousel */}
+          <Lightbox
+            open={photoIndex >= 0}
+            index={photoIndex}
+            close={() => setPhotoIndex(-1)}
+            slides={(project.imageUrls ?? []).map((url) => ({
+              src: url ?? "",
+            }))}
+          />
         </div>
 
         <div className="mt-8 space-y-10">
@@ -216,12 +205,23 @@ export default function ProjectDetailsPage() {
               <div className="text-center">
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
+
               <div className="relative w-full aspect-video md:aspect-21/9 bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
                 <Image
                   src={project.architectureUrl}
                   alt="Architecture Diagram"
-                  className="object-contain p-4"
+                  className="object-contain p-4 cursor-zoom-in"
                   fill
+                  onClick={() => setIsOpen(true)}
+                />
+                <Lightbox
+                  open={isOpen}
+                  close={() => setIsOpen(false)}
+                  slides={[{ src: project.architectureUrl }]}
+                  render={{
+                    buttonPrev: () => null,
+                    buttonNext: () => null,
+                  }}
                 />
               </div>
             </article>
@@ -331,25 +331,5 @@ function MetricCard({
       </p>
       <p className="text-xs text-muted-foreground">{desc}</p>
     </div>
-  );
-}
-
-function ProjectLoadingSkeleton() {
-  return (
-    <main className="md:max-w-4xl md:mx-auto px-5 md:px-0">
-      <div className="py-8 md:py-16 space-y-12">
-        <div className="space-y-4">
-          <Skeleton className="h-4 w-48" />
-          <Skeleton className="h-12 md:h-16 w-3/4" />
-          <Skeleton className="h-20 w-full" />
-        </div>
-        <Skeleton className="aspect-video w-full rounded-sm" />
-        <div className="space-y-6 pt-12">
-          <Skeleton className="h-8 w-40" />
-          <Skeleton className="h-4 w-full" />
-          <Skeleton className="h-4 w-5/6" />
-        </div>
-      </div>
-    </main>
   );
 }

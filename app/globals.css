@@ -59,7 +59,7 @@
     --background: oklch(98.5% 0.008 106.5); /* olive-50 */
     --foreground: oklch(22.8% 0.013 107.4); /* olive-900 */
 
-    --muted: oklch(94.5% 0.012 106.8); /* olive-100 */
+    --muted: oklch(96.6% 0.005 106.5); /* olive-100 */
     --muted-foreground: oklch(48.2% 0.022 107.2); /* olive-500 */
 
     --primary: oklch(28.4% 0.023 107.4); /*  olive-800 */
@@ -92,7 +92,7 @@
     --foreground: oklch(98.7% 0.026 102.212); /* yellow-50 */
 
     --muted: oklch(22.8% 0.013 107.4); /* olive-900 */
-    --muted-foreground: oklch(73.7% 0.021 106.9); /* olive-400 */
+    --muted-foreground: hsl(60, 8%, 74%); /* olive-400 a bit lighter */
 
     --primary: oklch(94.5% 0.129 101.54); /* yellow-200 */
     --primary-foreground: oklch(15.3% 0.006 107.1); /* olive-950 */

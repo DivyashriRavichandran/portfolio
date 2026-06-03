@@ -45,7 +45,7 @@ const ProjectNavbar = ({
 
           {/* NEXT PROJECT */}
           <Link
-            href={`/v2/project/${nextProject.slug}`}
+            href={`/v2/projects/${nextProject.slug}`}
             className="group flex items-center gap-1 transition-opacity hover:opacity-90"
           >
             <div className="flex flex-col items-end text-right text-muted-foreground">

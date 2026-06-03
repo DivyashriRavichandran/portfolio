@@ -12,7 +12,7 @@ const PageNavbar = ({ nextLabel, nextHref }: SubNavigationProps) => {
     <div className="mb-8 md:mb-10 flex w-full justify-between items-center text-xs text-muted-foreground">
       {/* Back Link */}
       <Link
-        href={"/"}
+        href={"/v2"}
         className="group flex items-center gap-2 hover:text-foreground transition-colors"
       >
         <ArrowLeft

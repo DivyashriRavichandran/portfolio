@@ -53,10 +53,12 @@
     "react-icons": "^5.5.0",
     "react-intersection-observer": "^9.16.0",
     "react-markdown": "^10.1.0",
+    "react-medium-image-zoom": "^5.4.5",
     "sonner": "^2.0.5",
     "tailwind-merge": "^3.3.0",
     "tech-stack-icons": "^3.7.1",
     "vaul": "^1.1.2",
+    "yet-another-react-lightbox": "^3.32.0",
     "zod": "^3.25.71"
   },
   "devDependencies": {

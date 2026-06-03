@@ -30,16 +30,16 @@ const BlogsSection = () => {
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
-            className="group grid grid-cols-[60px_1fr] md:grid-cols-[112px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
+            className="group grid grid-cols-1 md:grid-cols-[150px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
           >
             {/* COMPACT IMAGE CONTAINER */}
-            <div className="relative aspect-square w-full shrink-0">
+            <div className="relative w-full shrink-0">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
-                width={150}
-                height={150}
-                className="object-cover w-full h-full"
+                width={400}
+                height={400}
+                className="object-cover w-full h-full border"
               />
               {/* DESKTOP ONLY */}
               <div className="hidden md:flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">

@@ -9,11 +9,24 @@ import { LoadingProvider } from "@/components/custom/LoadingProvider";
 import { getLocale } from "next-intl/server";
 import Navbar from "./_components/Navbar";
 import Footer from "./_components/Footer";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Divyashri | Frontend Developer",
-  description: "My portfolio showcasing my projects and experience",
-};
+// Dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("divyashri-or-software-engineer"),
+    description: t(
+      "my-personal-portfolio-showcasing-software-engineering-projects-technical-skills-and-professional-experience",
+    ),
+  };
+}
 
 const generalSans = localFont({
   src: [
