@@ -37,7 +37,7 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full size-1.5 bg-primary"></span>
             </span>
-            Available for Internships / Thesis
+            Available for Internships
           </span>
         </div>
 
@@ -82,10 +82,10 @@ export default function Hero() {
 
       {/* RIGHT SIDE: AVATAR */}
       <div className="shrink-0 self-start md:self-auto">
-        <div className="relative size-28 md:size-36 overflow-hidden border border-border bg-muted">
+        <div className="relative size-28 md:size-36 overflow-hidden border">
           <Image
             src="/new_image.jpeg"
-            className="object-cover object-center transition-transform duration-500 hover:scale-105"
+            className="object-cover object-center"
             alt="Divyashri Ravichandran"
             fill
             sizes="(max-width: 768px) 112px, 144px"

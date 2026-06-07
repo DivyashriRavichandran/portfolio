@@ -25,15 +25,15 @@ const BlogsSection = () => {
         text3={"Blogs"}
       />
 
-      <div className="grid grid-cols-1 gap-4">
+      <div className="flex flex-col gap-4">
         {blogs.map((project) => (
           <a
             key={project._id}
             href={`/v2/blogs/${project.slug}`}
             className="group grid grid-cols-1 md:grid-cols-[150px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
           >
-            {/* COMPACT IMAGE CONTAINER */}
-            <div className="relative w-full shrink-0">
+            {/* IMAGE CONTAINER - HIDDEN ON MOBILE */}
+            <div className="hidden md:block relative w-full shrink-0 overflow-hidden rounded-lg">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
@@ -41,9 +41,8 @@ const BlogsSection = () => {
                 height={400}
                 className="object-cover w-full h-full border"
               />
-              {/* DESKTOP ONLY */}
-              <div className="hidden md:flex absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px]">
-                <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300 shadow-[0_0_20px_rgba(var(--primary),0.3)]">
+              <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px] flex">
+                <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
                   <ArrowUpRight size={20} />
                 </div>
               </div>

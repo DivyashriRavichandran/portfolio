@@ -136,7 +136,7 @@ export default function ProjectDetailsPage() {
             <ProjectSection
               id="execution"
               title1={t("how-i")}
-              title2={t("build-it")}
+              title2={t("built-it")}
               symbol="?"
             >
               <div className="whitespace-pre-line">
@@ -148,7 +148,7 @@ export default function ProjectDetailsPage() {
           {/* IMPACT METRICS */}
           {project.impact?.[locale] && project.impact[locale].length > 0 && (
             <section id="impact" className="scroll-mt-32 space-y-12">
-              <H2 text1="Impact &" text2={t("metrics")} />
+              <H2 text1={t("the")} text2={t("results")} />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {project.impact[locale].map((metric, i) => (
                   <MetricCard
@@ -241,7 +241,7 @@ export default function ProjectDetailsPage() {
 
           {/* PROJECT LINKS */}
           <div id="links" className="scroll-mt-32 space-y-8">
-            <H2 text1="Project" text2="Links" />
+            <H2 text1="Project" text2={t("links")} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.github_link && (
                 <a

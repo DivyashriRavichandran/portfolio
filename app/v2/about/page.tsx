@@ -132,10 +132,7 @@ const FavoriteCard = ({ item }: { item: FavItem }) => {
         {item.title}
       </p>
       <div className="mt-1 flex items-center gap-2">
-        <IconComponent
-          size={16}
-          className="size-3.5 md:size-4 text-primary-foreground dark:text-primary"
-        />
+        <IconComponent size={16} className="size-3.5 md:size-4 text-primary" />
         <span className="text-sm font-medium">{item.desc}</span>
       </div>
     </div>
