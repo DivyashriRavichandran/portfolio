@@ -5,6 +5,7 @@ const intlMiddleware = createIntlMiddleware({
   locales: ["en", "nl"],
   defaultLocale: "en",
   localePrefix: "never",
+  localeDetection: false,
 });
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
