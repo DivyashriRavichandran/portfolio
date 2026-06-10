@@ -277,10 +277,10 @@ export default function ProjectDetailsPage() {
                       {project.slug === "lung-cancer-classifier" ? (
                         <>
                           <h4 className="font-medium md:text-lg text-primary-foreground">
-                            Report
+                            Project Report
                           </h4>
                           <p className="text-xs md:text-sm text-background/70">
-                            View the research paper
+                            View the full research paper
                           </p>
                         </>
                       ) : (
