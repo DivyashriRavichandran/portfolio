@@ -6,21 +6,6 @@ const nextConfig: NextConfig = {
     locales: ["en", "nl"],
     defaultLocale: "en",
   },
-  images: {
-    dangerouslyAllowSVG: true,
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "trustworthy-husky-54.eu-west-1.convex.cloud",
-        pathname: "/api/storage/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ghchart.rshah.org",
-        pathname: "/**",
-      },
-    ],
-  },
 };
 
 const withNextIntl = createNextIntlPlugin();

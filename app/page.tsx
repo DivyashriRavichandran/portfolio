@@ -1,86 +1,73 @@
-"use client";
+import React from "react";
+import { unstable_cache } from "next/cache";
 
-import { useEffect, useRef, useState } from "react";
-import Navbar from "@/components/Navbar";
-import TechStackSection from "@/components/sections/TechStackSection";
-import PersonalSection from "@/components/sections/PersonalSection";
-import HeroSection from "@/components/sections/HeroSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import AboutSection from "@/components/sections/AboutSection";
-import ContactSection from "@/components/sections/ContactSection";
-import LoadingScreen from "@/components/LoadingScreen";
+const username = "divyashriravichandran";
 
-export default function Home() {
-  const homeRef = useRef<HTMLElement>(null);
-  const worksRef = useRef<HTMLElement>(null);
-  const aboutRef = useRef<HTMLElement>(null);
-  const techStackRef = useRef<HTMLElement>(null);
-  const personalRef = useRef<HTMLElement>(null);
-  const contactRef = useRef<HTMLElement>(null);
+import {
+  isAfter,
+  isBefore,
+  parseISO,
+  startOfDay,
+  addDays,
+  subMonths,
+} from "date-fns";
+import About from "@/components/sections/About";
+import BlogsSection from "@/components/sections/Blogs";
+import CareerSection from "@/components/sections/Career";
+import ContactSection from "@/components/sections/Contact";
+import Hero from "@/components/sections/Hero";
+import MiniProjectsSection from "@/components/sections/MiniProjectsSection";
+import ProjectSection from "@/components/sections/ProjectSection";
 
-  const [loading, setLoading] = useState(true);
+const getCachedContributions = unstable_cache(
+  async () => {
+    const response = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${username}`,
+    );
+    if (!response.ok) throw new Error("Failed to fetch");
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 6000);
+    const data = await response.json();
+    const today = startOfDay(new Date());
+    const timeframeInMonths = subMonths(today, 10);
 
-    return () => clearTimeout(timer);
-  }, []);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const contributions = data.contributions.filter((c: any) => {
+      const contributionDate = parseISO(c.date);
+      return (
+        isAfter(contributionDate, timeframeInMonths) &&
+        isBefore(contributionDate, addDays(today, 1))
+      );
+    });
+
+    const total = contributions.reduce(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (acc: number, curr: any) => acc + curr.count,
+      0,
+    );
+
+    return {
+      contributions,
+      total,
+    };
+  },
+  ["github-contributions"],
+  { revalidate: 60 * 60 * 24 },
+);
+
+const Home = async () => {
+  const githubData = await getCachedContributions();
 
   return (
-    <main className="overflow-x-hidden">
-      {/* BACKGROUND GLOWS */}
-      <div className="">
-        <div className="absolute z-0 size-24 md:size-36 rounded-full blur-[80px] md:blur-[100px] right-0 md:right-1/6 top-0 md:top-1/4 opacity-100 dark:opacity-60 bg-secondary" />
-        <div className="absolute z-0 size-20 md:h-36 md:w-1/5 rounded-full blur-[80px] md:blur-[150px] left-0 md:left-1/4 bottom-1/6 opacity-100 dark:opacity-60 bg-tertiary" />
-      </div>
-      <div className="hidden absolute z-0 w-40 h-60 rounded-full blur-[200px] right-0 top-0 opacity-100 bg-linear-to-br from-primary to-secondary" />
-
-      {loading ? (
-        <LoadingScreen />
-      ) : (
-        <>
-          <Navbar />
-          <div>
-            {/* HERO SECTION */}
-            <section id="home" ref={homeRef}>
-              <HeroSection />
-            </section>
-
-            {/* WORK SECTION */}
-            <section id="works" ref={worksRef}>
-              <ProjectsSection />
-            </section>
-
-            {/* ABOUT SECTION */}
-            <section id="about" ref={aboutRef}>
-              <AboutSection />
-            </section>
-
-            {/* TECH STACK SECTION */}
-            <section id="tech-stack" ref={techStackRef}>
-              <TechStackSection />
-            </section>
-
-            {/* PERSONAL SECTION */}
-            <section id="personal" ref={personalRef}>
-              <PersonalSection />
-            </section>
-
-            {/* CONTACT SECTION */}
-            <section id="contact" ref={contactRef}>
-              <ContactSection />
-            </section>
-          </div>
-
-          <footer className="bg-foreground dark:bg-muted py-4 md:py-8">
-            <div className="text-sm md:text-base container mx-auto px-4 text-center text-muted/60 dark:text-muted-foreground">
-              <p>© 2025. Divyashri Portfolio. All rights reserved.</p>
-            </div>
-          </footer>
-        </>
-      )}
-    </main>
+    <>
+      <Hero />
+      <About githubData={githubData} />
+      <ProjectSection />
+      <MiniProjectsSection />
+      <CareerSection />
+      <BlogsSection />
+      <ContactSection />
+    </>
   );
-}
+};
+
+export default Home;

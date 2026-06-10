@@ -5,13 +5,28 @@ import { Toaster } from "sonner";
 import { NextIntlClientProvider } from "next-intl";
 import ConvexClientProvider from "@/components/ConvexClientProvider";
 import localFont from "next/font/local";
-import { LoadingProvider } from "@/components/custom/LoadingProvider";
+import { LoadingProvider } from "@/components/LoadingProvider";
 import { getLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
-export const metadata: Metadata = {
-  title: "Divyashri | Frontend Developer",
-  description: "My portfolio showcasing my projects and experience",
-};
+// Dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("divyashri-or-software-engineer"),
+    description: t(
+      "my-personal-portfolio-showcasing-software-engineering-projects-technical-skills-and-professional-experience",
+    ),
+  };
+}
 
 const generalSans = localFont({
   src: [
@@ -80,7 +95,15 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <LoadingProvider>
+                <>
+                  <Navbar />
+                  <div className="mt-3 md:mt-8 px-5 md:max-w-3xl lg:px-0 md:mx-auto mb-10">
+                    {children}
+                  </div>
+                  <Footer />
+                </>
+              </LoadingProvider>
             </ThemeProvider>
           </ConvexClientProvider>
         </NextIntlClientProvider>
