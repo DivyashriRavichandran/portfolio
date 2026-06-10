@@ -33,13 +33,12 @@ const BlogsSection = () => {
             className="group grid grid-cols-1 md:grid-cols-[150px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
           >
             {/* IMAGE CONTAINER - HIDDEN ON MOBILE */}
-            <div className="hidden md:block relative w-full shrink-0 overflow-hidden rounded-lg">
+            <div className="hidden md:block relative w-full h-full min-h-25 shrink-0 overflow-hidden rounded-lg">
               <Image
                 src={project.imageUrl ?? ""}
                 alt={project.title.en}
-                width={400}
-                height={400}
-                className="object-cover w-full h-full border"
+                fill
+                className="object-cover border"
               />
               <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px] flex">
                 <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
