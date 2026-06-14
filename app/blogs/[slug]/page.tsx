@@ -8,7 +8,6 @@ import { api } from "@/convex/_generated/api";
 import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import { useLoading } from "@/components/LoadingProvider";
-import Navbar from "@/components/layout/Navbar";
 import PageNavbar from "@/components/layout/PageNavbar";
 
 const BlogDetailsPage = () => {
@@ -32,7 +31,6 @@ const BlogDetailsPage = () => {
   if (blog === null) {
     return (
       <>
-        <Navbar />
         <div className="min-h-screen flex items-center justify-center font-mono text-muted-foreground">
           Article not found.
         </div>

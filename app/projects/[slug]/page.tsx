@@ -35,24 +35,22 @@ export default function ProjectDetailsPage() {
   const project = useQuery(api.projects.getBySlug, { slug });
   const allProjects = useQuery(api.projects.list);
 
-  const isLoading = project === undefined || allProjects === undefined;
-
   useEffect(() => {
-    if (isLoading) {
+    if (project === undefined || allProjects === undefined) {
       startLoading();
     } else {
       stopLoading();
     }
 
     return () => stopLoading();
-  }, [isLoading, startLoading, stopLoading]);
+  }, [project, allProjects, startLoading, stopLoading]);
 
-  if (isLoading) {
-    return null;
+  if (project === null || allProjects === null) {
+    return <ProjectNotFound />;
   }
 
-  if (project === null) {
-    return <ProjectNotFound />;
+  if (project === undefined || allProjects === undefined) {
+    return null;
   }
 
   const currentIndex = allProjects?.findIndex((p) => p.slug === slug) ?? 0;
@@ -206,7 +204,7 @@ export default function ProjectDetailsPage() {
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
 
-              <div className="relative w-full aspect-video md:aspect-21/9 bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
+              <div className="relative w-full aspect-video md:aspect-16/9 bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
                 <Image
                   src={project.architectureUrl}
                   alt="Architecture Diagram"
