@@ -95,7 +95,7 @@ const BlogDetailsPage = () => {
           <Image
             src={blog.coverImageUrl}
             alt={blog.title.en}
-            className="mt-6 md:mt-10 w-full md:max-w-2xl h-auto mx-auto object-cover max-h-100"
+            className="mt-6 md:mt-10 w-full md:max-w-2xl h-auto mx-auto object-contain max-h-100"
             width={500}
             height={300}
             priority
