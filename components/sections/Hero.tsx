@@ -69,7 +69,7 @@ export default function Hero() {
             className="md:ml-1 flex items-center gap-1 group font-medium text-foreground transition-colors duration-200"
           >
             <span className="underline underline-offset-4 decoration-border group-hover:decoration-foreground">
-              resume.pdf
+              CV.pdf
             </span>
             <ArrowUpRight
               size={14}
@@ -80,7 +80,7 @@ export default function Hero() {
       </div>
 
       {/* RIGHT SIDE: AVATAR */}
-      <div className="shrink-0 size-28 md:w-44 md:h-auto">
+      <div className="shrink-0 size-28 md:w-40 md:h-auto">
         <div className="relative h-full w-full overflow-hidden rounded-sm">
           <Image
             src="/new_image.jpeg"
