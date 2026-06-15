@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
@@ -25,64 +24,46 @@ const BlogsSection = () => {
         text3={"Blogs"}
       />
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:gap-6 divide-y">
         {blogs.map((project) => (
           <a
             key={project._id}
             href={`/blogs/${project.slug}`}
-            className="group grid grid-cols-1 md:grid-cols-[150px_1fr] gap-3 md:gap-4 rounded border bg-muted p-3 md:p-4 hover:border-primary transition-all duration-200 ease-out"
+            className="group block relative"
           >
-            {/* IMAGE CONTAINER - HIDDEN ON MOBILE */}
-            <div className="hidden md:block relative w-full h-full min-h-25 shrink-0 overflow-hidden rounded-lg">
-              <Image
-                src={project.imageUrl ?? ""}
-                alt={project.title.en}
-                fill
-                className="object-contain border rounded-lg"
-              />
-              <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center backdrop-blur-[2px] flex">
-                <div className="size-12 rounded-full bg-primary text-background flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
-                  <ArrowUpRight size={20} />
-                </div>
-              </div>
-            </div>
-
-            {/* METADATA & CONTENT */}
-            <div className="flex flex-col min-w-0 justify-center">
-              {/* DATE */}
-              <div className="flex justify-between items-center">
-                {project.publishedAt && (
-                  <span className="text-[10px] md:text-xs text-muted-foreground">
-                    {format(project.publishedAt, "MMM dd, yyyy")}
-                  </span>
-                )}
-                {/* MOBILE ONLY ICON */}
-                <ArrowUpRight
-                  size={16}
-                  className="md:hidden text-muted-foreground shrink-0"
-                />
-              </div>
-
-              {/* TITLE */}
-              <h3 className="text-sm md:text-base font-medium leading-snug group-hover:underline underline-offset-2 mt-0.5">
-                {project.title.en}
-              </h3>
-
-              {/* DESCRIPTION */}
-              <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mt-1">
-                {project.description.en?.split("\n")[0]}
-              </p>
-
-              {/* COMPACT INLINE TAGS */}
-              {project.tags && project.tags.length > 0 && (
-                <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground">
-                  {project.tags.map((tag, i) => (
-                    <span key={i} className="flex items-center gap-x-2">
-                      <span>#{tag}</span>
-                    </span>
-                  ))}
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-[100px_1fr] gap-1 md:gap-10 items-start pb-4 md:pb-6">
+              {/* 1. DATE COLUMN */}
+              {project.publishedAt && (
+                <span className="text-[10px] md:text-xs text-muted-foreground md:pt-1 group-hover:text-primary transition">
+                  {format(project.publishedAt, "PPP")}
+                </span>
               )}
+
+              {/* 2. CONTENT COLUMN */}
+              <div className="space-y-2">
+                <h3 className="text-base md:text-lg font-medium text-foreground group-hover:underline underline-offset-4 decoration-1 transition leading-snug">
+                  {project.title.en}
+                  <span className="inline-block whitespace-nowrap ml-1.5">
+                    <ArrowUpRight className="text-muted-foreground size-4 group-hover:text-foreground transition inline" />
+                  </span>
+                </h3>
+
+                {/* DESCRIPTION */}
+                <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 mt-1 max-w-xl">
+                  {project.description.en?.split("\n")[0]}
+                </p>
+
+                {/* COMPACT INLINE TAGS */}
+                {project.tags && project.tags.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground/70">
+                    {project.tags.map((tag, i) => (
+                      <span key={i} className="flex items-center gap-x-2">
+                        <span>#{tag}</span>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </a>
         ))}
