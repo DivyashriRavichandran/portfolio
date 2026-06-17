@@ -22,7 +22,7 @@ const H1 = ({
         </span>
       </h2>
       {total && (
-        <p className="text-[10px] uppercase font-medium tracking-[0.2em] opacity-40 text-right">
+        <p className="text-[10px] uppercase font-medium tracking-[0.2em] text-muted-foreground/80 text-right">
           {total.toString().padStart(2, "0")}{" "}
           {text3 ? text3 : total == 1 ? t("project") : t("projects")}
         </p>

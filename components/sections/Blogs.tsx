@@ -35,7 +35,7 @@ const BlogsSection = () => {
               {/* 1. DATE COLUMN */}
               {project.publishedAt && (
                 <span className="text-[10px] md:text-xs text-muted-foreground md:pt-1 group-hover:text-primary transition">
-                  {format(project.publishedAt, "PPP")}
+                  {format(project.publishedAt, "PP")}
                 </span>
               )}
 
@@ -55,7 +55,7 @@ const BlogsSection = () => {
 
                 {/* COMPACT INLINE TAGS */}
                 {project.tags && project.tags.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground/70">
+                  <div className="mt-2 flex flex-wrap gap-x-2 gap-y-0.5 text-[10px] md:text-xs text-muted-foreground/80">
                     {project.tags.map((tag, i) => (
                       <span key={i} className="flex items-center gap-x-2">
                         <span>#{tag}</span>

@@ -18,6 +18,8 @@ import emailjs from "@emailjs/browser";
 import { FaEnvelope, FaGithub, FaLinkedin } from "react-icons/fa6";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "Name is required"),
@@ -28,6 +30,8 @@ const formSchema = z.object({
 const ContactSection = () => {
   const t = useTranslations();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const about = useQuery(api.about.get);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -78,17 +82,17 @@ const ContactSection = () => {
             {[
               {
                 label: "LinkedIn",
-                href: "https://linkedin.com/in/yourprofile",
+                href: about?.linkedin || "#",
                 icon: FaLinkedin,
               },
               {
                 label: "Github",
-                href: "https://github.com/yourusername",
+                href: about?.github || "#",
                 icon: FaGithub,
               },
               {
                 label: "Email",
-                href: "mailto:contact@divyashri.nl",
+                href: `mailto:${about?.email || ""}`,
                 icon: FaEnvelope,
               },
             ].map((social, index) => (

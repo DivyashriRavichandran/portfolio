@@ -50,18 +50,11 @@ const About = ({ githubData }: AboutProps) => {
           {/* Languages */}
           <div>
             {t("i-speak-english")}
-            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
-              (C2)
-            </span>
-            , {t("dutch")}
-            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
-              (A2+)
-            </span>
-            , {t("and-tamil")}
-            <span className="text-muted-foreground text-sm md:text-base ml-0.5">
-              {t("native")}
-            </span>
-            .
+            <span className="text-sm md:text-base ml-0.5">(C2)</span>,{" "}
+            {t("dutch")}
+            <span className="text-sm md:text-base ml-0.5">(A2)</span>,{" "}
+            {t("and-tamil")}
+            <span className="text-sm md:text-base ml-0.5">{t("native")}</span>.
           </div>
 
           {/* About me link */}

@@ -7,9 +7,13 @@ import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { PiMapPinSimpleFill } from "react-icons/pi";
 import { useTranslations } from "next-intl";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function Hero() {
   const t = useTranslations();
+  const about = useQuery(api.about.get);
+
   return (
     <section className="w-full flex flex-col-reverse md:flex-row md:items-stretch md:justify-between gap-6 md:gap-8">
       {/* LEFT SIDE: INTRO & CONTENT */}
@@ -41,20 +45,26 @@ export default function Hero() {
         </div>
 
         {/* ACTION ROW */}
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-xs md:text-sm text-muted-foreground pt-1">
+        <div className="flex flex-wrap items-center gap-x-3 md:gap-x-5 gap-y-3 text-xs md:text-sm text-muted-foreground pt-1">
           {[
-            { label: "LinkedIn", href: "#", icon: FaLinkedin },
-            { label: "GitHub", href: "#", icon: FaGithub },
+            {
+              label: "LinkedIn",
+              href: about?.linkedin || "#",
+              icon: FaLinkedin,
+            },
+            { label: "GitHub", href: about?.github || "#", icon: FaGithub },
             {
               label: "Email",
-              href: "mailto:contact@divyashri.nl",
+              href: `mailto:${about?.email || ""}`,
               icon: MdEmail,
             },
           ].map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="flex items-center gap-1.5 hover:text-foreground transition-colors duration-200 group"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 md:gap-1.5 hover:text-foreground transition-colors duration-200 group"
             >
               <link.icon className="size-3.5 md:size-4" />
               <span className="underline-offset-4 group-hover:underline">
