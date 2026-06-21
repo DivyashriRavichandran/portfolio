@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import ReactMarkdown from "react-markdown";
 import { useLoading } from "@/components/LoadingProvider";
 import PageNavbar from "@/components/layout/PageNavbar";
+import { Calendar, Clock } from "lucide-react";
 
 const BlogDetailsPage = () => {
   const params = useParams();
@@ -63,7 +64,7 @@ const BlogDetailsPage = () => {
               {blog.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-mono px-2 py-1 bg-muted text-muted-foreground"
+                  className="text-xs font-mono px-2 py-1 bg-muted lowercase text-muted-foreground"
                 >
                   #{tag}
                 </span>
@@ -75,9 +76,12 @@ const BlogDetailsPage = () => {
             {blog.title.en}
           </h1>
 
-          <div className="mt-1 flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
+          <div className="mt-1 flex items-center gap-1 md:gap-2 text-xs md:text-sm text-muted-foreground">
+            <Calendar size={12} />
             {blog.publishedAt && <span>{format(blog.publishedAt, "PPP")}</span>}
-            • <span>{blog.timeToRead} min read</span>
+            <span className="mx-1.5">•</span>
+            <Clock size={12} />
+            <span>{blog.timeToRead} min read</span>
           </div>
 
           <div

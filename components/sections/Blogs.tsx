@@ -1,19 +1,25 @@
 "use client";
-import React from "react";
+import React, { useState } from "react"; // Added useState
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useTranslations } from "next-intl";
 import { format } from "date-fns";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronUp } from "lucide-react"; // Added icons for the button
 import H1 from "../headings/H1";
 
 const BlogsSection = () => {
   const t = useTranslations();
   const blogs = useQuery(api.blogs.get);
 
+  // State to track whether the list is expanded or collapsed
+  const [isExpanded, setIsExpanded] = useState(false);
+
   if (!blogs) {
     return null;
   }
+
+  // Determine which blogs to display
+  const displayedBlogs = isExpanded ? blogs : blogs.slice(0, 3);
 
   return (
     <section className="py-6 md:py-10">
@@ -25,7 +31,7 @@ const BlogsSection = () => {
       />
 
       <div className="flex flex-col gap-4 md:gap-6 divide-y">
-        {blogs.map((project) => (
+        {displayedBlogs.map((project) => (
           <a
             key={project._id}
             href={`/blogs/${project.slug}`}
@@ -68,6 +74,28 @@ const BlogsSection = () => {
           </a>
         ))}
       </div>
+
+      {/* SEE MORE / SHOW LESS BUTTON */}
+      {blogs.length > 3 && (
+        <div className="flex justify-end">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-1 md:gap-1.5 text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+          >
+            {isExpanded ? (
+              <>
+                {t("Show less") || "Show less"}
+                <ChevronUp className="size-4" />
+              </>
+            ) : (
+              <>
+                {t("See more") || "See more"}
+                <ChevronDown className="size-4" />
+              </>
+            )}
+          </button>
+        </div>
+      )}
     </section>
   );
 };
