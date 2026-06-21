@@ -381,7 +381,7 @@ export default function AboutManager() {
                   ref={provided.innerRef}
                 >
                   {formData.favourites.map((fav, idx) => {
-                    const itemId = fav.id?.toString() || `item-${idx}`;
+                    const itemId = `item-${idx}`;
 
                     return (
                       <Draggable key={itemId} draggableId={itemId} index={idx}>
