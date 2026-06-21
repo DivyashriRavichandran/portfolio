@@ -50,7 +50,7 @@ export default function Hero() {
           </h1>
 
           <p className="text-xs md:text-base tracking-wide text-muted-foreground">
-            {t("masters-student-at-rug")} & {t("software-engineer")}
+            {t("masters-student-at-rug")} | {t("software-engineer")}
           </p>
         </div>
       </div>

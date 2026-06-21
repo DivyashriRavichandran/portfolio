@@ -60,7 +60,7 @@ export default function AboutPage() {
     <main className="space-y-8 md:space-y-14">
       <div>
         <H1 text1={t("more-about")} text2={t("me")} />
-        <p className="md:text-xl">{about.more_bio?.[locale]}</p>
+        <p className="text-sm md:text-xl">{about.more_bio?.[locale]}</p>
       </div>
 
       {favourites.length > 0 && (
