@@ -18,9 +18,20 @@ import {
   FileText,
   Heart,
   X,
+  LayoutGrid,
+  Type,
+  GripVertical,
+  Mail,
 } from "lucide-react";
 import H3 from "@/components/headings/H3";
 import { Id } from "@/convex/_generated/dataModel";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from "@hello-pangea/dnd";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
 
 // Real sub-schemas from your Convex schema configuration
 interface LocaleString {
@@ -127,6 +138,43 @@ export default function AboutManager() {
     }
   };
 
+  const addCard = () => {
+    setFormData({
+      ...formData,
+      favourites: [...formData.favourites, { icon: "", title: "", desc: "" }],
+    });
+  };
+
+  const updateCard = (
+    idx: number,
+    field: "icon" | "title" | "desc",
+    value: string,
+  ) => {
+    const updated = formData.favourites.map((fav, i) =>
+      i === idx ? { ...fav, [field]: value } : fav,
+    );
+    setFormData({ ...formData, favourites: updated });
+  };
+
+  const deleteCard = (idx: number) => {
+    setFormData({
+      ...formData,
+      favourites: formData.favourites.filter((_, i) => i !== idx),
+    });
+  };
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+
+    const items = Array.from(formData.favourites);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setFormData({
+      ...formData,
+      favourites: items,
+    });
+  };
   return (
     <form onSubmit={handleSave} className="space-y-16 pb-24">
       {/* SECTION 1: BIOGRAPHY */}
@@ -293,99 +341,150 @@ export default function AboutManager() {
       </section>
 
       {/* SECTION 3: FAVOURITES */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between border-b border-white/5 pb-2">
-          <H3 icon={Heart} text="Favourites" />
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                favourites: [
-                  ...formData.favourites,
-                  { icon: "", title: "", desc: "" },
-                ],
-              })
-            }
-            className="h-8 text-xs px-2.5"
-          >
-            <Plus size={12} className="mr-1" /> Add Card
-          </Button>
-        </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {/* SECTION 3: FAVOURITES */}
+        <section className="space-y-6 rounded-xl border p-5">
+          {/* SECTION HEADER */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <H3 icon={Heart} text="Favourites" />
+            <Button type="button" variant="outline" size="sm" onClick={addCard}>
+              <Plus size={14} className="mr-1.5" /> Add Card
+            </Button>
+          </div>
 
-        <div className="space-y-2">
-          {formData.favourites.map((fav, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col md:flex-row items-stretch md:items-center gap-2 bg-white/2 border border-white/5 p-2 rounded-md group relative"
-            >
-              {/* Meta Inputs: Icon & Title */}
-              <div className="grid grid-cols-2 gap-2 flex-1 min-w-0">
-                <Input
-                  placeholder="Icon (e.g. Heart)"
-                  variant="admin"
-                  value={fav.icon}
-                  onChange={(e) => {
-                    const updated = [...formData.favourites];
-                    updated[idx].icon = e.target.value;
-                    setFormData({ ...formData, favourites: updated });
-                  }}
-                  className="h-9 text-xs"
-                />
-                <Input
-                  placeholder="Card Title"
-                  variant="admin"
-                  value={fav.title}
-                  onChange={(e) => {
-                    const updated = [...formData.favourites];
-                    updated[idx].title = e.target.value;
-                    setFormData({ ...formData, favourites: updated });
-                  }}
-                  className="h-9 text-xs"
-                />
-              </div>
-
-              {/* Text Area/Long input area for description */}
-              <div className="flex-1 md:flex-[1.5] min-w-0">
-                <Input
-                  placeholder="Card Description"
-                  variant="admin"
-                  value={fav.desc}
-                  onChange={(e) => {
-                    const updated = [...formData.favourites];
-                    updated[idx].desc = e.target.value;
-                    setFormData({ ...formData, favourites: updated });
-                  }}
-                  className="h-9 text-xs"
-                />
-              </div>
-
-              {/* Action Button */}
-              <Button
+          {/* CARDS CONTAINER */}
+          {formData.favourites.length === 0 ? (
+            <div className="flex flex-col items-center justify-center border rounded-lg p-8 text-center ">
+              <Heart size={24} className="mb-2 stroke-[1.5] " />
+              <p className="text-xs">No favourite cards added yet.</p>
+              <button
                 type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    favourites: formData.favourites.filter((_, i) => i !== idx),
-                  })
-                }
-                className="h-9 w-9 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 shrink-0 self-end md:self-auto"
+                onClick={addCard}
+                className="mt-2 text-xs text-blue-400 hover:underline"
               >
-                <Trash2 size={13} />
-              </Button>
+                Create your first card
+              </button>
             </div>
-          ))}
-        </div>
-      </section>
+          ) : (
+            <Droppable droppableId="favourites-list">
+              {(provided) => (
+                <div
+                  className="grid grid-cols-1 gap-4"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {formData.favourites.map((fav, idx) => {
+                    const itemId = fav.id?.toString() || `item-${idx}`;
+
+                    return (
+                      <Draggable key={itemId} draggableId={itemId} index={idx}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            className={`group relative flex flex-col gap-4 rounded-xl border bg-muted p-4 transition-shadow ${
+                              snapshot.isDragging
+                                ? "shadow-lg border-primary/40 ring-1 ring-primary/10"
+                                : ""
+                            }`}
+                          >
+                            {/* Card Header & Actions */}
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                {/* Dedicated Drag Handle */}
+                                <div
+                                  {...provided.dragHandleProps}
+                                  className="cursor-grab active:cursor-grabbing p-1 rounded hover:bg-white/10 text-muted-foreground transition-colors"
+                                >
+                                  <GripVertical size={14} />
+                                </div>
+                                <span className="text-[11px] font-semibold uppercase tracking-wider ">
+                                  Item #{idx + 1}
+                                </span>
+                              </div>
+
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => deleteCard(idx)}
+                                className="h-7 w-7 rounded-md hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                                title="Delete item"
+                              >
+                                <Trash2 size={14} />
+                              </Button>
+                            </div>
+
+                            {/* Inputs Grid */}
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                              {/* Icon Input */}
+                              <div className="relative">
+                                <LayoutGrid
+                                  size={14}
+                                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                                />
+                                <Input
+                                  placeholder="Icon (e.g. Heart)"
+                                  variant="admin"
+                                  value={fav.icon}
+                                  onChange={(e) =>
+                                    updateCard(idx, "icon", e.target.value)
+                                  }
+                                  className="text-xs pl-9 w-full"
+                                />
+                              </div>
+
+                              {/* Title Input */}
+                              <div className="relative md:col-span-2">
+                                <Type
+                                  size={14}
+                                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                                />
+                                <Input
+                                  placeholder="Card Title"
+                                  variant="admin"
+                                  value={fav.title}
+                                  onChange={(e) =>
+                                    updateCard(idx, "title", e.target.value)
+                                  }
+                                  className="text-xs pl-9 w-full"
+                                />
+                              </div>
+
+                              {/* Description Input (Span full width) */}
+                              <div className="relative md:col-span-3 items-center flex">
+                                <FileText
+                                  size={14}
+                                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                                />
+                                <Input
+                                  placeholder="Card Description..."
+                                  variant="admin"
+                                  value={fav.desc}
+                                  onChange={(e) =>
+                                    updateCard(idx, "desc", e.target.value)
+                                  }
+                                  className="w-full pl-9 text-xs"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          )}
+        </section>
+      </DragDropContext>
 
       {/* SECTION 4: SPOTIFY & SOCIALS */}
       <section className="space-y-6">
         <H3 icon={Music} text="Spotify & Socials" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
+        <div className="grid grid-cols-1 gap-8 bg-foreground/5 border border-white/5 p-8 rounded-lg">
           {/* SPOTIFY */}
           <div className="space-y-4">
             <span className="text-xs font-medium">Spotify Songs IDs</span>
@@ -439,33 +538,61 @@ export default function AboutManager() {
 
           {/* NETWORKS & CONTACT */}
           <div className="space-y-4">
-            <span className="text-xs font-medium">Socials</span>
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider block mb-1">
+              Socials
+            </span>
 
-            <Input
-              placeholder="LinkedIn URL"
-              variant="admin"
-              value={formData.linkedin}
-              onChange={(e) =>
-                setFormData({ ...formData, linkedin: e.target.value })
-              }
-            />
-            <Input
-              placeholder="GitHub URL"
-              variant="admin"
-              value={formData.github}
-              onChange={(e) =>
-                setFormData({ ...formData, github: e.target.value })
-              }
-            />
-            <Input
-              placeholder="Contact Email Address"
-              variant="admin"
-              type="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
+            {/* LinkedIn Input */}
+            <div className="relative flex items-center">
+              <FaLinkedin
+                size={16}
+                className="absolute left-3 text-muted-foreground pointer-events-none"
+              />
+              <Input
+                placeholder="LinkedIn URL"
+                variant="admin"
+                value={formData.linkedin}
+                onChange={(e) =>
+                  setFormData({ ...formData, linkedin: e.target.value })
+                }
+                className="pl-10 w-full"
+              />
+            </div>
+
+            {/* GitHub Input */}
+            <div className="relative flex items-center">
+              <FaGithub
+                size={16}
+                className="absolute left-3 text-muted-foreground pointer-events-none"
+              />
+              <Input
+                placeholder="GitHub URL"
+                variant="admin"
+                value={formData.github}
+                onChange={(e) =>
+                  setFormData({ ...formData, github: e.target.value })
+                }
+                className="pl-10 w-full"
+              />
+            </div>
+
+            {/* Email Input */}
+            <div className="relative flex items-center">
+              <Mail
+                size={16}
+                className="absolute left-3 text-muted-foreground pointer-events-none"
+              />
+              <Input
+                placeholder="Contact Email Address"
+                variant="admin"
+                type="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+                className="pl-10 w-full"
+              />
+            </div>
           </div>
         </div>
       </section>

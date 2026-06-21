@@ -12,7 +12,7 @@ import { Briefcase, FolderCode, StickyNote, UserCircle } from "lucide-react";
 
 export default function AdminPage() {
   return (
-    <div className="min-h-screen bg-background px-5 md:container md:mx-auto py-10">
+    <>
       {/* HEADER */}
       <div>
         <H1 text1={"Admin"} text2={"Dashboard"} />
@@ -66,6 +66,6 @@ export default function AdminPage() {
           <AboutManager />
         </TabsContent>
       </Tabs>
-    </div>
+    </>
   );
 }
