@@ -32,6 +32,7 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import Image from "next/image";
 
 // Real sub-schemas from your Convex schema configuration
 interface LocaleString {
@@ -53,6 +54,7 @@ interface FavCard {
 
 interface AboutFormData {
   _id?: Id<"about">;
+  image?: string;
   bio: LocaleString;
   more_bio: LocaleString;
   favourites: FavCard[];
@@ -70,6 +72,7 @@ export default function AboutManager() {
   const generateUploadUrl = useMutation(api.images.generateUploadUrl);
 
   const [formData, setFormData] = useState<AboutFormData>({
+    image: "",
     bio: { en: "", nl: "" },
     more_bio: { en: "", nl: "" },
     favourites: [],
@@ -88,6 +91,7 @@ export default function AboutManager() {
     if (aboutQuery) {
       setFormData({
         _id: aboutQuery._id,
+        image: aboutQuery.image || "",
         bio: aboutQuery.bio || { en: "", nl: "" },
         more_bio: aboutQuery.more_bio || { en: "", nl: "" },
         favourites: aboutQuery.favourites || [],
@@ -118,7 +122,7 @@ export default function AboutManager() {
     }
   };
 
-  const handleFileUpload = async (file: File) => {
+  const handleFileUpload = async (file: File, field: "resume" | "image") => {
     try {
       const postUrl = await generateUploadUrl();
       const result = await fetch(postUrl, {
@@ -130,8 +134,11 @@ export default function AboutManager() {
       if (!result.ok) throw new Error("Upload failed");
 
       const { storageId } = await result.json();
-      setFormData((prev) => ({ ...prev, resume: storageId }));
-      toast.success("Resume uploaded!");
+
+      setFormData((prev) => ({ ...prev, [field]: storageId }));
+
+      const capitalizedField = field.charAt(0).toUpperCase() + field.slice(1);
+      toast.success(`${capitalizedField} uploaded!`);
     } catch (e) {
       console.error(e);
       toast.error("File upload failed.");
@@ -597,44 +604,93 @@ export default function AboutManager() {
         </div>
       </section>
 
-      {/* RESUME & SUBMIT */}
+      {/* RESUME, IMAGE & SUBMIT */}
       <section className="space-y-6">
-        <H3 icon={Globe} text="Resume Document" />
-        <div className="bg-foreground/5 border p-6 rounded max-w-sm">
-          {formData.resume ? (
-            <div className="relative size-24 rounded-md border overflow-hidden group bg-foreground/10 flex flex-col items-center justify-center p-2">
-              <FileText size={28} className="" />
-              <span className="text-[9px] font-mono mt-1 text-white/40 truncate w-full text-center">
-                {formData.resume}
-              </span>
-              <button
-                type="button"
-                onClick={() => setFormData({ ...formData, resume: "" })}
-                className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition"
-              >
-                <X size={18} />
-              </button>
-            </div>
-          ) : (
-            <label className="size-24 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition group">
-              <FileText
-                size={20}
-                className="opacity-60 group-hover:opacity-100"
-              />
-              <span className="text-[10px] mt-1 opacity-50 uppercase">
-                Upload
-              </span>
-              <input
-                type="file"
-                className="hidden"
-                accept=".pdf"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) handleFileUpload(file);
-                }}
-              />
-            </label>
-          )}
+        <H3 icon={Globe} text="Documents & Media" />
+
+        <div className="flex flex-wrap gap-6">
+          {/* RESUME UPLOAD */}
+          <div className="bg-foreground/5 border p-6 rounded max-w-sm flex-1 min-w-60">
+            <h4 className="text-sm font-medium mb-3 opacity-80">
+              Resume (PDF)
+            </h4>
+            {formData.resume ? (
+              <div className="relative size-24 rounded-md border overflow-hidden group bg-foreground/10 flex flex-col items-center justify-center p-2">
+                <FileText size={28} className="" />
+                <span className="text-[9px] font-mono mt-1 text-white/40 truncate w-full text-center">
+                  {formData.resume}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, resume: "" })}
+                  className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            ) : (
+              <label className="size-24 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition group">
+                <FileText
+                  size={20}
+                  className="opacity-60 group-hover:opacity-100"
+                />
+                <span className="text-[10px] mt-1 opacity-50 uppercase">
+                  Upload
+                </span>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept=".pdf"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleFileUpload(file, "resume");
+                  }}
+                />
+              </label>
+            )}
+          </div>
+
+          {/* IMAGE UPLOAD */}
+          <div className="bg-foreground/5 border p-6 rounded max-w-sm flex-1 min-w-60">
+            <h4 className="text-sm font-medium mb-3 opacity-80">
+              Profile Image
+            </h4>
+            {formData.image ? (
+              <div className="relative size-24 rounded-md border overflow-hidden group bg-foreground/10 flex flex-col items-center justify-center p-2">
+                <Image
+                  src={formData.image}
+                  alt="Profile Preview"
+                  className="w-full h-full object-cover rounded-md"
+                />
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, image: "" })}
+                  className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            ) : (
+              <label className="size-24 border-2 border-dashed rounded-md flex flex-col items-center justify-center cursor-pointer hover:border-primary/50 transition group">
+                <FileText
+                  size={20}
+                  className="opacity-60 group-hover:opacity-100"
+                />
+                <span className="text-[10px] mt-1 opacity-50 uppercase">
+                  Upload
+                </span>
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) handleFileUpload(file, "image");
+                  }}
+                />
+              </label>
+            )}
+          </div>
         </div>
       </section>
 

@@ -65,7 +65,7 @@ export default function ProjectDetailsPage() {
 
       <section>
         {/* HERO */}
-        <header className="space-y-4">
+        <header className="space-y-2 md:space-y-4">
           <div className="text-muted-foreground flex items-center gap-3 text-[10px] md:text-xs uppercase tracking-widest font-medium">
             <span>{project.year}</span>
             <span className="h-px w-6 bg-muted-foreground" />
@@ -74,7 +74,7 @@ export default function ProjectDetailsPage() {
           <h1 className="text-3xl md:text-5xl font-semibold wrap-break-word">
             {project.title[locale]}
           </h1>
-          <div className="mt-4 md:mt-6 text-sm md:text-lg">
+          <div className="mt-3 md:mt-6 text-sm md:text-lg">
             {project.description[locale]}
           </div>
         </header>
@@ -204,7 +204,7 @@ export default function ProjectDetailsPage() {
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
 
-              <div className="relative w-full aspect-video md:aspect-16/9 bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
+              <div className="relative w-full aspect-video bg-foreground/5 rounded border border-foreground/5 overflow-hidden">
                 <Image
                   src={project.architectureUrl}
                   alt="Architecture Diagram"
@@ -320,7 +320,9 @@ function ProjectSection({
   return (
     <article id={id} className="scroll-mt-32 space-y-4 md:space-y-6">
       <H2 text1={title1} text2={title2} symbol={symbol} />
-      <div className="space-y-4 md:space-y-6 md:text-lg">{children}</div>
+      <div className="space-y-2 md:space-y-6 text-sm md:text-lg">
+        {children}
+      </div>
     </article>
   );
 }

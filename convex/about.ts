@@ -4,13 +4,21 @@ import { favCard, hardware, localeString } from "./schema";
 
 export const get = query({
   handler: async (ctx) => {
-    return await ctx.db.query("about").first();
+    const about = await ctx.db.query("about").first();
+
+    if (!about) return null;
+
+    return {
+      ...about,
+      imageUrl: about.image ? await ctx.storage.getUrl(about.image) : null,
+    };
   },
 });
 
 export const update = mutation({
   args: {
     id: v.id("about"),
+    image: v.optional(v.string()),
     bio: localeString,
     more_bio: localeString,
     favourites: v.optional(v.array(favCard)),

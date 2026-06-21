@@ -43,8 +43,8 @@ const BlogsSection = () => {
               <div className="space-y-2">
                 <h3 className="text-base md:text-lg font-medium text-foreground group-hover:underline underline-offset-4 decoration-1 transition leading-snug">
                   {project.title.en}
-                  <span className="inline-block whitespace-nowrap ml-1.5">
-                    <ArrowUpRight className="text-muted-foreground size-4 group-hover:text-foreground transition inline" />
+                  <span className="inline-flex items-center align-top whitespace-nowrap ml-1.5 mt-0.5">
+                    <ArrowUpRight className="text-muted-foreground size-3.5 md:size-4 group-hover:text-foreground transition" />
                   </span>
                 </h3>
 

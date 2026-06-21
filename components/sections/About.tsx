@@ -40,11 +40,11 @@ const About = ({ githubData }: AboutProps) => {
   const bio = about?.bio?.[locale as "en" | "nl"] ?? "";
 
   return (
-    <section className="mt-8 py-6 md:py-10">
+    <section className="mt-4 md:mt-6 py-6 md:py-10">
       <H1 text1={t("about")} text2={t("me")} />
 
       <div className="flex flex-col gap-10 md:gap-12">
-        <div className="flex flex-col space-y-4 md:space-y-6 md:text-xl">
+        <div className="flex flex-col space-y-4 md:space-y-6 text-sm md:text-xl">
           <div className="whitespace-pre-line">{bio}</div>
 
           {/* Languages */}
@@ -62,7 +62,7 @@ const About = ({ githubData }: AboutProps) => {
             href="/about"
             className="flex items-center gap-1 md:gap-1.5 group ml-auto"
           >
-            <span className="text-sm md:text-base transition-all duration-300 decoration-1 decoration-border hover:decoration-primary hover:text-primary underline underline-offset-4">
+            <span className="text-xs md:text-base transition-all duration-300 decoration-1 decoration-muted-foreground/50 hover:decoration-primary hover:text-primary underline underline-offset-4">
               {t("more-about-me")}
             </span>
 
@@ -96,6 +96,7 @@ const TechStackSection = () => {
       { key: "typescript", label: "TypeScript" },
       { key: "js", label: "JavaScript" },
       { key: "java", label: "Java" },
+      { key: "php", label: "PHP" },
       { key: "python", label: "Python" },
       { key: "html5", label: "HTML5" },
       { key: "css3", label: "CSS3" },
@@ -103,20 +104,17 @@ const TechStackSection = () => {
     frameworks: [
       { key: "nextjs", label: "Next.js" },
       { key: "react", label: "React.js" },
-      { key: "vuejs", label: "Vue.js" },
       { key: "spring", label: "Spring Boot" },
       { key: "tailwindcss", label: "Tailwind" },
     ],
     database: [
       { key: "postgresql", label: "PostgreSQL" },
       { key: "convex", label: "Convex" },
-      { key: "payload", label: "Payload" },
     ],
     devops: [
       { key: "docker", label: "Docker" },
       { key: "kubernetes", label: "Kubernetes" },
       { key: "aws", label: "AWS" },
-      { key: "github", label: "Github Actions" },
       { key: "linux", label: "Linux" },
     ],
   };

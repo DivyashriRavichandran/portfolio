@@ -76,6 +76,7 @@ export default defineSchema({
     .index("by_order", ["order"]),
 
   about: defineTable({
+    image: v.optional(v.string()),
     bio: localeString,
     more_bio: localeString,
     favourites: v.optional(v.array(favCard)),

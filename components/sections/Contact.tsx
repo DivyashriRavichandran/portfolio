@@ -103,7 +103,7 @@ const ContactSection = () => {
                 rel="noopener noreferrer"
                 className="group flex items-center justify-between border-b py-2 transition-colors hover:border-primary"
               >
-                <span className="group-hover:text-primary flex items-center gap-2 text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
+                <span className="group-hover:text-primary flex items-center gap-2 md:text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
                   <social.icon size={20} />
                   {social.label}
                 </span>
@@ -123,7 +123,7 @@ const ContactSection = () => {
           <h3 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
             {t("inquiry")}
           </h3>
-          <p className="mt-2 md:text-lg">
+          <p className="mt-2 text-sm md:text-lg">
             {t("have-a-specific-inquiry-or-just-want-to-chat-about-web-dev")}
           </p>
         </div>
@@ -143,7 +143,7 @@ const ContactSection = () => {
                       <Input
                         placeholder={t("your-name")}
                         {...field}
-                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
+                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-9 md:h-12 md:text-lg"
                       />
                     </FormControl>
                     <FormMessage />
@@ -159,7 +159,7 @@ const ContactSection = () => {
                       <Input
                         placeholder={t("email-address")}
                         {...field}
-                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-12 text-lg"
+                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-9 md:h-12 md:text-lg"
                       />
                     </FormControl>
                     <FormMessage />
@@ -175,7 +175,7 @@ const ContactSection = () => {
                       <Textarea
                         placeholder={t("how-can-i-help-you")}
                         {...field}
-                        className="min-h-30 border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent text-lg resize-none"
+                        className="min-h-24 border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent md:text-lg resize-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -186,9 +186,8 @@ const ContactSection = () => {
             <div className="flex justify-end pt-4">
               <Button
                 type="submit"
-                size="lg"
                 disabled={isSubmitting}
-                className="w-full md:w-auto uppercase"
+                className="w-full md:w-auto uppercase font-semibold"
               >
                 {isSubmitting ? t("sending") : t("send")}
               </Button>

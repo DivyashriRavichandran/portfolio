@@ -5,102 +5,115 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { PiMapPinSimpleFill } from "react-icons/pi";
 import { useTranslations } from "next-intl";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useEffect } from "react";
+import { useLoading } from "../LoadingProvider";
 
 export default function Hero() {
   const t = useTranslations();
   const about = useQuery(api.about.get);
+  const { startLoading, stopLoading } = useLoading();
+
+  useEffect(() => {
+    if (about === undefined) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
+
+    return () => stopLoading();
+  }, [about, startLoading, stopLoading]);
+
+  if (about === null || about === undefined) {
+    return null;
+  }
 
   return (
-    <section className="w-full flex flex-col-reverse md:flex-row md:items-stretch md:justify-between gap-6 md:gap-8">
-      {/* LEFT SIDE: INTRO & CONTENT */}
-      <div className="flex-1 max-w-2xl min-w-0 flex flex-col gap-4 md:gap-5 justify-between">
-        <div className="space-y-1 md:space-y-1.5">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground">
-            Divyashri Ravichandran
-          </h1>
-
-          <p className="text-sm md:text-base text-foreground antialiased leading-relaxed font-medium">
-            {t("masters-student-at-rug")} & {t("software-engineer")}
-          </p>
-        </div>
-
-        {/* LOCATION & CURRENT STATE */}
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs md:text-sm">
-          <span className="flex items-center gap-1.5">
-            <PiMapPinSimpleFill size={14} className="text-primary" />
-            {t("groningen-netherlands")}
-          </span>
-
-          <span className="flex items-center gap-2 border bg-muted px-2 py-0.5 rounded-sm">
-            <span className="relative flex size-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full size-1.5 bg-primary"></span>
-            </span>
-            {t("available-for-internships-and-part-time")}
-          </span>
-        </div>
-
-        {/* ACTION ROW */}
-        <div className="flex flex-wrap items-center gap-x-3 md:gap-x-5 gap-y-3 text-xs md:text-sm text-muted-foreground pt-1">
-          {[
-            {
-              label: "LinkedIn",
-              href: about?.linkedin || "#",
-              icon: FaLinkedin,
-            },
-            { label: "GitHub", href: about?.github || "#", icon: FaGithub },
-            {
-              label: "Email",
-              href: `mailto:${about?.email || ""}`,
-              icon: MdEmail,
-            },
-          ].map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 md:gap-1.5 hover:text-foreground transition-colors duration-200 group"
-            >
-              <link.icon className="size-3.5 md:size-4" />
-              <span className="underline-offset-4 group-hover:underline">
-                {link.label}
-              </span>
-            </Link>
-          ))}
-
-          {/* Resume */}
-          <Link
-            href="#"
-            className="md:ml-1 flex items-center gap-1 group font-medium text-foreground transition-colors duration-200"
-          >
-            <span className="underline underline-offset-4 decoration-border group-hover:decoration-foreground">
-              CV.pdf
-            </span>
-            <ArrowUpRight
-              size={14}
-              className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200 text-muted-foreground group-hover:text-foreground"
-            />
-          </Link>
-        </div>
-      </div>
-
-      {/* RIGHT SIDE: AVATAR */}
-      <div className="shrink-0 size-28 md:w-40 md:h-auto">
-        <div className="relative h-full w-full overflow-hidden rounded-sm">
+    <section className="space-y-4 md:space-y-6">
+      {/* PROFILE */}
+      <div className="flex gap-3 md:gap-4">
+        <div className="relative size-12 md:size-16 shrink-0 overflow-hidden rounded-full bg-white">
           <Image
-            src="/new_image.jpeg"
-            className="object-cover object-center scale-170"
+            src={about?.imageUrl || "/logo.png"}
             alt="Divyashri Ravichandran"
             fill
-            sizes="(max-width: 768px) 96px, 144px"
+            className="object-contain"
             priority
           />
         </div>
+
+        <div className="flex flex-col justify-center">
+          <h1 className="mb-1 font-serif text-xl font-medium italic leading-none text-foreground md:text-3xl">
+            Divyashri Ravichandran
+          </h1>
+
+          <p className="text-xs md:text-base tracking-wide text-muted-foreground">
+            {t("masters-student-at-rug")} & {t("software-engineer")}
+          </p>
+        </div>
+      </div>
+
+      {/* INFO */}
+      <div className="hidden flex-wrap items-center gap-x-4 gap-y-1 text-xs md:text-sm text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <span className="size-1.5 rounded-full bg-foreground" />
+          <span>Doha, Qatar</span>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <span className="size-1.5 rounded-full bg-primary" />
+          <span>
+            Open to <span className="text-foreground">Internship</span> &{" "}
+            <span className="text-foreground">Part-time</span>
+          </span>
+        </div>
+      </div>
+
+      {/* SOCIAL + CV */}
+      <div className="flex flex-wrap items-center gap-x-4 md:gap-x-6 gap-y-1 text-xs md:text-sm">
+        <Link
+          href={about?.linkedin || ""}
+          target="_blank"
+          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
+          title="LinkedIn"
+        >
+          <FaLinkedin className="size-3 md:size-4" />
+          LinkedIn
+        </Link>
+
+        <Link
+          href={about?.github || ""}
+          target="_blank"
+          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
+          title="GitHub"
+        >
+          <FaGithub className="size-3 md:size-4" />
+          GitHub
+        </Link>
+
+        <Link
+          href={`mailto:${about?.email}`}
+          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
+          title="Email"
+        >
+          <MdEmail className="size-3 md:size-4" />
+          Email
+        </Link>
+
+        <Link
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80"
+        >
+          <span>CV.pdf</span>
+          <ArrowUpRight
+            size={14}
+            className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </Link>
       </div>
     </section>
   );

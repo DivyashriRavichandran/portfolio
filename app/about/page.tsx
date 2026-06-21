@@ -58,7 +58,7 @@ export default function AboutPage() {
 
   return (
     <main className="space-y-8 md:space-y-14">
-      <div className="space-y-4">
+      <div>
         <H1 text1={t("more-about")} text2={t("me")} />
         <p className="md:text-xl">{about.more_bio?.[locale]}</p>
       </div>
@@ -66,7 +66,7 @@ export default function AboutPage() {
       {favourites.length > 0 && (
         <section>
           <H2 text1={t("my")} text2={t("favourites")} />
-          <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {favourites.map((fav, index) => (
               <FavoriteCard key={fav.title + index} item={fav} />
             ))}
@@ -85,7 +85,7 @@ export default function AboutPage() {
                 return (
                   <div
                     key={item.product + index}
-                    className="group flex items-center justify-between border-b border-white/10 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
+                    className="group flex items-center justify-between border-b border-foreground/20 py-2 transition-all duration-300 hover:border-primary/50 hover:pl-2"
                   >
                     <div className="flex items-center gap-3 text-muted-foreground group-hover:text-primary transition-colors duration-300">
                       <IconComponent size={16} className="shrink-0" />
@@ -131,9 +131,9 @@ const FavoriteCard = ({ item }: { item: FavItem }) => {
       <p className="text-[10px] uppercase font-medium tracking-widest text-muted-foreground/80">
         {item.title}
       </p>
-      <div className="mt-1 flex items-center gap-2">
+      <div className="mt-1 flex items-center gap-1 md:gap-2">
         <IconComponent size={16} className="size-3.5 md:size-4 text-primary" />
-        <span className="text-sm font-medium">{item.desc}</span>
+        <span className="text-xs md:text-sm font-medium">{item.desc}</span>
       </div>
     </div>
   );

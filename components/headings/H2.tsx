@@ -10,8 +10,8 @@ const H2 = ({
   symbol?: string;
 }) => {
   return (
-    <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-2 md:pb-3">
-      <h2 className="md:text-xl font-semibold">
+    <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-1 md:pb-3">
+      <h2 className="text-sm md:text-xl font-semibold">
         {text1}
         {"  "}
         <span className="text-primary-foreground bg-primary px-1">
