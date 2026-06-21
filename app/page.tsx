@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { unstable_cache } from "next/cache";
 
 const username = "divyashriravichandran";
@@ -54,13 +54,20 @@ const getCachedContributions = unstable_cache(
   { revalidate: 60 * 60 * 24 },
 );
 
-const Home = async () => {
+async function AboutWithData() {
   const githubData = await getCachedContributions();
+  return <About githubData={githubData} />;
+}
 
+const Home = () => {
   return (
     <>
       <Hero />
-      <About githubData={githubData} />
+      <Suspense
+        fallback={<div className="h-48 animate-pulse bg-muted rounded-lg" />}
+      >
+        <AboutWithData />
+      </Suspense>
       <ProjectSection />
       <MiniProjectsSection />
       <CareerSection />
