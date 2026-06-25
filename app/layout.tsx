@@ -89,12 +89,7 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider locale={locale}>
           <ConvexClientProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
               <LoadingProvider>
                 <>
                   <Navbar />

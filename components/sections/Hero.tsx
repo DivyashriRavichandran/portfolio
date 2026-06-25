@@ -10,6 +10,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useEffect } from "react";
 import { useLoading } from "../LoadingProvider";
+import { IoLocationSharp } from "react-icons/io5";
 
 export default function Hero() {
   const t = useTranslations();
@@ -31,10 +32,10 @@ export default function Hero() {
   }
 
   return (
-    <section className="space-y-4 md:space-y-6">
+    <section className="space-y-3 md:space-y-5">
       {/* PROFILE */}
       <div className="flex gap-3 md:gap-4">
-        <div className="relative size-12 md:size-16 shrink-0 overflow-hidden rounded-full bg-white">
+        <div className="relative size-12 md:size-16 shrink-0 overflow-hidden rounded-full bg-white border">
           <Image
             src={about?.imageUrl || "/logo.png"}
             alt="Divyashri Ravichandran"
@@ -55,65 +56,54 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* INFO */}
-      <div className="hidden flex-wrap items-center gap-x-4 gap-y-1 text-xs md:text-sm text-muted-foreground">
-        <div className="flex items-center gap-1.5">
-          <span className="size-1.5 rounded-full bg-foreground" />
-          <span>Doha, Qatar</span>
+      <div className="flex justify-between items-center gap-3 text-xs md:text-sm">
+        {/* LOCATION */}
+        <div className="flex items-center gap-1 text-muted-foreground">
+          <IoLocationSharp className="size-3 md:size-4 text-foreground" />
+          <span>Groningen, Netherlands</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          <span className="size-1.5 rounded-full bg-primary" />
-          <span>
-            Open to <span className="text-foreground">Internship</span> &{" "}
-            <span className="text-foreground">Part-time</span>
-          </span>
+        {/* SOCIAL + CV */}
+        <div className="flex flex-wrap items-center gap-x-3 md:gap-x-5 gap-y-1">
+          <Link
+            href={about?.linkedin || ""}
+            target="_blank"
+            className="text-muted-foreground transition hover:text-foreground"
+            title="LinkedIn"
+          >
+            <FaLinkedin className="size-4 md:size-5" />
+          </Link>
+
+          <Link
+            href={about?.github || ""}
+            target="_blank"
+            className="text-muted-foreground transition hover:text-foreground"
+            title="GitHub"
+          >
+            <FaGithub className="size-4 md:size-5" />
+          </Link>
+
+          <Link
+            href={`mailto:${about?.email}`}
+            className="text-muted-foreground transition hover:text-foreground"
+            title="Email"
+          >
+            <MdEmail className="size-4.5 md:size-5.5" />
+          </Link>
+
+          <Link
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80"
+          >
+            <span>CV.pdf</span>
+            <ArrowUpRight
+              size={14}
+              className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+            />
+          </Link>
         </div>
-      </div>
-
-      {/* SOCIAL + CV */}
-      <div className="flex flex-wrap items-center gap-x-4 md:gap-x-6 gap-y-1 text-xs md:text-sm">
-        <Link
-          href={about?.linkedin || ""}
-          target="_blank"
-          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
-          title="LinkedIn"
-        >
-          <FaLinkedin className="size-3 md:size-4" />
-          LinkedIn
-        </Link>
-
-        <Link
-          href={about?.github || ""}
-          target="_blank"
-          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
-          title="GitHub"
-        >
-          <FaGithub className="size-3 md:size-4" />
-          GitHub
-        </Link>
-
-        <Link
-          href={`mailto:${about?.email}`}
-          className="flex items-center md:gap-1.5 gap-1 text-muted-foreground transition hover:text-foreground hover:underline underline-offset-4"
-          title="Email"
-        >
-          <MdEmail className="size-3 md:size-4" />
-          Email
-        </Link>
-
-        <Link
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80"
-        >
-          <span>CV.pdf</span>
-          <ArrowUpRight
-            size={14}
-            className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-          />
-        </Link>
       </div>
     </section>
   );

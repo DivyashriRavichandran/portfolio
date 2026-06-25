@@ -84,13 +84,11 @@ const BlogsSection = () => {
           >
             {isExpanded ? (
               <>
-                {t("Show less") || "Show less"}
-                <ChevronUp className="size-4" />
+                {t("show-less")} <ChevronUp className="size-3 md:size-4" />
               </>
             ) : (
               <>
-                {t("See more") || "See more"}
-                <ChevronDown className="size-4" />
+                {t("see-more")} <ChevronDown className="size-3 md:size-4" />
               </>
             )}
           </button>

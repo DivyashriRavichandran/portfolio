@@ -148,17 +148,19 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
                 <a
                   href={item.url}
                   target="_blank"
-                  className=" hover:underline underline-offset-2"
+                  className=" hover:underline underline-offset-2 font-medium"
                 >
                   {item.organization && item.organization[locale]}
                 </a>
                 <span className="">•</span>
-                {item.location && item.location[locale]}
+                <span className="text-muted-foreground">
+                  {item.location && item.location[locale]}
+                </span>
               </div>
             </div>
 
             {/* DATE */}
-            <div className="mt-1 md:mt-0 text-xs md:text-sm text-muted-foreground">
+            <div className="mt-0.5 md:mt-0 text-xs md:text-sm text-muted-foreground">
               {displayDate(item.startDate, "N/A")} —{" "}
               {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
             </div>
