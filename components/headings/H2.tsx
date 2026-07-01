@@ -10,7 +10,7 @@ const H2 = ({
   symbol?: string;
 }) => {
   return (
-    <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-1 md:pb-3">
+    <div className="flex justify-between items-end mb-4 md:mb-6 border-b pb-1 md:pb-2">
       <h2 className="md:text-xl font-semibold">
         {text1}
         {"  "}

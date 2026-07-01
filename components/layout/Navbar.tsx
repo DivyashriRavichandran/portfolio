@@ -12,7 +12,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-xl font-semibold tracking-tighter uppercase transition-opacity hover:opacity-90"
+          className="underline-offset-4 hover:underline transition-all text-xl font-semibold tracking-tighter uppercase hover:opacity-90"
         >
           DR.
         </Link>

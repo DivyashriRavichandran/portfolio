@@ -37,6 +37,10 @@ const About = ({ githubData }: AboutProps) => {
     return () => stopLoading();
   }, [about, startLoading, stopLoading]);
 
+  if (about === null || about === undefined) {
+    return null;
+  }
+
   const bio = about?.bio?.[locale as "en" | "nl"] ?? "";
 
   return (

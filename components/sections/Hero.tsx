@@ -10,7 +10,6 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useEffect } from "react";
 import { useLoading } from "../LoadingProvider";
-import { IoLocationSharp } from "react-icons/io5";
 
 export default function Hero() {
   const t = useTranslations();
@@ -58,10 +57,7 @@ export default function Hero() {
 
       <div className="flex justify-between items-center gap-3 text-xs md:text-sm">
         {/* LOCATION */}
-        <div className="flex items-center gap-1 text-muted-foreground">
-          <IoLocationSharp className="size-3 md:size-4 text-foreground" />
-          <span>Groningen, Netherlands</span>
-        </div>
+        <div>📍 Groningen, Netherlands</div>
 
         {/* SOCIAL + CV */}
         <div className="flex flex-wrap items-center gap-x-3 md:gap-x-5 gap-y-1">
@@ -71,7 +67,7 @@ export default function Hero() {
             className="text-muted-foreground transition hover:text-foreground"
             title="LinkedIn"
           >
-            <FaLinkedin className="size-4 md:size-5" />
+            <FaLinkedin className="size-4 md:size-6" />
           </Link>
 
           <Link
@@ -80,7 +76,7 @@ export default function Hero() {
             className="text-muted-foreground transition hover:text-foreground"
             title="GitHub"
           >
-            <FaGithub className="size-4 md:size-5" />
+            <FaGithub className="size-4 md:size-6" />
           </Link>
 
           <Link
@@ -88,14 +84,14 @@ export default function Hero() {
             className="text-muted-foreground transition hover:text-foreground"
             title="Email"
           >
-            <MdEmail className="size-4.5 md:size-5.5" />
+            <MdEmail className="size-4.5 md:size-7" />
           </Link>
 
           <Link
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80"
+            className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80 hover:text-primary"
           >
             <span>CV.pdf</span>
             <ArrowUpRight

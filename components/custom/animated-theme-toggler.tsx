@@ -89,7 +89,7 @@ export const AnimatedThemeToggler = ({
       type="button"
       ref={buttonRef}
       onClick={toggleTheme}
-      className={cn(className, "cursor-pointer")}
+      className={cn(className, "cursor-pointer hover:text-primary transition")}
       {...props}
     >
       {isDark ? (

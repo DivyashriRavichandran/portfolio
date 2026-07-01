@@ -145,7 +145,7 @@ export default function ProjectDetailsPage() {
 
           {/* IMPACT METRICS */}
           {project.impact?.[locale] && project.impact[locale].length > 0 && (
-            <section id="impact" className="scroll-mt-32 space-y-12">
+            <section id="impact" className=" space-y-12">
               <H2 text1={t("the")} text2={t("results")} />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {project.impact[locale].map((metric, i) => (
@@ -161,7 +161,7 @@ export default function ProjectDetailsPage() {
           )}
 
           {/* TECH STACK */}
-          <div id="stack" className="space-y-4 scroll-mt-32">
+          <div id="stack" className="space-y-4 ">
             <H2 text1={t("technologies")} text2={t("used")} />
             <div className="flex flex-wrap gap-2">
               {project.tech_stack.map((tech) => (
@@ -196,10 +196,7 @@ export default function ProjectDetailsPage() {
 
           {/* SYSTEM DESIGN IMAGE */}
           {project.architectureUrl && (
-            <article
-              id="design"
-              className="scroll-mt-32 space-y-6 w-full relative"
-            >
+            <article id="design" className=" space-y-6 w-full relative">
               <div className="text-center">
                 <H2 text1={t("system")} text2={t("design")} />
               </div>
@@ -238,17 +235,17 @@ export default function ProjectDetailsPage() {
           )}
 
           {/* PROJECT LINKS */}
-          <div id="links" className="scroll-mt-32 space-y-8">
+          <div id="links" className="space-y-8">
             <H2 text1="Project" text2={t("links")} />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.github_link && (
                 <a
                   href={project.github_link}
                   target="_blank"
-                  className="group relative p-4 border hover:border-primary/50 transition-all duration-300"
+                  className="group relative p-3 md:p-4 border hover:border-primary transition-all duration-300"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="size-12 rounded-full bg-background flex items-center justify-center border group-hover:scale-110 transition-transform">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="size-10 md:size-12 rounded-full bg-background flex items-center justify-center border group-hover:scale-110 transition-transform">
                       <FaGithub size={24} />
                     </div>
                     <div>
@@ -265,11 +262,11 @@ export default function ProjectDetailsPage() {
                 <a
                   href={project.project_link}
                   target="_blank"
-                  className="group relative p-4 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
+                  className="group relative p-3 md:p-4 bg-primary text-background hover:bg-primary/90 transition-all duration-300"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="size-12 rounded-full bg-black/10 flex items-center justify-center border group-hover:scale-110 transition-transform">
-                      <FaGlobe size={24} />
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="size-10 md:size-12 rounded-full bg-black/10 flex items-center justify-center border group-hover:scale-110 transition-transform">
+                      <FaGlobe size={20} />
                     </div>
                     <div>
                       {project.slug === "lung-cancer-classifier" ? (
@@ -318,7 +315,7 @@ function ProjectSection({
   children: React.ReactNode;
 }) {
   return (
-    <article id={id} className="scroll-mt-32 space-y-4 md:space-y-6">
+    <article id={id} className=" space-y-4 md:space-y-6">
       <H2 text1={title1} text2={title2} symbol={symbol} />
       <div className="space-y-2 md:space-y-6 text-sm md:text-lg">
         {children}

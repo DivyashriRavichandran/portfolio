@@ -18,7 +18,7 @@ const Footer = () => {
       <div className="flex justify-between items-baseline gap-4">
         <p>© 2026 Divyashri&apos;s Portfolio. {t("all-rights-reserved")}</p>
         <div className="flex items-baseline gap-1 md:gap-2">
-          <span>{t("go-to-top")}</span>
+          <div>{t("go-to-top")}</div>
           <Button
             onClick={scrollToTop}
             aria-label="Scroll to top"

@@ -17,6 +17,7 @@ import {
 } from "date-fns";
 import H4 from "@/components/headings/H4";
 import H1 from "../headings/H1";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -109,7 +110,6 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
   ) => {
     if (!start) return "";
     const startDate = new Date(start);
-
     const endDate = end ? addDays(new Date(end), 1) : new Date();
 
     if (!isValid(startDate) || !isValid(endDate)) return "";
@@ -123,6 +123,9 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
       return "";
     }
   };
+
+  const durationStr =
+    item.type === "experience" ? getDuration(item.startDate, item.endDate) : "";
 
   return (
     <div className="group">
@@ -139,30 +142,45 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
         {/* CONTENT */}
         <div className="flex-1">
           <div className="flex flex-col md:flex-row md:justify-between">
+            {/* LEFT */}
             <div className="flex flex-col gap-1">
               {/* TITLE */}
               <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
 
-              {/* DETAILS */}
-              <div className="flex gap-1 text-xs md:text-sm">
+              {/* ORGANIZATION + LOCATION */}
+              <div className="flex items-center justify-between md:justify-start gap-2 md:gap-0">
                 <a
                   href={item.url}
                   target="_blank"
-                  className=" hover:underline underline-offset-2 font-medium"
+                  rel="noopener noreferrer"
+                  className="hover:underline underline-offset-2 font-medium text-sm md:text-base"
                 >
-                  {item.organization && item.organization[locale]}
+                  {item.organization && item.organization[locale]}{" "}
+                  <span className="hidden md:inline-block font-normal">•</span>
                 </a>
-                <span className="">•</span>
-                <span className="text-muted-foreground">
-                  {item.location && item.location[locale]}
-                </span>
+
+                {item.location && item.location[locale] && (
+                  <div className="flex items-center gap-1 text-muted-foreground text-xs md:text-sm">
+                    <FaMapMarkerAlt className="size-2.5 md:size-0" />
+                    <span>{item.location[locale]}</span>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* DATE */}
-            <div className="mt-0.5 md:mt-0 text-xs md:text-sm text-muted-foreground">
-              {displayDate(item.startDate, "N/A")} —{" "}
-              {item.endDate ? displayDate(item.endDate, "Present") : "Present"}
+            {/* RIGHT - DATE */}
+            <div className="flex md:flex-col items-center md:items-end justify-between md:justify-start gap-2 text-xs md:text-sm text-muted-foreground">
+              <span>
+                {displayDate(item.startDate, "N/A")} —{" "}
+                {item.endDate
+                  ? displayDate(item.endDate, "Present")
+                  : "Present"}
+              </span>
+              {durationStr && (
+                <span className="text-[10px] md:text-xs px-2 py-0.5 bg-primary/10 text-primary rounded select-none">
+                  {durationStr}
+                </span>
+              )}
             </div>
           </div>
 
@@ -178,14 +196,9 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
                 {item.grade}
               </Badge>
             )}
-            {item.type == "experience" && (
-              <Badge variant={"outline"} size="lg">
-                {getDuration(item.startDate, item.endDate)}
-              </Badge>
-            )}
           </div>
 
-          <div className="hidden md:block">
+          <div className="">
             {/* CONTRIBUTIONS */}
             {item.achievements![locale]?.length > 0 && (
               <div>
@@ -194,10 +207,12 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
                   {item.achievements![locale].map((a: string, i: number) => (
                     <li
                       key={i}
-                      className="text-sm md:text-base flex gap-2 text-muted-foreground"
+                      className="text-sm md:text-base flex gap-2 text-muted-foreground leading-relaxed"
                     >
-                      <span>•</span>
-                      {a}
+                      <span className="text-primary select-none font-bold">
+                        ›
+                      </span>
+                      <span>{a}</span>
                     </li>
                   ))}
                 </ul>
@@ -206,9 +221,9 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
             {/* WEBSITES */}
             {item.websites && item.websites.length > 0 && (
-              <div className="mt-6 md:mt-8">
+              <div>
                 <H4>{t("featured-projects")}</H4>
-                <div className="mt-3 flex flex-wrap gap-3">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {item.websites.map((url: string) => {
                     // Clean up URL for display
                     const displayUrl = url
@@ -235,57 +250,6 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
             )}
           </div>
         </div>
-      </div>
-
-      {/* mobile view */}
-      <div className="md:hidden">
-        {/* CONTRIBUTIONS */}
-        {item.achievements![locale]?.length > 0 && (
-          <div>
-            <H4>{t("contributions")}</H4>
-            <ul className="mt-2 space-y-1 md:space-y-2">
-              {item.achievements![locale].map((a: string, i: number) => (
-                <li
-                  key={i}
-                  className="text-sm md:text-base flex gap-2 text-muted-foreground"
-                >
-                  <span>•</span>
-                  {a}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* WEBSITES */}
-        {item.websites && item.websites.length > 0 && (
-          <div className="mt-6 md:mt-8">
-            <H4>{t("featured-projects")}</H4>
-            <div className="mt-3 flex flex-wrap gap-3">
-              {item.websites.map((url: string) => {
-                // Clean up URL for display
-                const displayUrl = url
-                  .replace(/^https?:\/\//, "")
-                  .replace(/^www\./, "")
-                  .replace(/\/$/, "");
-
-                return (
-                  <Badge
-                    key={url}
-                    variant="outline"
-                    className="normal-case font-normal"
-                    asChild
-                  >
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      {displayUrl}
-                      <ArrowUpRight />
-                    </a>
-                  </Badge>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

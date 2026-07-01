@@ -131,20 +131,16 @@ const ContactSection = () => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-6 space-y-8"
+            className="mt-6 space-y-6"
           >
-            <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div className="grid space-y-4">
               <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        placeholder={t("your-name")}
-                        {...field}
-                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-9 md:h-12 md:text-lg"
-                      />
+                      <Input placeholder={t("your-name")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -156,11 +152,7 @@ const ContactSection = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input
-                        placeholder={t("email-address")}
-                        {...field}
-                        className="border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent h-9 md:h-12 md:text-lg"
-                      />
+                      <Input placeholder={t("email-address")} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -170,12 +162,12 @@ const ContactSection = () => {
                 control={form.control}
                 name="message"
                 render={({ field }) => (
-                  <FormItem className="md:col-span-2">
+                  <FormItem className="">
                     <FormControl>
                       <Textarea
                         placeholder={t("how-can-i-help-you")}
                         {...field}
-                        className="min-h-24 border-t-0 border-x-0 border-b rounded-none px-0 focus-visible:ring-0 focus-visible:border-primary transition-colors bg-transparent md:text-lg resize-none"
+                        className="mt-2 md:mt-3 resize-none"
                       />
                     </FormControl>
                     <FormMessage />
@@ -183,7 +175,7 @@ const ContactSection = () => {
                 )}
               />
             </div>
-            <div className="flex justify-end pt-4">
+            <div className="flex justify-end">
               <Button
                 type="submit"
                 disabled={isSubmitting}

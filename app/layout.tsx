@@ -93,7 +93,7 @@ export default async function RootLayout({
               <LoadingProvider>
                 <>
                   <Navbar />
-                  <div className="mt-3 md:mt-8 px-5 md:max-w-3xl lg:px-0 md:mx-auto mb-10">
+                  <div className="mt-3 md:mt-8 px-5 md:max-w-3xl lg:px-0 md:mx-auto mb-8">
                     {children}
                   </div>
                   <Footer />
