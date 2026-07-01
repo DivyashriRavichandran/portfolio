@@ -158,3 +158,18 @@ html {
     @apply mx-1 px-1;
   }
 }
+
+/* Disable all transitions during a View Transition snapshot */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Temporary global override to stop Tailwind transitions from executing mid-snapshot */
+html::view-transition {
+  background: transparent;
+}
+html::view-transition-group(root) {
+  animation-duration: 0s;
+}

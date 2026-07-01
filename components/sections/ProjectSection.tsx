@@ -116,7 +116,7 @@ const ProjectCard = ({
                 key={i}
                 className="text-[10px] md:text-xs lowercase text-muted-foreground"
               >
-                #{tech}
+                #{tech.toLowerCase().replace(/\s+/g, "-")}
               </span>
             ))}
           </div>

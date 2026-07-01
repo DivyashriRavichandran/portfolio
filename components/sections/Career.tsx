@@ -17,7 +17,6 @@ import {
 } from "date-fns";
 import H4 from "@/components/headings/H4";
 import H1 from "../headings/H1";
-import { FaMapMarkerAlt } from "react-icons/fa";
 
 const CareerSection = () => {
   const t = useTranslations();
@@ -141,29 +140,23 @@ const CareerItem = ({ item, locale, logoUrl }: CareerItemProps) => {
 
         {/* CONTENT */}
         <div className="flex-1">
-          <div className="flex flex-col md:flex-row md:justify-between">
+          <div className="flex flex-col md:flex-row md:justify-between gap-1">
             {/* LEFT */}
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col md:gap-1">
               {/* TITLE */}
-              <h3 className="text-lg md:text-2xl font-medium">{title}</h3>
+              <h3 className="text-lg md:text-xl font-medium">{title}</h3>
 
               {/* ORGANIZATION + LOCATION */}
-              <div className="flex items-center justify-between md:justify-start gap-2 md:gap-0">
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:underline underline-offset-2 font-medium text-sm md:text-base"
-                >
-                  {item.organization && item.organization[locale]}{" "}
-                  <span className="hidden md:inline-block font-normal">•</span>
-                </a>
+              <div className="text-sm md:text-base flex items-center justify-between md:justify-start gap-2 md:gap-0">
+                {item.organization && item.organization[locale]}
 
+                <span className="hidden md:inline-block font-normal mx-1 select-none">
+                  •
+                </span>
                 {item.location && item.location[locale] && (
-                  <div className="flex items-center gap-1 text-muted-foreground text-xs md:text-sm">
-                    <FaMapMarkerAlt className="size-2.5 md:size-0" />
-                    <span>{item.location[locale]}</span>
-                  </div>
+                  <span className="text-muted-foreground text-xs md:text-sm">
+                    {item.location[locale]}
+                  </span>
                 )}
               </div>
             </div>

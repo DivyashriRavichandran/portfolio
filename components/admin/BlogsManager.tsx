@@ -16,7 +16,6 @@ import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Badge } from "../ui/badge";
 
 export default function BlogsManager() {
   const blogs = useQuery(api.blogs.get);
@@ -68,9 +67,8 @@ export default function BlogsManager() {
           <TableRow className="border-white/5 hover:bg-transparent">
             <TableHead className="w-12 text-center"></TableHead>
             <TableHead className="w-16 text-center">No.</TableHead>
-            <TableHead className="pl-8">Project Title</TableHead>
-            <TableHead>Tags</TableHead>
-            <TableHead className="pr-8 text-right">Management</TableHead>
+            <TableHead className="">Project Title</TableHead>
+            <TableHead className="text-right">Management</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -87,21 +85,9 @@ export default function BlogsManager() {
                 {(index + 1).toString().padStart(2, "0")}
               </TableCell>
 
-              <TableCell className="font-medium text-lg pl-8">
-                {blog.title.en}
-              </TableCell>
+              <TableCell className="font-medium">{blog.title.en}</TableCell>
 
-              <TableCell>
-                <div className="flex gap-2">
-                  {blog.tags?.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </TableCell>
-
-              <TableCell className="text-right pr-8">
+              <TableCell className="">
                 <div className="flex justify-end gap-2">
                   <Link href={`/admin/blogs/${blog._id}`}>
                     <Button

@@ -101,10 +101,9 @@ export default function ProjectManager() {
               <TableHead className="w-12 text-center"></TableHead>{" "}
               {/* Drag Handle Col */}
               <TableHead className="w-16 text-center">No.</TableHead>
-              <TableHead className="pl-8">Project Details</TableHead>
+              <TableHead className="">Project Details</TableHead>
               <TableHead>Tags</TableHead>
-              <TableHead>Year</TableHead>
-              <TableHead className="pr-8 text-right">Management</TableHead>
+              <TableHead className="">Management</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -140,7 +139,7 @@ export default function ProjectManager() {
                           {(index + 1).toString().padStart(2, "0")}
                         </TableCell>
 
-                        <TableCell className="font-medium text-lg pl-8">
+                        <TableCell className="font-medium text-lg">
                           {project.title.en}
                         </TableCell>
                         <TableCell className="flex gap-2">
@@ -148,9 +147,8 @@ export default function ProjectManager() {
                             <Badge key={tag}>{tag}</Badge>
                           ))}
                         </TableCell>
-                        <TableCell>{project.year}</TableCell>
 
-                        <TableCell className="text-right pr-8">
+                        <TableCell className="">
                           <div className="flex justify-end gap-2">
                             <Link href={`/admin/projects/${project.slug}`}>
                               <Button

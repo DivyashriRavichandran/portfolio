@@ -109,10 +109,13 @@ const TechStackSection = () => {
       { key: "nextjs", label: "Next.js" },
       { key: "react", label: "React.js" },
       { key: "spring", label: "Spring Boot" },
+      { key: "laravel", label: "Laravel" },
       { key: "tailwindcss", label: "Tailwind" },
     ],
     database: [
+      { key: "mysql", label: "MySQL" },
       { key: "postgresql", label: "PostgreSQL" },
+      { key: "elastic", label: "Elasticsearch" },
       { key: "convex", label: "Convex" },
     ],
     devops: [
@@ -124,7 +127,7 @@ const TechStackSection = () => {
   };
 
   const theme = useTheme();
-  console.log(theme);
+  const websiteTheme = theme.theme === "dark" ? "dark" : "light";
 
   return (
     <>
@@ -138,7 +141,11 @@ const TechStackSection = () => {
               key={tech.key}
               className="normal-case font-normal flex items-center gap-1"
             >
-              <StackIcon name={tech.key} className="size-4" variant="dark" />
+              <StackIcon
+                name={tech.key}
+                className="size-4"
+                variant={websiteTheme}
+              />
               <span>{tech.label}</span>
             </Badge>
           ))}
