@@ -85,15 +85,14 @@ export default function ProjectDetailsPage() {
             <CarouselContent>
               {(project.imageUrls ?? []).map((url, i) => (
                 <CarouselItem key={url || i} className="rounded">
-                  <div
-                    className="relative aspect-video overflow-hidden border cursor-zoom-in"
-                    onClick={() => setPhotoIndex(i)}
-                  >
+                  <div onClick={() => setPhotoIndex(i)}>
                     <Image
                       src={url ?? ""}
                       alt={`Project Image ${i + 1}`}
-                      fill
-                      className="object-top"
+                      className="object-top object-fill w-full max-h-120 border cursor-zoom-in"
+                      width={1200}
+                      height={700}
+                      priority={i === 0}
                     />
                   </div>
                 </CarouselItem>
