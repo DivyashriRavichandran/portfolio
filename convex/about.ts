@@ -1,7 +1,18 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { favCard, hardware, localeString } from "./schema";
+import { Id } from "./_generated/dataModel";
 
+async function getFileUrl(
+  ctx: { storage: { getUrl: (id: Id<"_storage">) => Promise<string | null> } },
+  value: string | null | undefined,
+): Promise<string | null> {
+  if (!value) return null;
+  if (value.startsWith("http://") || value.startsWith("https://")) {
+    return value;
+  }
+  return await ctx.storage.getUrl(value as Id<"_storage">);
+}
 export const get = query({
   handler: async (ctx) => {
     const about = await ctx.db.query("about").first();
@@ -10,7 +21,8 @@ export const get = query({
 
     return {
       ...about,
-      imageUrl: about.image ? await ctx.storage.getUrl(about.image) : null,
+      imageUrl: await getFileUrl(ctx, about.image),
+      resumeUrl: await getFileUrl(ctx, about.resume),
     };
   },
 });
@@ -28,6 +40,7 @@ export const update = mutation({
     github: v.string(),
     email: v.string(),
     resume: v.optional(v.string()),
+    resumeFileName: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const { id, ...data } = args;

@@ -64,6 +64,7 @@ interface AboutFormData {
   github: string;
   email: string;
   resume?: string;
+  resumeFileName?: string;
 }
 
 export default function AboutManager() {
@@ -82,6 +83,7 @@ export default function AboutManager() {
     github: "",
     email: "",
     resume: "",
+    resumeFileName: "",
   });
 
   const [isSyncing, setIsSyncing] = useState(false);
@@ -91,7 +93,7 @@ export default function AboutManager() {
     if (aboutQuery) {
       setFormData({
         _id: aboutQuery._id,
-        image: aboutQuery.image || "",
+        image: aboutQuery.imageUrl || "",
         bio: aboutQuery.bio || { en: "", nl: "" },
         more_bio: aboutQuery.more_bio || { en: "", nl: "" },
         favourites: aboutQuery.favourites || [],
@@ -135,7 +137,11 @@ export default function AboutManager() {
 
       const { storageId } = await result.json();
 
-      setFormData((prev) => ({ ...prev, [field]: storageId }));
+      setFormData((prev) => ({
+        ...prev,
+        [field]: storageId,
+        [`${field}FileName`]: file.name,
+      }));
 
       const capitalizedField = field.charAt(0).toUpperCase() + field.slice(1);
       toast.success(`${capitalizedField} uploaded!`);
@@ -617,12 +623,21 @@ export default function AboutManager() {
             {formData.resume ? (
               <div className="relative size-24 rounded-md border overflow-hidden group bg-foreground/10 flex flex-col items-center justify-center p-2">
                 <FileText size={28} className="" />
-                <span className="text-[9px] font-mono mt-1 text-white/40 truncate w-full text-center">
-                  {formData.resume}
+                <span
+                  className="text-[9px] font-mono mt-1 text-white/80 truncate w-full text-center px-1"
+                  title={formData.resumeFileName || "CV.pdf"}
+                >
+                  {formData.resumeFileName || "CV.pdf"}
                 </span>
                 <button
                   type="button"
-                  onClick={() => setFormData({ ...formData, resume: "" })}
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      resume: "",
+                      resumeFileName: "",
+                    })
+                  }
                   className="absolute inset-0 flex items-center justify-center bg-red-500/80 opacity-0 group-hover:opacity-100 transition"
                 >
                   <X size={18} />
@@ -660,7 +675,9 @@ export default function AboutManager() {
                 <Image
                   src={formData.image}
                   alt="Profile Preview"
-                  className="w-full h-full object-cover rounded-md"
+                  className="w-fit h-full rounded-md"
+                  width={96}
+                  height={96}
                 />
                 <button
                   type="button"

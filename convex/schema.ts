@@ -86,6 +86,7 @@ export default defineSchema({
     github: v.string(),
     email: v.string(),
     resume: v.optional(v.string()), // storageId
+    resumeFileName: v.optional(v.string()),
   }),
 
   career: defineTable({

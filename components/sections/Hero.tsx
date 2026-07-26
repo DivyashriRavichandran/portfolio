@@ -88,9 +88,10 @@ export default function Hero() {
           </Link>
 
           <Link
-            href="#"
+            href={about.resumeUrl || "#"}
             target="_blank"
             rel="noopener noreferrer"
+            download={about.resumeFileName || "CV.pdf"}
             className="font-medium group flex items-center md:gap-1.5 gap-1 text-foreground underline underline-offset-4 transition hover:opacity-80 hover:text-primary"
           >
             <span>CV.pdf</span>
